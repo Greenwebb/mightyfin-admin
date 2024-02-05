@@ -98,7 +98,7 @@ use Illuminate\Support\Facades\Route;
 // });
 Route::get('/', function () {
     return redirect()->route('login');
-});
+})->name('welcome');
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::post('/share-docs', [UserController::class, 'share_doc'])->name('share.docs');
 
