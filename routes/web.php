@@ -96,7 +96,9 @@ use Illuminate\Support\Facades\Route;
 // Route::get('/foo', function () {
 //     Artisan::call('storage:link');
 // });
-Route::get('/', WelcomePage::class)->name('welcome');
+Route::get('/', function () {
+    return redirect()->route('login');
+});
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::post('/share-docs', [UserController::class, 'share_doc'])->name('share.docs');
 
@@ -233,12 +235,9 @@ Route::get('privacy-policy', PrivacyPolicyPage::class)->name('pp');
 Route::get('terms-and-conditions', TermsConditionPage::class)->name('terms');
 Route::get('how-to', GuidelinePage::class)->name('guideline');
 
-
-
 // Alerts and Notifications
 Route::get('successfully-applied-a-loan', SuccessPage::class)->name('success-application');
 Route::get('email-sent-successfully', SuccessEmailPage::class)->name('success-email');
-
 
 // Errors
 Route::get('account-already-exists', AlreadyExistPage::class)->name('already-exists');
