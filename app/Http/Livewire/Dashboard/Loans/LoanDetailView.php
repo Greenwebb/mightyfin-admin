@@ -5,6 +5,7 @@ namespace App\Http\Livewire\Dashboard\Loans;
 use App\Models\Application;
 use App\Models\LoanManualApprover;
 use App\Models\LoanStatus;
+use App\Models\Status;
 use App\Models\User;
 use App\Traits\EmailTrait;
 use App\Traits\LoanTrait;
@@ -19,7 +20,7 @@ class LoanDetailView extends Component
 {
     use EmailTrait, WalletTrait, LoanTrait, AuthorizesRequests;
     public $loan, $user, $loan_id, $msg, $due_date, $reason, $loan_product;
-    public $loan_stage;
+    public $loan_stage, $denied_status, $picked_status;
     public function mount($id){
         /**
             *loan main details
@@ -35,7 +36,9 @@ class LoanDetailView extends Component
         $this->loan = $this->get_loan_details($this->loan_id);
         $this->loan_product = $this->get_loan_product($this->loan->loan_product_id);
         $this->loan_stage = $this->get_loan_current_stage($this->loan->loan_product_id);
-        
+        $this->denied_status = Status::where('stage', 'denied')
+        ->orderBy('id')
+        ->get();
         $this->change_status();
         return view('livewire.dashboard.loans.loan-detail-view')
         ->layout('layouts.admin');
@@ -123,6 +126,14 @@ class LoanDetailView extends Component
                 $application->status = 1;
             } elseif($loan_status->stage == 'denied') {
                 $application->status = 3;
+                LoanStatus::where('loan_product_id', $this->loan_product->id)
+                ->orderBy('id')
+                ->update(['state' => 'pending']);
+                LoanStatus::where('loan_product_id', $this->loan_product->id)
+                ->where('status_id', '>', $this->loan_stage->status_id)
+                ->orderBy('id')
+                ->first()
+                ->update(['state' => 'current']);
             } elseif($loan_status->stage == 'defaulted') {
                 $application->status = 4;
             }elseif($loan_status->stage == 'Not Taken Up') {
@@ -231,6 +242,7 @@ class LoanDetailView extends Component
             $x->status = 3;
             $x->save();
 
+            $this->change_stage();
 
             $mail = [
                 'user_id' => $x->user_id,

@@ -20,7 +20,7 @@ return new class extends Migration
             $table->text('icon')->nullable();
             $table->text('description')->nullable();
             $table->string('release_date')->default(1);
-            $table->integer('auto_payment')->default(1);
+            $table->integer('auto_payment')->nullable();
             $table->string('loan_duration_period')->nullable();
             $table->string('loan_interest_period')->nullable();
             

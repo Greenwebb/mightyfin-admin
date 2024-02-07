@@ -29,10 +29,10 @@
                             </div>
                             <div class="m-2">
                                 <label class="text-primary fw-bold" for="reason">Denied Status</label>
-                                <select  class="form-control" type="text" wire:model="status">
-                                    {{-- @foreach ($ as $item)
-                                        
-                                    @endforeach --}}
+                                <select  class="form-control" type="text" wire:model="picked_status">
+                                    @foreach ($denied_status as $status)
+                                        <option value="{{$status->id}}">{{$status->name}}</option>
+                                    @endforeach
                                 </select>
                             </div>
                             <div class="m-2">
