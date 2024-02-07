@@ -1,5 +1,4 @@
 <div class="content-body">
-@dd($loan)
     <div class="container @role('user') @else mt-4 @endrole">
         <div class="row ">
             <div class="col-xxl-12 col-xl-12 col-lg-12">

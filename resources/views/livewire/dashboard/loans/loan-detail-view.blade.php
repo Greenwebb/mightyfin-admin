@@ -283,6 +283,7 @@
                     @include('livewire.dashboard.loans.__stages.processing.reviewing')
                 @break
                 @case('verification')
+                    {{-- @dd('here') --}}
                     @include('livewire.dashboard.loans.__stages.processing.verification')
                 @break
                 @case('approval')
@@ -304,6 +305,26 @@
                 @break
                 @default
                     @include('livewire.dashboard.loans.__stages.open.current-due-today')
+                @break
+            @endswitch
+        @break
+
+        @case('denied')
+            @switch(strtolower($loan_stage->status->name))
+                @case('incomplet kyc')
+                    @include('livewire.dashboard.loans.__stages.denied.incomplet-kyc')
+                @break
+                @case('incomplete crb')
+                    @include('livewire.dashboard.loans.__stages.denied.incomplete-crb')
+                @break
+                @case('bad credit score')
+                    @include('livewire.dashboard.loans.__stages.denied.bad-credit-score')
+                @break
+                @case('Financial Risk')
+                    @include('livewire.dashboard.loans.__stages.denied.financial-risk')
+                @break
+                @default
+                    @include('livewire.dashboard.loans.__stages.denied.fraud')
                 @break
             @endswitch
         @break

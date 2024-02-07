@@ -8,7 +8,7 @@
                             <div class="d-flex flex-center flex-column mb-5">
 
                                 <div class="fs-3 text-gray-800 text-hover-primary fw-bold mb-1">
-                                    <h1 class="text-primary">Open </h1>
+                                    <h1 class="text-primary font-bold">Open</h1>
                                 </div>
                                 
                                 <div class="symbol symbol-100px symbol-circle mb-7">
@@ -126,7 +126,7 @@
                                     <div class="menu-content text-muted pb-2 px-5 fs-7 text-uppercase">Payments</div>
                                 </div> --}}
                                 <div class="menu-item px-5">
-                                    <a href="#" wire:click="setLoanID({{$loan->id}})" class="menu-link px-5"> Default Loan </a>
+                                    <a href="#" wire:click="setLoanID({{$loan->id}})" class="menu-link px-5"> Default Loan</a>
                                 </div>
                                 {{-- <div class="menu-item px-5">
                                     <a href="#" wire:click="accept({{$loan->id}})" class="menu-link px-5"> Approve </a>

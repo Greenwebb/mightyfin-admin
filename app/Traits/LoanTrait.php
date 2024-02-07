@@ -50,6 +50,42 @@ trait LoanTrait{
 
     public function getLoanRequests($type){
         $userId = auth()->user()->id;
+
+        if(auth()->user()->hasRole('admin')){
+            // dd('here');
+            return Application::with('loan_product')->where('complete', 1)
+            ->where('status', 2)->orWhere('status', 0)->get();
+        }else{
+            switch ($type) {
+                case 'spooling':
+                    return Application::with('loan_product')->where('complete', 1)
+                    ->orWhere('status', 2)->orWhere('status', 0)->get();
+                    break;
+                case 'manual':
+                    return Application::with('loan_product')->with(['manual_approvers' => function ($query) use ($userId) {
+                        $query->where('user_id', $userId);
+                        $query->where('is_active', 1);
+                    }])->whereHas('manual_approvers', function ($query) use ($userId) {
+                        $query->where('user_id', $userId);
+                        $query->where('is_active', 1);
+                    })
+                    ->orWhere('status', 2)->orWhere('status', 0)
+                    ->where('complete', 1)
+                    ->get();
+    
+                    break;
+                case 'auto':
+                    # code...
+                    break;
+                
+                default:
+                    # code...
+                break;
+            }
+        }
+    }
+    public function getOpenLoanRequests($type){
+        $userId = auth()->user()->id;
         // if ($this->type) {
         //     $loan_requests->whereIn('type', $this->type)->orderBy('id', 'desc');
         // }
@@ -62,7 +98,8 @@ trait LoanTrait{
         }else{
             switch ($type) {
                 case 'spooling':
-                    return Application::with('loan_product')->where('complete', 1)->get();
+                    return Application::with('loan_product')->where('complete', 1)
+                    ->where('status', 1)->get();
                     break;
                 case 'manual':
                     return Application::with('loan_product')->with(['manual_approvers' => function ($query) use ($userId) {
@@ -72,6 +109,7 @@ trait LoanTrait{
                         $query->where('user_id', $userId);
                         $query->where('is_active', 1);
                     })
+                    ->where('status', 1)
                     ->where('complete', 1)
                     ->get();
     

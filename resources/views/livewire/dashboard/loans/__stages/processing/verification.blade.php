@@ -127,10 +127,12 @@
                     <div class="float-end">
                         
                         @if ($this->my_review_status($loan->id) == 1)
-                            <a href="#" class="btn btn-primary ps-7" data-kt-menu-trigger="click"
-                                data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">Action
-                                <i class="ki-duotone ki-down fs-2 me-0"></i>
-                            </a>
+                            @can('verify loan')
+                                <a href="#" class="btn btn-primary ps-7" data-kt-menu-trigger="click"
+                                    data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">Action
+                                    <i class="ki-duotone ki-down fs-2 me-0"></i>
+                                </a>
+                            @endcan
                         @elseif (auth()->user()->hasRole('admin'))
                             <a href="#" class="btn btn-primary ps-7" data-kt-menu-trigger="click"
                                 data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">Action
@@ -296,22 +298,23 @@
                                                 <!--begin::Col-->
                                                 <div class="flex-equal me-5">
                                                     <table class="table table-flush fw-semibold gy-1">
+                                                        {{-- @dd($data->bank) --}}
                                                         @if($data->bank !== null)
-                                                        <tr>
-                                                            <td class="text-muted min-w-125px w-125px">Name</td>
-                                                            <td class="text-gray-800">{{ $data->bank->first()->accountNames }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-muted min-w-125px w-125px">Number</td>
-                                                            <td class="text-gray-800">{{ $data->bank->first()->accountNumber }}</td>
-                                                        </tr>
-                                                        <tr>
-                                                            <td class="text-muted min-w-125px w-125px">Branch Name</td>
-                                                            <td class="text-gray-800">{{ $data->bank->first()->branchName }}</td>
-                                                        </tr>
-                                                        @else
-                                                        <span class="text-muted">Not Set</span>
-                                                        @endif
+                                                            {{-- <tr>
+                                                                <td class="text-muted min-w-125px w-125px">Name</td>
+                                                                <td class="text-gray-800">{{ $data->bank->first()->accountNames }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-muted min-w-125px w-125px">Number</td>
+                                                                <td class="text-gray-800">{{ $data->bank->first()->accountNumber }}</td>
+                                                            </tr>
+                                                            <tr>
+                                                                <td class="text-muted min-w-125px w-125px">Branch Name</td>
+                                                                <td class="text-gray-800">{{ $data->bank->first()->branchName }}</td>
+                                                            </tr> --}}
+                                                            @else
+                                                            <span class="text-muted">Not Set</span>
+                                                            @endif
                                                     </table>
                                                 </div>
                                                 <!--end::Col-->
@@ -531,7 +534,7 @@
                                 <div class="card-body py-0">
 
                                     <div class="row g-6 g-xl-9 mb-6 mb-xl-9">
-                                        <div class="row">
+                                        {{-- <div class="row">
                                             <div class="row col-6">
                                                 @if ($loan->user->uploads->where('name', 'nrc_file')->isNotEmpty())
                                                     <div class="col-6">
@@ -594,7 +597,7 @@
                                                     </div>
                                                 @endif
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                                 

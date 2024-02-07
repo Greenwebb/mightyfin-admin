@@ -127,10 +127,12 @@
                     <div class="float-end">
                         
                         @if ($this->my_review_status($loan->id) == 1)
+                            @can('approve loan')
                             <a href="#" class="btn btn-primary ps-7" data-kt-menu-trigger="click"
                                 data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">Action
                                 <i class="ki-duotone ki-down fs-2 me-0"></i>
                             </a>
+                            @endcan
                         @elseif (auth()->user()->hasRole('admin'))
                             <a href="#" class="btn btn-primary ps-7" data-kt-menu-trigger="click"
                                 data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">Action

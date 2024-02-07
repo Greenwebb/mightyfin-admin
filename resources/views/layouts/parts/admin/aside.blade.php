@@ -1020,7 +1020,7 @@
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Approved Loans</span>
+                                <span class="menu-title">Open Loans</span>
                             </a>
                         </div>
                         {{-- @endcan --}}

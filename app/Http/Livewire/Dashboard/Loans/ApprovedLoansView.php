@@ -27,28 +27,20 @@ class ApprovedLoansView extends Component
             // Retrieve users with the 'user' role, excluding their applications
             $this->users = User::role('user')->without('applications')->get();
     
-            if (auth()->user()->hasRole('user')) {
-                // Retrieve loan requests for the authenticated user and paginate the results (5 items per page)
-                $this->loan_requests = Application::with('loan')->where('user_id', auth()->user()->id)->orderBy('id', 'desc')->get();
-                $requests = Application::with('loan')->where('user_id', auth()->user()->id)->orderBy('id', 'desc')->paginate(5);
-                return view('livewire.dashboard.loans.approved-loans-view',[
-                    'requests'=>$requests
-                ])->layout('layouts.dashboard');
+            if($this->current_configs('loan-approval')->value == 'auto'){
+                // get loan only if first review as approved
+                $this->loan_requests = $this->getOpenLoanRequests('auto');
+            }elseif($this->current_configs('loan-approval')->value == 'manual'){
+                $this->loan_requests = $this->getOpenLoanRequests('manual');
+                $requests = $this->getOpenLoanRequests('manual');
             }else{
-                if($this->current_configs('loan-approval')->value == 'auto'){
-                    // get loan only if first review as approved
-                    $this->loan_requests = $this->getLoanRequests('auto');
-                }elseif($this->current_configs('loan-approval')->value == 'manual'){
-                    $this->loan_requests = $this->getLoanRequests('manual');
-                    $requests = $this->getLoanRequests('manual');
-                }else{
-                    $this->loan_requests = $this->getLoanRequests('spooling');
-                    $requests = $this->getLoanRequests('spooling');
-                }
-                return view('livewire.dashboard.loans.approved-loans-view',[
-                    'requests'=>$requests
-                ])->layout('layouts.admin');
+                $this->loan_requests = $this->getOpenLoanRequests('spooling');
+                $requests = $this->getOpenLoanRequests('spooling');
             }
+            return view('livewire.dashboard.loans.approved-loans-view',[
+                'requests'=>$requests
+            ])->layout('layouts.admin');
+
         } catch (\Throwable $th) {
             // If an exception occurs, set $loan_requests to an empty array
             $this->loan_requests = [];

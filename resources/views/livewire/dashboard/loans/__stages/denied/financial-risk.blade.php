@@ -1,23 +1,16 @@
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-    <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
-        <!--begin::Container-->
         <div id="kt_content_container" class="container-xxl">
-            <!--begin::Layout-->
             <div class="d-flex flex-column flex-xl-row">
-                <!--begin::Sidebar-->
                 <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
-                    <!--begin::Card-->
                     <div class="card mb-5 mb-xl-8">
-                        <!--begin::Card body-->
                         <div class="card-body pt-15">
-                            <!--begin::Summary-->
                             <div class="d-flex flex-center flex-column mb-5">
 
                                 <div class="fs-3 text-gray-800 text-hover-primary fw-bold mb-1">
-                                    <h1 class="text-warning">Disbursement</h1>
+                                    <h1 class="text-primary font-bold">Financial Risk</h1>
                                 </div>
-                                <!--begin::Avatar-->
+                                
                                 <div class="symbol symbol-100px symbol-circle mb-7">
                                     @if ($loan->user->profile_photo_path)
                                         <img src="{{ '../public/'.Storage::url($loan->user->profile_photo_path) }}" alt=""/>
@@ -25,21 +18,15 @@
                                         <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg" alt=""/>
                                     @endif
                                 </div>
-                                <!--end::Avatar-->
-                                <!--begin::Name-->
                                 <a href="#" class="fs-3 text-gray-800 text-hover-primary fw-bold mb-1">
                                     {{ $loan->user->fname.' '.$loan->user->lname }}
                                 </a>
-                                <!--end::Name-->
-                                <!--begin::Position-->
+                                
                                 <div class="fs-5 fw-semibold text-muted mb-6">{{ $loan->user->occupation }}</div>
-                                <!--end::Position-->
-                                <!--begin::Info-->
+
                                 <div class="d-flex flex-wrap flex-center">
-                                    <!--begin::Stats-->
                                     <div class="row justify-content-center">
-                                        <div
-                                            class="col-lg-4 border border-gray-300 border-dashed rounded py-3 px-3 mx-4 m-3">
+                                        <div class="col-lg-4 border border-gray-300 border-dashed rounded py-3 px-3 mx-4 m-3">
                                             <div class="fs-4 fw-bold text-gray-700">
                                                 <span class="w-50px">ZMW {{ $loan->amount}}</span>
                                                 <i class="ki-duotone ki-usd fs-3 text-danger">
@@ -49,8 +36,7 @@
                                             </div>
                                             <div class="fw-semibold text-muted">Principle<br>Amount</div>
                                         </div>
-                                        <div
-                                            class="col-lg-4 border border-gray-300 border-dashed rounded py-3 px-3 mx-4 m-3">
+                                        <div class="col-lg-4 border border-gray-300 border-dashed rounded py-3 px-3 mx-4 m-3">
                                             <div class="fs-4 fw-bold text-gray-700">
                                                 <span class="w-50px">{{ $loan->repayment_plan ?? 1}} (Months)</span>
                                                 <i class="ki-duotone ki-usd fs-3 text-danger">
@@ -60,10 +46,9 @@
                                             </div>
                                             <div class="fw-semibold text-muted">Loan Duration</div>
                                         </div>
-                                        <div
-                                            class="col-lg-4 border border-gray-300 border-dashed rounded py-3 px-3 mx-4 m-3">
+                                        <div class="col-lg-4 bg-info text-white border border-gray-300 border-dashed rounded py-3 px-3 mx-4 m-3">
                                             <div class="fs-4 fw-bold text-gray-700">
-                                                <span class="w-50px">K {{ App\Models\Application::payback($loan->amount, $loan->repayment_plan, $loan_product->id) }}</span>
+                                                <span class="w-50px text-white">K {{ App\Models\Application::payback($loan->amount, $loan->repayment_plan, $loan_product->id) }}</span>
                                                 <i class="ki-duotone ki-usd fs-3 text-danger">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>
@@ -71,18 +56,16 @@
                                             </div>
                                             <div class="fw-semibold text-muted">Total <br> Repayment</div>
                                         </div>
-                                        <div
-                                            class="col-lg-4 border border-gray-300 border-dashed rounded py-3 px-3 mx-4 m-3">
+                                        <div class="col-lg-4 border border-gray-300 border-dashed rounded py-3 px-3 mx-4 m-3">
                                             <div class="fs-4 fw-bold text-gray-700">
-                                                <span class="w-50px">K {{ App\Models\Application::monthly_installment($loan->amount, $loan->repayment_plan) }}</span>
+                                                <span class="w-50px text-warning">K {{ App\Models\Application::monthly_installment($loan->amount, $loan->repayment_plan) }}</span>
                                                 <i class="ki-duotone ki-usd fs-3 text-danger">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>
                                                 </i>
                                             </div>
-                                            <div class="fw-semibold text-muted">Monthly<br>Repayment</div>
+                                            <div class="fw-semibold text-info">Monthly<br>Repayment</div>
                                         </div>
-
                                     </div>
                                 </div>
                             </div>
@@ -127,12 +110,10 @@
                     <div class="float-end">
                         
                         @if ($this->my_review_status($loan->id) == 1)
-                            @can('disburse fund')
                             <a href="#" class="btn btn-primary ps-7" data-kt-menu-trigger="click"
                                 data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">Action
                                 <i class="ki-duotone ki-down fs-2 me-0"></i>
                             </a>
-                            @endcan
                         @elseif (auth()->user()->hasRole('admin'))
                             <a href="#" class="btn btn-primary ps-7" data-kt-menu-trigger="click"
                                 data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">Action
@@ -145,11 +126,11 @@
                                     <div class="menu-content text-muted pb-2 px-5 fs-7 text-uppercase">Payments</div>
                                 </div> --}}
                                 <div class="menu-item px-5">
-                                    <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_decline_warning" wire:click="setLoanID({{$loan->id}})" class="menu-link px-5"> Decline </a>
+                                    <a href="#" wire:click="setLoanID({{$loan->id}})" class="menu-link px-5"> Default Loan </a>
                                 </div>
-                                <div class="menu-item px-5">
+                                {{-- <div class="menu-item px-5">
                                     <a href="#" wire:click="accept({{$loan->id}})" class="menu-link px-5"> Approve </a>
-                                </div>
+                                </div> --}}
                         </div>
                     </div>
 

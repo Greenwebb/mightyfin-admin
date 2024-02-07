@@ -9,6 +9,7 @@ use App\Models\User;
 use App\Traits\EmailTrait;
 use App\Traits\LoanTrait;
 use App\Traits\WalletTrait;
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use Illuminate\Http\Client\Request;
 use Livewire\Component;
 use Illuminate\Support\Facades\DB;
@@ -16,7 +17,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class LoanDetailView extends Component
 {
-    use EmailTrait, WalletTrait, LoanTrait;
+    use EmailTrait, WalletTrait, LoanTrait, AuthorizesRequests;
     public $loan, $user, $loan_id, $msg, $due_date, $reason, $loan_product;
     public $loan_stage;
     public function mount($id){
@@ -30,18 +31,14 @@ class LoanDetailView extends Component
 
     public function render()
     {
+        $this->authorize('processes loans');
         $this->loan = $this->get_loan_details($this->loan_id);
         $this->loan_product = $this->get_loan_product($this->loan->loan_product_id);
         $this->loan_stage = $this->get_loan_current_stage($this->loan->loan_product_id);
-    
-        if (auth()->user()->hasRole('user')) {
-            // return view('livewire.dashboard.loans.loan-app-hrdetail-view')
-            return view('livewire.dashboard.loans.loan-detail-app-view')
-            ->layout('layouts.dashboard');
-        }else{
-            return view('livewire.dashboard.loans.loan-detail-view')
-            ->layout('layouts.admin');
-        }
+        
+        $this->change_status();
+        return view('livewire.dashboard.loans.loan-detail-view')
+        ->layout('layouts.admin');
     }
     
     public function setLoanID($id){
@@ -78,7 +75,6 @@ class LoanDetailView extends Component
             $application_request = Application::find($id);
 
             $this->change_stage();
-
             if($this->final_approver($id)['status']){
                 // $this->approve_final($application_request);
 
@@ -112,6 +108,30 @@ class LoanDetailView extends Component
                 ->orderBy('id')
                 ->first()
                 ->update(['state' => 'current']);
+        
+    }
+
+    public function change_status(){
+        try {
+            $loan_status = LoanStatus::where('loan_product_id', $this->loan_product->id)
+                ->where('status_id', $this->loan_stage->status_id)
+                ->orderBy('id')
+                ->first();
+                
+            $application = Application::find($this->loan_id);
+            if ($loan_status->stage == 'open') {
+                $application->status = 1;
+            } elseif($loan_status->stage == 'denied') {
+                $application->status = 3;
+            } elseif($loan_status->stage == 'defaulted') {
+                $application->status = 4;
+            }elseif($loan_status->stage == 'Not Taken Up') {
+                $application->status = 5;
+            }
+            $application->save();
+        } catch (\Throwable $th) {
+            dd('Cant Change Status: '.$th->getMessage());
+        }        
     }
 
     public function approve_continue($id){
