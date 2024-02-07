@@ -1,116 +1,213 @@
-
-
 <!DOCTYPE html>
 <html lang="en">
-<!-- Mirrored from tende.vercel.app/signin.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 17 Nov 2023 16:21:43 GMT -->
-<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Mighty Finance Solution | Sign In</title>
-    <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('public/images/m.jpg') }}" />
-    <!-- Custom Stylesheet -->
-    <link href="{{ asset('public/theme/css/style.css') }}" rel="stylesheet">
-    <style>
+<!--begin::Head-->
 
-      a{
-            color: rgb(255, 187, 0);
+<head>
+    <base href="" />
+    <title>MFS | Administration Dashboard</title>
+    <meta charset="utf-8" />
+    <meta name="description"
+        content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />
+    <meta name="keywords"
+        content="Mightyfin, bootstrap, bootstrap 5, angular, VueJs, React, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel starter kits, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta property="og:locale" content="en_US" />
+    <meta property="og:type" content="article" />
+    <meta property="og:title" content="Mightyfin - Financial admin Dashboard" />
+    <meta property="og:url" content="https://keenthemes.com/Mightyfin" />
+    <meta property="og:site_name" content="Greenwebb | Mightyfin" />
+
+    <link rel="shortcut icon" href="{{ asset('public/mfs/admin/assets/media/logos/favicon.ico') }}" />
+    <!--begin::Fonts(mandatory for all pages)-->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+    <!--end::Fonts-->
+    <!--begin::Vendor Stylesheets(used for this page only)-->
+    <link href="{{ asset('public/mfs/admin/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css') }}"
+        rel="stylesheet" type="text/css" />
+    <link href="{{ asset('public/mfs/admin/assets/plugins/custom/datatables/datatables.bundle.css') }}" rel="stylesheet"
+        type="text/css" />
+    <!--end::Vendor Stylesheets-->
+    <!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+    <link href="{{ asset('public/mfs/admin/assets/plugins/global/plugins.bundle.css') }}" rel="stylesheet"
+        type="text/css" />
+    <link href="{{ asset('public/mfs/admin/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
+    <!--end::Global Stylesheets Bundle-->
+    <script>
+        // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }
+    </script>
+    <script src="https://jsuites.net/v4/jsuites.js"></script>
+    <link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />
+    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+    <link rel="stylesheet" href="{{ asset('public/mfs/admin/assets/css/wizard.min.css') }}">
+
+    {{-- Custom --}}
+    <style>
+        .sm-btn {
+            margin-top: 2%;
+            width: 20%;
+            height: 20%;
+            font-size: 10px;
         }
     </style>
+    @livewireStyles
 </head>
+<!--end::Head-->
+<!--begin::Body-->
 
-<body class="@@dashboard" style="margin: 0; overflow: hidden; overflow-y: auto;">
- <div id="preloader"><i>.</i><i>.</i><i>.</i></div>
- <div style="position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: linear-gradient(to right, rgba(102, 45, 145, 0.947), rgba(145, 45, 115, 0.893)), url('https://cdn03.allafrica.com/download/pic/main/main/csiid/00611742:63e77387f56223a1509fb944791b01eb:arc614x376:w735:us1.jpg'); background-size: cover; background-position: center;"></div>
-  <div id="main-wrapper" >
-    <div class="authincation section-padding">
-      <div class="container">
-        <div class="row justify-content-center align-items-center">
-          <div class="col-xl-5 col-md-6">
-            <div class="mini-logo text-center my-4">
-              <a href="{{ route('welcome') }}">
-                  <img width="170" src="{{ asset("/public/web/images/01-ft-logo.png") }}" alt="" />
-              </a>
-                        <h4 class="text-white" style="margin-top:2rem" id="slogan-text">Financial Inclusion for All!</h4>
-                        <p class="text-white mb-4" id="id-text">Welcome Back!</p>
-            </div>
+<body id="kt_body" class="auth-bg">
+    <!--begin::Theme mode setup on page load-->
+    <script>
+        var defaultThemeMode = "light";
+        var themeMode;
+        if (document.documentElement) {
+            if (document.documentElement.hasAttribute("data-bs-theme-mode")) {
+                themeMode = document.documentElement.getAttribute("data-bs-theme-mode");
+            } else {
+                if (localStorage.getItem("data-bs-theme") !== null) {
+                    themeMode = localStorage.getItem("data-bs-theme");
+                } else {
+                    themeMode = defaultThemeMode;
+                }
+            }
+            if (themeMode === "system") {
+                themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
+            }
+            document.documentElement.setAttribute("data-bs-theme", themeMode);
+        }
+    </script>
+    <!--end::Theme mode setup on page load-->
+    <!--begin::Main-->
+    <!--begin::Root-->
+    <div class="d-flex flex-column flex-root">
+        <!--begin::Authentication - Sign-in -->
+        <div class="d-flex flex-column flex-lg-row flex-column-fluid">
+            <!--begin::Body-->
+            <div class="d-flex flex-column flex-lg-row-fluid w-lg-50 p-10 order-2 order-lg-1">
+                <!--begin::Form-->
+                <div class="d-flex flex-center flex-column flex-lg-row-fluid">
+                    <!--begin::Wrapper-->
+                    <div class="w-lg-500px p-10">
+                        <!--begin::Form-->
+                        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"
+                            data-kt-redirect-url="index.html" action="#">
+                            <!--begin::Heading-->
+                            <div class="text-center mb-11">
+                                <!--begin::Title-->
+                                <h1 class="text-dark fw-bolder mb-3"><strong>Administration Sign In</strong></h1>
+                                <!--end::Title-->
+                                <!--begin::Subtitle-->
 
-            <div class="auth-form card" style="box-shadow: rgba(255, 255, 255, 0.219) 0px 5px 15px 0px; border-radius:2%">
-              <div class="w-full">
-                <h2 id="create-text" style="color: #792db8" class="text-center mb-2"> <b>Sign In</b> </h2>
-                <p style="color: #792db8" class="text-center">Do not have an account? <a class="text-warning" href="{{ route('register') }}">Sign Up</a></p>
-            </div>
+                                <div class="text-gray-500 fw-semibold fs-6">Hello, <t style="color: #fabe15;">Welcome!</t></t></div>
+                                <!--end::Subtitle=-->
+                            </div>
 
-              <x-jet-validation-errors class="alert text-center alert-danger text-danger text-xs" />
-              <div class="">
+                            <!--end::Login options-->
+                            <!--begin::Separator-->
+                            <div class="separator separator-content my-14">
+                                <span class="w-300px text-gray-500 fw-semibold fs-7">Stricly use your company email to
+                                    sign in</span>
+                            </div>
+                            <!--end::Separator-->
+                            <!--begin::Input group=-->
+                            <div class="fv-row mb-8">
+                                <!--begin::Email-->
+                                <input type="text" placeholder="Email" name="email" autocomplete="off"
+                                    class="form-control bg-transparent" />
+                                <!--end::Email-->
+                            </div>
+                            <!--end::Input group=-->
+                            <div class="fv-row mb-3">
+                                <!--begin::Password-->
+                                <input type="password" placeholder="Password" name="password" autocomplete="off"
+                                    class="form-control bg-transparent" />
+                                <!--end::Password-->
+                            </div>
+                            <!--end::Input group=-->
+                            <!--begin::Wrapper-->
+                            <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
+                                <div></div>
+                                <!--begin::Link-->
+                                <a href="authentication/layouts/corporate/reset-password.html"
+                                    class="link-primary">Forgot Password ?</a>
+                                <!--end::Link-->
+                            </div>
+                            <!--end::Wrapper-->
+                            <!--begin::Submit button-->
+                            <div class="d-grid mb-10">
+                                <button type="submit" id="kt_sign_in_submit" class="btn btn-primary">
+                                    <!--begin::Indicator label-->
+                                    <span class="indicator-label">Administration Sign In</span>
+                                    <!--end::Indicator label-->
+                                    <!--begin::Indicator progress-->
+                                    <span class="indicator-progress">Please wait...
+                                        <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
+                                    <!--end::Indicator progress-->
+                                </button>
+                            </div>
+                            <!--end::Submit button-->
 
-                <form
-                  name="myform"
-                  class=" row g-3" method="POST" action="{{ route('login') }}">
-                  @csrf
-                  <div class="col-12">
-                      <input
-                          type="email" name="email" :value="old('email')"
-                          class="form-control"
-                          placeholder="hello@example.com"
-                          name="email"
-                      />
-                  </div>
-                  <div class="col-12 mt-2">
-                      <input
-                          type="password" name="password" required
-                          class="form-control"
-                          placeholder="Password"
-                      />
-                  </div>
-                  <div class="col-6">
-                      <div class="form-check form-switch">
-                          <input
-                              class="form-check-input"
-                              type="checkbox"
-                              id="flexSwitchCheckDefault"
-                          />
-                          <label class="form-check-label" for="flexSwitchCheckDefault"
-                          >Remember me</label
-                          >
-                      </div>
-                  </div>
-                  <div class="col-6 text-right">
-                    <a href="{{ route('password.request') }}">Forgot Password?</a>
-                  </div>
-                  <div class="col-12 pt-3">
-                    <button style="background-color:#792db8; box-shadow: rgba(50, 50, 93, 0.25) 0px 13px 27px -5px, rgba(0, 0, 0, 0.3) 0px 8px 16px -8px;" type="submit" class="btn col-12 text-white">Login</button>
-                  </div>
-                </form>
-                <p class="mt-3 mb-0">
-                  Don't have an account?
-                  <a class="text-primary" href="{{ route('register') }}">Sign up</a>
-                </p>
-              </div>
+                        </form>
+                        <!--end::Form-->
+                    </div>
+                    <!--end::Wrapper-->
+                </div>
+                <!--end::Form-->
+
             </div>
-            <div class="privacy-link">
-              {{-- <a href="#"
-                >Have an issue with 2-factor authentication?</a
-              >
-              <br /> --}}
-              <a href="{{ route('pp') }}">
-                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
-                  <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14m0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16"/>
-                  <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0"/>
-                </svg>
-                Privacy Policy</a>
+            <!--end::Body-->
+            <!--begin::Aside-->
+            <div class="d-flex flex-lg-row-fluid w-lg-50 bgi-size-cover bgi-position-center order-1 order-lg-2"
+                style="background-image: linear-gradient(to right, #662d91, #912d73);">
+                <!--begin::Content-->
+                <div class="d-flex flex-column flex-center py-7 py-lg-15 px-5 px-md-15 w-100">
+                    <!--begin::Logo-->
+                    <a href="index.html" class="mb-0 mb-lg-12">
+                        <img alt="Logo" src="{{ asset('/public/web/images/01-ft-logo.png') }}"
+                            class="h-60px h-lg-75px" />
+                    </a>
+                    <!--end::Logo-->
+                    <!--begin::Image-->
+                    <img style="width: 23dvh!important;" class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-2 mb-lg-1" width="350px"
+                        src="{{ asset('public/mfs/admin/assets/media/misc/auth-screens.png') }}" alt="" />
+                    <!--end::Image-->
+                    <!--begin::Title-->
+                    <h1 class="d-none d-lg-block text-white fs-2qx fw-bolder text-center mb-7">
+
+                        "Access Point: Secure Login"</h1>
+                    <!--end::Title-->
+                    <!--begin::Text-->
+                    <div class="d-none d-lg-block text-white fs-base text-center">
+                        "Success in business comes when every <a href="#"
+                            class="opacity-75-hover text-warning fw-bold me-1">employee</a> is inspired to do their
+                        best, knowing that their efforts are valued and recognized. Remember, a company's greatest asset
+                        is not its products or services, but the people who work tirelessly to make it thrive." - <a
+                            href="#" class="opacity-75-hover text-warning fw-bold me-1">Richard Branson</a>
+
+                    </div>
+                    <!--end::Text-->
+                </div>
+                <!--end::Content-->
             </div>
-          </div>
+            <!--end::Aside-->
         </div>
-      </div>
+        <!--end::Authentication - Sign-in-->
     </div>
-  </div>
-
-<script src="{{ asset('public/mfs/vendor/jquery/jquery.min.js')}}"></script>
-<script src="{{ asset('public/mfs/vendor/bootstrap/js/bootstrap.bundle.min.js')}}"></script>
-<script src="{{ asset('public/mfs/js/scripts.js')}}"></script>
+    <!--end::Root-->
+    <!--end::Main-->
+    <!--begin::Javascript-->
+    <script>
+        var hostUrl = "assets/";
+    </script>
+    <!--begin::Global Javascript Bundle(mandatory for all pages)-->
+    <script src="{{ asset('public/mfs/admin/assets/plugins/global/plugins.bundle.js"></script>
+    <script src="{{ asset('public/mfs/admin/assets/js/scripts.bundle.js"></script>
+    <!--end::Global Javascript Bundle-->
+    <!--begin::Custom Javascript(used for this page only)-->
+    <script src="{{ asset('public/mfs/admin/assets/js/custom/authentication/sign-in/general.js"></script>
+    <!--end::Custom Javascript-->
+    <!--end::Javascript-->
 </body>
-<!-- Mirrored from tende.vercel.app/signin.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 17 Nov 2023 16:21:44 GMT -->
+<!--end::Body-->
+
 </html>

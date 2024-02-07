@@ -4,9 +4,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\OTPController;
 use App\Http\Controllers\LoanApplicationController;
-use App\Http\Controllers\LoanProductController;
-use App\Http\Controllers\PostController;
-use App\Http\Livewire\AboutPage;
+
 use App\Http\Livewire\AlreadyExistPage;
 use App\Http\Livewire\CareerPage;
 use App\Http\Livewire\ContactPage;
@@ -54,17 +52,9 @@ use App\Http\Livewire\Dashboard\SiteSettings\SystemSettings;
 use App\Http\Livewire\Dashboard\SiteSettings\TestPage;
 use App\Http\Livewire\Dashboard\SiteSettings\UpdateSetting;
 use App\Http\Livewire\Dashboard\SiteSettings\ViewSetting;
-use App\Http\Livewire\FaqPage;
+
 use App\Http\Livewire\GuidelinePage;
 use App\Http\Livewire\KYCView;
-use App\Http\Livewire\Loans\AssetFinanceLoan;
-use App\Http\Livewire\Loans\EducationalLoan;
-use App\Http\Livewire\Loans\HomeLoan;
-use App\Http\Livewire\Loans\PersonalLoan;
-use App\Http\Livewire\Loans\SMELoan;
-use App\Http\Livewire\Loans\VehicleLoan;
-use App\Http\Livewire\Loans\WIBLoan;
-use App\Http\Livewire\Loans\Payday;
 use App\Http\Livewire\PersonFour;
 use App\Http\Livewire\PersonOne;
 use App\Http\Livewire\PersonThree;
@@ -74,7 +64,7 @@ use App\Http\Livewire\ReportView;
 use App\Http\Livewire\ServicePage;
 use App\Http\Livewire\SuccessEmailPage;
 use App\Http\Livewire\SuccessPage;
-use App\Http\Livewire\TeamPage;
+
 use App\Http\Livewire\TermsConditionPage;
 use App\Http\Livewire\WelcomePage;
 use App\Http\Livewire\WithdrawRequestView;
@@ -138,7 +128,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::post('apply-proxy-loan', [LoanApplicationController::class, 'new_proxy_loan'])->name('proxy-apply-loan');
     Route::post('update-loan', [LoanApplicationController::class, 'updateLoanDetails'])->name('update-loan-details');
     Route::post('update-loan-statuses', [LoanProductController::class, 'updateLoanStatus'])->name('update-loan-statuses');
-    
+
     // ---- Payments
     Route::get('make-payments', PaymentPage::class)->name('payments');
     Route::get('/payments-portal', PaymentGatePage::class)->name('payment.gate');
@@ -196,39 +186,12 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 Route::resource('posts', PostController::class);
 Route::get('eligibility-score/{id}', EligibilityScoreView::class)->name('score');
 
-// Site Pages
-Route::get('faq', FaqPage::class)->name('faq');
-Route::get('about-us', AboutPage::class)->name('about.us');
-Route::get('our-team', TeamPage::class)->name('about.team');
-Route::get('careers', CareerPage::class)->name('about.careers');
-Route::get('contact-us', ContactPage::class)->name('contact');
-Route::get('services', ServicePage::class)->name('services');
-
 
 Route::post('request-for-loan', [LoanApplicationController::class, 'store'])->name('loan-request');
 Route::post('assign-manual-approval', [LoanApplicationController::class, 'assign_manual'])->name('assign-manual-approval');
 
 Route::get('get-application', [LoanApplicationController::class, 'getLoan'])->name('get-application');
 Route::get('update-existing-application', [LoanApplicationController::class, 'updateExistingLoan'])->name('update-existing-application');
-
-// Our Team
-Route::get('vwanganji-bowa-ceo', PersonOne::class)->name('ceo');
-Route::get('chiluba-bowa-coo', PersonTwo::class)->name('coo');
-Route::get('lemmy-amatende-cfo', PersonThree::class)->name('cfo');
-Route::get('chanda-mwenda-sales-and-marketing-director', PersonFour::class)->name('sales');
-
-
-// Site Services Pages
-Route::get('payday', Payday::class)->name('payday');
-Route::get('inventory-financing', PersonalLoan::class)->name('inventory');
-Route::get('credit-facility', EducationalLoan::class)->name('credit');
-Route::get('bridging-financing', AssetFinanceLoan::class)->name('bridging');
-Route::get('equipment-financing', HomeLoan::class)->name('equipment');
-Route::get('offer-trade-credit', SMELoan::class)->name('offer');
-Route::get('refinancing', VehicleLoan::class)->name('refinancing');
-Route::get('women-in-business-soft-loans', WIBLoan::class)->name('view-wib-loans');
-Route::get('category/{category}', [PostController::class, 'category'])->name('posts.category');
-Route::get('tag/{tag}', [PostController::class, 'tag'])->name('posts.tag');
 
 // Legal Pages
 Route::get('privacy-policy', PrivacyPolicyPage::class)->name('pp');
