@@ -2,7 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
-
+  
 <!-- Mirrored from tende.vercel.app/reset.html by HTTrack Website Copier/3.x [XR&CO'2014], Fri, 17 Nov 2023 16:22:14 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=utf-8" /><!-- /Added by HTTrack -->
 <head>
@@ -13,7 +13,7 @@
     <!-- Favicon icon -->
     <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('public/mfs/images/logoi.png')}}" />
     <!-- Custom Stylesheet -->
-
+     
     <link rel="stylesheet" href="{{ asset('public/mfs/css/style.css')}}" />
   </head>
 
@@ -32,7 +32,7 @@
                     {{ session('status') }}
                 </div>
             @endif
-
+            
             <x-jet-validation-errors class="mb-4" />
             <div class="row justify-content-center align-items-center">
                 <div class="col-xl-6 col-md-6">
