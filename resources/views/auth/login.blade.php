@@ -70,8 +70,8 @@
                     <!--begin::Wrapper-->
                     <div class="w-lg-500px p-10">
                         <!--begin::Form-->
-                        <form class="form w-100" data-kt-redirect-url="{{ route('login') }}" novalidate="novalidate" id="kt_sign_in_form" method="POST"
-                            action="{{ route('login') }}">
+                        <form class="form w-100" data-kt-redirect-url="{{ route('login') }}" novalidate="novalidate"
+                            id="kt_sign_in_form" method="POST" action="{{ route('login') }}">
                             <!--begin::Heading-->
                             <div class="text-center mb-11">
                                 <!--begin::Title-->
@@ -81,7 +81,8 @@
 
                                 <div class="text-gray-500 fw-semibold fs-6">Hello, <t style="color: #fabe15;">Welcome!
                                     </t>
-                                    </t>
+
+
                                 </div>
                                 <!--end::Subtitle=-->
                             </div>
@@ -112,8 +113,7 @@
                             <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
                                 <div></div>
                                 <!--begin::Link-->
-                                <a href="{{ route('password.request') }}"
-                                    class="link-primary">Forgot Password ?</a>
+                                <a href="{{ route('password.request') }}" class="link-primary">Forgot Password ?</a>
                                 <!--end::Link-->
                             </div>
                             <!--end::Wrapper-->
@@ -185,11 +185,11 @@
         var hostUrl = "assets/";
     </script>
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
-    <script src="{{ asset('public/mfs/admin/assets/plugins/global/plugins.bundle.js')}}"></script>
-    <script src="{{ asset('public/mfs/admin/assets/js/scripts.bundle.js')}}"></script>
+    <script src="{{ asset('public/mfs/admin/assets/plugins/global/plugins.bundle.js') }}"></script>
+    <script src="{{ asset('public/mfs/admin/assets/js/scripts.bundle.js') }}"></script>
     <!--end::Global Javascript Bundle-->
     <!--begin::Custom Javascript(used for this page only)-->
-    <script src="{{ asset('public/mfs/admin/assets/js/custom/authentication/sign-in/general.js')}}"></script>
+    <script src="{{ asset('public/mfs/admin/assets/js/custom/authentication/sign-in/general.js') }}"></script>
     <!--end::Custom Javascript-->
     <!--end::Javascript-->
 </body>
