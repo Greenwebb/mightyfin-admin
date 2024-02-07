@@ -88,9 +88,9 @@ use Illuminate\Support\Facades\Route;
 // });
 Route::get('/', function () {
     return redirect()->route('login');
-})->name('welcome');
+})->name('home');
 
-Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+// Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::post('/share-docs', [UserController::class, 'share_doc'])->name('share.docs');
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
@@ -185,7 +185,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
 });
 
-Route::resource('posts', PostController::class);
+// Route::resource('posts', PostController::class);
 Route::get('eligibility-score/{id}', EligibilityScoreView::class)->name('score');
 
 
