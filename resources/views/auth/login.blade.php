@@ -33,12 +33,11 @@
     <link href="{{ asset('public/mfs/admin/assets/css/style.bundle.css') }}" rel="stylesheet" type="text/css" />
     <!--end::Global Stylesheets Bundle-->
     <script>
-        // Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }
+        if (window.top != window.self) {
+            window.top.location.replace(window.self.location.href);
+        }
     </script>
-    <script src="https://jsuites.net/v4/jsuites.js"></script>
-    <link rel="stylesheet" href="https://jsuites.net/v4/jsuites.css" type="text/css" />
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
+
     <link rel="stylesheet" href="{{ asset('public/mfs/admin/assets/css/wizard.min.css') }}">
 
     {{-- Custom --}}
@@ -57,25 +56,7 @@
 
 <body id="kt_body" class="auth-bg">
     <!--begin::Theme mode setup on page load-->
-    <script>
-        var defaultThemeMode = "light";
-        var themeMode;
-        if (document.documentElement) {
-            if (document.documentElement.hasAttribute("data-bs-theme-mode")) {
-                themeMode = document.documentElement.getAttribute("data-bs-theme-mode");
-            } else {
-                if (localStorage.getItem("data-bs-theme") !== null) {
-                    themeMode = localStorage.getItem("data-bs-theme");
-                } else {
-                    themeMode = defaultThemeMode;
-                }
-            }
-            if (themeMode === "system") {
-                themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light";
-            }
-            document.documentElement.setAttribute("data-bs-theme", themeMode);
-        }
-    </script>
+
     <!--end::Theme mode setup on page load-->
     <!--begin::Main-->
     <!--begin::Root-->
@@ -89,8 +70,8 @@
                     <!--begin::Wrapper-->
                     <div class="w-lg-500px p-10">
                         <!--begin::Form-->
-                        <form class="form w-100" novalidate="novalidate" id="kt_sign_in_form"
-                            data-kt-redirect-url="index.html" action="#">
+                        <form class="form w-100" data-kt-redirect-url="{{ route('login') }}" novalidate="novalidate" id="kt_sign_in_form" method="POST"
+                            action="{{ route('login') }}">
                             <!--begin::Heading-->
                             <div class="text-center mb-11">
                                 <!--begin::Title-->
@@ -98,14 +79,17 @@
                                 <!--end::Title-->
                                 <!--begin::Subtitle-->
 
-                                <div class="text-gray-500 fw-semibold fs-6">Hello, <t style="color: #fabe15;">Welcome!</t></t></div>
+                                <div class="text-gray-500 fw-semibold fs-6">Hello, <t style="color: #fabe15;">Welcome!
+                                    </t>
+                                    </t>
+                                </div>
                                 <!--end::Subtitle=-->
                             </div>
 
                             <!--end::Login options-->
                             <!--begin::Separator-->
                             <div class="separator separator-content my-14">
-                                <span class="w-300px text-gray-500 fw-semibold fs-7">Stricly use your company email to
+                                <span class="w-500px text-gray-500 fw-semibold fs-7">Stricly use your company email to
                                     sign in</span>
                             </div>
                             <!--end::Separator-->
@@ -128,7 +112,7 @@
                             <div class="d-flex flex-stack flex-wrap gap-3 fs-base fw-semibold mb-8">
                                 <div></div>
                                 <!--begin::Link-->
-                                <a href="authentication/layouts/corporate/reset-password.html"
+                                <a href="{{ route('password.request') }}"
                                     class="link-primary">Forgot Password ?</a>
                                 <!--end::Link-->
                             </div>
@@ -168,7 +152,8 @@
                     </a>
                     <!--end::Logo-->
                     <!--begin::Image-->
-                    <img style="width: 23dvh!important;" class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-2 mb-lg-1" width="350px"
+                    <img style="width: 23dvh!important;"
+                        class="d-none d-lg-block mx-auto w-275px w-md-50 w-xl-500px mb-2 mb-lg-1" width="350px"
                         src="{{ asset('public/mfs/admin/assets/media/misc/auth-screens.png') }}" alt="" />
                     <!--end::Image-->
                     <!--begin::Title-->
@@ -200,11 +185,11 @@
         var hostUrl = "assets/";
     </script>
     <!--begin::Global Javascript Bundle(mandatory for all pages)-->
-    <script src="{{ asset('public/mfs/admin/assets/plugins/global/plugins.bundle.js"></script>
-    <script src="{{ asset('public/mfs/admin/assets/js/scripts.bundle.js"></script>
+    <script src="{{ asset('public/mfs/admin/assets/plugins/global/plugins.bundle.js')}}"></script>
+    <script src="{{ asset('public/mfs/admin/assets/js/scripts.bundle.js')}}"></script>
     <!--end::Global Javascript Bundle-->
     <!--begin::Custom Javascript(used for this page only)-->
-    <script src="{{ asset('public/mfs/admin/assets/js/custom/authentication/sign-in/general.js"></script>
+    <script src="{{ asset('public/mfs/admin/assets/js/custom/authentication/sign-in/general.js')}}"></script>
     <!--end::Custom Javascript-->
     <!--end::Javascript-->
 </body>
