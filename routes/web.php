@@ -4,7 +4,7 @@ use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\OTPController;
 use App\Http\Controllers\LoanApplicationController;
-
+use App\Http\Controllers\LoanProductController;
 use App\Http\Livewire\AlreadyExistPage;
 use App\Http\Livewire\CareerPage;
 use App\Http\Livewire\ContactPage;
