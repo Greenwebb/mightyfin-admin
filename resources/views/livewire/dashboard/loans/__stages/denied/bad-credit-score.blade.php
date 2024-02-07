@@ -3,12 +3,12 @@
         <div id="kt_content_container" class="container-xxl">
             <div class="d-flex flex-column flex-xl-row">
                 <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
-                    <div class="card mb-5 mb-xl-8">
-                        <div class="card-body pt-15">
-                            <div class="d-flex flex-center flex-column mb-5">
+                    <div class="card mb-5 mb-xl-8 bg-danger">
+                        <div class="card-body pt-15 text-white">
+                            <div class="d-flex flex-center text-white flex-column mb-5 ">
 
                                 <div class="fs-3 text-gray-800 text-hover-primary fw-bold mb-1">
-                                    <h1 class="text-primary font-bold">Bad Credit Score</h1>
+                                    <h1 class="text-white font-bold">Bad Credit Score</h1>
                                 </div>
                                 
                                 <div class="symbol symbol-100px symbol-circle mb-7">
@@ -18,11 +18,11 @@
                                         <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg" alt=""/>
                                     @endif
                                 </div>
-                                <a href="#" class="fs-3 text-gray-800 text-hover-primary fw-bold mb-1">
+                                <a href="#" class="fs-3 text-warning text-hover-primary fw-bold mb-1">
                                     {{ $loan->user->fname.' '.$loan->user->lname }}
                                 </a>
                                 
-                                <div class="fs-5 fw-semibold text-muted mb-6">{{ $loan->user->occupation }}</div>
+                                <div class="fs-5 fw-semibold mb-6">{{ $loan->user->occupation }}</div>
 
                                 <div class="d-flex flex-wrap flex-center">
                                     <div class="row justify-content-center">
@@ -34,7 +34,7 @@
                                                     <span class="path2"></span>
                                                 </i>
                                             </div>
-                                            <div class="fw-semibold text-muted">Principle<br>Amount</div>
+                                            <div class="fw-semibold">Principle<br>Amount</div>
                                         </div>
                                         <div class="col-lg-4 border border-gray-300 border-dashed rounded py-3 px-3 mx-4 m-3">
                                             <div class="fs-4 fw-bold text-gray-700">
@@ -44,7 +44,7 @@
                                                     <span class="path2"></span>
                                                 </i>
                                             </div>
-                                            <div class="fw-semibold text-muted">Loan Duration</div>
+                                            <div class="fw-semibold">Loan Duration</div>
                                         </div>
                                         <div class="col-lg-4 bg-info text-white border border-gray-300 border-dashed rounded py-3 px-3 mx-4 m-3">
                                             <div class="fs-4 fw-bold text-gray-700">
@@ -54,7 +54,7 @@
                                                     <span class="path2"></span>
                                                 </i>
                                             </div>
-                                            <div class="fw-semibold text-muted">Total <br> Repayment</div>
+                                            <div class="fw-semibold">Total <br> Repayment</div>
                                         </div>
                                         <div class="col-lg-4 border border-gray-300 border-dashed rounded py-3 px-3 mx-4 m-3">
                                             <div class="fs-4 fw-bold text-gray-700">
@@ -64,7 +64,7 @@
                                                     <span class="path2"></span>
                                                 </i>
                                             </div>
-                                            <div class="fw-semibold text-info">Monthly<br>Repayment</div>
+                                            <div class="fw-semibold">Monthly<br>Repayment</div>
                                         </div>
                                     </div>
                                 </div>
@@ -82,23 +82,23 @@
                             <div class="separator separator-dashed my-3"></div>
                             <div id="kt_customer_view_details" class="collapse show">
                                 <div class="py-5 fs-6">
-                                    <div class="fw-bold mt-5">Account ID</div>
-                                    <div class="text-gray-600">ID-{{$loan->user->id}} </div>
-                                    <div class="fw-bold mt-5">Gender</div>
-                                    <div class="text-gray-600">{{ ucwords($loan->gender) }}</div>
-                                    <div class="fw-bold mt-5">Email</div>
-                                    <div class="text-gray-600">
+                                    <div style="color: #fff" class="fw-bold mt-5">Account ID</div>
+                                    <div style="color: #fff" class="text-white">ID-{{$loan->user->id}} </div>
+                                    <div style="color: #fff" class="fw-bold mt-5">Gender</div>
+                                    <div style="color: #fff" class="text-white">{{ ucwords($loan->gender) }}</div>
+                                    <div style="color: #fff" class="fw-bold mt-5">Email</div>
+                                    <div style="color: #fff" class="text-white">
                                         <a href="mailto:{{$loan->user->email}}"
-                                            class="text-gray-600 text-hover-primary">{{ $loan->user->email ?? 'Not set'}}</a>
+                                            style="color: #0a0e3d" class=" text-hover-primary">{{ $loan->user->email ?? 'Not set'}}</a>
                                     </div>
-                                    <div class="fw-bold mt-5">Address</div>
-                                    <div class="text-gray-600">
+                                    <div style="color: #fff" class="fw-bold mt-5">Address</div>
+                                    <div style="color: #fff" class="text-white">
                                         {{ $loan->user->address ?? 'Not set'}}
                                     </div>
                                     <div class="fw-bold mt-5">Phone</div>
-                                    <div class="text-gray-600">+260{{ $loan->phone ?? ' --' }}</div>
-                                    <div class="fw-bold mt-5">Interest Rate</div>
-                                    <div class="text-gray-600">{{ App\Models\Application::interest_rate($loan_product->id) }}</div>
+                                    <div style="color: #fff" class="text-white">+260{{ $loan->phone ?? ' --' }}</div>
+                                    <div style="color: #fff" class="fw-bold mt-5">Interest Rate</div>
+                                    <div style="color: #fff" class="text-white">{{ App\Models\Application::interest_rate($loan_product->id) }}</div>
                                 </div>
                             </div>
                         </div>
@@ -128,9 +128,9 @@
                                 <div class="menu-item px-5">
                                     <a href="#" wire:click="setLoanID({{$loan->id}})" class="menu-link px-5"> Default Loan </a>
                                 </div>
-                                {{-- <div class="menu-item px-5">
-                                    <a href="#" wire:click="accept({{$loan->id}})" class="menu-link px-5"> Approve </a>
-                                </div> --}}
+                                <div class="menu-item px-5">
+                                    <a href="#" wire:click="reprocess({{$loan->id}})" class="text-danger menu-link px-5"> Re-Process</a>
+                                </div>
                         </div>
                     </div>
 

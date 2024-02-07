@@ -10,6 +10,7 @@ use Spatie\Permission\Models\Permission;
 
 class RoleSeeder extends Seeder
 {
+    
     /**
      * Run the database seeds.
      *
@@ -21,9 +22,9 @@ class RoleSeeder extends Seeder
         $role2 = Role::create(['name' => 'user']);
         $role3 = Role::create(['name' => 'loan officer']);
         $role4 = Role::create(['name' => 'operations manager']);
-        
+
         // Company Wallet
-        
+
         // Clientele
         Permission::create(['name' => 'view clientele','group'=>'customer','permission'=>'View All', 'description' => 'View a customer'])->syncRoles([$role1, $role4, $role3]);
         Permission::create(['name' => 'edit clientele','group'=>'customer','permission'=>'Edit', 'description' => 'Edit a customer'])->syncRoles([$role1, $role4]);
@@ -90,18 +91,18 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'create loans','group'=>'loan','permission'=>'Create', 'description' => 'Create loan management'])->syncRoles([$role1,$role2, $role4]);
         Permission::create(['name' => 'delete loans','group'=>'loan','permission'=>'Delete', 'description' => 'Delete loan management'])->syncRoles([$role1,$role2, $role4]);
         Permission::create(['name' => 'view loan history','group'=>'loan','permission'=>'View History', 'description' => 'View loan management'])->syncRoles([$role1, $role4]);
-                
+
         // Loan  Statuses
         Permission::create(['name' => 'review loan','group'=>'loan stages','permission'=>'Review', 'description' => 'Review, accept or reject loan requests'])->syncRoles([$role1, $role4, $role3]);
         Permission::create(['name' => 'verify loan','group'=>'loan stages','permission'=>'Verify', 'description' => 'Review, accept or reject loan requests'])->syncRoles([$role1, $role4, $role3]);
         Permission::create(['name' => 'approve loan','group'=>'loan stages','permission'=>'Approval', 'description' => 'Review, accept or reject loan requests'])->syncRoles([$role1, $role4, $role3]);
         Permission::create(['name' => 'disburse fund','group'=>'loan stages','permission'=>'Disbursements', 'description' => 'Review, accept or reject loan requests'])->syncRoles([$role1, $role4, $role3]);
-       
+
         Permission::create(['name' => 'processes loans','group'=>'loan stages','permission'=>'processes loans', 'description' => 'View Reports Module'])->syncRoles([$role1, $role4, $role3]);
         Permission::create(['name' => 'decline a loan','group'=>'loan stages','permission'=>'decline', 'description' => 'View Loan Reports'])->syncRoles([$role1, $role4, $role3]);
         Permission::create(['name' => 'default a loan','group'=>'loan stages','permission'=>'default', 'description' => 'View Loan Reports'])->syncRoles([$role1, $role4, $role3]);
         Permission::create(['name' => 'not taken up loan','group'=>'loan stages','permission'=>'not taken up loan', 'description' => 'View Loan Reports'])->syncRoles([$role1, $role4, $role3]);
-        
+
         // --deplicated --
         // Permission::create(['name' => 'view loan requests','group'=>'loan','permission'=>'View Loan Requests', 'description' => 'View loan requests'])->syncRoles([$role1,$role2]);
         // Permission::create(['name' => 'accept and reject loan requests','group'=>'loan','permission'=>'Review', 'description' => 'Review, accept or reject loan requests'])->syncRoles([$role1]);
@@ -117,6 +118,6 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'disburse funds','group'=>'transaction','permission'=>'disburse funds', 'description' => 'Transfer funds to customers'])->syncRoles([$role1, $role4]);
         Permission::create(['name' => 'make payments','group'=>'transaction','permission'=>'make payments', 'description' => 'Make payments to repay loans'])->syncRoles([$role2, $role4]);
         Permission::create(['name' => 'withdraw funds','group'=>'transaction','permission'=>'withdraw funds', 'description' => 'Withdraw loan funds'])->syncRoles([$role2, $role4]);
-        
+
     }
 }

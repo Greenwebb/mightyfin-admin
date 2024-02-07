@@ -120,20 +120,13 @@ class LoanDetailView extends Component
                 ->where('status_id', $this->loan_stage->status_id)
                 ->orderBy('id')
                 ->first();
-                
+                // dd($loan_status->stage);
             $application = Application::find($this->loan_id);
             if ($loan_status->stage == 'open') {
                 $application->status = 1;
             } elseif($loan_status->stage == 'denied') {
                 $application->status = 3;
-                LoanStatus::where('loan_product_id', $this->loan_product->id)
-                ->orderBy('id')
-                ->update(['state' => 'pending']);
-                LoanStatus::where('loan_product_id', $this->loan_product->id)
-                ->where('status_id', '>', $this->loan_stage->status_id)
-                ->orderBy('id')
-                ->first()
-                ->update(['state' => 'current']);
+
             } elseif($loan_status->stage == 'defaulted') {
                 $application->status = 4;
             }elseif($loan_status->stage == 'Not Taken Up') {
@@ -211,8 +204,18 @@ class LoanDetailView extends Component
     public function reverse($id){
         try {
             $x = Application::find($id);
-            $x->status = 3;
+            $x->status = 2;
             $x->save();
+
+            // Make a Denied Stage status page as active
+            LoanStatus::where('loan_product_id', $this->loan_product->id)
+            ->orderBy('id')
+            ->update(['state' => 'pending']);
+            LoanStatus::where('loan_product_id', $this->loan_product->id)
+            ->where('status_id', $this->picked_status)
+            ->orderBy('id')
+            ->first()
+            ->update(['state' => 'current']);
 
             $mail = [
                 'user_id' => '',
@@ -225,11 +228,11 @@ class LoanDetailView extends Component
                 'amount' => $x->amount,
                 'payback' => Application::payback($x->amount, $x->repayment_plan),
                 'type' => 'loan-application',
-                'msg' => 'Your '.$x->type.' loan application request has been rejected'
+                'msg' => 'Your '.$x->type.' has been taken up and is currently under review, please wait withing the next 48 hours.'
             ];
             $this->withdraw($x->amount, $x);
             $this->send_loan_feedback_email($mail);
-            session()->flash('success', 'Loan has been rejected');
+            session()->flash('success', 'Loan has been reverted successfully');
         } catch (\Throwable $th) {
             session()->flash('error', 'Oops something failed here, please contact the Administrator.');
         }
@@ -242,7 +245,15 @@ class LoanDetailView extends Component
             $x->status = 3;
             $x->save();
 
-            $this->change_stage();
+            // Make a Denied Stage status page as active
+            LoanStatus::where('loan_product_id', $this->loan_product->id)
+            ->orderBy('id')
+            ->update(['state' => 'pending']);
+            LoanStatus::where('loan_product_id', $this->loan_product->id)
+            ->where('status_id', $this->picked_status)
+            ->orderBy('id')
+            ->first()
+            ->update(['state' => 'current']);
 
             $mail = [
                 'user_id' => $x->user_id,
@@ -268,5 +279,8 @@ class LoanDetailView extends Component
         }
     }
 
+    public function reprocess(){
+
+    }
 
 }

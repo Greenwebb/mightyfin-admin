@@ -273,7 +273,9 @@
         <!--end::Post-->
     </div>
     
-    @include('livewire.dashboard.__parts.dash-alerts')
+    <div class="mx-4">
+        @include('livewire.dashboard.__parts.dash-alerts')
+    </div>
     {{-- @dd(strtolower($loan_stage->status->name)) --}}
     @switch(strtolower($loan_stage->stage))
         
