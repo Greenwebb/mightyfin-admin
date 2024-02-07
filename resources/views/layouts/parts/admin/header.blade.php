@@ -2,7 +2,7 @@
     <!--begin::Brand-->
     <div class="header-brand">
         <!--begin::Logo-->
-        <a href="index.html">
+        <a href="{{ route('home') }}">
             <img alt="Logo" src="{{ asset('public/mfs/admin/assets/media/logos/logo.png')}}" class="h-25px h-lg-25px" />
         </a>
         <!--end::Logo-->
@@ -48,7 +48,7 @@
                 <ul class="breadcrumb breadcrumb-separatorless fw-semibold fs-7 pt-1">
                     <!--begin::Item-->
                     <li class="breadcrumb-item text-muted">
-                        <a href="index.html" class="text-muted text-hover-primary">Home</a>
+                        <a href="{{ route('home') }}" class="text-muted text-hover-primary">Home</a>
                     </li>
                     <!--end::Item-->
                     <!--begin::Item-->

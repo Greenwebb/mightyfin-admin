@@ -89,6 +89,7 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function () {
     return redirect()->route('login');
 })->name('welcome');
+
 Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
 Route::post('/share-docs', [UserController::class, 'share_doc'])->name('share.docs');
 
@@ -96,6 +97,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
     Route::get('otp-verification', [OTPController::class, 'index'])->name('otp');
     Route::get('/dashboard', DashboardView::class)->name('dashboard');
+  // Route::get('/home', DashboardView::class)->name('dashboard');
     Route::get('/search', SearchEngineView::class)->name('search');
     // Administrator
     Route::get('open-loans', ApprovedLoansView::class)->name('approved-loans');
