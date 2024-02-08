@@ -33,22 +33,22 @@ class LoanDetailView extends Component
 
     public function render()
     {
-try {
-    $this->authorize('processes loans');
-    $this->current = ApplicationStage::where('application_id', $this->loan->id)->first();
-    $this->loan = $this->get_loan_details($this->loan_id);
-    $this->loan_product = $this->get_loan_product($this->loan->loan_product_id);
-    $this->loan_stage = $this->get_loan_current_stage($this->loan->loan_product_id);
-    $this->denied_status = Status::where('stage', 'denied')
-    ->orderBy('id')
-    ->get();
-    $this->change_status();
-    
-    return view('livewire.dashboard.loans.loan-detail-view')
-    ->layout('layouts.admin');
-} catch (\Throwable $th) {
-    dd($th);
-}
+        try {
+            $this->authorize('processes loans');
+            $this->loan = $this->get_loan_details($this->loan_id);
+            $this->loan_product = $this->get_loan_product($this->loan->loan_product_id);
+            $this->loan_stage = $this->get_loan_current_stage($this->loan->loan_product_id);
+            $this->denied_status = Status::where('stage', 'denied')
+            ->orderBy('id')
+            ->get();
+            $this->current = ApplicationStage::where('application_id', $this->loan->id)->first();
+            $this->change_status();
+            
+            return view('livewire.dashboard.loans.loan-detail-view')
+            ->layout('layouts.admin');
+        } catch (\Throwable $th) {
+            dd($th);
+        }
     }
     
     public function setLoanID($id){
@@ -108,23 +108,28 @@ try {
 
     // Only when step is accepted
     public function change_stage(){
-        
-        $next_status = LoanStatus::with('status')
-        ->where('loan_product_id', $this->loan_product->id)
-        ->orderBy('id', 'asc')
-        ->skip($this->current) // $this->current is 0-indexed, no need to subtract 1
-        ->take(1)
-        ->first();
+        try {
+            $next_status = LoanStatus::with('status')
+            ->where('loan_product_id', $this->loan_product->id)
+            ->orderBy('id', 'asc')
+            ->skip($this->current->position) // $this->current is 0-indexed, no need to subtract 1
+            ->take(1)
+            ->first();
             
-        $this->current->update([
-            'state' => 'current',
-            'status' => $next_status->status->first()->name,
-            'stage' => $next_status->stage,
-            'prev_status' => 'complete',
-            'curr_status' => 'bg-white',
-            'position' => $this->current->position + 1,
-        ]);
-        
+            // dd($next_status);
+
+
+            $this->current->update([
+                'state' => 'current',
+                'status' => $next_status->status->name,
+                'stage' => $next_status->stage,
+                'prev_status' => 'complete',
+                'curr_status' => 'bg-white',
+                'position' => $this->current->position + 1,
+            ]);
+        } catch (\Throwable $th) {
+            dd($th);
+        }
     }
 
     public function change_status(){
@@ -253,16 +258,14 @@ try {
             $x = Application::find($this->loan_id);
             $x->status = 3;
             $x->save();
-
-            // Make a Denied Stage status page as active
-            LoanStatus::where('loan_product_id', $this->loan_product->id)
-            ->orderBy('id')
-            ->update(['state' => 'pending']);
-            LoanStatus::where('loan_product_id', $this->loan_product->id)
-            ->where('status_id', $this->picked_status)
-            ->orderBy('id')
-            ->first()
-            ->update(['state' => 'current']);
+            
+            $this->current->update([
+                'state' => 'current',
+                'status' => $this->picked_status,
+                'stage' => 'denied',
+                'prev_status' => 'complete',
+                'curr_status' => 'bg-white',
+            ]);
 
             $mail = [
                 'user_id' => $x->user_id,
