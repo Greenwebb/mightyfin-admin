@@ -3,6 +3,8 @@
 namespace Database\Seeders;
 
 use App\Models\Application;
+use App\Models\ApplicationStage;
+use App\Models\LoanStatus;
 use App\Models\ServiceCharge;
 use App\Models\User;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
@@ -19,13 +21,13 @@ class LoanApplicationSeeder extends Seeder
     {
 
         $user = User::create([
-            'fname' => 'Ken',
-            'lname' => 'Mobby',
+            'fname' => 'Kenobi',
+            'lname' => 'Wobby',
             'email' => 'georgemunganga@gmail.com',
             'password' => bcrypt('mighty4you'),
         ])->assignRole('user');
 
-        Application::create([
+        $app = Application::create([
             'lname' => 'Ken',
             'fname' => 'Mobby',
             'email' => 'georgemunganga@gmail.com',
@@ -43,6 +45,34 @@ class LoanApplicationSeeder extends Seeder
             'is_assigned' => 0,
             'loan_product_id' => 1
         ]);
+
+        // $status = LoanStatus::with('status')->where('loan_product_id', 1)
+        // ->orderBy('id', 'asc')
+        // ->first();
+
+        ApplicationStage::create([
+            'application_id' => $app->id,
+            'loan_status_id' => 1,
+            'state' => 'current',
+            'status' => 'verification',
+            'stage' => 'processing',
+            'prev_status' => 'current',
+            'curr_status' => ''
+        ]);        
+        
+        // $status = LoanStatus::with('status')->where('loan_product_id', 1)
+        // ->orderBy('id', 'asc')
+        // ->first();
+
+        // ApplicationStage::create([
+        //     'application_id' => $app,
+        //     'loan_product_id' => 1,
+        //     'state' => 'current',
+        //     'status' => $status->status->first()->name,
+        //     'stage' => $status->stage,
+        //     'prev_status' => 'current',
+        //     'curr_status' => ''
+        // ]);
     }
 }
 

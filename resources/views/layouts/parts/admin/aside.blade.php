@@ -1106,7 +1106,67 @@
                             <span class="menu-heading fw-bold text-uppercase fs-7">Operations & Staff</span>
                         </div>
                     </div>
-                
+                    {{-- @can('view clientele') --}}
+                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        
+                        <span class="menu-link">
+                            <span class="menu-icon">
+                                <i class="ki-duotone ki-address-book fs-2">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>
+                            </span>
+                            <span class="menu-title">HRM</span>
+                            <span class="menu-arrow"></span>
+                        </span>
+    
+                        <div class="menu-sub menu-sub-accordion">
+                            @can('view employees')
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('hrm.dashboard') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Dashboard</span>
+                                </a>
+                            </div>
+                            @endcan
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('hrm.staff') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Staff</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('hrm.payroll') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Payroll</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('insurance') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Insurance</span>
+                                </a>
+                            </div>
+                            <div class="menu-item">
+                                <a class="menu-link" href="{{ route('contracts') }}">
+                                    <span class="menu-bullet">
+                                        <span class="bullet bullet-dot"></span>
+                                    </span>
+                                    <span class="menu-title">Contracts</span>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                    {{-- @endcan --}}
                     @can('view employees')
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">

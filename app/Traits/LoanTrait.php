@@ -4,6 +4,7 @@ namespace App\Traits;
 
 use App\Mail\LoanApplication;
 use App\Models\Application;
+use App\Models\ApplicationStage;
 use App\Models\LoanInstallment;
 use App\Models\LoanManualApprover;
 use App\Models\LoanPackage;
@@ -45,7 +46,7 @@ trait LoanTrait{
 
     public function get_loan_current_stage($id){
         return LoanStatus::with('status')->where('loan_product_id', $id)
-                        ->where('state', 'current')->first();
+                        ->first();
     }
 
     public function getLoanRequests($type){
@@ -178,6 +179,22 @@ trait LoanTrait{
                         $loan_data = new LoanApplication($mail);
                         Mail::to($data['email'])->send($loan_data);
                     }
+
+                    // Set the first processing default stage as pending kyc
+                    $status = LoanStatus::with('status')->where('loan_product_id', 1)
+                    ->orderBy('id', 'asc')
+                    ->first();
+
+                    ApplicationStage::create([
+                        'application_id' => $item->id,
+                        'loan_product_id' => 1,
+                        'state' => 'current',
+                        'status' => 'pending kyc',
+                        // 'status' => $status->status->first()->name,
+                        'stage' => $status->stage,
+                        'prev_status' => 'current',
+                        'curr_status' => 'bg-white'
+                    ]);
                     return $item->id;
                 }else{
                     // redirect to you already have loan request

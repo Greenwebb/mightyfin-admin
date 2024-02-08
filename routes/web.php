@@ -17,6 +17,11 @@ use App\Http\Livewire\Dashboard\Borrowers\LoanStatementView as BorrowersLoanStat
 use App\Http\Livewire\Dashboard\Borrowers\SendBorrowerMessageView;
 use App\Http\Livewire\Dashboard\DashboardView;
 use App\Http\Livewire\Dashboard\Employees\EmployeesView;
+use App\Http\Livewire\Dashboard\HRM\Contracts;
+use App\Http\Livewire\Dashboard\HRM\Dashboard;
+use App\Http\Livewire\Dashboard\HRM\Insurance;
+use App\Http\Livewire\Dashboard\HRM\Payroll;
+use App\Http\Livewire\Dashboard\HRM\Staff;
 use App\Http\Livewire\Dashboard\Loans\ApprovedLoansView;
 use App\Http\Livewire\Dashboard\Loans\ClosedLoanView;
 use App\Http\Livewire\Dashboard\Loans\CreateLoanView;
@@ -134,6 +139,13 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     // ---- Payments
     Route::get('make-payments', PaymentPage::class)->name('payments');
     Route::get('/payments-portal', PaymentGatePage::class)->name('payment.gate');
+
+    // ---- HRM
+    Route::get('hrm-dashboard', Dashboard::class)->name('hrm.dashboard');
+    Route::get('staff', Staff::class)->name('hrm.staff');
+    Route::get('payroll', Payroll::class)->name('hrm.payroll');
+    Route::get('insurance', Insurance::class)->name('insurance');
+    Route::get('contracts', Contracts::class)->name('contracts');
 
     // ---- Employees
     Route::get('view-employees', EmployeesView::class)->name('employees');

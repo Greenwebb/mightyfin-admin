@@ -83,37 +83,20 @@
                     <!--begin::Details-->
                     <div class="col-12">
                         @if($loan_product->loan_status !== null || $loan_product !== null)
-                            @switch(strtolower($loan_stage->stage))
+                            @dd(strtolower($current->stage))
+                            @switch(strtolower($current->stage))
                                 @case('processing')
                                     <div class="tabbable">
                                         <ul class="nav nav-tabss wizard">
                                             <li class="active"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">1</span>Application Submitted</a></li>
-                                            @forelse ($loan_product->loan_status->where('stage', 'processing') as $step)
-                                                <li class="{{$step->state}}" id="{{$step->stage}}"><a href="#w{{ $step->id }}" data-toggle="tab" aria-expanded="false"><span class="nmbr">{{ $step->step + 1 }}</span>{{ $step->status->name }}</a></li>
+                                            @forelse ($loan_product->loan_status->where('stage', 'processing') as $key => $step)
+                                                <li class="" id="{{$step->stage}}"><a href="#w{{ $step->id }}" data-toggle="tab" aria-expanded="false"><span class="nmbr">{{ $key + 1 }}</span>{{ $step->status->name }}</a></li>
                                             @empty
                                             @endforelse    
                                         </ul>
                                     </div>
                                 @break
-                                @case('open')
-                                    <div class="mx-6">
-                                        <div class="px-9 py-6 mt-2">
-                                            <h1 class="text-info fw-bold font-bold">Open Loan</h1>
-                                            <p>Note: This loan is current active and is pending for repayment collection.</p>
-                                        </div>
-                                    </div>
-                                @break
-                                @default
-                                    <div class="tabbable">
-                                        <ul class="nav nav-tabss wizard">
-                                            <li class="active"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">1</span>Application Submitted</a></li>
-                                            @forelse ($loan_product->loan_status->where('stage', 'processing') as $step)
-                                                <li class="{{$step->state}}" id="{{$step->stage}}"><a href="#w{{ $step->id }}" data-toggle="tab" aria-expanded="false"><span class="nmbr">{{ $step->step + 1 }}</span>{{ $step->status->name }}</a></li>
-                                            @empty
-                                            @endforelse    
-                                        </ul>
-                                    </div>
-                                @break
+
                             @endswitch
                         @else                                                                         
                         @endif

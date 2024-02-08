@@ -86,8 +86,8 @@
                             {{-- @dd($loan_product->loan_status->where('stage', 'processing')) --}}
                             <ul class="nav nav-tabss wizard">
                                 <li class="active"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">1</span>Application Submitted</a></li>
-                                @forelse ($loan_product->loan_status->where('stage', 'processing') as $step)
-                                    <li><a href="#w{{ $step->id }}" data-toggle="tab" aria-expanded="false"><span class="nmbr">{{ $step->step + 1 }}</span>{{ $step->status->name }}</a></li>
+                                @forelse ($loan_product->loan_status->where('stage', 'processing') as $key => $step)
+                                    <li><a href="#w{{ $step->id }}" data-toggle="tab" aria-expanded="false"><span class="nmbr">{{ $key+ 1 }}</span>{{ $step->status->name }}</a></li>
                                 @empty
 
                                 @endforelse                                    

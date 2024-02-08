@@ -27,10 +27,10 @@ class DatabaseSeeder extends Seeder
         $this->call(RepaymentCycleSeeder::class);
         $this->call(RepaymentOrderSeeder::class);
         $this->call(CompanyAccountSeeder::class);
-        $this->call(LoanApplicationSeeder::class);
+        $this->call(StatusesSeeder::class);
         $this->call(ServiceChargeSeeder::class);
         $this->call(SettingSeeder::class);
-        $this->call(StatusesSeeder::class);
+        $this->call(LoanApplicationSeeder::class);
         // Storage::makeDirectory('public/posts');
     }
 }

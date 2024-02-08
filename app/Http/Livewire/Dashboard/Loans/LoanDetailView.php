@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Dashboard\Loans;
 
 use App\Models\Application;
+use App\Models\ApplicationStage;
 use App\Models\LoanManualApprover;
 use App\Models\LoanStatus;
 use App\Models\Status;
@@ -20,7 +21,7 @@ class LoanDetailView extends Component
 {
     use EmailTrait, WalletTrait, LoanTrait, AuthorizesRequests;
     public $loan, $user, $loan_id, $msg, $due_date, $reason, $loan_product;
-    public $loan_stage, $denied_status, $picked_status;
+    public $loan_stage, $denied_status, $picked_status, $current;
     public function mount($id){
         /**
             *loan main details
@@ -32,16 +33,22 @@ class LoanDetailView extends Component
 
     public function render()
     {
-        $this->authorize('processes loans');
-        $this->loan = $this->get_loan_details($this->loan_id);
-        $this->loan_product = $this->get_loan_product($this->loan->loan_product_id);
-        $this->loan_stage = $this->get_loan_current_stage($this->loan->loan_product_id);
-        $this->denied_status = Status::where('stage', 'denied')
-        ->orderBy('id')
-        ->get();
-        $this->change_status();
-        return view('livewire.dashboard.loans.loan-detail-view')
-        ->layout('layouts.admin');
+try {
+    $this->authorize('processes loans');
+    $this->current = ApplicationStage::where('application_id', $this->loan->id)->first();
+    $this->loan = $this->get_loan_details($this->loan_id);
+    $this->loan_product = $this->get_loan_product($this->loan->loan_product_id);
+    $this->loan_stage = $this->get_loan_current_stage($this->loan->loan_product_id);
+    $this->denied_status = Status::where('stage', 'denied')
+    ->orderBy('id')
+    ->get();
+    $this->change_status();
+    
+    return view('livewire.dashboard.loans.loan-detail-view')
+    ->layout('layouts.admin');
+} catch (\Throwable $th) {
+    dd($th);
+}
     }
     
     public function setLoanID($id){
@@ -101,35 +108,37 @@ class LoanDetailView extends Component
 
     // Only when step is accepted
     public function change_stage(){
-        $a = LoanStatus::where('loan_product_id', $this->loan_product->id)
-                ->where('status_id', $this->loan_stage->status_id)
-                ->orderBy('id')
-                ->first()
-                ->update(['state' => 'completed']);
-        $b = LoanStatus::where('loan_product_id', $this->loan_product->id)
-                ->where('status_id', '>', $this->loan_stage->status_id)
-                ->orderBy('id')
-                ->first()
-                ->update(['state' => 'current']);
+        
+        $next_status = LoanStatus::with('status')
+        ->where('loan_product_id', $this->loan_product->id)
+        ->orderBy('id', 'asc')
+        ->skip($this->current) // $this->current is 0-indexed, no need to subtract 1
+        ->take(1)
+        ->first();
+            
+        $this->current->update([
+            'state' => 'current',
+            'status' => $next_status->status->first()->name,
+            'stage' => $next_status->stage,
+            'prev_status' => 'complete',
+            'curr_status' => 'bg-white',
+            'position' => $this->current->position + 1,
+        ]);
         
     }
 
     public function change_status(){
         try {
-            $loan_status = LoanStatus::where('loan_product_id', $this->loan_product->id)
-                ->where('status_id', $this->loan_stage->status_id)
-                ->orderBy('id')
-                ->first();
-                // dd($loan_status->stage);
+            
             $application = Application::find($this->loan_id);
-            if ($loan_status->stage == 'open') {
+            if ($this->current->stage == 'open') {
                 $application->status = 1;
-            } elseif($loan_status->stage == 'denied') {
+            } elseif($this->current->stage == 'denied') {
                 $application->status = 3;
 
-            } elseif($loan_status->stage == 'defaulted') {
+            } elseif($this->current->stage == 'defaulted') {
                 $application->status = 4;
-            }elseif($loan_status->stage == 'Not Taken Up') {
+            }elseif($this->current->stage == 'Not Taken Up') {
                 $application->status = 5;
             }
             $application->save();

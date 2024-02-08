@@ -73,7 +73,9 @@ class Application extends Model
         'is_zambian',
         'nationality',
         'continue',
-        'is_assigned'
+        'is_assigned',
+        'c_stage',
+        'c_status',
     ];
     protected $appends = [
         'done_by',
