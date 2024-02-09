@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dashboard\SiteSettings;
 
 use App\Models\AccountPayment;
 use App\Models\DisbursedBy;
+use App\Models\Institution;
 use App\Models\InterestMethod;
 use App\Models\InterestType;
 use App\Models\LoanAccountPayment;
@@ -12,6 +13,7 @@ use App\Models\LoanDisbursedBy;
 use App\Models\LoanInterestMethod;
 use App\Models\LoanInterestType;
 use App\Models\LoanProduct;
+use App\Models\LoanProductInstitution;
 use App\Models\LoanRepaymentCycle;
 use App\Models\LoanRepaymentOrder;
 use App\Models\LoanServiceCharge;
@@ -43,7 +45,9 @@ class CreateSetting extends Component
 
     // Disbursements
     public $disbursement_name, $penalty_name, $penalty_amount, $penalty_grace, $repayment_cycle_name;
-    public $loan_charge_name, $loan_charge_amount;
+    public $loan_charge_name, $loan_charge_amount, $loan_institution, $institutions;
+    public $sector;
+
     
     public function render()
     {
@@ -61,6 +65,25 @@ class CreateSetting extends Component
         $this->repayment_orders = RepaymentOrder::get();
         $this->company_accounts = AccountPayment::get();
         $this->service_charges = ServiceCharge::get();
+        // $this->institutions = Institution::where('status', 1)->get();
+    }
+
+    public function updatedSector()
+    {
+        // dd('here');
+        $this->updateInstitutions();
+    }
+
+    private function updateInstitutions()
+    {
+        if ($this->sector) {
+            $this->institutions = Institution::where('status', 1)
+                ->where('type', $this->sector)
+                ->get();
+        } else {
+            // Handle the case where no sector is selected, you might want to reset the institutions to the default state
+            $this->institutions = Institution::where('status', 1)->get();
+        }
     }
 
     public function create_loan_product(){
@@ -151,6 +174,11 @@ class CreateSetting extends Component
                     'loan_product_id' => $loan_product->id
                 ]);
             }
+            // Institutions
+            LoanProductInstitution::Create([
+                'institution_id' => $this->loan_institution,
+                'loan_product_id' => $loan_product->id
+            ]);
             
             Session::flash('success', "Loan product created successfully.");
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-types']);

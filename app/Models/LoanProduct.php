@@ -70,5 +70,8 @@ class LoanProduct extends Model
         return $this->hasMany(LoanServiceCharge::class);
     }
 
+    public function loan_products(){
+        return $this->hasMany(LoanProductInstitution::class);
+    }
 
 }

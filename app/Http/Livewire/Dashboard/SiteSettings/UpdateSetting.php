@@ -8,6 +8,7 @@ use App\Traits\LoanTrait;
 use Livewire\Component;
 use App\Models\AccountPayment;
 use App\Models\DisbursedBy;
+use App\Models\Institution;
 use App\Models\InterestMethod;
 use App\Models\InterestType;
 use App\Models\LoanDecimalPlace;
@@ -15,6 +16,7 @@ use App\Models\LoanDisbursedBy;
 use App\Models\LoanInterestMethod;
 use App\Models\LoanInterestType;
 use App\Models\LoanProduct;
+use App\Models\LoanProductInstitution;
 use App\Models\LoanRepaymentCycle;
 use App\Models\Penalty;
 use App\Models\RepaymentCycle;
@@ -59,7 +61,7 @@ class UpdateSetting extends Component
     public $disbursement_name, $disbursement;
     public $repayment_cycle_name,$repayment_cycle_method;
     public $penalty_amount, $penalty_name, $penalty_grace, $penalty;
-    public $loan_charge, $loan_charge_name, $loan_charge_amount;
+    public $loan_charge, $loan_charge_name, $loan_charge_amount, $loan_institution, $institutions;
 
     public function render()
     {
@@ -116,6 +118,7 @@ class UpdateSetting extends Component
         $this->repayment_orders = RepaymentOrder::get();
         $this->company_accounts = AccountPayment::get();
         $this->service_charges = ServiceCharge::get();
+        $this->institutions = Institution::where('status', 1)->get();
     }
 
 
@@ -209,6 +212,12 @@ class UpdateSetting extends Component
                 ]);
             }
             
+            // Institutions
+            LoanProductInstitution::Create([
+                'institution_id' => $this->loan_institution,
+                'loan_product_id' => $this->loan_product->id
+            ]);
+
             Session::flash('success', "Loan product updated successfully.");
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-types']);
             
