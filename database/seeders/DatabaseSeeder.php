@@ -29,6 +29,8 @@ class DatabaseSeeder extends Seeder
         $this->call(StatusesSeeder::class);
         $this->call(ServiceChargeSeeder::class);
         $this->call(SettingSeeder::class);
+        $this->call(LoanStatusSeeder::class);
+        $this->call(InstitutionSeeder::class);
         $this->call(LoanApplicationSeeder::class);
         $this->call(InstitutionSeeder::class);
         $this->call(LoanProductSeeder::class);
