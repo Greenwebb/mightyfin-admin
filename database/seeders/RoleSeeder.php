@@ -118,6 +118,9 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'disburse funds','group'=>'transaction','permission'=>'disburse funds', 'description' => 'Transfer funds to customers'])->syncRoles([$role1, $role4]);
         Permission::create(['name' => 'make payments','group'=>'transaction','permission'=>'make payments', 'description' => 'Make payments to repay loans'])->syncRoles([$role2, $role4]);
         Permission::create(['name' => 'withdraw funds','group'=>'transaction','permission'=>'withdraw funds', 'description' => 'Withdraw loan funds'])->syncRoles([$role2, $role4]);
+        
+        // System Settings
+        Permission::create(['name' => 'system settings','group'=>'system settings','permission'=>'system settings', 'description' => 'View loan management'])->syncRoles([$role1,$role2, $role4, $role3]);
 
     }
 }

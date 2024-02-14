@@ -24,6 +24,7 @@ class LoanApplicationSeeder extends Seeder
             'fname' => 'Kenobi',
             'lname' => 'Wobby',
             'email' => 'georgemunganga@gmail.com',
+            'phone' => '0772147755',
             'password' => bcrypt('mighty4you'),
         ])->assignRole('user');
 
@@ -31,7 +32,7 @@ class LoanApplicationSeeder extends Seeder
             'lname' => 'Ken',
             'fname' => 'Mobby',
             'email' => 'georgemunganga@gmail.com',
-            'phone' => '771235431',
+            'phone' => '0771235431',
             'gender' => 'male',
             'type' => 'ABX Loan',
             'repayment_plan' => 1,

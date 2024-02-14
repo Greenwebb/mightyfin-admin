@@ -62,7 +62,7 @@ class UpdateSetting extends Component
     public $repayment_cycle_name,$repayment_cycle_method;
     public $penalty_amount, $penalty_name, $penalty_grace, $penalty;
     public $loan_charge, $loan_charge_name, $loan_charge_amount, $loan_institution, $institutions;
-
+    public $current_statuses = [];
     public function render()
     {
         $this->page = $_GET['page'];
@@ -98,6 +98,7 @@ class UpdateSetting extends Component
             case 'loan-statuses':
                 $this->get_data();
                 $this->loan_product = $this->get_loan_product($_GET['item_id']);
+                $this->current_statuses = $this->get_loan_statuses($_GET['item_id']);
                 $this->set_loan_product_values();
             break;
             

@@ -13,17 +13,10 @@ class ClosedLoanView extends Component
     public $loan_requests;
     public function render()
     {
-        if (auth()->user()->hasRole('user')) {
-            $this->loan_requests = Loans::with(['application' => function($q){
-                $q->where('user_id', auth()->user()->id);
-            }])->where('closed', 1 )->orderBy('id', 'desc')->get();
-            return view('livewire.dashboard.loans.closed-loan-view')
-            ->layout('layouts.dashboard');
-        } else {
-            $this->loan_requests = Loans::with('application')->where('closed', 1 )->orderBy('id', 'desc')->get();
-            return view('livewire.dashboard.loans.closed-loan-view')
-            ->layout('layouts.admin');
-        }
+        $this->loan_requests = Loans::with('application')->where('closed', 1 )
+            ->orderBy('id', 'desc')->get();
+        return view('livewire.dashboard.loans.closed-loan-view')
+        ->layout('layouts.admin');
     }
 
     public function exportClosedLoans(){

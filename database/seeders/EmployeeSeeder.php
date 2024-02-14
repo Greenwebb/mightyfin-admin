@@ -18,7 +18,7 @@ class EmployeeSeeder extends Seeder
         User::create([
             'fname' => 'Karen',
             'lname' => 'Doe',
-            'phone' => '68770022',
+            'phone' => '068770022',
             'email' => 'employee@mfs.com',
             'password' => bcrypt('mighty.@123'),
         ])->assignRole('loan officer');
@@ -26,7 +26,7 @@ class EmployeeSeeder extends Seeder
         User::create([
             'fname' => 'Dan',
             'lname' => 'Maxwell',
-            'phone' => '77000022',
+            'phone' => '077000022',
             'email' => 'employee2@mfs.com',
             'password' => bcrypt('mighty.@123'),
         ])->assignRole('operations manager');

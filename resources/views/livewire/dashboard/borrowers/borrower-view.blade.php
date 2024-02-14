@@ -25,11 +25,11 @@
                         <!--begin::Toolbar-->
                         <div class="d-flex justify-content-end" data-kt-customer-table-toolbar="base">
                             <!--begin::Filter-->
-                            <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                            {{-- <button type="button" class="btn btn-light-primary me-3" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                             <i class="ki-duotone ki-filter fs-2">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
-                            </i>Filter</button>
+                            </i>Filter</button> --}}
                             <!--begin::Menu 1-->
                             <div class="menu menu-sub menu-sub-dropdown w-300px w-md-325px" data-kt-menu="true" id="kt-toolbar-filter">
                                 <!--begin::Header-->
@@ -106,14 +106,16 @@
                             <!--end::Menu 1-->
                             <!--end::Filter-->
                             <!--begin::Export-->
-                            <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_customers_export_modal">
+                            {{-- <button type="button" class="btn btn-light-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_customers_export_modal">
                             <i class="ki-duotone ki-exit-up fs-2">
                                 <span class="path1"></span>
                                 <span class="path2"></span>
-                            </i>Export</button>
+                            </i>Export</button> --}}
                             <!--end::Export-->
                             <!--begin::Add customer-->
+                            @can('create clientele')
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer">Add Customer</button>
+                            @endcan
                             <!--end::Add customer-->
                         </div>
                         <!--end::Toolbar-->
@@ -192,9 +194,11 @@
                                         </div>
                                         <!--end::Menu item-->
                                         <!--begin::Menu item-->
+                                        @can('delete clientele')
                                         <div class="menu-item px-3">
-                                            <a  wire:click="destroy({{ $user->id }})" onclick="confirm('Are you sure you want to permanently delete this account.') || event.stopImmediatePropagation();" title="Delete Account" href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
+                                            <a wire:click="destroy({{ $user->id }})" onclick="confirm('Are you sure you want to permanently delete this account.') || event.stopImmediatePropagation();" title="Delete Account" href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
                                         </div>
+                                        @endcan
                                         <!--end::Menu item-->
                                     </div>
                                     <!--end::Menu-->

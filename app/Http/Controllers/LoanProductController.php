@@ -80,4 +80,11 @@ class LoanProductController extends Controller
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-types']);
         }
     }
+
+    public function deleteStep($loan_step){
+        $del = LoanStatus::where('id', $loan_step)->first();
+        $id = $del->loan_product_id;
+        $del->delete();
+        return redirect()->route('system-edit', ['page' => 'loan-statuses', 'item_id' => $id]);
+    }
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Spatie\Permission\Models\Permission;
 use Spatie\Permission\Models\Role;
 // use Illuminate\Http\JsonResponse;
@@ -43,11 +44,24 @@ class RoleController extends Controller
         $request->validate([
             'name' => 'required',
         ]);
+        try {
+            $role = Role::create([
+                'name' => $request->toArray()['name'],
+                'guard_name' => 'web'
+            ]);
+            $role->syncPermissions($request->toArray()['permission']);
+        
+            Session::flash('attention', "New role created successfully.");
+            return redirect()->route('roles');
+        } catch (\Throwable $th) {
+            Session::flash('error_msg', substr($th->getMessage(),16,110));
+            return redirect()->route('roles');
+        }
 
-        $role = Role::create($request->all());
-        $role->permissions()->sync($request->permissions);
+        // $role = Role::create($request->all());
+        // $role->permissions()->sync($request->permissions);
 
-        return redirect()->route('admin.roles.edit', $role)->with('info', 'The role has been successfully created.');
+        // return redirect()->route('admin.roles.edit', $role)->with('info', 'The role has been successfully created.');
     }
 
     /**

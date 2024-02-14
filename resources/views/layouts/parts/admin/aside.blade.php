@@ -993,7 +993,7 @@
                     <div class="menu-sub menu-sub-accordion">
                         
                         @can('create loan')
-                        <div class="menu-item">
+                        {{-- <div class="menu-item">
                             <a class="menu-link" href="{{ route('proxy-loan-create') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
@@ -1001,10 +1001,10 @@
                                 
                                 <span class="menu-title">Create Loan</span>
                             </a>
-                        </div>
+                        </div> --}}
                         @endcan
                         
-                        {{-- @can('view pending') --}}
+                        @can('view pending')
                         <div class="menu-item">
                             <a class="menu-link" href="{{ route('view-loan-requests') }}">
                                 <span class="menu-bullet">
@@ -1013,8 +1013,8 @@
                                 <span class="menu-title">Pending Loans</span>
                             </a>
                         </div>
-                        {{-- @endcan --}}
-                        {{-- @can('view pending') --}}
+                        @endcan
+                        @can('view pending')
                         <div class="menu-item">
                             <a class="menu-link" href="{{ route('approved-loans') }}">
                                 <span class="menu-bullet">
@@ -1023,18 +1023,8 @@
                                 <span class="menu-title">Open Loans</span>
                             </a>
                         </div>
-                        {{-- @endcan --}}
-
-                        {{-- @can('view loans')
-                        <div class="menu-item">
-                            <a class="menu-link" href="{{ route('view-loan-requests') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">All Loans</span>
-                            </a>
-                        </div>
-                        @endcan --}}
+                        @endcan
+                        
 
                         @can('view closed')
                         <div class="menu-item">
@@ -1106,8 +1096,8 @@
                             <span class="menu-heading fw-bold text-uppercase fs-7">Operations & Staff</span>
                         </div>
                     </div>
-                    {{-- @can('view clientele') --}}
-                    <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                    @can('view clientele')
+                    {{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         
                         <span class="menu-link">
                             <span class="menu-icon">
@@ -1165,8 +1155,8 @@
                                 </a>
                             </div>
                         </div>
-                    </div>
-                    {{-- @endcan --}}
+                    </div> --}}
+                    @endcan
                     @can('view employees')
                     <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                         <span class="menu-link">
@@ -1261,7 +1251,7 @@
                 @endcan
 
 
-                @role('admin')
+                @can('system settings')
                 <div class="menu-item pt-5">
                     <!--begin:Menu content-->
                     <div class="menu-content">
@@ -1270,6 +1260,7 @@
                     <!--end:Menu content-->
                 </div>
 
+                @can('see the list of users')
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                     <!--begin:Menu link-->
                     <span class="menu-link">
@@ -1311,7 +1302,7 @@
                                 </div>
                                 <!--end:Menu item-->
                                 <!--begin:Menu item-->
-                                <div class="menu-item">
+                                {{-- <div class="menu-item">
                                     <!--begin:Menu link-->
                                     <a class="menu-link" href="#">
                                         <span class="menu-bullet">
@@ -1320,14 +1311,14 @@
                                         <span class="menu-title">Blocked Users</span>
                                     </a>
                                     <!--end:Menu link-->
-                                </div>
+                                </div> --}}
                                 <!--end:Menu item-->
                             </div>
                             <!--end:Menu sub-->
                         </div>
                         <!--end:Menu item-->
                         <!--begin:Menu item-->
-                        <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
+                        {{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
                             <!--begin:Menu link-->
                             <a href="{{ route('roles') }}" class="menu-link">
                                 <span class="menu-bullet">
@@ -1339,32 +1330,14 @@
                             <!--begin:Menu sub-->
                             
                             <!--end:Menu sub-->
-                        </div>
+                        </div> --}}
                         <!--end:Menu item-->
                         <!--begin:Menu item-->
                         <!--end:Menu item-->
                     </div>
                     <!--end:Menu sub-->
                 </div>
-                <!--end:Menu item-->
-                <!--begin:Menu item-->
-               
-                <!--end:Menu item-->
-                <!--begin:Menu item-->
-                <div class="menu-item">
-                    <!--begin:Menu link-->
-                    <a class="menu-link" href="###">
-                        <span class="menu-icon">
-                            <i class="ki-duotone ki-abstract-13 fs-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                            </i>
-                        </span>
-                        <span class="menu-title">APIs & Plugins</span>
-                    </a>
-                    <!--end:Menu link-->
-                </div>
-                <!--end:Menu item-->
+                @endcan
                 <!--begin:Menu item-->
                 <div class="menu-item">
                     <!--begin:Menu link-->
@@ -1379,7 +1352,7 @@
                     </a>
                     <!--end:Menu link-->
                 </div>
-                @endrole
+                @endcan
                 
             </div>
             <!--end::Menu-->

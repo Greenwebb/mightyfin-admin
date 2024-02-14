@@ -83,16 +83,20 @@
                     <!--begin::Details-->
                     <div class="col-12">
                         @if($loan_product->loan_status !== null || $loan_product !== null)
-                            {{-- @dd(strtolower($current->stage)) --}}
+                           
                             @switch(strtolower($current->stage))
                                 @case('processing')
                                     <div class="tabbable">
                                         <ul class="nav nav-tabss wizard">
                                             <li class="active"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">1</span>Application Submitted</a></li>
+                                            @php
+                                                $count = 1;
+                                            @endphp
                                             @forelse ($loan_product->loan_status->where('stage', 'processing') as $key => $step)
-                                                
-                                            
-                                            <li class="" id="{{$step->stage}}"><a href="#w{{ $step->id }}" data-toggle="tab" aria-expanded="false"><span class="nmbr">{{ $key + 1 }}</span>{{ $step->status->name }}</a></li>
+                                                @php
+                                                    $count ++;
+                                                @endphp
+                                                <li class="" id="{{$step->stage}}"><a href="#w{{ $step->id }}" data-toggle="tab" aria-expanded="false"><span class="nmbr">{{ $count }}</span>{{ $step->status->name }}</a></li>
                                             @empty
                                             @endforelse    
                                         </ul>
@@ -281,7 +285,7 @@
     <div class="mx-4">
         @include('livewire.dashboard.__parts.dash-alerts')
     </div>
-    {{-- @dd(strtolower($loan_stage->status->name)) --}}
+    
     @switch(strtolower($current->stage))
         
         @case('processing')
@@ -290,7 +294,6 @@
                     @include('livewire.dashboard.loans.__stages.processing.reviewing')
                 @break
                 @case('verification')
-                    {{-- @dd('here') --}}
                     @include('livewire.dashboard.loans.__stages.processing.verification')
                 @break
                 @case('approval')
@@ -306,7 +309,7 @@
         @break
 
         @case('open')
-            @switch(strtolower($loan_stage->status->name))
+            @switch(strtolower($current->status))
                 @case('current loan')
                     @include('livewire.dashboard.loans.__stages.open.current-loan')
                 @break
@@ -317,7 +320,7 @@
         @break
 
         @case('denied')
-            @switch(strtolower($loan_stage->status->name))
+            @switch(strtolower($current->status))
                 @case('incomplet kyc')
                     @include('livewire.dashboard.loans.__stages.denied.incomplet-kyc')
                 @break

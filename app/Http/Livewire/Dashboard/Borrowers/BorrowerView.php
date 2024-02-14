@@ -37,20 +37,11 @@ class BorrowerView extends Component
         $this->permissions = Permission::get();
         $roles = Role::orderBy('id','DESC')->paginate(5);
         $users = User::role('user')->orderBy('created_at', 'desc')->paginate(7);
-
-        if (auth()->user()->hasRole('user')) {
-            return view('livewire.dashboard.borrowers.borrower-view',[
-                'users' => $users,
-                'roles' => $roles
-            ])
-            ->layout('layouts.dashboard');
-        }else{
-            return view('livewire.dashboard.borrowers.borrower-view',[
-                'users' => $users,
-                'roles' => $roles
-            ])
-            ->layout('layouts.admin');
-        }
+        return view('livewire.dashboard.borrowers.borrower-view',[
+            'users' => $users,
+            'roles' => $roles
+        ])
+        ->layout('layouts.admin');
     }
 
     public function borrowerExcelExport(){
@@ -62,6 +53,7 @@ class BorrowerView extends Component
     }
 
     public function store(){
+        $this->authorize('create clientele');
         try {
             //For demo purposes only. When creating user or inviting a user
             // you should create a generated random password and email it to the user

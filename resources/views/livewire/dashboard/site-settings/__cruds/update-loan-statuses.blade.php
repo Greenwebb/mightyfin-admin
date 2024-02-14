@@ -77,12 +77,16 @@
                             {{-- <label class="col-lg-4 col-form-label required fw-bold fs-6">Set Loan Release Date to Today's date</label> --}}
                             <div class="col-lg-12 fv-row">
                                 <div class="col-lg-12 mb-4 mb-lg-0">
-                                    {{-- <div class="dynamic-field-wrapper flex" style="display: flex;width: 50%;">
-                                        <select name="processing[]" class="form-select m-2 aos-init" data-aos="fade-right">
-                                            <option value="">--Choose-</option>
+                                    @forelse ($current_statuses->where('stage', 'processing') as $item)
+                                    <div class="dynamic-field-wrapper flex" style="display: flex;width: 50%;">
+                                        <select name="current_processing_steps[]" class="form-select m-2 aos-init" data-aos="fade-right">
+                                            <option value="{{ $item->status->id }}" selected>{{ $item->status->name }}</option>
                                         </select>
-                                        <button type="button" class="btn btn-danger sm-btn">Delete</button>
-                                    </div> --}}
+                                        <a href="{{ route('delete-loan-step', $item) }}" type="button" class="btn btn-danger sm-btn">Delete</a>
+                                    </div>
+                                    @empty
+                                    @endforelse
+
                                     <div id="dynamicFieldsContainer1" style="width: 50%; display:block">
                                         {{-- Newly added select fields will be inserted here --}}
                                     </div>
@@ -106,12 +110,15 @@
                         <div class="row mb-6">
                             <div class="col-lg-12 fv-row">
                                 <div class="col-lg-12 mb-4 mb-lg-0">
-                                    {{-- <div class="dynamic-field-wrapper flex" style="display: flex;width: 50%;">
-                                        <select name="open[]" class="form-select m-2 aos-init" data-aos="fade-right">
-                                            <option value="">--Choose-</option>
+                                    @forelse ($current_statuses->where('stage', 'open') as $item)
+                                    <div class="dynamic-field-wrapper flex" style="display: flex;width: 50%;">
+                                        <select name="current_processing_steps[]" class="form-select m-2 aos-init" data-aos="fade-right">
+                                            <option value="{{ $item->status->id }}" selected>{{ $item->status->name }}</option>
                                         </select>
-                                        <button type="button" class="btn btn-danger sm-btn">Delete</button>
-                                    </div> --}}
+                                        <a href="{{ route('delete-loan-step', $item) }}" type="button" class="btn btn-danger sm-btn">Delete</a>
+                                    </div>
+                                    @empty
+                                    @endforelse
                                     <div id="dynamicFieldsContainer2" style="width: 50%; display:block">
                                         {{-- Newly added select fields will be inserted here --}}
                                     </div>
@@ -135,12 +142,15 @@
                         <div class="row mb-6">
                             <div class="col-lg-12 fv-row">
                                 <div class="col-lg-12 mb-4 mb-lg-0">
-                                    {{-- <div class="dynamic-field-wrapper flex" style="display: flex;width: 50%;">
-                                        <select name="defaulted[]" class="form-select m-2 aos-init" data-aos="fade-right">
-                                            <option value="">--Choose-</option>
+                                    @forelse ($current_statuses->where('stage', 'defaulted') as $item)
+                                    <div class="dynamic-field-wrapper flex" style="display: flex;width: 50%;">
+                                        <select name="current_processing_steps[]" class="form-select m-2 aos-init" data-aos="fade-right">
+                                            <option value="{{ $item->status->id }}" selected>{{ $item->status->name }}</option>
                                         </select>
-                                        <button type="button" class="btn btn-danger sm-btn">Delete</button>
-                                    </div> --}}
+                                        <a href="{{ route('delete-loan-step', $item) }}" type="button" class="btn btn-danger sm-btn">Delete</a>
+                                    </div>
+                                    @empty
+                                    @endforelse
                                     <div id="dynamicFieldsContainer3" style="width: 50%; display:block">
                                         {{-- Newly added select fields will be inserted here --}}
                                     </div>
@@ -164,12 +174,15 @@
                         <div class="row mb-6">
                             <div class="col-lg-12 fv-row">
                                 <div class="col-lg-12 mb-4 mb-lg-0">
-                                    {{-- <div class="dynamic-field-wrapper flex" style="display: flex;width: 50%;">
-                                        <select name="denied[]" class="form-select m-2 aos-init" data-aos="fade-right">
-                                            <option value="">--Choose-</option>
+                                    @forelse ($current_statuses->where('stage', 'denied') as $item)
+                                    <div class="dynamic-field-wrapper flex" style="display: flex;width: 50%;">
+                                        <select name="current_processing_steps[]" class="form-select m-2 aos-init" data-aos="fade-right">
+                                            <option value="{{ $item->status->id }}" selected>{{ $item->status->name }}</option>
                                         </select>
-                                        <button type="button" class="btn btn-danger sm-btn">Delete</button>
-                                    </div> --}}
+                                        <a href="{{ route('delete-loan-step', $item) }}" type="button" class="btn btn-danger sm-btn">Delete</a>
+                                    </div>
+                                    @empty
+                                    @endforelse
                                     <div id="dynamicFieldsContainer4" style="width: 50%; display:block">
                                         {{-- Newly added select fields will be inserted here --}}
                                     </div>
@@ -193,12 +206,15 @@
                         <div class="row mb-6">
                             <div class="col-lg-12 fv-row">
                                 <div class="col-lg-12 mb-4 mb-lg-0">
-                                    {{-- <div class="dynamic-field-wrapper flex" style="display: flex;width: 50%;">
-                                        <select name="no_taken_up[]" class="form-select m-2 aos-init" data-aos="fade-right">
-                                            <option value="">--Choose-</option>
+                                    @forelse ($current_statuses->where('stage', 'Not Taken Up') as $item)
+                                    <div class="dynamic-field-wrapper flex" style="display: flex;width: 50%;">
+                                        <select name="current_processing_steps[]" class="form-select m-2 aos-init" data-aos="fade-right">
+                                            <option value="{{ $item->status->id }}" selected>{{ $item->status->name }}</option>
                                         </select>
-                                        <button type="button" class="btn btn-danger sm-btn">Delete</button>
-                                    </div> --}}
+                                        <a href="{{ route('delete-loan-step', $item) }}" type="button" class="btn btn-danger sm-btn">Delete</a>
+                                    </div>
+                                    @empty
+                                    @endforelse
                                     <div id="dynamicFieldsContainer5" style="width: 50%; display:block">
                                         {{-- Newly added select fields will be inserted here --}}
                                     </div>

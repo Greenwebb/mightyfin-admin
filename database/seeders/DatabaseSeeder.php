@@ -17,7 +17,6 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // Storage::deleteDirectory('public/posts');
         $this->call(RoleSeeder::class);
         $this->call(UserSeeder::class);
         $this->call(EmployeeSeeder::class);
@@ -31,6 +30,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ServiceChargeSeeder::class);
         $this->call(SettingSeeder::class);
         $this->call(LoanApplicationSeeder::class);
-        // Storage::makeDirectory('public/posts');
+        $this->call(InstitutionSeeder::class);
+        $this->call(LoanProductSeeder::class);
     }
 }

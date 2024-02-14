@@ -17,9 +17,8 @@
                             <div class="fs-4 fw-bold text-dark">User Settings</div>
                             <div class="d-flex flex-wrap mb-6 p-4">
                                 <ul class="list-unstyled">
-                                    <li><a href="{{ route('item-settings', ['confg' => 'user','settings' => 'user-kyc']) }}" class="fs-6 text-info fw-bold">User KYC settings</a></li> <!-- Change text color to blue -->
-                                    <li><a href="{{ route('item-settings', ['confg' => 'user','settings' => 'user-req']) }}" class="fs-6 text-info fw-bold">User Requirements</a></li> <!-- Change text color to blue -->
-                                    <li><a href="{{ route('roles', ['confg' => 'user','settings' => 'user-roles']) }}" class="fs-6 text-info fw-bold">User Roles & Permissions</a></li> 
+                                    <li><a href="#" class="fs-6 text-muted fw-bold">User KYC settings</a></li> <!-- Change text color to blue -->
+                                    <li><a href="#" class="fs-6 text-muted fw-bold">User Requirements</a></li> <!-- Change text color to blue -->
                                 </ul>
                             </div>
                         </div>
@@ -33,13 +32,12 @@
                                 <ul class="list-unstyled">
                                     <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-types']) }}" class="fs-6 text-info fw-bold hover:text-light">Loan Products</a></li> 
                                     <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-disbursements']) }}" class="fs-6 text-info fw-bold">Loan Disbursed By</a></li> 
-                                    {{-- <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-rates']) }}" class="fs-6 text-info fw-bold">Loan Rates</a></li> <!-- Change text color to blue --> --}}
                                     <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-approval']) }}" class="fs-6 text-info fw-bold">Loan Approval Hierachy</a></li> <!-- Change text color to blue -->
                                     <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-repayment-cycle']) }}" class="fs-6 text-info fw-bold">Loan Repayment Cycles</a></li> 
                                     <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-penalty-settings']) }}" class="fs-6 text-info fw-bold">Loan Penalty Settings</a></li> 
                                     <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-fees']) }}" class="fs-6 text-info fw-bold">Loan Fees</a></li> 
                                     <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-remainder-settings']) }}" class="fs-6 text-info fw-bold">Loan Remainder Settngs</a></li> 
-                                    <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-adjustments']) }}" class="fs-6 text-info fw-bold">Loan Adjustments</a></li> 
+                                    <li><a href="#" class="fs-6 text-muted fw-bold">Loan Adjustments</a></li> 
                                     <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'send-borrower-otp']) }}" class="fs-6 text-info fw-bold">Send OTP to Borrower before Loan Disbursment</a></li> 
                                 </ul>
                             </div>
@@ -53,10 +51,12 @@
                             <div class="d-flex flex-wrap mb-6 p-4">
                                 <ul class="list-unstyled">
                                     {{-- <li><a href="{{ route('item-settings', ['confg' => 'staff','settings' => 'departments']) }}" class="fs-6 text-info fw-bold">Departments</a></li> <!-- Change text color to blue --> --}}
-                                    <li><a href="{{ route('item-settings', ['confg' => 'staff','settings' => 'loan-rates']) }}" class="fs-6 text-info fw-bold">Staff</a></li> 
-                                    <li><a href="{{ route('item-settings', ['confg' => 'staff','settings' => 'loan-rates']) }}" class="fs-6 text-info fw-bold">Staff Roles & Permissions</a></li> 
-                                    <li><a href="{{ route('item-settings', ['confg' => 'staff','settings' => 'departments']) }}" class="fs-6 text-info fw-bold">Staff Email Notifications</a></li>
-                                    <li><a href="{{ route('item-settings', ['confg' => 'staff','settings' => 'departments']) }}" class="fs-6 text-info fw-bold">Audit Management</a></li>
+                                    <li><a href="{{ route('employees') }}" class="fs-6 text-info fw-bold">Staff</a></li> 
+                                    @can('view user roles')
+                                    <li><a href="{{ route('roles', ['confg' => 'user','settings' => 'user-roles']) }}" class="fs-6 text-info fw-bold">User Roles & Permissions</a></li> 
+                                    @endcan
+                                    <li><a href="#" class="fs-6 text-muted fw-bold">Staff Email Notifications</a></li>
+                                    <li><a href="#" class="fs-6 text-muted fw-bold">Audit Management</a></li>
                                 </ul>
                             </div>
                         </div>
@@ -69,8 +69,8 @@
                             <div class="fs-4 fw-bold text-dark">Manage Branches</div>
                             <div class="d-flex flex-wrap mb-6 p-4">
                                 <ul class="list-unstyled">
-                                    <li><a href="{{ route('item-settings', ['confg' => 'rewards-badges','settings' => 'badges']) }}" class="fs-6 text-info fw-bold">Branches</a></li> <!-- Change text color to blue -->
-                                    <li><a href="{{ route('item-settings', ['confg' => 'rewards-badges','settings' => 'rewards']) }}" class="fs-6 text-info fw-bold">Branch Holidays</a></li> <!-- Change text color to blue -->
+                                    <li><a href="#" class="fs-6 text-muted disabled fw-bold">Branches</a></li> <!-- Change text color to blue -->
+                                    <li><a href="#" class="fs-6 text-muted disabled fw-bold">Branch Holidays</a></li> <!-- Change text color to blue -->
                                 </ul>
                             </div>
                         </div>
@@ -82,13 +82,13 @@
                             <div class="fs-4 fw-bold text-dark">Borrowers</div>
                             <div class="d-flex flex-wrap mb-6 p-4">
                                 <ul class="list-unstyled">
-                                    <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-rates']) }}" class="fs-6 text-info fw-bold">Download Statements/Schedules</a></li> 
-                                    <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-rates']) }}" class="fs-6 text-info fw-bold">Format Borrower Report</a></li> 
-                                    <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-rates']) }}" class="fs-6 text-info fw-bold">Rename Borrower Report</a></li> 
-                                    <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-rates']) }}" class="fs-6 text-info fw-bold">Rename Collect Sheet Headings</a></li> 
-                                    <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-rates']) }}" class="fs-6 text-info fw-bold">Manage Loan Officers</a></li> 
-                                    <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-rates']) }}" class="fs-6 text-info fw-bold">Invite Borrowers Settings</a></li> 
-                                    <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-rates']) }}" class="fs-6 text-info fw-bold">Bulk Update Borrowers With Loan Officers</a></li> 
+                                    <li><a href="#" class="fs-6 text-muted disabled fw-bold">Download Statements/Schedules</a></li> 
+                                    <li><a href="#" class="fs-6 text-muted disabled fw-bold">Format Borrower Report</a></li> 
+                                    <li><a href="#" class="fs-6 text-muted disabled fw-bold">Rename Borrower Report</a></li> 
+                                    <li><a href="#" class="fs-6 text-muted disabled fw-bold">Rename Collect Sheet Headings</a></li> 
+                                    <li><a href="#" class="fs-6 text-muted disabled fw-bold">Manage Loan Officers</a></li> 
+                                    <li><a href="#" class="fs-6 text-muted disabled fw-bold">Invite Borrowers Settings</a></li> 
+                                    <li><a href="#" class="fs-6 text-muted disabled fw-bold">Bulk Update Borrowers With Loan Officers</a></li> 
                                 </ul>
                             </div>
                         </div>
@@ -100,8 +100,8 @@
                             <div class="fs-4 fw-bold text-dark">Repayments</div>
                             <div class="d-flex flex-wrap mb-6 p-4">
                                 <ul class="list-unstyled">
-                                    <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-rates']) }}" class="fs-6 text-info fw-bold">Loan Repayment Methods</a></li> 
-                                    <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-rates']) }}" class="fs-6 text-info fw-bold">Manage Collectors</a></li> 
+                                    <li><a href="#" class="fs-6 text-muted disabled fw-bold">Loan Repayment Methods</a></li> 
+                                    <li><a href="#" class="fs-6 text-muted disabled fw-bold">Manage Collectors</a></li> 
                                 </ul>
                             </div>
                         </div>
@@ -114,7 +114,7 @@
                             <div class="fs-4 fw-bold text-dark">Collateral</div>
                             <div class="d-flex flex-wrap mb-6 p-4">
                                 <ul class="list-unstyled">
-                                    <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-rates']) }}" class="fs-6 text-info fw-bold">Collecteral Types</a></li> 
+                                    <li><a href="#" class="fs-6 text-muted disabled fw-bold">Collecteral Types</a></li> 
                                 </ul>
                             </div>
                         </div>
@@ -126,7 +126,7 @@
                             <div class="fs-4 fw-bold text-dark">Other Income</div>
                             <div class="d-flex flex-wrap mb-6 p-4">
                                 <ul class="list-unstyled">
-                                    <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-rates']) }}" class="fs-6 text-info fw-bold">Other Income</a></li> 
+                                    <li><a href="#" class="fs-6 text-muted disabled fw-bold">Other Income</a></li> 
                                 </ul>
                             </div>
                         </div>
@@ -138,11 +138,11 @@
                             <div class="fs-4 fw-bold text-dark">Bulk Updates</div>
                             <div class="d-flex flex-wrap mb-6 p-4">
                                 <ul class="list-unstyled">
-                                    <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-rates']) }}" class="fs-6 text-info fw-bold">Upload Borrowers from CSV file</a></li> 
-                                    <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-rates']) }}" class="fs-6 text-info fw-bold">Upload Loans from CSV file</a></li> 
-                                    <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-rates']) }}" class="fs-6 text-info fw-bold">Upload Repayments from CSV file</a></li> 
-                                    <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-rates']) }}" class="fs-6 text-info fw-bold">Upload Expenses from CSV file</a></li> 
-                                    <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-rates']) }}" class="fs-6 text-info fw-bold">Upload Other Income from CSV file</a></li> 
+                                    <li><a href="#" class="fs-6 text-muted disabled fw-bold">Upload Borrowers from CSV file</a></li> 
+                                    <li><a href="#" class="fs-6 text-muted disabled fw-bold">Upload Loans from CSV file</a></li> 
+                                    <li><a href="#" class="fs-6 text-muted disabled fw-bold">Upload Repayments from CSV file</a></li> 
+                                    <li><a href="#" class="fs-6 text-muted disabled fw-bold">Upload Expenses from CSV file</a></li> 
+                                    <li><a href="#" class="fs-6 text-muted disabled fw-bold">Upload Other Income from CSV file</a></li> 
                                 </ul>
                             </div>
                         </div>
@@ -155,7 +155,7 @@
                             <div class="fs-4 fw-bold text-dark">Asset Management</div>
                             <div class="d-flex flex-wrap mb-6 p-4">
                                 <ul class="list-unstyled">
-                                    <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-rates']) }}" class="fs-6 text-info fw-bold">Asset Management Types</a></li> 
+                                    <li><a href="#" class="fs-6 text-muted disabled fw-bold">Asset Management Types</a></li> 
                                 </ul>
                             </div>
                         </div>

@@ -135,7 +135,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::post('apply-proxy-loan', [LoanApplicationController::class, 'new_proxy_loan'])->name('proxy-apply-loan');
     Route::post('update-loan', [LoanApplicationController::class, 'updateLoanDetails'])->name('update-loan-details');
     Route::post('update-loan-statuses', [LoanProductController::class, 'updateLoanStatus'])->name('update-loan-statuses');
-
+    Route::get('delete-loan-step/{loan_step}', [LoanProductController::class, 'deleteStep'])->name('delete-loan-step');
+    
     // ---- Payments
     Route::get('make-payments', PaymentPage::class)->name('payments');
     Route::get('/payments-portal', PaymentGatePage::class)->name('payment.gate');
@@ -173,8 +174,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
 
     // ------ Role Permission
+    Route::post('create-role', [RoleController::class, 'store'])->name('create-role');
     Route::post('update-role', [RoleController::class, 'update'])->name('update-role');
-
+    
     // ----- System Settings
     Route::get('system-settings', SystemSettings::class)->name('sys-settings');
     Route::get('system-property-settings', SystemItemSettings::class)->name('item-settings');

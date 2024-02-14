@@ -45,6 +45,10 @@ trait LoanTrait{
         ])->first();
     }
 
+    public function get_loan_statuses($id){
+        return LoanStatus::with('status')->where('loan_product_id', $id)
+                        ->get();
+    }
     public function get_loan_current_stage($id){
         return LoanStatus::with('status')->where('loan_product_id', $id)
                         ->first();
@@ -88,15 +92,8 @@ trait LoanTrait{
     }
     public function getOpenLoanRequests($type){
         $userId = auth()->user()->id;
-        // if ($this->type) {
-        //     $loan_requests->whereIn('type', $this->type)->orderBy('id', 'desc');
-        // }
-
-        // if ($this->status) {
-        //     $loan_requests->whereIn('status', $this->status)->orderBy('id', 'desc');
-        // }
         if(auth()->user()->hasRole('admin')){
-            return Application::with('loan_product')->where('complete', 1)->get();
+            return Application::with('loan_product')->where('complete', 1)->where('status', 1)->get();
         }else{
             switch ($type) {
                 case 'spooling':

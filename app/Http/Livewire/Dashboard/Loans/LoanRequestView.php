@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Redirect;
 
 class LoanRequestView extends Component
 {
-    use EmailTrait, WalletTrait, LoanTrait, SettingTrait, UserTrait;
+    use EmailTrait, WalletTrait, LoanTrait, SettingTrait, UserTrait, AuthorizesRequests;
     public $loan_requests, $loan_request, $new_loan_user, $user_basic_pay, $user_net_pay, $loan_id;
     public $type = [];
     public $status = [];
@@ -29,6 +29,8 @@ class LoanRequestView extends Component
     public $assignModal = false;
     public function render()
     {
+        
+        $this->authorize('view loans');
         try {
             // Retrieve users with the 'user' role, excluding their applications
             $this->users = User::role('user')->without('applications')->get();
