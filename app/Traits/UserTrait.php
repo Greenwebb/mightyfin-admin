@@ -3,6 +3,7 @@
 namespace App\Traits;
 
 use App\Models\Application;
+use App\Models\ApplicationStage;
 use App\Models\BankDetails;
 use App\Models\NextOfKing;
 use App\Models\References;
@@ -88,10 +89,14 @@ trait UserTrait{
                     $files->contains('name', 'nrc_file') &&
                     $files->contains('name', 'tpin_file')
                 ){
-                    Application::where('status', 0)
+                    $a = Application::where('status', 0)
                     ->where('complete', 0)
                     ->where('user_id',auth()->user()->id)
                     ->update(['complete' => 1]);
+                    
+                    ApplicationStage::where('application_id', $a->id)->update([
+                        'position' => 1
+                    ]);
                 }
             }
         }
@@ -114,6 +119,10 @@ trait UserTrait{
                 ){
                     $loan->complete = 1;
                     $loan->save();
+
+                    ApplicationStage::where('application_id', $loan->id)->update([
+                        'position' => 1
+                    ]);
                 }
             }
         }

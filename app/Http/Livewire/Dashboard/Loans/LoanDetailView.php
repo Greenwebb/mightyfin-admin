@@ -116,9 +116,6 @@ class LoanDetailView extends Component
             ->take(1)
             ->first();
             
-            // dd($next_status);
-
-
             $this->current->update([
                 'state' => 'current',
                 'status' => $next_status->status->name,

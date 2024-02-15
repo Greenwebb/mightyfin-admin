@@ -47,10 +47,6 @@ class LoanApplicationSeeder extends Seeder
             'loan_product_id' => 1
         ]);
 
-        // $status = LoanStatus::with('status')->where('loan_product_id', 1)
-        // ->orderBy('id', 'asc')
-        // ->first();
-
         ApplicationStage::create([
             'application_id' => $app->id,
             'loan_status_id' => 1,
@@ -58,22 +54,9 @@ class LoanApplicationSeeder extends Seeder
             'status' => 'verification',
             'stage' => 'processing',
             'prev_status' => 'current',
-            'curr_status' => ''
-        ]);        
-        
-        // $status = LoanStatus::with('status')->where('loan_product_id', 1)
-        // ->orderBy('id', 'asc')
-        // ->first();
-
-        // ApplicationStage::create([
-        //     'application_id' => $app,
-        //     'loan_product_id' => 1,
-        //     'state' => 'current',
-        //     'status' => $status->status->first()->name,
-        //     'stage' => $status->stage,
-        //     'prev_status' => 'current',
-        //     'curr_status' => ''
-        // ]);
+            'curr_status' => '',
+            'position'=>1
+        ]);
     }
 }
 

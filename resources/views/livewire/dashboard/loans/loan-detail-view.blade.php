@@ -83,7 +83,6 @@
                     <!--begin::Details-->
                     <div class="col-12">
                         @if($loan_product->loan_status !== null || $loan_product !== null)
-                           
                             @switch(strtolower($current->stage))
                                 @case('processing')
                                     <div class="tabbable">
@@ -91,12 +90,13 @@
                                             <li class="active"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">1</span>Application Submitted</a></li>
                                             @php
                                                 $count = 1;
+                                                
                                             @endphp
                                             @forelse ($loan_product->loan_status->where('stage', 'processing') as $key => $step)
                                                 @php
                                                     $count ++;
                                                 @endphp
-                                                <li class="" id="{{$step->stage}}"><a href="#w{{ $step->id }}" data-toggle="tab" aria-expanded="false"><span class="nmbr">{{ $count }}</span>{{ $step->status->name }}</a></li>
+                                                <li class="{{ $current->position >= $count ? 'completed' : '' }}" id="{{$step->stage}}"><a href="#w{{ $step->id }}" data-toggle="tab" aria-expanded="false"><span class="nmbr">{{ $count }}</span>{{ $step->status->name }}</a></li>
                                             @empty
                                             @endforelse    
                                         </ul>
@@ -111,17 +111,21 @@
                                     </div>
                                 @break
                                 @default
-                                    <div class="tabbable">
-                                        <ul class="nav nav-tabss wizard">
-                                            <li class="active"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">1</span>Application Submitted</a></li>
-                                            @forelse ($loan_product->loan_status->where('stage', 'processing') as $key => $step)
-                                                
-                                            
-                                            <li class="" id="{{$step->stage}}"><a href="#w{{ $step->id }}" data-toggle="tab" aria-expanded="false"><span class="nmbr">{{ $key + 1 }}</span>{{ $step->status->name }}</a></li>
-                                            @empty
-                                            @endforelse    
-                                        </ul>
-                                    </div>
+                                <div class="tabbable">
+                                    <ul class="nav nav-tabss wizard">
+                                        <li class="active"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">1</span>Application Submitted</a></li>
+                                        @php
+                                            $count = 1;
+                                        @endphp
+                                        @forelse ($loan_product->loan_status->where('stage', 'processing') as $key => $step)
+                                            @php
+                                                $count ++;
+                                            @endphp
+                                            <li class="" id="{{$step->stage}}"><a href="#w{{ $step->id }}" data-toggle="tab" aria-expanded="false"><span class="nmbr">{{ $count }}</span>{{ $step->status->name }}</a></li>
+                                        @empty
+                                        @endforelse    
+                                    </ul>
+                                </div>
                                 @break
                             @endswitch
                         @else                                                                         
@@ -309,6 +313,7 @@
         @break
 
         @case('open')
+            
             @switch(strtolower($current->status))
                 @case('current loan')
                     @include('livewire.dashboard.loans.__stages.open.current-loan')
