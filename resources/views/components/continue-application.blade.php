@@ -1036,10 +1036,7 @@
       if (!fileInput6.value && preapprovalExists === 'null') {
         preapprovalError.textContent = 'Please upload signed Preapproval form';
       }
-    //   if (!fileInput7.value && letterExists === 'null') {
-    //     letterError.textContent = 'Please upload Letter of Introduction';
-    //   }
-    // || !fileInput7.value && letterExists === 'null'
+      
       if (!fileInput3.value && payslipExists === 'null'|| 
           !fileInput4.value && bankExists === 'null' || 
           !fileInput5.value && passportExists === 'null'|| 

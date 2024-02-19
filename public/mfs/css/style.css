@@ -91,7 +91,7 @@ body {
   line-height: 1.5;
   color: #7184ad;
   background: linear-gradient(to bottom, #330066, #660099);
-  background-image: url("{{ asset('https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fg%2Fayenomoh&psig=AOvVaw1SzuDLKEHeFFUrDLSwMd6r&ust=1702361782174000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCOiHkYHehoMDFQAAAAAdAAAAABAD') }}");
+  /* background-image: url("{{ asset('https://www.google.com/url?sa=i&url=https%3A%2F%2Fwww.shutterstock.com%2Fg%2Fayenomoh&psig=AOvVaw1SzuDLKEHeFFUrDLSwMd6r&ust=1702361782174000&source=images&cd=vfe&opi=89978449&ved=0CBIQjRxqFwoTCOiHkYHehoMDFQAAAAAdAAAAABAD') }}"); */
   background-size: cover;
   background-position: center;
   background-blend-mode: multiply;

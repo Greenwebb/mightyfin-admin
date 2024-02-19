@@ -114,8 +114,9 @@
                             <!--end::Export-->
                             <!--begin::Add customer-->
                             @can('create clientele')
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer">Add Customer</button>
+                            <a href="{{ route('new-borrower') }}" class="btn btn-primary">Add Customer</a>
                             @endcan
+                            {{-- data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer" --}}
                             <!--end::Add customer-->
                         </div>
                         <!--end::Toolbar-->

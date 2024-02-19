@@ -187,11 +187,11 @@ trait LoanTrait{
                         'application_id' => $item->id,
                         'loan_product_id' => 1,
                         'state' => 'current',
-                        'status' => 'pending kyc',
-                        // 'status' => $status->status->first()->name,
+                        'status' => $status->status->first()->name,
                         'stage' => $status->stage,
                         'prev_status' => 'current',
-                        'curr_status' => 'bg-white'
+                        'curr_status' => 'bg-white',
+                        'position'=>1
                     ]);
                     return $item->id;
                 }else{

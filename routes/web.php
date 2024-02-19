@@ -14,6 +14,7 @@ use App\Http\Livewire\Dashboard\Accounts\MakePaymentView;
 use App\Http\Livewire\Dashboard\Accounts\MyProfile;
 use App\Http\Livewire\Dashboard\Borrowers\BorrowerView;
 use App\Http\Livewire\Dashboard\Borrowers\LoanStatementView as BorrowersLoanStatementView;
+use App\Http\Livewire\Dashboard\Borrowers\NewCustomer;
 use App\Http\Livewire\Dashboard\Borrowers\SendBorrowerMessageView;
 use App\Http\Livewire\Dashboard\DashboardView;
 use App\Http\Livewire\Dashboard\Employees\EmployeesView;
@@ -121,6 +122,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
     // ---- Borrowers
     Route::get('borrowers', BorrowerView::class)->name('borrowers');
+    Route::get('new-borrower', NewCustomer::class)->name('new-borrower');
     Route::get('loan-statement/{id}', BorrowersLoanStatementView::class)->name('loan-statement');
     Route::get('send-messages-to-borrowers', SendBorrowerMessageView::class)->name('notify-borrowers');
 
