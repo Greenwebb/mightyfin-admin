@@ -185,14 +185,15 @@ trait LoanTrait{
 
                     ApplicationStage::create([
                         'application_id' => $item->id,
-                        'loan_product_id' => 1,
+                        'loan_status_id' => 1,
                         'state' => 'current',
-                        'status' => $status->status->first()->name,
-                        'stage' => $status->stage,
+                        'status' => 'verification',
+                        'stage' => 'processing',
                         'prev_status' => 'current',
-                        'curr_status' => 'bg-white',
-                        'position'=>1
+                        'curr_status' => '',
+                        'position'=> 1
                     ]);
+                    
                     return $item->id;
                 }else{
                     // redirect to you already have loan request
