@@ -46,13 +46,13 @@ class LoanProductSeeder extends Seeder
             'def_loan_duration' => 1,
             'max_loan_duration' => 2,
     
-            'min_loan_interest' => 10,
-            'def_loan_interest' => 15,
-            'max_loan_interest' => 20,
+            'min_loan_interest' => 15,
+            'def_loan_interest' => 30,
+            'max_loan_interest' => 40,
     
             'min_num_of_repayments' => 1,
             'def_num_of_repayments' => 1,
-            'max_num_of_repayments' => 2,
+            'max_num_of_repayments' => 3,
         ]);
 
         for ($i=0; $i < 4; $i++) { 
