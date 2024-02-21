@@ -540,7 +540,12 @@
                                                         <a href="{{ 'public/'.Storage::url($loan->user->uploads->where('name', 'nrc_file')->first()->path) }}"  class="open-modal" data-toggle="modal" data-target="#fileModal" data-file-url="{{ 'public/'.Storage::url($loan->user->uploads[0]->path) }}">
                                                             <img width="90" src="{{ asset('public/mfs/admin/assets/media/svg/files/pdf.svg') }}">
                                                         </a>
-                                                        <p class="file-list">NRC uploaded on {{ $loan->user->uploads->where('name', 'nrc_file')->first()->created_at->toFormattedDateString() }}</p>
+                                                        <p class="file-list">NRC uploaded on 
+                                                            {{ 
+                                                                $loan->user->uploads->where('name', 'nrc_file')->first() ?
+                                                                $loan->user->uploads->where('name', 'nrc_file')->first()->created_at->toFormattedDateString() : '' 
+                                                            }}
+                                                        </p>
                                                     </div>
                                                 @endif
                                                 @if ($loan->user->uploads->where('name', 'tpin_file')->isNotEmpty())
@@ -548,7 +553,12 @@
                                                         <a href="{{ 'public/'.Storage::url($loan->user->uploads->where('name', 'tpin_file')->first()->path) }}"  class="open-modal" data-toggle="modal" data-target="#fileModal" data-file-url="{{ 'public/'.Storage::url($loan->user->uploads[0]->path) }}">
                                                             <img width="90" src="{{ asset('public/mfs/admin/assets/media/svg/files/pdf.svg') }}">
                                                         </a>
-                                                        <p class="file-list">Tpin uploaded on {{ $loan->user->uploads->where('name', 'tpin_file')->first()->created_at->toFormattedDateString() }}</p>
+                                                        <p class="file-list">Tpin uploaded on 
+                                                            {{ 
+                                                                $loan->user->uploads->where('name', 'tpin_file')->first() ? 
+                                                                $loan->user->uploads->where('name', 'tpin_file')->first()->created_at->toFormattedDateString() : '' 
+                                                            }}
+                                                        </p>
                                                     </div>
                                                 @endif
                                             </div>
@@ -558,7 +568,11 @@
                                                         <a href="{{ 'public/'.Storage::url($loan->user->uploads->where('name', 'preapproval')->first()->path) }}"  class="open-modal" data-toggle="modal" data-target="#fileModal" data-file-url="{{ 'public/'.Storage::url($loan->user->uploads[0]->path) }}">
                                                             <img width="90" src="{{ asset('public/mfs/admin/assets/media/svg/files/pdf.svg') }}">
                                                         </a>
-                                                        <p class="file-list">Preapproval uploaded on {{ $loan->user->uploads->where('name', 'preapproval')->first()->created_at->toFormattedDateString() }}</p>
+                                                        <p class="file-list">Preapproval uploaded on 
+                                                            {{ 
+                                                                $loan->user->uploads->where('name', 'preapproval')->first() ?
+                                                                $loan->user->uploads->where('name', 'preapproval')->first()->created_at->toFormattedDateString() :'' 
+                                                            }}</p>
                                                     </div>
                                                 @endif
                                                 @if ($loan->user->uploads->where('name', 'letterofintro')->isNotEmpty())
@@ -566,7 +580,11 @@
                                                         <a href="{{ 'public/'.Storage::url($loan->user->uploads->where('name', 'letterofintro')->first()->path) }}"  class="open-modal" data-toggle="modal" data-target="#fileModal" data-file-url="{{ 'public/'.Storage::url($loan->user->uploads[0]->path) }}">
                                                             <img width="90" src="{{ asset('public/mfs/admin/assets/media/svg/files/pdf.svg') }}">
                                                         </a>
-                                                        <p class="file-list">Letter of Introduction uploaded on {{ $loan->user->uploads->where('name', 'letterofintro')->first()->created_at->toFormattedDateString() }}</p>
+                                                        <p class="file-list">Letter of Introduction uploaded on 
+                                                            {{ 
+                                                            $loan->user->uploads->where('name', 'letterofintro')->first() ?
+                                                            $loan->user->uploads->where('name', 'letterofintro')->first()->created_at->toFormattedDateString() : '' 
+                                                        }}</p>
                                                     </div>
                                                 @endif
                                             </div>
@@ -576,7 +594,12 @@
                                                         <a href="{{ 'public/'.Storage::url($loan->user->uploads->where('name', 'bankstatement')->first()->path) }}"  class="open-modal" data-toggle="modal" data-target="#fileModal" data-file-url="{{ 'public/'.Storage::url($loan->user->uploads[0]->path) }}">
                                                             <img width="90" src="{{ asset('public/mfs/admin/assets/media/svg/files/pdf.svg') }}">
                                                         </a>
-                                                        <p class="file-list">Bank Statement uploaded on {{ $loan->user->uploads->where('name', 'bankstatement')->first()->created_at->toFormattedDateString() }}</p>
+                                                        <p class="file-list">Bank Statement uploaded on 
+                                                            {{ 
+                                                                $loan->user->uploads->where('name', 'bankstatement')->first() ?
+                                                                $loan->user->uploads->where('name', 'bankstatement')->first()->created_at->toFormattedDateString() : '' 
+                                                            }}
+                                                        </p>
                                                     </div>
                                                 @endif
                                                 @if ($loan->user->uploads->where('name', 'payslip_file')->isNotEmpty())
@@ -584,7 +607,10 @@
                                                         <a href="{{ 'public/'.Storage::url($loan->user->uploads->where('name', 'payslip_file')->first()->path) }}"  class="open-modal" data-toggle="modal" data-target="#fileModal" data-file-url="{{ 'public/'.Storage::url($loan->user->uploads[0]->path) }}">
                                                             <img width="90" src="{{ asset('public/mfs/admin/assets/media/svg/files/pdf.svg') }}">
                                                         </a>
-                                                        <p class="file-list">Payslip uploaded on {{ $loan->user->uploads->where('name', 'payslip_file')->first()->created_at->toFormattedDateString() }}</p>
+                                                        <p class="file-list">Payslip uploaded on {{ 
+                                                        $loan->user->uploads->where('name', 'payslip_file')->first() ?
+                                                        $loan->user->uploads->where('name', 'payslip_file')->first()->created_at->toFormattedDateString() :''
+                                                        }}</p>
                                                     </div>
                                                 @endif
                                                 @if ($loan->user->uploads->where('name', 'passport')->isNotEmpty())
@@ -592,7 +618,11 @@
                                                         <a href="{{ 'public/'.Storage::url($loan->user->uploads->where('name', 'passport')->first()->path) }}"  class="open-modal" data-toggle="modal" data-target="#fileModal" data-file-url="{{ 'public/'.Storage::url($loan->user->uploads[0]->path) }}">
                                                             <img width="90" src="{{ asset('public/mfs/admin/assets/media/svg/files/pdf.svg') }}">
                                                         </a>
-                                                        <p class="file-list">Passport Size photo uploaded on {{ $loan->user->uploads->where('name', 'passport')->first()->created_at->toFormattedDateString() }}</p>
+                                                        <p class="file-list">Passport Size photo uploaded on 
+                                                            {{ 
+                                                                $loan->user->uploads->where('name', 'passport')->first()->created_at ? 
+                                                                $loan->user->uploads->where('name', 'passport')->first()->created_at->toFormattedDateString() : '' 
+                                                            }}</p>
                                                     </div>
                                                 @endif
                                             </div>

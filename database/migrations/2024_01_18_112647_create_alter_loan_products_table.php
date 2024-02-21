@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('loan_products', function (Blueprint $table) {
-            $table->text('icon_alt');
+            $table->text('icon_alt')->nullable();
         });
     }
 
