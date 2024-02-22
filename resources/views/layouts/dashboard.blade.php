@@ -19,7 +19,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
     <title>Mighty Finance Solution | App</title>
     <!-- Favicon icon -->
-    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('public/web/images/01-ft-logo.png') }}" />
+    <link rel="icon" type="image/png" sizes="16x16" href="{{ asset('public/images/m.jpg') }}" />
     <!-- Custom Stylesheet -->
 
     <link rel="stylesheet" href="{{ asset('public/mfs/css/style.css') }}" />

@@ -534,7 +534,7 @@
                                 <div class="card-body py-0">
 
                                     <div class="row g-6 g-xl-9 mb-6 mb-xl-9">
-                                        <div class="row">
+                                        {{-- <div class="row">
                                             <div class="row col-6">
                                                 @if ($loan->user->uploads->where('name', 'nrc_file')->isNotEmpty())
                                                     <div class="col-6">
@@ -543,7 +543,7 @@
                                                         </a>
                                                         <p class="file-list">NRC uploaded on 
                                                             {{ 
-                                                                $loan->user->uploads->where('name', 'nrc_file')->first() != null ?
+                                                                $loan->user->uploads != null ?
                                                                 $loan->user->uploads->where('name', 'nrc_file')->first()->created_at->toFormattedDateString() : '' 
                                                             }}
                                                         </p>
@@ -556,7 +556,7 @@
                                                         </a>
                                                         <p class="file-list">Tpin uploaded on 
                                                             {{ 
-                                                                $loan->user->uploads->where('name', 'tpin_file')->first() != null ? 
+                                                                $loan->user->uploads != null ? 
                                                                 $loan->user->uploads->where('name', 'tpin_file')->first()->created_at->toFormattedDateString() : '' 
                                                             }}
                                                         </p>
@@ -571,7 +571,7 @@
                                                         </a>
                                                         <p class="file-list">Preapproval uploaded on 
                                                             {{ 
-                                                                $loan->user->uploads->where('name', 'preapproval')->first() != null ?
+                                                                $loan->user->uploads != null ?
                                                                 $loan->user->uploads->where('name', 'preapproval')->first()->created_at->toFormattedDateString() :'' 
                                                             }}</p>
                                                     </div>
@@ -583,7 +583,7 @@
                                                         </a>
                                                         <p class="file-list">Letter of Introduction uploaded on 
                                                             {{ 
-                                                            $loan->user->uploads->where('name', 'letterofintro')->first() != null ?
+                                                            $loan->user->uploads != null ?
                                                             $loan->user->uploads->where('name', 'letterofintro')->first()->created_at->toFormattedDateString() : '' 
                                                         }}</p>
                                                     </div>
@@ -597,7 +597,7 @@
                                                         </a>
                                                         <p class="file-list">Bank Statement uploaded on 
                                                             {{ 
-                                                                $loan->user->uploads->where('name', 'bankstatement')->first() != null ?
+                                                                $loan->user->uploads != null ?
                                                                 $loan->user->uploads->where('name', 'bankstatement')->first()->created_at->toFormattedDateString() : '' 
                                                             }}
                                                         </p>
@@ -609,7 +609,7 @@
                                                             <img width="90" src="{{ asset('public/mfs/admin/assets/media/svg/files/pdf.svg') }}">
                                                         </a>
                                                         <p class="file-list">Payslip uploaded on {{ 
-                                                        $loan->user->uploads->where('name', 'payslip_file')->first() != null ?
+                                                        $loan->user->uploads != null ?
                                                         $loan->user->uploads->where('name', 'payslip_file')->first()->created_at->toFormattedDateString() :''
                                                         }}</p>
                                                     </div>
@@ -621,13 +621,13 @@
                                                         </a>
                                                         <p class="file-list">Passport Size photo uploaded on 
                                                             {{ 
-                                                                $loan->user->uploads->where('name', 'passport')->first() != null ? 
+                                                                $loan->user->uploads != null ? 
                                                                 $loan->user->uploads->where('name', 'passport')->first()->created_at->toFormattedDateString() : '' 
                                                             }}</p>
                                                     </div>
                                                 @endif
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     </div>
                                 </div>
                                 
