@@ -294,13 +294,13 @@
         
         @case('processing')
             @switch(strtolower($current->status))
-                {{-- @case('reviewing')
+                @case('reviewing')
                     @include('livewire.dashboard.loans.__stages.processing.reviewing')
-                @break --}}
+                @break
                 @case('verification')
                     @include('livewire.dashboard.loans.__stages.processing.verification')
                 @break
-                {{-- @case('approval')
+                @case('approval')
                     @include('livewire.dashboard.loans.__stages.processing.approval')
                 @break
                 @case('disbursements')
@@ -308,22 +308,23 @@
                 @break
                 @default
                     @include('livewire.dashboard.loans.__stages.processing.reviewing')
-                @break --}}
+                @break
             @endswitch
         @break
 
-        {{-- @case('open')
+        @case('open')
             
             @switch(strtolower($current->status))
                 @case('current loan')
+                    
                     @include('livewire.dashboard.loans.__stages.open.current-loan')
                 @break
                 @default
                     @include('livewire.dashboard.loans.__stages.open.current-due-today')
                 @break
             @endswitch
-        @break --}}
-{{-- 
+        @break
+
         @case('denied')
             @switch(strtolower($current->status))
                 @case('incomplet kyc')
@@ -342,7 +343,7 @@
                     @include('livewire.dashboard.loans.__stages.denied.fraud')
                 @break
             @endswitch
-        @break --}}
+        @break
 
         @default
         <div class="modal fade show" id="kt_modal_decline_warning" tabindex="-1" aria-hidden="true">

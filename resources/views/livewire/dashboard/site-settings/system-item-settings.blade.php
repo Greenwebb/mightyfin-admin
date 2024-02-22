@@ -58,6 +58,10 @@
                     @case('send-borrower-otp')
                         @include('livewire.dashboard.site-settings.__parts.send-borrower-otp')
                     @break
+
+                    @case('institutes')
+                        @include('livewire.dashboard.site-settings.__parts.institutes')
+                    @break
                     
                     @default
                         @include('livewire.dashboard.site-settings.__parts.default-page')

@@ -3,6 +3,7 @@
 namespace App\Http\Livewire\Dashboard\SiteSettings;
 
 use App\Models\DisbursedBy;
+use App\Models\Institution;
 use App\Traits\LoanTrait;
 use App\Traits\SettingTrait;
 use App\Models\LoanAccountPayment;
@@ -25,20 +26,17 @@ class SystemItemSettings extends Component
 {
     use SettingTrait, LoanTrait, DisbursementTrait;
     public $settings, $title, $subtitle, $current_conf;
-    public $loan_products, $disbursements, $repayment_cycles, $penalties, $loan_fees;
+    public $loan_products, $disbursements, $repayment_cycles, $penalties, $loan_fees,$institutions;
     public function render()
     {
         $this->settings = $_GET['settings'];
         $this->current_conf = $this->current_configs($_GET['settings']);
-        // Loan Products
         $this->loan_products = $this->get_all_loan_products();
-        // Disbursement Methods
         $this->disbursements = $this->get_all_disbursement_methods();
-        // Repayment Cycles
         $this->repayment_cycles = $this->get_all_repayment_cycle();
-        // Repayment Cycles
         $this->penalties = $this->get_all_penalties();
         $this->loan_fees = $this->get_all_loan_fees();
+        $this->institutions = Institution::where('status', 1)->get();
         return view('livewire.dashboard.site-settings.system-item-settings')
         ->layout('layouts.admin');
     }
@@ -95,7 +93,18 @@ class SystemItemSettings extends Component
             Session::flash('success', "Loan Fee deleted successfully.");
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-fees']);
         } catch (\Throwable $th) {
-            Session::flash('success', "Loan Fee deleted successfully.");
+            Session::flash('error', "Loan Fee deleted successfully.");
+            return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-fees']);
+        }
+    }
+
+    public function deleteInstitute($id){
+        try {
+            Institution::where('id', $id)->delete();
+            Session::flash('success', "Institution deleted successfully.");
+            return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-fees']);
+        } catch (\Throwable $th) {
+            Session::flash('error', "Institution deleted successfully.");
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-fees']);
         }
     }

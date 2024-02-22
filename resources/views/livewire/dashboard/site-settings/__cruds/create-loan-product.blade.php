@@ -718,7 +718,7 @@
                     <div id="kt_account_profile_details_form" class="form">
                         <!--begin::Card body-->
                         <div class="card-body border-top p-9">
-                            <div class="row mb-6">
+                            {{-- <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label fw-bold fs-6">Sector</label>
                                 <div class="col-lg-8 fv-row">
                                     <select type="text" wire:model="sector" class="form-select form-control form-control-lg form-control-solid">
@@ -728,14 +728,14 @@
                                         <option value="ngo">NGO</option>
                                     </select>
                                 </div>
-                            </div>
+                            </div> --}}
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Institutions</label>
                                 <div class="col-lg-8 fv-row">
                                     <div class="d-block mt-3">
-                                        @forelse ($institutions as $option)
-                                        <label for="{{ $option->name }}" class="mt-2 form-check form-check-custom form-check-inline form-check-solid me-5">
-                                            <input id="{{ $option->name }}" class="form-check-input" wire:model.lazy="loan_institution" type="checkbox" value="{{ $option->id }}" />
+                                        @forelse ($institutions as $key => $option)
+                                        <label for="{{ $key }}" class="mt-2 form-check form-check-custom form-check-inline form-check-solid me-5">
+                                            <input id="{{ $key }}" class="form-check-input" wire:model.lazy="loan_institution" type="checkbox" value="{{ $option->id }}" />
                                             <span class="fw-semibold ps-2 fs-6">{{ $option->name }} </span>
                                         </label>
                                         <br>

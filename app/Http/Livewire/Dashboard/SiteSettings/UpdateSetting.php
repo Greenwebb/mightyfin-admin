@@ -61,7 +61,8 @@ class UpdateSetting extends Component
     public $disbursement_name, $disbursement;
     public $repayment_cycle_name,$repayment_cycle_method;
     public $penalty_amount, $penalty_name, $penalty_grace, $penalty;
-    public $loan_charge, $loan_charge_name, $loan_charge_amount, $loan_institution, $institutions;
+    public $loan_charge, $loan_charge_name, $loan_charge_amount, $loan_institution, $institutions, $institution;
+    public $loan_institute_name, $loan_institute_type;
     public $current_statuses = [];
     public function render()
     {
@@ -101,7 +102,12 @@ class UpdateSetting extends Component
                 $this->current_statuses = $this->get_loan_statuses($_GET['item_id']);
                 $this->set_loan_product_values();
             break;
-            
+
+            case 'institutes':
+                $this->institution = Institution::where('id', $_GET['item_id'])->where('status', 1)->first();
+                $this->loan_institute_name = $this->institution->name;
+                $this->loan_institute_type = $this->institution->type;
+            break;
             
             default:
             break;
@@ -226,6 +232,20 @@ class UpdateSetting extends Component
             Session::flash('error', "Failed. ". $th->getMessage());
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-types']);
         
+        }
+    }
+    
+    public function update_institution(){
+        try {
+            Institution::where('id', $this->institution->id)->update([
+                'name' => $this->loan_institute_name,
+                'type' => $this->loan_institute_type
+            ]);
+            Session::flash('success', "Loan Institution created successfully.");
+            return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'institutes']);
+        } catch (\Throwable $th) {
+            Session::flash('error', "Failed. ". $th->getMessage());
+            return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'institutes']);
         }
     }
 

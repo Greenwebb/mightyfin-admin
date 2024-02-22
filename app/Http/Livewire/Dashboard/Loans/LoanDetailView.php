@@ -132,7 +132,7 @@ class LoanDetailView extends Component
     public function change_status(){
         try {
             
-            $application = Application::where('id', $this->loan_id)->first();
+            $application = Application::find($this->loan_id);
             if ($this->current->stage == 'open') {
                 $application->status = 1;
             } elseif($this->current->stage == 'denied') {
