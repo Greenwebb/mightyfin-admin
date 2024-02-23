@@ -300,7 +300,7 @@
                                                     <table class="table table-flush fw-semibold gy-1">
                                                         {{-- @dd($data->bank) --}}
                                                         @if($data->bank !== null)
-                                                            {{-- <tr>
+                                                            <tr>
                                                                 <td class="text-muted min-w-125px w-125px">Name</td>
                                                                 <td class="text-gray-800">{{ $data->bank->first()->accountNames }}</td>
                                                             </tr>
@@ -311,7 +311,7 @@
                                                             <tr>
                                                                 <td class="text-muted min-w-125px w-125px">Branch Name</td>
                                                                 <td class="text-gray-800">{{ $data->bank->first()->branchName }}</td>
-                                                            </tr> --}}
+                                                            </tr>
                                                             @else
                                                             <span class="text-muted">Not Set</span>
                                                             @endif
@@ -534,7 +534,7 @@
                                 <div class="card-body py-0">
 
                                     <div class="row g-6 g-xl-9 mb-6 mb-xl-9">
-                                        {{-- <div class="row">
+                                        <div class="row">
                                             <div class="row col-6">
                                                 @if ($loan->user->uploads->where('name', 'nrc_file')->isNotEmpty())
                                                     <div class="col-6">
@@ -627,7 +627,7 @@
                                                     </div>
                                                 @endif
                                             </div>
-                                        </div> --}}
+                                        </div>
                                     </div>
                                 </div>
                                 

@@ -82,6 +82,7 @@
                 <div style="margin-top: -4%; padding: 0px;" class="card-body pt-5 pb-0">
                     <!--begin::Details-->
                     <div class="col-12">
+                        @if($loan->complete == 1)
                         @if($loan_product->loan_status !== null || $loan_product !== null)
                             @switch(strtolower($current->stage))
                                 @case('processing')
@@ -129,6 +130,7 @@
                                 @break
                             @endswitch
                         @else                                                                         
+                        @endif
                         @endif
                         
                         <style>
@@ -289,7 +291,8 @@
     <div class="mx-4">
         @include('livewire.dashboard.__parts.dash-alerts')
     </div>
-    
+
+    @if($loan->complete == 1)
     @switch(strtolower($current->stage))
         
         @case('processing')
@@ -313,10 +316,8 @@
         @break
 
         @case('open')
-            
             @switch(strtolower($current->status))
                 @case('current loan')
-                    
                     @include('livewire.dashboard.loans.__stages.open.current-loan')
                 @break
                 @default
@@ -361,7 +362,9 @@
             </div>
         </div>                                                                                                  
     @endswitch
-    
+    @else
+    @include('livewire.dashboard.loans.__stages.denied.incomplet-kyc')
+    @endif
 
     @include('livewire.dashboard.loans.__modals.review-warning')
     @include('livewire.dashboard.loans.__modals.decline-loan')

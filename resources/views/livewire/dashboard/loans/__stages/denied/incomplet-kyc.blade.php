@@ -3,7 +3,7 @@
         <div id="kt_content_container" class="container-xxl">
             <div class="d-flex flex-column flex-xl-row">
                 <div class="flex-column flex-lg-row-auto w-100 w-xl-350px mb-10">
-                    <div class="card mb-5 mb-xl-8">
+                    <div class="card mb-5 mb-xl-8 bg-warning">
                         <div class="card-body pt-15">
                             <div class="d-flex flex-center flex-column mb-5">
 
@@ -48,7 +48,6 @@
                                         </div>
                                         <div class="col-lg-4 bg-info text-white border border-gray-300 border-dashed rounded py-3 px-3 mx-4 m-3">
                                             <div class="fs-4 fw-bold text-gray-700">
-                                                <span class="w-50px text-white">K {{ App\Models\Application::payback($loan->amount, $loan->repayment_plan, $loan_product->id) }}</span>
                                                 <i class="ki-duotone ki-usd fs-3 text-danger">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>
@@ -58,7 +57,6 @@
                                         </div>
                                         <div class="col-lg-4 border border-gray-300 border-dashed rounded py-3 px-3 mx-4 m-3">
                                             <div class="fs-4 fw-bold text-gray-700">
-                                                <span class="w-50px text-warning">K {{ App\Models\Application::monthly_installment($loan->amount, $loan->repayment_plan) }}</span>
                                                 <i class="ki-duotone ki-usd fs-3 text-danger">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>
@@ -97,8 +95,6 @@
                                     </div>
                                     <div class="fw-bold mt-5">Phone</div>
                                     <div class="text-gray-600">+260{{ $loan->phone ?? ' --' }}</div>
-                                    <div class="fw-bold mt-5">Interest Rate</div>
-                                    <div class="text-gray-600">{{ App\Models\Application::interest_rate($loan_product->id) }}</div>
                                 </div>
                             </div>
                         </div>
@@ -164,82 +160,6 @@
                             role="tabpanel">
                             <!--begin::Card-->
                             
-                            <div class="card pt-4 mb-6 mb-xl-9">
-                                <!--begin::Card header-->
-                                <div class="card-header border-0">
-                                    <!--begin::Card title-->
-                                    <div class="card-title">
-                                        <h2>Repayment Records</h2>
-                                    </div>
-                                    <!--end::Card title-->
-                                    <!--begin::Card toolbar-->
-                                    <div class="card-toolbar">
-                                        <!--begin::Filter-->
-                                        <button type="button" class="btn btn-sm btn-flex btn-light-primary"
-                                            data-bs-toggle="modal" data-bs-target="#kt_modal_add_payment">
-                                            <i class="ki-duotone ki-plus-square fs-3">
-                                                <span class="path1"></span>
-                                                <span class="path2"></span>
-                                                <span class="path3"></span>
-                                            </i>Add payment</button>
-                                        <!--end::Filter-->
-                                    </div>
-                                    <!--end::Card toolbar-->
-                                </div>
-                                <!--end::Card header-->
-                                <!--begin::Card body-->
-                                <div class="card-body pt-0 pb-5">
-                                    <!--begin::Table-->
-                                    <table class="table align-middle table-row-dashed gy-5"
-                                        id="kt_table_customers_payment">
-                                        <thead class="border-bottom border-gray-200 fs-7 fw-bold">
-                                            <tr class="text-start text-muted text-uppercase gs-0">
-                                                <th class="min-w-100px">Invoice No.</th>
-                                                <th>Status</th>
-                                                <th>Amount</th>
-                                                <th class="min-w-100px">Date</th>
-                                                <th class="text-end min-w-100px pe-4">Actions</th>
-                                            </tr>
-                                        </thead>
-                                        <tbody class="fs-6 fw-semibold text-gray-600">
-                                            @forelse (App\Models\Transaction::hasTransaction($data->id) as $item)
-                                                <tr>
-                                                    <td>
-                                                        <a href="#" class="text-gray-600 text-hover-primary mb-1">9673-1893</a>
-                                                    </td>
-                                                    <td>
-                                                        <span class="badge badge-light-success">Successful</span>
-                                                    </td>
-                                                    <td>$1,200.00</td>
-                                                    <td>14 Dec 2020, 8:43 pm</td>
-                                                    <td class="pe-0 text-end">
-                                                        <a href="#" class="btn btn-sm btn-light image.png btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                                        <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                                        <!--begin::Menu-->
-                                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                                            <!--begin::Menu item-->
-                                                            <div class="menu-item px-3">
-                                                                <a href="../apps/customers/view.html" class="menu-link px-3">View</a>
-                                                            </div>
-                                                            <!--end::Menu item-->
-                                                            <!--begin::Menu item-->
-                                                            <div class="menu-item px-3">
-                                                                <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-                                                            </div>
-                                                            <!--end::Menu item-->
-                                                        </div>
-                                                        <!--end::Menu-->
-                                                    </td>
-                                                </tr>
-                                            @empty  
-                                            @endforelse
-                                        </tbody>
-                                        <!--end::Table body-->
-                                    </table>
-                                    <!--end::Table-->
-                                </div>
-                                <!--end::Card body-->
-                            </div>
                             <!--end::Card-->
                             <!--begin::Card-->
                             <div class="card pt-4 mb-6 mb-xl-9">
