@@ -41,7 +41,7 @@ trait LoanTrait{
             'loan_status.status',
             'loan_decimal_places',
             'service_fees.service_charge',
-            'loan_products.institutions'
+            'loan_institutes.institutions'
         ])->first();
     }
 

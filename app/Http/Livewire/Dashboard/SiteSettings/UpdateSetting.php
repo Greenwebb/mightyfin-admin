@@ -342,6 +342,7 @@ class UpdateSetting extends Component
         $this->loan_disbursed_by = $this->loan_product->disbursed_by->pluck('id')->all();
         $this->loan_repayment_cycle = $this->loan_product->repayment_cycle->pluck('id')->all();
         $this->auto_payment_sources = $this->loan_product->loan_accounts->pluck('id')->all();
+        $this->loan_institution = $this->loan_product->loan_institutes->pluck('id')->all();
 
         // Durations
         $this->loan_duration_period = $this->loan_product->loan_duration_period; 
