@@ -93,9 +93,12 @@ use Illuminate\Support\Facades\Route;
 //     Artisan::call('storage:link');
 // });
 Route::get('/', function () {
-    return redirect()->route('login');
+  return redirect()->route('login');
 })->name('home');
-// Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+Route::get('/welcome', function () {
+    return redirect()->route('login');
+})->name('welcome');
+
 Route::post('/share-docs', [UserController::class, 'share_doc'])->name('share.docs');
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
