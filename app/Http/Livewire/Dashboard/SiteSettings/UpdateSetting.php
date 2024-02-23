@@ -54,6 +54,7 @@ class UpdateSetting extends Component
     public $defaulted = [];
     public $denied = [];
     public $no_taken_up = [];
+    public $loan_institution = [];
 
 
 
@@ -61,7 +62,7 @@ class UpdateSetting extends Component
     public $disbursement_name, $disbursement;
     public $repayment_cycle_name,$repayment_cycle_method;
     public $penalty_amount, $penalty_name, $penalty_grace, $penalty;
-    public $loan_charge, $loan_charge_name, $loan_charge_amount, $loan_institution, $institutions, $institution;
+    public $loan_charge, $loan_charge_name, $loan_charge_amount, $institutions, $institution;
     public $loan_institute_name, $loan_institute_type;
     public $current_statuses = [];
     public function render()
@@ -218,13 +219,13 @@ class UpdateSetting extends Component
                     'loan_product_id' => $this->loan_product->id
                 ]);
             }
-            
             // Institutions
-            LoanProductInstitution::Create([
+            LoanProductInstitution::where('loan_product_id', $this->loan_product->id)
+            ->update([
                 'institution_id' => $this->loan_institution,
                 'loan_product_id' => $this->loan_product->id
             ]);
-
+            
             Session::flash('success', "Loan product updated successfully.");
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-types']);
             

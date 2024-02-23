@@ -176,10 +176,12 @@ class CreateSetting extends Component
                 ]);
             }
             // Institutions
-            LoanProductInstitution::Create([
-                'institution_id' => $this->loan_institution,
-                'loan_product_id' => $loan_product->id
-            ]);
+            foreach ($this->loan_institution as $key => $value) {
+                LoanProductInstitution::Create([
+                    'institution_id' => $value,
+                    'loan_product_id' => $loan_product->id
+                ]);
+            }
             
             Session::flash('success', "Loan product created successfully.");
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-types']);

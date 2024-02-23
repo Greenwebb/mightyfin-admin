@@ -682,7 +682,57 @@
                 </div>
                 <!--end::Content-->
             </div> --}}
-
+            <div class="card mb-5 mb-xl-10">
+                <!--begin::Card header-->
+                <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+                    <!--begin::Card title-->
+                    <div class="card-title m-0">
+                        <h3 class="fw-bold text-info m-0">Institutions:</h3>
+                    </div>
+                    <!--end::Card title-->
+                </div>
+                <!--begin::Card header-->
+                <!--begin::Content-->
+                <div id="kt_account_settings_profile_details" class="collapse show">
+                    <!--begin::Form-->
+                    <div id="kt_account_profile_details_form" class="form">
+                        <!--begin::Card body-->
+                        <div class="card-body border-top p-9">
+                            {{-- <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label fw-bold fs-6">Sector</label>
+                                <div class="col-lg-8 fv-row">
+                                    <select type="text" wire:model="sector" class="form-select form-control form-control-lg form-control-solid">
+                                        <option value="">--select--</option>
+                                        <option value="public">Public</option>
+                                        <option value="private">Private</option>
+                                        <option value="ngo">NGO</option>
+                                    </select>
+                                </div>
+                            </div> --}}
+                            <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Institutions</label>
+                                <div class="col-lg-8 fv-row">
+                                    <div class="d-block mt-3">
+                                        @forelse ($institutions as $key => $option)
+                                        <label for="{{ $key }}" class="mt-2 form-check form-check-custom form-check-inline form-check-solid me-5">
+                                            <input id="{{ $key }}" class="form-check-input" wire:model.lazy="loan_institution" type="checkbox" value="{{ $option->id }}" />
+                                            <span class="fw-semibold ps-2 fs-6">{{ $option->name }} </span>
+                                        </label>
+                                        <br>
+                                        @empty
+                                            <p>No Charges</p>
+                                        @endforelse
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        
+                    </div>
+                    <!--end::Form-->
+                </div>
+                <!--end::Content-->
+            </div>
             <div class="card mb-5 mb-xl-10">
                 <!--begin::Card header-->
                 <div class="card-header border-0 cursor-pointer py-3" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
