@@ -220,11 +220,13 @@ class UpdateSetting extends Component
                 ]);
             }
             // Institutions
-            LoanProductInstitution::where('loan_product_id', $this->loan_product->id)
-            ->update([
-                'institution_id' => $this->loan_institution,
-                'loan_product_id' => $this->loan_product->id
-            ]);
+            foreach ($this->loan_institution as $key => $value) {
+                LoanProductInstitution::where('loan_product_id', $this->loan_product->id)
+                ->update([
+                    'institution_id' => $value,
+                    'loan_product_id' => $this->loan_product->id
+                ]);
+            }
             
             Session::flash('success', "Loan product updated successfully.");
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-types']);
