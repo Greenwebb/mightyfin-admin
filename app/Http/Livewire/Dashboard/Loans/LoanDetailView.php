@@ -47,7 +47,7 @@ class LoanDetailView extends Component
             return view('livewire.dashboard.loans.loan-detail-view')
             ->layout('layouts.admin');
         } catch (\Throwable $th) {
-            dd($th);
+           
         }
     }
     

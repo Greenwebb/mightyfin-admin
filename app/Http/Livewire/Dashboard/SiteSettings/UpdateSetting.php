@@ -334,7 +334,7 @@ class UpdateSetting extends Component
         // Decimal Places
         $this->loan_decimal_place = $this->loan_product->loan_decimal_places->first()->value;
         
-        //Dropdowns 
+        // Dropdowns 
         $this->loan_interest_method = $this->loan_product->interest_methods->first()->id;
         $this->loan_interest_type = $this->loan_product->interest_types->first()->id;
 
