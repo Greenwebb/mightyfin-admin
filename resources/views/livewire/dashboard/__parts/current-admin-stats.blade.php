@@ -1,7 +1,7 @@
 <div class="row g-5 g-xl-8">
     <div class="col-xl-4">
         <!--begin::Statistics Widget 5-->
-        <a href="#" class="card bg-body-white hoverable card-xl-stretch mb-xl-8">
+        <a href="{{ route('borrowers') }}" class="card bg-body-white hoverable card-xl-stretch mb-xl-8">
             <!--begin::Body-->
             <div class="card-body">
                 <i class="ki-duotone ki-basket text-primary fs-2x ms-n1">
@@ -19,7 +19,7 @@
     </div>
     <div class="col-xl-4">
         <!--begin::Statistics Widget 5-->
-        <a href="#" class="card bg-primary hoverable card-xl-stretch mb-xl-8">
+        <a href="{{ route('view-loan-requests') }}" class="card bg-primary hoverable card-xl-stretch mb-xl-8">
             <!--begin::Body-->
             <div class="card-body">
                 <i class="ki-duotone ki-element-11 text-white fs-2x ms-n1">
@@ -37,7 +37,7 @@
     </div>
     <div class="col-xl-4">
         <!--begin::Statistics Widget 5-->
-        <a href="#" class="card bg-dark hoverable card-xl-stretch mb-5 mb-xl-8">
+        <a href="{{ route('closed-loans') }}" class="card bg-dark hoverable card-xl-stretch mb-5 mb-xl-8">
             <!--begin::Body-->
             <div class="card-body">
                 <i class="ki-duotone ki-chart-simple text-gray-100 fs-2x ms-n1">
