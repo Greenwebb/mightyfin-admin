@@ -305,23 +305,10 @@ class LoanApplicationController extends Controller
         DB::beginTransaction();
         try {
             $form = $request->toArray();
-            // dd($form);
-            // Add Payslip and TPIN file if they are uploaded
-            if($request->file('tpin_file') !== null){               
-                $tpin_file = $request->file('tpin_file')->store('tpin_file', 'public');                
-            }
-            if($request->file('payslip_file') !== null){               
-                $payslip_file = $request->file('payslip_file')->store('payslip_file', 'public');         
-            }
-            if($request->file('nrc_file') !== null){               
-                $nrc_file = $request->file('nrc_file')->store('nrc_file', 'public');         
-            }
-    
-            // Update the User's Basic & Net Pay (Automatically placed in the input field)
+
+            // First Upload the files
+            $this->uploadCommonFiles($request);
             $user = User::where('id', $form['borrower_id'])->first();
-            $user->basic_pay = $form['basic_pay'];
-            $user->net_pay = $form['net_pay'];
-            $user->save();
             
             // Collect the loan application data
             $data = [
@@ -332,7 +319,7 @@ class LoanApplicationController extends Controller
                 'amount'=> $form['amount'],
                 'phone'=> $user->phone,
                 'gender'=> $user->gender,
-                'type'=> $form['type'],
+                'loan_product_id'=> $form['loan_product_id'],
                 'repayment_plan'=> $form['repayment_plan'],
 
                 'glname'=> $form['glname'],
@@ -348,35 +335,20 @@ class LoanApplicationController extends Controller
                 'g2phone'=> $form['g2phone'],
                 'g2_gender'=> $form['g2_gender'],
                 'g2_relation'=> $form['g2_relation'],
-    
-                'tpin_file' => $tpin_file ?? 'no file',
-                'payslip_file' => $payslip_file ?? 'no file',
-                'nrc_file' => $nrc_file ?? 'no file',
-                
-                'doa' => $form['datepicker'],
                 'processed_by'=> auth()->user()->id
             ];
-            // Skip the updating of KYC
-            if($form['bypass']){
-                $data['complete'] = 1;
-            }else{
-                $data['complete'] = 0;
-            }
-
-
-            // Enter Next of King if its personal loan
-            if($form['type'] !== 'Asset Financing'){
-                $nok = [
-                    'nok_email' => $form['nok_email'],
-                    'nok_fname' => $form['nok_fname'],
-                    'nok_lname' => $form['nok_lname'],
-                    'nok_phone' => $form['nok_phone'],
-                    'nok_relation' => $form['nok_relation'],
-                    'nok_gender' => $form['nok_gender'],
-                    'user_id' => $form['borrower_id']
-                ];
-                $this->createNOK($nok);
-            }
+            
+            $nok = [
+                'nok_email' => $form['nok_email'],
+                'nok_fname' => $form['nok_fname'],
+                'nok_lname' => $form['nok_lname'],
+                'nok_phone' => $form['nok_phone'],
+                'nok_relation' => $form['nok_relation'],
+                'nok_gender' => $form['nok_gender'],
+                'user_id' => $form['borrower_id']
+            ];
+            $this->createNOK($nok);
+                
 
             // Create a loan request application and send email to borrower
             $application = $this->apply_loan($data);

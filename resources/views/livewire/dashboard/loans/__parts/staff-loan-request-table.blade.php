@@ -28,7 +28,7 @@
                             <div class="separator mb-3 opacity-75"></div>
                             
                             <div class="menu-item px-3">
-                                <a href="#" class="menu-link px-3">New Loan</a>
+                                <a href="{{ route('proxy-loan-create') }}" class="menu-link px-3">New Loan</a>
                             </div>
                             
                             <div class="menu-item px-3">
