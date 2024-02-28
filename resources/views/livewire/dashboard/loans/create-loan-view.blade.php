@@ -13,8 +13,8 @@
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
-        <form  action="{{ route("proxy-apply-loan") }}" method="POST" enctype="multipart/form-data" id="kt_content_container" class="container-xxl">
-            
+        <form action="{{ route("proxy-apply-loan") }}" method="POST" enctype="multipart/form-data" id="kt_content_container" class="container-xxl">
+            @csrf
             <div class="card-header border-0 cursor-pointer">
                 <div class="alert alert-primary mt-2">
                     <small>
@@ -36,8 +36,8 @@
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Loan Product</label>
                                 <div class="col-lg-8 fv-row">
-                                    <select type="text" name="loan_product" class="form-control form-control-lg form-control-solid" placeholder="E.g Business Loan" required>
-                                        <option value="name">-- select --</option>
+                                    <select type="text" name="loan_product_id" class="form-control form-control-lg form-control-solid" placeholder="E.g Business Loan" required>
+                                        <option value="">-- select --</option>
                                         @forelse ($loan_products as $lp)
                                         <option value="{{ $lp->id }}">{{ $lp->name }}</option>
                                         @empty
@@ -48,12 +48,11 @@
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Borrower</label>
                                 <div class="col-lg-8 fv-row">
-                                    <select type="text" name="borrower" class="form-control form-control-lg form-control-solid" placeholder="E.g Civil Servant Loan" required>
+                                    <select type="text" name="borrower_id" class="form-control form-control-lg form-control-solid" placeholder="E.g Civil Servant Loan" required>
                                         <option value="name">-- select --</option>
                                         @forelse ($borrowers as $b)
                                         <option value="{{ $b->id }}">{{ $b->fname.' '.$b->lname.' | '.$b->phone }}</option>
                                         @empty
-                                        
                                         @endforelse
                                     </select>
                                 </div>
@@ -67,13 +66,13 @@
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Principal Amount</label>
                                 <div class="col-lg-8 fv-row">
-                                    <input type="text" name="amount" class="form-control form-control-lg form-control-solid" placeholder="10 000" required></input>
+                                    <input type="text" name="amount" class="form-control form-control-lg form-control-solid" placeholder="10 000" required/>
                                 </div>
                             </div>
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Duration</label>
                                 <div class="col-lg-8 fv-row">
-                                    <select type="text" name="replayment_plan" class="form-control form-control-lg form-control-solid" placeholder="SVG code" required>
+                                    <select type="text" name="replayment_plan" class="form-control form-control-lg form-control-solid" placeholder="" required>
                                         <option value="">--select--</option>
                                         <option value="1">1 Month</option>
                                         <option value="2">2 Months</option>

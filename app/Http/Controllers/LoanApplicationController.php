@@ -302,10 +302,10 @@ class LoanApplicationController extends Controller
 
     public function new_proxy_loan(Request $request)
     {
-        DB::beginTransaction();
+        // DB::beginTransaction();
         try {
             $form = $request->toArray();
-
+            // dd($form);
             // First Upload the files
             $this->uploadCommonFiles($request);
             $user = User::where('id', $form['borrower_id'])->first();
@@ -321,20 +321,6 @@ class LoanApplicationController extends Controller
                 'gender'=> $user->gender,
                 'loan_product_id'=> $form['loan_product_id'],
                 'repayment_plan'=> $form['repayment_plan'],
-
-                'glname'=> $form['glname'],
-                'gfname'=> $form['gfname'],
-                'gemail'=> $form['gemail'],
-                'gphone'=> $form['gphone'],
-                'g_gender'=> $form['g_gender'],
-                'g_relation'=> $form['g_relation'],
-    
-                'g2lname'=> $form['g2lname'],
-                'g2fname'=> $form['g2fname'],
-                'g2email'=> $form['g2email'],
-                'g2phone'=> $form['g2phone'],
-                'g2_gender'=> $form['g2_gender'],
-                'g2_relation'=> $form['g2_relation'],
                 'processed_by'=> auth()->user()->id
             ];
             
@@ -349,7 +335,6 @@ class LoanApplicationController extends Controller
             ];
             $this->createNOK($nok);
                 
-
             // Create a loan request application and send email to borrower
             $application = $this->apply_loan($data);
 
@@ -385,10 +370,11 @@ class LoanApplicationController extends Controller
                     return redirect()->back();
                 }
             } 
-            DB::commit();
+            // DB::commit();
         } catch (\Throwable $th) {
-            DB::rollback();
-            return redirect()->back();
+            dd($th);
+            // DB::rollback();
+            // return redirect()->back();
         }      
     }
 
