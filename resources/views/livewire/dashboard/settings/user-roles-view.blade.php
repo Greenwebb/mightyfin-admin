@@ -1,3 +1,41 @@
+<style>
+    .tree {
+        list-style-type: none;
+        padding-left: 1em;
+    }
+
+    .tree li {
+        margin: 0;
+        padding: 0 1em;
+        line-height: 2em;
+        color: #000;
+        position: relative;
+    }
+
+    .tree li:before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 1em;
+        height: 1em;
+        font-weight: bold;
+        color: #000;
+        transform: rotate(45deg);
+        margin-top: 0.2em;
+    }
+
+    .toggle {
+        cursor: pointer;
+    }
+
+    .nested {
+        display: none;
+    }
+
+    .nested.show {
+        display: block;
+    }
+</style>
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <div id="kt_content_container" class="container-xxl">
         <div class="card mb-5 mb-xl-10">
@@ -97,115 +135,83 @@
                 @endcan
                 <!--begin::Add new card-->
             </div>
-            <!--end::Row-->
-            <!--begin::Modals-->
-            <!--begin::Modal - Add role-->
+            
             <div wire:ignore class="modal fade" id="kt_modal_add_role" tabindex="-1" aria-hidden="true">
-                <!--begin::Modal dialog-->
                 <div class="modal-dialog modal-dialog-centered mw-750px">
-                    <!--begin::Modal content-->
                     <div class="modal-content">
-                        <!--begin::Modal header-->
                         <div class="modal-header">
-                            <!--begin::Modal title-->
                             <h2 class="fw-bold">Add a Role</h2>
-                            <!--end::Modal title-->
-                            <!--begin::Close-->
+                            
                             <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-roles-modal-action="close">
                                 <i class="ki-duotone ki-cross fs-1">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                 </i>
                             </div>
-                            <!--end::Close-->
                         </div>
-                        <!--end::Modal header-->
-                        <!--begin::Modal body-->
+                        
                         <div class="modal-body scroll-y mx-lg-5 my-7">
-                            <!--begin::Form-->
                             <form id="kt_modal_add_role_form" class="form"  method="POST" action="{{ route('create-role') }}">
                                 @csrf
-                                <!--begin::Scroll-->
                                 <div wire:loading.remove wire:target="store" class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_add_role_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_add_role_header" data-kt-scroll-wrappers="#kt_modal_add_role_scroll" data-kt-scroll-offset="300px">
-                                    <!--begin::Input group-->
                                     <div class="fv-row mb-10">
-                                        <!--begin::Label-->
                                         <label class="fs-5 fw-bold form-label mb-2">
                                             <span class="required">Role name</span>
                                         </label>
-                                        <!--end::Label-->
-                                        <!--begin::Input-->
                                         <input class="form-control form-control-solid" placeholder="Enter a role name"  name="name" />
-                                        <!--end::Input-->
                                     </div>
-                                    <!--end::Input group-->
-                                    <!--begin::Permissions-->
+                                    
                                     <div class="fv-row">
-                                        <!--begin::Label-->
                                         <label class="fs-5 fw-bold form-label mb-2">Role Permissions</label>
-                                        <!--end::Label-->
-                                        <!--begin::Table wrapper-->
                                         <div class="table-responsive">
-                                            <!--begin::Table-->
-                                            <table class="table align-middle table-row-dashed fs-6 gy-5">
-                                                <!--begin::Table body-->
-                                                <tbody class="text-gray-600 fw-semibold">
-                                                    <!--begin::Table row-->
-                                                    <tr>
-                                                        <td class="text-gray-800">Administrator Access
-                                                        <span class="ms-2" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="Allows a full access to the system">
-                                                            <i class="ki-duotone ki-information fs-7">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                                <span class="path3"></span>
-                                                            </i>
-                                                        </span></td>
-                                                        <td>
-                                                            <!--begin::Checkbox-->
-                                                            <label class="form-check form-check-custom form-check-solid me-9">
-                                                                <input class="form-check-input" type="checkbox" value="" id="kt_roles_select_all" />
-                                                                <span class="form-check-label" for="kt_roles_select_all">Select all</span>
-                                                            </label>
-                                                            <!--end::Checkbox-->
-                                                        </td>
-                                                    </tr>
-                                                    
-                                                    @foreach($permissions as $g => $p)
-                                                    <tr>
-                                                        <!--begin::Label-->
-                                                        <td class="text-gray-800">{{ ucwords($g) }} Management</td>
-                                                        <!--end::Label-->
-                                                        <!--begin::Options-->
-                                                        <td>
-                                                            <!--begin::Wrapper-->
-                                                            <div class="d-flex">
-                                                                <!--begin::Checkbox-->
+                                            <!--begin::Table row-->
+                                            {{-- 
+                                                <tr>
+                                                <td class="text-gray-800">Administrator Access
+                                                    <span class="ms-2" data-bs-toggle="popover" data-bs-trigger="hover" data-bs-html="true" data-bs-content="Allows a full access to the system">
+                                                        <i class="ki-duotone ki-information fs-7">
+                                                            <span class="path1"></span>
+                                                            <span class="path2"></span>
+                                                            <span class="path3"></span>
+                                                        </i>
+                                                    </span>
+                                                </td>
+                                                <td>
+                                                    <label class="form-check form-check-custom form-check-solid me-9">
+                                                        <input class="form-check-input" type="checkbox" value="" id="kt_roles_select_all" />
+                                                        <span class="form-check-label" for="kt_roles_select_all">Select all</span>
+                                                    </label>
+                                                </td>
+                                                </tr> 
+                                            --}}
+                                            <ul class="tree">
+                                                @foreach($permissions as $g => $p)
+                                                    <li class="text-gray-800">
+                                                        <span class="toggle">
+                                                            <span style="color: blueviolet">
+                                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                                                    <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                                                                </svg>
+                                                            </span>
+                                                            <span class="font-bold" style="color: blueviolet">
+                                                                <b>{{ ucwords($g) }} Management</b>
+                                                            </span>
+                                                        </span>
+                                                        <ul class="nested">
+                                                            <li class="d-block">
                                                                 @foreach($p as $key => $perm)
-                                                                <label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
-                                                                    <input 
-                                                                        class="form-check-input" 
-                                                                        type="checkbox" 
-                                                                        name="permission[]"
-                                                                        value="{{ $perm->name }}" 
-                                                                        name="user_management_read" />
-                                                                    <small class="form-check-label">{{ ucwords($perm->permission) }}</small>                                                               <span class="form-check-label">{{ $permission->permission }}</span>
-                                                                </label>
+                                                                    <label class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
+                                                                        <input class="form-check-input" type="checkbox" name="permission[]" value="{{ $perm->name }}" />
+                                                                        <small class="form-check-label">{{ ucwords($perm->permission) }}</small>
+                                                                    </label>
                                                                 @endforeach
-                                                                <!--end::Checkbox-->
-                                                            </div>
-                                                            <!--end::Wrapper-->
-                                                        </td>
-                                                        <!--end::Options-->
-                                                    </tr>
-                                                    @endforeach
-                                                </tbody>
-                                                <!--end::Table body-->
-                                            </table>
-                                            <!--end::Table-->
+                                                            </li>
+                                                        </ul>
+                                                    </li>
+                                                @endforeach
+                                            </ul>
                                         </div>
-                                        <!--end::Table wrapper-->
                                     </div>
-                                    <!--end::Permissions-->
                                 </div>
                                 
                                 <div wire:loading wire:target="store" class="text-center">
@@ -214,8 +220,7 @@
                                         <p class="mt-2">Making the user role...</p>
                                     </div>
                                 </div>
-                                <!--end::Scroll-->
-                                <!--begin::Actions-->
+                                
                                 <div class="text-center pt-15">
                                     <button type="reset" class="btn btn-light me-3" data-kt-roles-modal-action="cancel">Discard</button>
                                     <button type="submit" class="btn btn-primary"  data-bs-dismiss="modal"  data-kt-roles-modal-action="submit">
@@ -224,44 +229,29 @@
                                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                     </button>
                                 </div>
-                                <!--end::Actions-->
                             </form>
-                            <!--end::Form-->
                         </div>
-                        <!--end::Modal body-->
                     </div>
-                    <!--end::Modal content-->
                 </div>
-                <!--end::Modal dialog-->
             </div>
-            <!--end::Modal - Add role-->
-            <!--begin::Modal - Update role-->
+            
             @if($show)
             <div wire:ignore.self class="modal fade" id="kt_modal_update_role" tabindex="-1" aria-hidden="true">
-                <!--begin::Modal dialog-->
                 <div class="modal-dialog modal-dialog-centered mw-750px">
-                    <!--begin::Modal content-->
                     <div class="modal-content">
-                        <!--begin::Modal header-->
                         <div class="modal-header">
-                            <!--begin::Modal title-->
                             <h2 class="fw-bold">Update Role</h2>
-                            <!--end::Modal title-->
-                            <!--begin::Close-->
+                            
                             <div class="btn btn-icon btn-sm btn-active-icon-primary" data-kt-roles-modal-action="close">
                                 <i class="ki-duotone ki-cross fs-1">
                                     <span class="path1"></span>
                                     <span class="path2"></span>
                                 </i>
                             </div>
-                            <!--end::Close-->
                         </div>
-                        <!--end::Modal header-->
-                        <!--begin::Modal body-->
+                        
                         <div class="modal-body scroll-y mx-5 my-7">
-                            <!--begin::Form-->
                             <form id="updateRoleForm" class="form" method="POST" action="{{ route('update-role') }}">
-                                
                                 @csrf
                                 <input type="hidden" name="role_id" value="{{$role_id}}">
                                 <div class="d-flex flex-column scroll-y me-n7 pe-7" id="kt_modal_update_role_scroll" data-kt-scroll="true" data-kt-scroll-activate="{default: false, lg: true}" data-kt-scroll-max-height="auto" data-kt-scroll-dependencies="#kt_modal_update_role_header" data-kt-scroll-wrappers="#kt_modal_update_role_scroll" data-kt-scroll-offset="300px">
@@ -276,50 +266,34 @@
                                         <div class="table-responsive">
                                             <table class="table align-middle table-row-dashed fs-6 gy-5">
                                                 <tbody class="text-gray-600 fw-semibold">
-                                                    <tr>
-                                                        <td class="text-gray-800">Administrator Access
-                                                        <span class="ms-1" data-bs-toggle="tooltip" title="Allows a full access to the system">
-                                                            <i class="ki-duotone ki-information-5 text-gray-500 fs-6">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                                <span class="path3"></span>
-                                                            </i>
-                                                        </span></td>
-                                                        <td>
-                                                            <label class="form-check form-check-sm form-check-custom form-check-solid me-9">
-                                                                <input class="form-check-input" type="checkbox" value="" id="kt_roles_select_all" />
-                                                                <span class="form-check-label" for="kt_roles_select_all">Select all</span>
-                                                            </label>
-                                                        </td>
-                                                    </tr>
                                                     @foreach($permissions as $g => $p)
-                                                    <tr>
-                                                        <td class="text-gray-800">{{ ucwords($g) }} Management</td>
-                                                        <td>
-                                                            <div class="d-flex">
-                                                                @foreach($p as $key => $perm)
-                                                                    <label for="{{ $perm->name.''.$perm->id }}" class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
-                                                                        <input 
-                                                                            id="{{ $perm->name.''.$perm->id }}"
-                                                                            class="form-check-input" 
-                                                                            type="checkbox" 
-                                                                            name="permission[]"
-                                                                            @if(!empty($rolePermissions))
-                                                                            value="{{ $perm->name }}" 
-                                                                            {{ 
-                                                                                in_array($perm->name, $rolePermissions) ? 'checked' : '' 
-                                                                            }} 
-                                                                            @endif
-                                                                            value="{{ $perm->name }}"
+                                                        <tr>
+                                                            <td class="text-gray-800"> {{ ucwords($g) }} Management</td>
+                                                            <td>
+                                                                <div class="d-flex">
+                                                                    @foreach($p as $key => $perm)
+                                                                        <label for="{{ $perm->name.''.$perm->id }}" class="form-check form-check-sm form-check-custom form-check-solid me-5 me-lg-20">
+                                                                            <input 
+                                                                                id="{{ $perm->name.''.$perm->id }}"
+                                                                                class="form-check-input" 
+                                                                                type="checkbox" 
+                                                                                name="permission[]"
+                                                                                @if(!empty($rolePermissions))
+                                                                                value="{{ $perm->name }}" 
+                                                                                {{ 
+                                                                                    in_array($perm->name, $rolePermissions) ? 'checked' : '' 
+                                                                                }} 
+                                                                                @endif
+                                                                                value="{{ $perm->name }}"
 
-                                                                        />
-                                                                        <small class="form-check-label">{{ ucwords($perm->permission) }}</small>
-                                                                        <span class="form-check-label">{{ $permission->permission }}</span>
-                                                                    </label>
-                                                                @endforeach
-                                                            </div>
-                                                        </td>
-                                                    </tr>
+                                                                            />
+                                                                            <small class="form-check-label">{{ ucwords($perm->permission) }}</small>
+                                                                            <span class="form-check-label">{{ $permission->permission }}</span>
+                                                                        </label>
+                                                                    @endforeach
+                                                                </div>
+                                                            </td>
+                                                        </tr>
                                                     @endforeach
                                                 </tbody>
                                             </table>
@@ -335,24 +309,24 @@
                                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                     </button>
                                 </div>
-                                <!--end::Actions-->
+                                
                             </form>
-                            <!--end::Form-->
                         </div>
-                        <!--end::Modal body-->
                     </div>
-                    <!--end::Modal content-->
                 </div>
-                <!--end::Modal dialog-->
             </div>
             @endif
-            <!--end::Modal - Update role-->
-            <!--end::Modals-->
+            
         </div>
-        <!--end::Container-->
     </div>
-    <!--end::Post-->
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script>
+        $(document).ready(function () {
+            $('.toggle').click(function () {
+                $(this).parent().children('ul.nested').toggleClass('show');
+            });
+        });
+    
         function submitForm() {
             var form = document.getElementById('updateRoleForm');
             var formData = new FormData(form);
