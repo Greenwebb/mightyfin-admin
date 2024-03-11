@@ -15,7 +15,7 @@ class CreateLoanView extends Component
     public function render()
     {
         
-        // $this->authorize('accept and reject loan requests');
+    // $this->authorize('accept and reject loan requests');
         
         $this->loan_products = LoanProduct::has('loan_status')->with('loan_status')->get();
         $this->borrowers = User::role('user')->get();
