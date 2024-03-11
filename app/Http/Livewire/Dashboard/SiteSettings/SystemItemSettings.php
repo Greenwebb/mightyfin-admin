@@ -18,14 +18,18 @@ use App\Models\Penalty;
 use App\Models\RepaymentCycle;
 use App\Models\RepaymentOrder;
 use App\Models\ServiceCharge;
+use App\Models\User;
+use App\Traits\CRBTrait;
 use App\Traits\DisbursementTrait;
+use Illuminate\Support\Facades\Request;
 use Illuminate\Support\Facades\Session;
 use Livewire\Component;
 
 class SystemItemSettings extends Component
 {
-    use SettingTrait, LoanTrait, DisbursementTrait;
-    public $settings, $title, $subtitle, $current_conf;
+    use SettingTrait, LoanTrait, DisbursementTrait, CRBTrait;
+    public $settings, $title, $subtitle, $current_conf, $borrowers;
+    public $crb_response, $crb;
     public $loan_products, $disbursements, $repayment_cycles, $penalties, $loan_fees,$institutions;
     public function render()
     {
@@ -37,8 +41,15 @@ class SystemItemSettings extends Component
         $this->penalties = $this->get_all_penalties();
         $this->loan_fees = $this->get_all_loan_fees();
         $this->institutions = Institution::where('status', 1)->get();
+        $this->borrowers = User::role('user')->get();
         return view('livewire.dashboard.site-settings.system-item-settings')
         ->layout('layouts.admin');
+    }
+
+    public function CheckCRB()
+    {
+        $response = $this->soapApiRequest();
+        
     }
 
     // System Setting Delete Functions

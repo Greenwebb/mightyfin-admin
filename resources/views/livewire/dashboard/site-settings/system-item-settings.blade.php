@@ -62,6 +62,12 @@
                     @case('institutes')
                         @include('livewire.dashboard.site-settings.__parts.institutes')
                     @break
+
+                    @case('crb')
+                        @include('livewire.dashboard.site-settings.__parts.crb')
+                    @break
+
+
                     
                     @default
                         @include('livewire.dashboard.site-settings.__parts.default-page')

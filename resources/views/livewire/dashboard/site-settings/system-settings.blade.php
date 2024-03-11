@@ -90,6 +90,7 @@
                                     <li><a href="#" class="fs-6 text-muted disabled fw-bold">Manage Loan Officers</a></li> 
                                     <li><a href="#" class="fs-6 text-muted disabled fw-bold">Invite Borrowers Settings</a></li> 
                                     <li><a href="#" class="fs-6 text-muted disabled fw-bold">Bulk Update Borrowers With Loan Officers</a></li> 
+                                    <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'crb']) }}" class="fs-6 text-info fw-bold">CRB Checks</a></li> 
                                 </ul>
                             </div>
                         </div>
