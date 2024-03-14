@@ -67,6 +67,7 @@ trait LoanTrait{
                     return Application::with('loan_product')->where('complete', 1)
                     ->orWhere('status', 2)->orWhere('status', 0)->get();
                     break;
+
                 case 'manual':
                     return Application::with('loan_product')->with(['manual_approvers' => function ($query) use ($userId) {
                         $query->where('user_id', $userId);
@@ -78,8 +79,8 @@ trait LoanTrait{
                     ->orWhere('status', 2)->orWhere('status', 0)
                     ->where('complete', 1)
                     ->get();
-    
                     break;
+
                 case 'auto':
                     # code...
                     break;

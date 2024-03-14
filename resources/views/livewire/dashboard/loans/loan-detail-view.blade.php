@@ -271,21 +271,11 @@
                                 }
                             }
                         </style>
-
                     </div>
-                    <!--end::Details-->
-                    <!--begin::Navs-->
-
-                    <!--begin::Navs-->
                 </div>
             </div>
-
-            <!--end::Navbar-->
-            <!--end::Container-->
         </div>
-
-
-        <!--end::Post-->
+        
     </div>
     
     <div class="mx-4">

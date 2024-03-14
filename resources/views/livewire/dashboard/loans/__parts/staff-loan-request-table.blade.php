@@ -31,18 +31,19 @@
                                 <a href="{{ route('proxy-loan-create') }}" class="menu-link px-3">New Loan</a>
                             </div>
                             
-                            <div class="menu-item px-3">
+                            {{-- <div class="menu-item px-3">
                                 <a href="#" class="menu-link px-3">New Customer</a>
+                            </div> --}}
+                            
+                            <div class="menu-item px-3">
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#export_loans_panel" class="menu-link px-3">Export</a>
+                            </div>
+                            
+                            <div class="menu-item px-3">
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#import_loans_panel" class="menu-link px-3">Import</a>
                             </div>
                             
                             <div class="separator mt-3 opacity-75"></div>
-                            
-                            <div class="menu-item px-3">
-                                <div class="menu-content px-3 py-3">
-                                    <a class="btn btn-primary btn-sm px-4" href="#">Generate Reports</a>
-                                </div>
-                            </div>
-                            
                         </div>
                         
                     </div>
@@ -62,8 +63,8 @@
                                     </th> --}}
                                     <th class="min-w-100px">Loan Type</th>
                                     <th class="min-w-140px">Principal</th>
-                                    <th class="min-w-120px">Date</th>
-                                    <th class="min-w-120px">Borrower</th>
+                                    <th class="w-120px">Date</th>
+                                    <th class="w-100px">Borrower</th>
                                     <th class="min-w-120px">Payback</th>
                                     <th class="min-w-120px">Status</th>
                                     
@@ -87,7 +88,7 @@
                                         </td> --}}
                                         <td>
                                             <a href="#" class="text-dark fw-bold text-hover-primary ">
-                                                {{ $loan->loan_product->name }} Loan
+                                                {{ $loan->loan_product->name }} 
                                             </a>
                                         </td>
                                         <td>
@@ -106,7 +107,7 @@
                                             <a target="_blank" href="{{ route('client-account', ['key'=>$loan->user->id])}}" class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">
                                                 {{ $loan->user->fname.' '. $loan->user->lname }}
                                             </a>
-                                            <span class="text-muted fw-semibold text-muted d-block fs-7">{{ '260'.$loan->phone??' '. $loan->user->phone.', '.$loan->user->gender }}</span>
+                                            <span class="text-muted fw-semibold text-muted d-block fs-7">{{ $loan->phone??' '. $loan->user->phone.', '.$loan->user->gender }}</span>
                                         </td>
                                         <td class="text-dark fw-bold text-hover-primary fs-6">
                                             {{ 
@@ -207,7 +208,27 @@
             
         </div>
     </div>
-
+    
     @include('livewire.dashboard.loans.__modals.assign-loan')
     @include('livewire.dashboard.loans.__modals.review-warning')
+    @include('livewire.dashboard.loans.__modals.export-loan-panel')
+    @include('livewire.dashboard.loans.__modals.import-loan-panel')
+
+    {{-- <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const exportLink = document.getElementById('exportLink');
+            const importLink = document.getElementById('importLink');
+            const modal = new bootstrap.Modal(document.getElementById('export_loans_panel'));
+            const modal2 = new bootstrap.Modal(document.getElementById('import_loans_panel'));
+
+            exportLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                modal.show();
+            });
+            importLink.addEventListener('click', function(event) {
+                event.preventDefault();
+                modal2.show();
+            });
+        });
+    </script> --}}
 </div>
