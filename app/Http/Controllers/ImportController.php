@@ -29,7 +29,6 @@ class ImportController extends Controller
                         // Remove the header row
                         array_shift($data);
                         
-                        dd($data);
                         try {
                             foreach ($data as $row) {
                                 if ($row['A'] !== null || $row['E'] !== null || $row['J'] !== null) {
