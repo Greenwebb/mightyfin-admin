@@ -214,26 +214,7 @@ trait LoanTrait{
             try {
                 // check if user already created a loan application that is not approved yet and not complete
                 $check = Application::where('id', $loan_id)->first();
-                    
-                if($data['email'] != ''){
-                    $mail = [
-                        'name' => $data['fname'].' '.$data['lname'],
-                        'to' => $data['email'],
-                        'from' => 'admin@mightyfinance.co.zm',
-                        'phone' => $data['phone'],
-                        'subject' => 'Mighty Finance Loan Application',
-                        'message' => 'Hey '.$data['fname'].' '.$data['lname'].', Your loan details have been updated',
-                    ];
-                }
-                
-                if(!empty($check->toArray())){
-                    $check->update($data);
-                    if($data['email'] != ''){
-                        $contact_email = new LoanApplication($mail);
-                        Mail::to($data['email'])->send($contact_email);
-                    }
-                    return $check->id;
-                }
+                $check->update($data);
 
             } catch (\Throwable $th) {
                 return 0;

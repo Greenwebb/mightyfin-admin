@@ -1,376 +1,295 @@
-<div class="content-body">
-    <div class="container-fluid">
-        <div class="container">
-            @if(!$can_edit)
-            <form id="updateloandetails" action="{{ route("update-loan-details") }}" method="POST" style="min-height:60vh" enctype="multipart/form-data">
-                @csrf
-                <div class="card p-4">
-                    <h4>Loan Details</h4>
-                    <div class="row">
-                        <div class="col-lg-6 mb-2">
-                            <div class="mb-3">
-                                <label class="text-label form-label">Borrower*</label>
-                                <input disabled type="text" value="{{ $user->fname.' '.$user->lname}}" class="form-control">                      
-                                <input type="hidden" value="{{ $user->id }}" name="borrower_id" class="form-control">                      
-                            </div>
-                        </div>
-                        <input type="hidden" name="loan_id" value="{{$loan->id}}">
-                        <input type="hidden" name="old_amount" value="{{$loan->amount}}">
-                        
-                        <input type="hidden" name="loan_status" value="{{$loan->status}}">
-                        <div class="col-lg-6 mb-2">
-                            <div class="mb-3">
-                                <label class="text-label form-label">Purpose for Loan*</label>
-                                <select onchange="changeType()" type="text" value="{{ $loan->type }}" id="myTypeDropdown" name="type" class="form-control">
-                                    <option data-display="Select">{{ $loan->type }}</option>
-                                    <option value="Personal">Personal</option>
-                                    <option value="Education">Education</option>
-                                    <option value="Asset Financing">Asset Financing</option>
-                                    <option value="Home Improvement">Home Improvements</option>
-                                    <option value="Agri Business">Agri Business</option>
-                                    <option value="Women in Business (Femiprise) Soft">Women in Business (Femiprise) Soft Loan</option>
-                                </select>
-                            </div>
-                        </div>
-                        
-                        <div class="col-lg-6 mb-2">
-                            <div class="mb-3">
-                                <label class="text-label form-label">Amount (ZMW)</label>
-                                <input type="text" value="{{$loan->amount}}" id="principalLoan2" name="amount" class="form-control" placeholder="0.00" >
-                                {{-- <small id="validprincipal2" style="color:red">Amount is !</small> --}}
-                            </div>
-                        </div>
-                        <div class="col-lg-6 mb-2">
-                            <div class="mb-3">
-                                <label class="text-label form-label">Duration (Months)</label>
-                                <select type="text" value="{{ $loan->repayment_plan }}" name="repayment_plan" class="form-control">
-                                    <option data-display="Select">{{ $loan->repayment_plan }}</option>
-                                    <option value="1">1 Month</option>
-                                    <option value="2">2 Months</option>
-                                    <option value="3">3 Months</option>
-                                    <option value="4">4 Months</option>
-                                    <option value="5">5 Months</option>
-                                    <option value="6">6 Months</option>
-                                    <option value="7">7 Months</option>
-                                    <option value="8">8 Months</option>
-                                    <option value="9">9 Months</option>
-                                    <option value="10">10 Months</option>
-                                    <option value="11">11 Months</option>
-                                    <option value="12">12 Months</option>
-                                    <option value="18">1 Year 6 Months</option>
-                                    <option value="24">2 Years</option>
-                                    <option value="30">2 Year 6 Months</option>
-                                </select>
-                            </div>
-                        </div>
-                        <div class="col-lg-6 mb-2">
-                            <div class="mb-3">
-                                <label class="text-label form-label">Borrower KYC*</label>
-                                <select type="text" value="{{ $loan->complete }}" name="complete" class="form-control">
-                                    <option data-display="Select" value="{{ $loan->complete }}">{{ $loan->complete == 1 ? 'Skip KYC Update':'Borrower will update KYC' }}</option>
-                                    <option value="1">Skip KYC Update</option>
-                                    <option value="0">Borrower will update KYC</option>
-                                </select>
-                            </div>
-                        </div>
-                        @if($loan->status == 1)
-                        <div class="col-lg-6 mb-3">
-                            <div class="mb-3">
-                                <label class="text-label form-label">Due Date</label>
-                                <input type="date" value="{{ $loan->loan->final_due_date }}" name="new_due_date" class="form-control" id="datepicker">
-                                <p class="text-primary">Current Due Date: {{ $loan->loan->final_due_date }}</p>
-                            </div>
-                        </div>
-                        @endif
-                        <div class="col-lg-6 mb-3">
-                            <div class="mb-3">
-                                <label class="text-label form-label">Date of Application*</label>
-                                <input value="{{$loan->created_at ?? $loan->created_at}}" type="date" name="doa" class="form-control" id="datepicker">
-                            </div>
-                        </div>
-                        <div class="col-lg-6 mb-3">
-                            <div class="mb-3">
-                                <label class="text-label form-label">Basic Pay*</label>
-                                <input id="basic_pay_field" value="{{ $user->basic_pay }}" name="basic_pay" class=" form-control" >
-                                {{-- <small id="validbasicpayl2" style="color:red">Basic Pay is !</small> --}}
 
-                            </div>
-                        </div>
-                        <div class="col-lg-6 mb-3">
-                            <div class="mb-3">
-                                <label class="text-label form-label">Net Pay*</label>
-                                <input id="net_pay_field" value="{{ $user->net_pay }}" name="net_pay" class="form-control">
-                                {{-- <small id="validnetpayl2" style="color:red">Net Pay is !</small> --}}
-                            </div>
-                        </div>
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
+    <a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-types']) }}" class="flex py-4 px-9">
+        <span>
+            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-90deg-left" viewBox="0 0 16 16">
+                <path fill-rule="evenodd" d="M1.146 4.854a.5.5 0 0 1 0-.708l4-4a.5.5 0 1 1 .708.708L2.707 4H12.5A2.5 2.5 0 0 1 15 6.5v8a.5.5 0 0 1-1 0v-8A1.5 1.5 0 0 0 12.5 5H2.707l3.147 3.146a.5.5 0 1 1-.708.708z"/>
+            </svg>
+        </span>
+        <span>
+            Return Back to Loan Product List
+        </span>
+    </a>
+    <!--begin::Post-->
+    <div class="post d-flex flex-column-fluid" id="kt_post">
+        <!--begin::Container-->
+        <form action="{{ route("update-loan-details") }}" method="POST" enctype="multipart/form-data" id="kt_content_container" class="container-xxl">
+            @csrf
+            <div class="card-header border-0 cursor-pointer">
+                <div class="alert alert-primary mt-2">
+                    <small>
+                        Please note that some of the fields below are optional. You can leave the fields empty if you do not want to place any restriction.
+                    </small>
+                </div>
+            </div>
+
+            <div class="card mb-5 mb-xl-10">
+                <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+                    <div class="card-title m-0">
+                        <h3 class="fw-bold text-info m-0">Edit Loan Information:</h3>
                     </div>
                 </div>
-
-
-                <div class="card p-4">
-                    <div id="guarantorLoanRef2">
-                        <h4>Gurantors</h4>
-                        <div class="row">
-                            <div class="col-lg-6 mb-2">
-                                <div class="mb-3">
-                                    <label class="text-label form-label">Guarantor 1's First Name*</label>
-                                    <input type="text" value="{{$loan->gfname}}" name="gfname" id="gfname22" class="form-control" placeholder="Name" >
-                                    {{-- <small id="validg_fname22" style="color:red">Missing information!</small> --}}
+                
+                <div id="kt_account_settings_profile_details" class="collapse show">
+                    <div id="kt_account_profile_details_form" class="form">
+                        <div class="card-body border-top p-9">
+                            <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Loan Product</label>
+                                <div class="col-lg-8 fv-row">
+                                    <select type="text" name="loan_product_id" class="form-control form-control-lg form-control-solid" placeholder="E.g Business Loan" required>
+                                        <option value="">-- select --</option>
+                                        @forelse ($this->get_all_loan_products() as $lp)
+                                        <option {{ $loan->loan_product_id == $lp->id ? 'selected':'' }} value="{{ $lp->id }}">{{ $lp->name }}</option>
+                                        @empty
+                                        @endforelse
+                                    </select>
+                                </div>
+                            </div> 
+                            <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Borrower</label>
+                                <div class="col-lg-8 fv-row">
+                                    <input disabled type="text" name="" value="{{ $user['fname'].' '.$user['lname']}}" class="form-control form-control-lg form-control-solid">                  
+                                    <input type="hidden" value="{{ $user['id'] }}" name="borrower_id" class="form-control">                           
                                 </div>
                             </div>
-                            <div class="col-lg-6 mb-2">
-                                <div class="mb-3">
-                                    <label class="text-label form-label">Guarantor 1's Last Name*</label>
-                                    <input type="text" value="{{$loan->glname}}" name="glname" id="glname22" class="form-control" placeholder="Name" >
-                                    {{-- <small id="validg_lname22" style="color:red">Missing information!</small> --}}
+                            {{-- <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Loan #</label>
+                                <div class="col-lg-8 fv-row">
+                                    <textarea type="text" name="new_loan_icon" class="form-control form-control-lg form-control-solid" placeholder="SVG code" required></textarea>
+                                </div>
+                            </div> --}}
+                            <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Principal Amount</label>
+                                <div class="col-lg-8 fv-row">
+                                    <input type="text" value="{{$loan->amount}}" name="amount" class="form-control form-control-lg form-control-solid" placeholder="10 000" required/>
+                                    <input type="hidden" value="{{$loan->id}}" name="amount" class="form-control form-control-lg form-control-solid" placeholder="10 000" required/>
                                 </div>
                             </div>
-                            <div class="col-lg-6 mb-2">
-                                <div class="mb-3">
-                                    <label class="text-label form-label">Guarantor 1's Email Address*</label>
-                                    <input type="email" value="{{$loan->gemail}}" name="gemail" id="gemail22" class="form-control" id="emial1" placeholder="example@example.com.com" >
-                                    {{-- <small id="validg_email22" style="color:red">Missing information!</small> --}}
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-2">
-                                <div class="mb-3">
-                                    <label class="text-label form-label">Guarantor 1's Phone Number*</label>
-                                    <input type="text" value="{{$loan->gphone}}" name="gphone" id="gphone22" class="form-control" placeholder="(+1)408-657-9007" >
-                                    {{-- <small id="validg_phone22" style="color:red">Missing information!</small> --}}
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-2">
-                                <div class="mb-3">
-                                    <label class="text-label form-label">Relation*</label>
-                                    <select type="text" value="{{$loan->g_relation}}" name="g_relation" id="g_relation22" class="form-control">
-                                        <option data-display="Select">{{ $loan->g_relation }}</option>
-                                        <option value="Brother">Brother</option>
-                                        <option value="Sister">Sister</option>
-                                        <option value="Parent">Parent</option>
-                                        <option value="Relative">Relative</option>
-                                        <option value="Spouse">Spouse</option>
-                                        <option value="Work Mate">Work Mate</option>
-                                        <option value="Close Friend">Close Friend</option>
-                                    </select> 
-                                    {{-- <small id="validg_relation22" style="color:red">Missing information!</small> --}}
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-2">
-                                <div class="mb-3">
-                                    <label class="text-label form-label">Gender*</label>
-                                    <select type="text" value="{{$loan->g_gender}}" name="g_gender" id="g_gender22" class="form-control">
-                                        <option data-display="Select">{{ $loan->g_gender }}</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                    </select> 
-                                    {{-- <small id="validg_gender22" style="color:red">Missing information!</small> --}}
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="row">
-                            <div class="col-lg-6 mb-2">
-                                <div class="mb-3">
-                                    <label class="text-label form-label">Guarantor 2's First Name*</label>
-                                    <input type="text" value="{{$loan->g2fname}}" name="g2fname" class="form-control" placeholder="Name" >
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-2">
-                                <div class="mb-3">
-                                    <label class="text-label form-label">Guarantor 2's Last Name*</label>
-                                    <input type="text" value="{{$loan->g2lname}}" name="g2lname" class="form-control" placeholder="Name" >
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-2">
-                                <div class="mb-3">
-                                    <label class="text-label form-label">Guarantor 2's Email Address*</label>
-                                    <input type="email" value="{{$loan->g2email}}" name="g2email" class="form-control" id="emial1" placeholder="example@example.com.com" >
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-2">
-                                <div class="mb-3">
-                                    <label class="text-label form-label">Guarantor 2's Phone Number*</label>
-                                    <input type="text" value="{{$loan->g2phone}}" name="g2phone" class="form-control" placeholder="(+1)408-657-9007" >
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-2">
-                                <div class="mb-3">
-                                    <label class="text-label form-label">Relation*</label>
-                                    <select type="text" value="{{ $loan->g2_relation }}" name="g2_relation" class="form-control">
-                                        <option data-display="Select">{{ $loan->g2_relation }}</option>
-                                        <option value="Brother">Brother</option>
-                                        <option value="Sister">Sister</option>
-                                        <option value="Parent">Parent</option>
-                                        <option value="Relative">Relative</option>
-                                        <option value="Spouse">Spouse</option>
-                                        <option value="Work Mate">Work Mate</option>
-                                        <option value="Close Friend">Close Friend</option>
-                                    </select> 
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-2">
-                                <div class="mb-3">
-                                    <label class="text-label form-label">Gender*</label>
-                                    <select type="text" value="{{ $loan->g2_gender }}" name="g2_gender" class="form-control">
-                                        <option data-display="Select">{{ $loan->g2_gender }}</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                    </select> 
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    {{-- NEXT OF KIN SECTION --}}
-                    <div id="nok2">
-                        <h4>Next of Kin</h4>
-                        <div class="row">
-                            <div class="col-lg-6 mb-2">
-                                <div class="mb-3">
-                                    <label class="text-label form-label">Next of Kin's First Name*</label>
-                                    <input id="noK_fname22" type="text" value="{{$user->nextkin->first()->fname}}" name="nok_fname" class="form-control" placeholder="Name" >
-                                    {{-- <small id="validnok_fname22" style="color:red">Missing information!</small> --}}
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-2">
-                                <div class="mb-3">
-                                    <label class="text-label form-label">Next of Kin's Last Name*</label>
-                                    <input id="noK_lname22" type="text" value="{{$user->nextkin->first()->lname}}" name="nok_lname" class="form-control" placeholder="Name" >
-                                    {{-- <small id="validnok_lname22" style="color:red">Missing information!</small> --}}
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-2">
-                                <div class="mb-3">
-                                    <label class="text-label form-label">Next of Kin's Email Address*</label>
-                                    <input type="email"  value="{{$user->nextkin->first()->email}}" name="nok_email" id="nok_email22" class="form-control" id="emial1" placeholder="example@example.com.com" >
-                                    {{-- <small id="validnok_email22" style="color:red">Missing information!</small> --}}
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-2">
-                                <div class="mb-3">
-                                    <label class="text-label form-label">Next of Kin's Phone Number*</label>
-                                    <input type="text"  value="{{$user->nextkin->first()->phone}}" name="nok_phone" id="nok_phone22" class="form-control" placeholder="(+260)777888899" >
-                                    {{-- <small id="validnok_phone2" style="color:red">Missing information!</small> --}}
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-2">
-                                <div class="mb-3">
-                                    <label class="text-label form-label">Relation*</label>
-                                    <select type="text" value="{{$user->nextkin->first()->address}}" name="nok_relation" id="nok_relation22" class="form-control">
-                                        <option data-display="Select">{{$user->nextkin->first()->address}}</option>
-                                        <option value="Brother">Brother</option>
-                                        <option value="Sister">Sister</option>
-                                        <option value="Parent">Parent</option>
-                                        <option value="Relative">Relative</option>
-                                        <option value="Spouse">Spouse</option>
-                                        <option value="Work Mate">Work Mate</option>
-                                        <option value="Close Friend">Close Friend</option>
-                                    </select> 
-                                    {{-- <small id="validnok_relation2" style="color:red">Missing information!</small> --}}
-                                </div>
-                            </div>
-                            <div class="col-lg-6 mb-2">
-                                <div class="mb-3">
-                                    <label class="text-label form-label">Gender*</label>
-                                    <select type="text" value="{{$user->nextkin->first()->gender}}" name="nok_gender" id="nok_gender22" class="form-control">
-                                        <option data-display="Select">{{$user->nextkin->first()->gender}}</option>
-                                        <option value="Male">Male</option>
-                                        <option value="Female">Female</option>
-                                    </select> 
-                                    {{-- <small id="validnok_gender2" style="color:red">Missing information!</small> --}}
+                            <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Duration</label>
+                                <div class="col-lg-8 fv-row">
+                                    <select type="text" name="repayment_plan" class="form-control form-control-lg form-control-solid" placeholder="" required>
+                                        <option {{ $loan->repayment_plan == 1 ? 'selected':'' }} value="1">1 Month</option>
+                                        <option {{ $loan->repayment_plan == 2 ? 'selected':'' }} value="2">2 Months</option>
+                                        <option {{ $loan->repayment_plan == 3 ? 'selected':'' }} value="3">3 Months</option>
+                                        <option {{ $loan->repayment_plan == 4 ? 'selected':'' }} value="4">4 Months</option>
+                                        <option {{ $loan->repayment_plan == 5 ? 'selected':'' }} value="5">5 Months</option>
+                                        <option {{ $loan->repayment_plan == 6 ? 'selected':'' }} value="6">6 Months</option>
+                                        <option {{ $loan->repayment_plan == 7 ? 'selected':'' }} value="7">7 Months</option>
+                                        <option {{ $loan->repayment_plan == 8 ? 'selected':'' }} value="8">8 Months</option>
+                                        <option {{ $loan->repayment_plan == 9 ? 'selected':'' }} value="9">9 Months</option>
+                                        <option {{ $loan->repayment_plan == 10 ? 'selected':'' }} value="10">10 Months</option>
+                                        <option {{ $loan->repayment_plan == 11 ? 'selected':'' }} value="11">11 Months</option>
+                                        <option {{ $loan->repayment_plan == 12 ? 'selected':'' }} value="12">12 Months</option>
+                                    </select>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
+            </div>
 
-
-                {{-- Step 3 --}}
-                <div class="card p-4">
-                    <h4>Support Documents</h4>
-                    <div class="row">
-                        <div class="col-lg-6 mb-2">
-                            <div class="mb-3">
-                                <label class="text-label form-label">NRC Copy*</label>
-                                <input type="file" value="{{ $loan->nrc_file }}" placeholder="{{ $loan->nrc_file }}" name="nrc_file" class="form-control" id="nrcFile" >
+            {{-- <div class="card mb-5 mb-xl-10">
+                <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+                    <div class="card-title m-0">
+                        <h3 class="fw-bold text-info m-0">Next of Kin:</h3>
+                    </div>
+                </div>
+                
+                <div id="kt_account_settings_profile_details" class="collapse show">
+                    <div id="kt_account_profile_details_form" class="form">
+                        <div class="card-body border-top p-9">
+                            <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">First Name</label>
+                                <div class="col-lg-8 fv-row">
+                                    <input type="text" value="@php App\Models\NextOfKing::customer_nok($loan->user_id)->first()->fname @endphp" name="nok_fname" class="form-control form-control-lg form-control-solid" placeholder="" ></input>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6 mb-2">
-                            <div class="mb-3">
-                                <label class="text-label form-label">Payslip (leave empty if not applicable)</label>
-                                <input type="file" value="{{ $loan->payslip_file }}" name="payslip_file" class="form-control" id="payslip_file" >
+                            <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Last Name</label>
+                                <div class="col-lg-8 fv-row">
+                                    <input type="text" value="@php  echo App\Models\NextOfKing::customer_nok($loan->user_id)->first()->fname @endphp" name="nok_lname" class="form-control form-control-lg form-control-solid" placeholder="" ></input>
+                                </div>
                             </div>
-                        </div>
-                        <div class="col-lg-6 mb-2">
-                            <div class="mb-3">
-                                <label class="text-label form-label">TPIN*</label>
-                                <input type="file" value="{{ $loan->tpin_file }}" name="tpin_file" class="form-control" id="tpin_file" >
+                            <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Phone Number</label>
+                                <div class="col-lg-8 fv-row">
+                                    <input type="text" value="@php echo App\Models\NextOfKing::customer_nok($loan->user_id)->first()->phone @endphp" name="nok_phone" class="form-control form-control-lg form-control-solid" placeholder="" ></input>
+                                </div>
+                            </div>
+                            <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Email Address</label>
+                                <div class="col-lg-8 fv-row">
+                                    <input type="text" value="@php echo App\Models\NextOfKing::customer_nok($loan->user_id)->first()->email @endphp" name="nok_email" class="form-control form-control-lg form-control-solid" placeholder="" ></input>
+                                </div>
+                            </div>
+                            <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Relation</label>
+                                <div class="col-lg-8 fv-row">
+                                    <input type="text" value="@php echo App\Models\NextOfKing::customer_nok($loan->user_id)->first()->relation @endphp" name="nok_relation" class="form-control form-control-lg form-control-solid" placeholder="" ></input>
+                                </div>
                             </div>
                         </div>
                     </div>
                 </div>
-                <div class="d-flex">
-                    <button onclick="isLoanding()" class="btn btn-primary btn-square">
-                        Save Changes
+            </div> --}}
+            
+
+            {{-- <div class="card mb-5 mb-xl-10">
+                <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+                    <div class="card-title m-0">
+                        <h3 class="fw-bold text-info m-0">References Information:</h3>
+                    </div>
+                </div>
+                
+                <div id="kt_account_settings_profile_details" class="collapse show">
+                    <div id="kt_account_profile_details_form" class="form">
+                        <div class="card-body border-top p-9">
+                            
+                        <h4 class="text-gray py-3" style="color: darkgray">Human Resources</h4>
+                            <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">First Name</label>
+                                <div class="col-lg-8 fv-row">
+                                    <input type="text" value="" name="sup_fname" class="form-control form-control-lg form-control-solid" placeholder=""></input>
+                                </div>
+                            </div>
+                            <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Last Name</label>
+                                <div class="col-lg-8 fv-row">
+                                    <input type="text" name="sup_lname" class="form-control form-control-lg form-control-solid" placeholder=""></input>
+                                </div>
+                            </div>
+                            <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Phone Number</label>
+                                <div class="col-lg-8 fv-row">
+                                    <input type="text" name="sup_phone" class="form-control form-control-lg form-control-solid" placeholder=""></input>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-body border-top p-9">
+                            
+                        <h4 class="text-gray py-3" style="color: darkgray">Supervisor </h4>
+                            <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">First Name</label>
+                                <div class="col-lg-8 fv-row">
+                                    <input type="text" name="sup_fname" class="form-control form-control-lg form-control-solid" placeholder="" ></input>
+                                </div>
+                            </div>
+                            <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Last Name</label>
+                                <div class="col-lg-8 fv-row">
+                                    <input type="text" name="sup_lname" class="form-control form-control-lg form-control-solid" placeholder="" ></input>
+                                </div>
+                            </div>
+                            <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Phone Number</label>
+                                <div class="col-lg-8 fv-row">
+                                    <input type="text" name="sup_phone" class="form-control form-control-lg form-control-solid" placeholder="" ></input>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div> --}}
+            
+            <div class="card mb-5 mb-xl-10">
+                <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+                    <div class="card-title m-0">
+                        <h3 class="fw-bold text-info m-0">Documents Upload:</h3>
+                    </div>
+                </div>
+                
+                <div id="kt_account_settings_profile_details" class="collapse show">
+                    <div id="kt_account_profile_details_form" class="form">
+                        <div class="card-body border-top p-9">
+                            
+                            <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">NRC</label>
+                                <div class="col-lg-8 fv-row">
+                                    <input type="file" name="nrc_file" class="form-control" id="nrcFile">
+                                    @if(!empty($user['uploads']))
+                                    <small>NRC already uploaded</small>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">Payslip</label>
+                                <div class="col-lg-8 fv-row">
+                                    <input type="file" name="payslip_file" class="form-control" id="payslip_file" >
+                                    @if(!empty($user['uploads']))
+                                    <small>Payslip already uploaded</small>
+                                    @endif
+                                </div>
+                            </div>
+                            <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">TPIN</label>
+                                <div class="col-lg-8 fv-row">
+                                    <input type="file" name="tpin_file" class="form-control" id="tpin_file" >
+                                    @if(!empty($user['uploads']))
+                                    <small>TPIN already uploaded</small>
+                                    @endif
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div id="kt_account_settings_deactivate" class="collapse show">
+                <div class="card-footer d-flex justify-content-end py-6 px-9">
+                    <button id="kt_account_deactivate_account_submit" type="submit" class="btn btn-primary fw-semibold">
+                        <span>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy2" viewBox="0 0 16 16">
+                                <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v3.5A1.5 1.5 0 0 1 11.5 6h-7A1.5 1.5 0 0 1 3 4.5V1H1.5a.5.5 0 0 0-.5.5m9.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z"/>
+                            </svg>
+                        </span>    
+                        Save
                     </button>
                 </div>
-            </form>
-            <div id="loaderloanupdate" class="mx-auto">
-                <div class="container-fluid content-center justify-center items-center">
-                    <img width="60" src="{{ asset('public/loader/loading.gif') }}">
-                    <span>Please wait a minute</span>
-                </div>
             </div>
-            @else
-            <div id="transactionExists" class="mx-auto">
-                <div class="col-xl-12">
-                    <div class="alert alert-primary left-icon-big alert-dismissible fade show">
-                        <div class="media">
-                            <div class="alert-left-icon-big">
-                                <span>
-                                    <svg viewBox="0 0 24 24" width="24" height="24" stroke="currentColor" stroke-width="2" fill="none" stroke-linecap="round" stroke-linejoin="round" class="me-2"><polyline points="9 11 12 14 22 4"></polyline><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"></path></svg>	
-                                </span>
-                            </div>
-                            <div class="media-body">
-                                <h2 class="mt-1 mb-2">Not Applicable!</h2>
-                                <p class="mb-0">
-                                    Can not edit loan details, transactions are currently in progress, view <a  href="{{ route('loan-statement', ['id'=>$loan->id]) }}">Loan Statement</a>
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            @endif
-        </div>
-    </div>  
+            
+        </form>
+    </div>
 </div>
-<script type="text/javascript">    
-    const type = '{{ $loan_type }}';
-    document.getElementById("updateloandetails").style.display = "block";
-    document.getElementById("loaderloanupdate").style.display = "none";
-    
-    if(type !== 'Asset Financing'){
-        document.getElementById("nok2").style.display = "block";
-        document.getElementById("guarantorLoanRef2").style.display = "none";
-    }else{
-        document.getElementById("nok2").style.display = "none";
-        document.getElementById("guarantorLoanRef2").style.display = "block";
-    }
+<script>
+    // Get the input and select elements
+    const minAmountInput = document.getElementById('minimum_loan_principal_amount');
+    const selectElement = document.getElementById('loan_product_wiz_steps');
 
-    function changeType(){
-        const dropdown = document.getElementById("myTypeDropdown");
-        const selectedValue = dropdown.value;
-        if(selectedValue !== 'Asset Financing'){
-            document.getElementById("nok2").style.display = "block";
-            document.getElementById("guarantorLoanRef2").style.display = "none";
-        }else{
-            document.getElementById("nok2").style.display = "none";
-            document.getElementById("guarantorLoanRef2").style.display = "block";
+    // Event listener to update select options when input changes
+    minAmountInput.addEventListener('input', updateSelectOptions);
+
+    // Initial update based on the current value
+    updateSelectOptions();
+
+    function updateSelectOptions() {
+        // Get the minimum loan principal amount from the input
+        const minAmount = parseFloat(minAmountInput.value);
+
+        // Clear existing options
+        selectElement.innerHTML = '';
+        // Add options based on the minimum loan principal amount
+        if (minAmount >= 1500) {
+            addOption(10);
+            addOption(50);
+            addOption(100);
+            addOption(500);
+        } else {
+            addOption(10);
+            addOption(50);
+            addOption(100);
+            addOption(500);
+            addOption(1000);
         }
+
+        // Trigger the Livewire update if needed
+        selectElement.dispatchEvent(new Event('change'));
     }
 
-    function isLoanding(){
-        document.getElementById("updateloandetails").style.display = "none";
-        document.getElementById("loaderloanupdate").style.display = "block";
+    function addOption(value) {
+        const option = document.createElement('option');
+        option.value = value;
+        option.text = value;
+        selectElement.add(option);
     }
 </script>

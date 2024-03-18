@@ -10,6 +10,15 @@
                     </h3>
                     
                     <div class="card-toolbar">
+                        <!--begin::Filter-->
+                        <button onclick="deleteBulk()" type="button" id="deleteBtn" class="btn btn-sm btn-flex btn-light-danger"
+                            data-bs-toggle="modal" data-bs-target="#kt_modal_add_payment">
+                            <i class="ki-duotone ki-plus-cross fs-3">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                                <span class="path3"></span>
+                            </i>Delete
+                        </button>
                         <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                             <i class="ki-duotone ki-category fs-6">
                                 <span class="path1"></span>
@@ -56,23 +65,23 @@
                             
                             <thead>
                                 <tr class="fw-bold text-muted">
-                                    {{-- <th class="w-25px">
+                                    <th class="w-20px">
                                         <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                            <input class="form-check-input" type="checkbox" value="1" data-kt-check="true" data-kt-check-target=".widget-13-check" />
+                                            <input onclick="showDelBtn()" class="form-check-input" type="checkbox" value="1" data-kt-check="true" data-kt-check-target=".widget-13-check" />
                                         </div>
-                                    </th> --}}
+                                    </th>
                                     <th class="min-w-100px">Loan Type</th>
                                     <th class="min-w-140px">Principal</th>
                                     <th class="w-120px">Date</th>
                                     <th class="w-100px">Borrower</th>
                                     <th class="min-w-120px">Payback</th>
-                                    <th class="min-w-120px">Status</th>
+                                    <th class="min-w-90">Status</th>
                                     
                                     @if($this->current_configs('loan-approval')->value == 'spooling')
-                                    <th class="min-w-130px"></th>
+                                    <th class="min-w-100px"></th>
                                     @endif
                                     @if($this->current_configs('loan-approval')->value == 'manual')
-                                    <th class="min-w-130px"></th>
+                                    <th class="min-w-100px"></th>
                                     @endif
                                     <th class="min-w-140px text-end">Actions</th>
                                 </tr>
@@ -81,11 +90,11 @@
                             <tbody>
                                 @forelse($requests as $loan)
                                     <tr>
-                                        {{-- <td>
+                                        <td>
                                             <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                                <input class="form-check-input widget-13-check" type="checkbox" value="1" />
+                                                <input onclick="showDelBtn()" class="form-check-input widget-13-check" type="checkbox" name="items[]" value="{{ $loan->id }}" />
                                             </div>
-                                        </td> --}}
+                                        </td>
                                         <td>
                                             <a href="#" class="text-dark fw-bold text-hover-primary ">
                                                 {{ $loan->loan_product->name }} 
@@ -167,7 +176,7 @@
                                         @endif
                                         <td class="text-center">
                                             @can('processes loans')
-                                                <a href="{{ route('loan-details',['id' => $loan->id]) }}" class="btn btn-icon btn-bg-light btn-primary btn-sm me-1">
+                                                <a href="{{ route('loan-details',['id' => $loan->id]) }}" class="btn btn-icon btn-bg-light btn-light btn-sm me-1">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
                                                         <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
                                                         <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
@@ -181,15 +190,21 @@
                                                     </svg>
                                                 </a>
                                             @endcan
-                                            @can('view loan statements')
+                                            {{-- @can('view loan statements')
                                                 <a  title="View Loan Statement" href="{{ route('loan-statement', ['id'=>$loan->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm me-1">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-file-ruled-fill" viewBox="0 0 16 16">
                                                         <path d="M12 0H4a2 2 0 0 0-2 2v4h12V2a2 2 0 0 0-2-2m2 7H6v2h8zm0 3H6v2h8zm0 3H6v3h6a2 2 0 0 0 2-2zm-9 3v-3H2v1a2 2 0 0 0 2 2zm-3-4h3v-2H2zm0-3h3V7H2z"/>
                                                     </svg>
                                                 </a>
-                                            @endcan
+                                            @endcan --}}
+                                            <a href="{{ route('detailed',['id' => $loan->id]) }}" class="btn btn-icon btn-bg-light btn-primary btn-sm me-1">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-eye-fill" viewBox="0 0 16 16">
+                                                    <path d="M10.5 8a2.5 2.5 0 1 1-5 0 2.5 2.5 0 0 1 5 0"/>
+                                                    <path d="M0 8s3-5.5 8-5.5S16 8 16 8s-3 5.5-8 5.5S0 8 0 8m8 3.5a3.5 3.5 0 1 0 0-7 3.5 3.5 0 0 0 0 7"/>
+                                                </svg>
+                                            </a>
                                             @can('update loans')
-                                                <a title="Edit Loan" href="{{ route('edit-loan', ['id'=>$loan->id]) }}" class="btn btn-icon btn-bg-light btn-active-color-primary btn-sm">
+                                                <a title="Edit Loan" href="{{ route('edit-loan', ['id'=>$loan->id]) }}" class="btn btn-icon btn-bg-info text-white btn-active-color-white btn-sm">
                                                     <svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" fill="currentColor" class="bi bi-pencil-fill" viewBox="0 0 16 16">
                                                         <path d="M12.854.146a.5.5 0 0 0-.707 0L10.5 1.793 14.207 5.5l1.647-1.646a.5.5 0 0 0 0-.708l-3-3zm.646 6.061L9.793 2.5 3.293 9H3.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.207l6.5-6.5zm-7.468 7.468A.5.5 0 0 1 6 13.5V13h-.5a.5.5 0 0 1-.5-.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.5-.5V10h-.5a.499.499 0 0 1-.175-.032l-.179.178a.5.5 0 0 0-.11.168l-2 5a.5.5 0 0 0 .65.65l5-2a.5.5 0 0 0 .168-.11l.178-.178z"/>
                                                     </svg>
@@ -214,21 +229,45 @@
     @include('livewire.dashboard.loans.__modals.export-loan-panel')
     @include('livewire.dashboard.loans.__modals.import-loan-panel')
 
-    {{-- <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const exportLink = document.getElementById('exportLink');
-            const importLink = document.getElementById('importLink');
-            const modal = new bootstrap.Modal(document.getElementById('export_loans_panel'));
-            const modal2 = new bootstrap.Modal(document.getElementById('import_loans_panel'));
+    <script>
+        const delBtn = document.getElementById('deleteBtn');
+        delBtn.style.display = 'none';
+        function showDelBtn(){
+            delBtn.style.display = 'block';
+        }
+        function deleteBulk() {
+            // Fetch all selected checkboxes
+            const checkboxes = document.querySelectorAll('input[name="items[]"]:checked');
+            const selectedIds = Array.from(checkboxes).map(checkbox => checkbox.value);
+            
+            if (selectedIds.length > 0) {
+                // Confirm deletion
+                const confirmDelete = confirm("Are you sure you want to delete the selected loan applications?");
+                
+                if (confirmDelete) {
+                    // Send an AJAX request to the Laravel route with the selected IDs
+                    fetch('delete-loans', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        },
+                        body: JSON.stringify({ ids: selectedIds }),
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Items deleted successfully.');
+                            window.location.reload(true);
+                        } else {
+                            console.error('Failed to delete items.');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                }
+            } else {
+                alert("No items selected for deletion.");
+            }
+        }
 
-            exportLink.addEventListener('click', function(event) {
-                event.preventDefault();
-                modal.show();
-            });
-            importLink.addEventListener('click', function(event) {
-                event.preventDefault();
-                modal2.show();
-            });
-        });
-    </script> --}}
+    </script>
 </div>

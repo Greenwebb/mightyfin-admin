@@ -126,27 +126,7 @@ class Application extends Model
     public function approvedLoans(){
         return $this->hasOne(Loans::class);
     }
-
-    // public function approvalAction(){
-    //     return $this->hasMany()
-    // }
-
-    // public static function payback($principal, $duration){
-    //     // 1 month
-    //     if( $duration < 2){
-    //         return ($principal * 0.2) + $principal;
-    //     }
-
-    //     // 2 to 6 months
-    //     if( $duration > 1 && $duration < 7 ){
-    //         return ($principal * 0.44) + $principal;
-    //     } 
-        
-    //     // 3 months and above
-    //     // if( $duration > 3){
-    //     //     return ($principal * 1.44) + $principal;
-    //     // }
-    // }
+    
 
     // Pending for approval
     public static function currentApplication(){

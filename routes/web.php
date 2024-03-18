@@ -35,6 +35,7 @@ use App\Http\Livewire\Dashboard\Loans\LoanApplicationStandaloneView;
 use App\Http\Livewire\Dashboard\Loans\LoanArears;
 use App\Http\Livewire\Dashboard\Loans\LoanCalculator;
 use App\Http\Livewire\Dashboard\Loans\LoanCalcutor;
+use App\Http\Livewire\Dashboard\Loans\LoanDetailedView;
 use App\Http\Livewire\Dashboard\Loans\LoanDetailView;
 use App\Http\Livewire\Dashboard\Loans\LoanHistoryView;
 use App\Http\Livewire\Dashboard\Loans\LoanRatesView;
@@ -140,7 +141,8 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
     // ---- loans
     Route::get('apply-for-a-loan/{id}', LoanApplicationStandaloneView::class)->name('apply-for');
-    Route::get('loan-details/{id}', LoanDetailView::class)->name('loan-details');
+    Route::get('loan-approval/{id}', LoanDetailView::class)->name('loan-details');
+    Route::get('loan-details/{id}', LoanDetailedView::class)->name('detailed');
     Route::get('no-repayments', NoRepayments::class)->name('no-repayments');
     Route::get('loan-calculator', LoanCalculator::class)->name('loan-calculator');
     Route::get('loan-arrears', LoanArears::class)->name('loan-arrears');
@@ -153,6 +155,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::post('apply-for-loan', [LoanApplicationController::class, 'new_loan'])->name('apply-loan');
     Route::post('apply-proxy-loan', [LoanApplicationController::class, 'new_proxy_loan'])->name('proxy-apply-loan');
     Route::post('update-loan', [LoanApplicationController::class, 'updateLoanDetails'])->name('update-loan-details');
+    Route::post('delete-loans', [LoanApplicationController::class, 'deleteLoans'])->name('delete-loans');
     Route::post('update-loan-statuses', [LoanProductController::class, 'updateLoanStatus'])->name('update-loan-statuses');
     Route::get('delete-loan-step/{loan_step}', [LoanProductController::class, 'deleteStep'])->name('delete-loan-step');
     
