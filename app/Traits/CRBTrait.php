@@ -17,11 +17,11 @@ trait CRBTrait{
     }
 
     // Using cURL
-    public function soapApiRequest(){
+    public function soapApiCRBRequest($code, $user){
         try {
             $url = 'https://secure3.crbafrica.com/crbws_zm/zm'; // Update with the correct endpoint
-            $soapAction = 'http://ws.zm.crbws.transunion.ke.co/getProduct104'; // Update with the correct SOAP action
-        
+            $soapAction = 'http://ws.zm.crbws.transunion.ke.co/getProduct'.$code; // Update with the correct SOAP action
+
             $xmlPayload = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.zm.crbws.transunion.ke.co/">
                     <soapenv:Header/>
                     <soapenv:Body>
@@ -36,15 +36,15 @@ trait CRBTrait{
                             <!--Optional:-->
                             <infinityCode>zm123456789</infinityCode>
                             <!--Optional:-->
-                            <name1>Elizabeth M</name1>
+                            <name1>'.$user->fname.'</name1>
                             <!--Optional:-->
-                            <name2>Mpundu</name2>
+                            <name2>'.$user->lname.'</name2>
                             <!--Optional:-->
                             <name3>?</name3>
                             <!--Optional:-->
                             <name4>?</name4>
                             <!--Optional:-->
-                            <nationalID>217544/13/1</nationalID>
+                            <nationalID>'.$user->nrc_no.'</nationalID>
                             <!--Optional:-->
                             <passportNo>?</passportNo>
                             <!--Optional:-->
@@ -54,7 +54,8 @@ trait CRBTrait{
                             <!--Optional:-->
                             <taxID>?</taxID>
                             <!--Optional:-->
-                            <dateOfBirth>22/4/1982</dateOfBirth>
+                            
+                            <dateOfBirth>'.date('d/m/Y', strtotime($user->dob)).'</dateOfBirth>
                             <!--Optional:-->
                             <postalBoxNo>?</postalBoxNo>
                             <!--Optional:-->
@@ -78,7 +79,7 @@ trait CRBTrait{
                         </ws:getProduct104>
                     </soapenv:Body>
                 </soapenv:Envelope>';
-
+            // dd($xmlPayload);
             $headers = [
                 "Content-type: text/xml;charset=\"utf-8\"",
                 'Authorization: Basic ' . base64_encode($this->username . ':' . $this->password),
@@ -103,7 +104,6 @@ trait CRBTrait{
             curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
 
             $response = curl_exec($ch);
-            dd($response);
             if (curl_errno($ch)) {
                 // Handle cURL error
                 echo 'Error: ' . curl_error($ch);
@@ -116,26 +116,5 @@ trait CRBTrait{
             dd('Hello Greenwebbtech Fix this error: '.$th);
         }
     }
-    
-
-    // Using a codedredd/laravel-soap package
-        
-    // public function makeCRBSoapRequest()
-    // {
-    //     $response = Soap::baseWsdl('https://secure3.crbafrica.com/crbws/zm?wsdl')
-    //     ->withBasicAuth($this->username, $this->password)
-    //     ->call('getProduct104', [
-    //         'username' => 'Ws_Mighty',
-    //         'password' => '11dI`I5))e2%',
-    //         'code' => '1267',
-    //         'infinityCode' => 'zm123456789',
-    //         'name1' => 'Elizabeth M',
-    //         'name2' => 'Mpundu',
-    //         'reportSector' => 1,
-    //         'reportReason' => 3,
-    //     ]);
-    //     // Handle the SOAP response as needed
-    //     return $response;
-    // }
 
 }

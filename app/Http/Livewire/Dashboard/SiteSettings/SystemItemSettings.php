@@ -48,7 +48,7 @@ class SystemItemSettings extends Component
 
     public function CheckCRB()
     {
-        $response = $this->soapApiRequest();
+        $response = $this->soapApiCRBRequest();
         
     }
 

@@ -7,46 +7,57 @@ use App\Models\UserFile;
 use Illuminate\Support\File;
 trait CalculatorTrait{
 
-    function calculateAmortizationSchedule($loanAmount, $annualInterestRate, $loanTermYears) {
-        $monthlyInterestRate = $annualInterestRate / 12 / 100;
-        $totalPayments = $loanTermYears * 12;
-        $monthlyPayment = ($loanAmount * $monthlyInterestRate) / (1 - pow(1 + $monthlyInterestRate, -$totalPayments));
+    public function calculateAmortizationSchedule($loanAmount, $loanTermYears, $loanProductId) {
         
-        $amortizationSchedule = [];
-        $balance = $loanAmount;
-        for ($i = 1; $i <= $totalPayments; $i++) {
-            $interestPayment = $balance * $monthlyInterestRate;
-            $principalPayment = $monthlyPayment - $interestPayment;
-            $balance -= $principalPayment;
-            
-            $amortizationSchedule[] = [
-                'month' => $i,
-                'payment' => $monthlyPayment,
-                'interest' => $interestPayment,
-                'principal' => $principalPayment,
-                'balance' => $balance
-            ];
+        try {
+            $info = $this->getLoanProductDetails($loanProductId);
+
+            switch ($info->interest_methods->first()->interest_method->name) {
+                case 'Flat Rate':
+                    return $this->flatRateAmortization($loanAmount, $loanTermYears, $info);
+                    break;
+                
+                default:
+                    # code...
+                    break;
+            }
+        } catch (\Throwable $th) {
+            dd($th);
         }
+
+    }
+    function flatRateAmortization($principal, $termMonths, $info) {
+            $schedule = [];
+            $monthlyInterestRate = $info->def_loan_interest / 100 / 12;
+            $monthlyPayment = ($principal * $monthlyInterestRate) / (1 - pow(1 + $monthlyInterestRate, -$termMonths));
         
-        return $amortizationSchedule;
+            $remainingBalance = $principal;
+        
+            for ($i = 0; $i < $termMonths; $i++) {
+                $interest = $remainingBalance * $monthlyInterestRate;
+                $principalPayment = $monthlyPayment - $interest;
+                $remainingBalance -= $principalPayment;
+        
+                $schedule[] = [
+                    'month' => $i + 1,
+                    'payment' => $monthlyPayment,
+                    'principal' => $principalPayment,
+                    'interest' => $interest,
+                    'balance' => $remainingBalance
+                ];
+            }
+            return $schedule;
     }
     public function getLoanProductDetails($id){
-        
+        return LoanProduct::where('id', $id)->with([
+            'disbursed_by.disbursed_by',
+            'interest_methods.interest_method', 
+            'interest_types.interest_type',
+            'loan_accounts.account_payment',
+            'loan_status.status',
+            'loan_decimal_places',
+            'service_fees.service_charge',
+            'loan_institutes.institutions'
+        ])->first();
     }
-
-    
-        
-    // // Example usage:
-    // $loanAmount = 100000; // Loan amount
-    // $annualInterestRate = 5; // Annual interest rate (in percentage)
-    // $loanTermYears = 30; // Loan term in years
-    
-    // $amortizationSchedule = calculateAmortizationSchedule($loanAmount, $annualInterestRate, $loanTermYears);
-    
-    // // Print the amortization schedule
-    // echo "Month | Payment | Interest | Principal | Balance\n";
-    // foreach ($amortizationSchedule as $payment) {
-    //     printf("%5d | %8.2f | %8.2f | %9.2f | %8.2f\n", $payment['month'], $payment['payment'], $payment['interest'], $payment['principal'], $payment['balance']);
-    // }
-
 }

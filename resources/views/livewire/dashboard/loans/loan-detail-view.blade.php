@@ -82,7 +82,7 @@
                 <div style="margin-top: -4%; padding: 0px;" class="card-body pt-5 pb-0">
                     <!--begin::Details-->
                     <div class="col-12">
-                        @if($loan->complete == 1)
+                        @if(true)
                         @if($loan_product->loan_status !== null || $loan_product !== null)
                             @switch(strtolower($current->stage))
                                 @case('processing')

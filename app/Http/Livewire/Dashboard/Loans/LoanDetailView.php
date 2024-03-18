@@ -8,6 +8,8 @@ use App\Models\LoanManualApprover;
 use App\Models\LoanStatus;
 use App\Models\Status;
 use App\Models\User;
+use App\Traits\CalculatorTrait;
+use App\Traits\CRBTrait;
 use App\Traits\EmailTrait;
 use App\Traits\LoanTrait;
 use App\Traits\WalletTrait;
@@ -19,15 +21,12 @@ use Illuminate\Support\Facades\Redirect;
 
 class LoanDetailView extends Component
 {
-    use EmailTrait, WalletTrait, LoanTrait, AuthorizesRequests;
+    use CalculatorTrait, EmailTrait, WalletTrait, LoanTrait, CRBTrait, AuthorizesRequests;
     public $loan, $user, $loan_id, $msg, $due_date, $reason, $loan_product;
-    public $loan_stage, $denied_status, $picked_status, $current;
+    public $loan_stage, $denied_status, $picked_status, $current, $principal_amt, $code, $crb, $crb_results;
+    public $amortizationSchedule,$amo_principal, $amo_duration;
+    public $debt_ratio, $gross_pay, $net_pay, $result_amount;
     public function mount($id){
-        /**
-            *loan main details
-            *Loan owner
-            *Loan status timeline
-        **/
         $this->loan_id = $id;
     }
 
@@ -36,21 +35,49 @@ class LoanDetailView extends Component
         try {
             $this->authorize('processes loans');
             $this->loan = $this->get_loan_details($this->loan_id);
+            $this->principal_amt = $this->loan->amount;
             $this->loan_product = $this->get_loan_product($this->loan->loan_product_id);
             $this->loan_stage = $this->get_loan_current_stage($this->loan->loan_product_id);
-            $this->denied_status = Status::where('stage', 'denied')
-            ->orderBy('id')
-            ->get();
+            $this->denied_status = Status::where('stage', 'denied')->orderBy('id')->get();
             $this->current = ApplicationStage::where('application_id', $this->loan->id)->first();
+            // $this->amortizationSchedule = $this->calculateAmortizationSchedule(
+            //     $this->loan->amount, 
+            //     $this->loan->repayment_plan, 
+            //     $this->loan->loan_product_id);
             $this->change_status();
-            
             return view('livewire.dashboard.loans.loan-detail-view')
             ->layout('layouts.admin');
         } catch (\Throwable $th) {
-           
+
         }
     }
     
+    public function CheckCRB()
+    {
+        $response = $this->soapApiCRBRequest($this->code, $this->loan->user);
+        $parser = xml_parser_create();
+        xml_parse_into_struct($parser, $response, $values, $index);
+        xml_parser_free($parser);
+    
+        $this->crb_results = [
+            'values' => $values,
+            'index' => $index
+        ];
+    }
+
+    public function checkRisk(){
+        $this->result_amount = ($this->debt_ratio * $this->gross_pay) - $this->net_pay;
+    }
+
+    public function calculateAmoritization(){
+        // $this->reset(['amortizationSchedule']);
+        $this->amortizationSchedule = $this->calculateAmortizationSchedule(
+            $this->amo_principal, 
+            $this->amo_duration, 
+            $this->loan->loan_product_id);
+    }
+    
+
     public function setLoanID($id){
         $this->loan_id = $id;
     }
