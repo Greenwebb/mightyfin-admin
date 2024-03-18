@@ -1,4 +1,4 @@
-<div wire:ignore class="content d-flex flex-column flex-column-fluid" id="kt_content">
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -271,57 +271,7 @@
                                         @endif
                                     </div>
                                 </div>
-                                
                             </div>
-                            
-                            <div class="card pt-4 mb-6 mb-xl-9">
-                                <div class="card-header border-0">
-                                    <div class="card-title">
-                                        <h4 class="fw-bold mb-0">Amoritization Repayment Schedule </h4>
-                                    </div>
-                                </div>
-                                
-                                <div id="kt_customer_view_payment_method" class="card-body pt-0">
-                                    <div class="py-0" data-kt-customer-payment-method="row">
-                                        <div id="kt_customer_view_payment_method_1"
-                                            class="collapse show fs-6 ps-10"
-                                            data-bs-parent="#kt_customer_view_payment_method">
-                                            <div class="d-flex flex-wrap py-5">
-                                                <div class="d-flex w-full">
-                                                    <input type="number" class="form-control" wire:model.defer="principal_amt" placeholder="{{$principal_amt}}" id="amo">
-                                                    <button class="btn btn-sm btn-primary">Check</button>
-                                                </div>
-                                                <table class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Month</th>
-                                                            <th>Payment</th>
-                                                            <th>Interest</th>
-                                                            <th>Principal</th>
-                                                            <th>Balance</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($amortizationSchedule as $payment)
-                                                        <tr>
-                                                            <td>{{ $payment['month'] }}</td>
-                                                            <td>{{ number_format($payment['payment'], 2) }}</td>
-                                                            <td>{{ number_format($payment['interest'], 2) }}</td>
-                                                            <td>{{ number_format($payment['principal'], 2) }}</td>
-                                                            <td>{{ number_format($payment['balance'], 2) }}</td>
-                                                        </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
-                                                
-                                            </div>
-                                        </div>
-                                    </div>
-                                    
-                                </div>
-                            </div>
-                            
-                            
                         </div>
                         <!--end:::Tab pane-->
 
