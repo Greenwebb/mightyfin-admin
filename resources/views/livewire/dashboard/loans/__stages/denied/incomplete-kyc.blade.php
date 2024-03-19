@@ -105,7 +105,7 @@
                 <div class="flex-lg-row-fluid ms-lg-15">
                     <div class="float-end">
                         
-                        {{-- @if ($this->my_review_status($loan->id) == 1)
+                        @if ($this->my_review_status($loan->id) == 1)
                             <a href="#" class="btn btn-primary ps-7" data-kt-menu-trigger="click"
                                 data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">Action
                                 <i class="ki-duotone ki-down fs-2 me-0"></i>
@@ -115,7 +115,7 @@
                                 data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">Action
                                 <i class="ki-duotone ki-down fs-2 me-0"></i>
                             </a>
-                        @endif --}}
+                        @endif
                             
                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold py-4 w-250px fs-6" data-kt-menu="true">
                                 {{-- <div class="menu-item px-5">
@@ -124,9 +124,9 @@
                                 <div class="menu-item px-5">
                                     <a href="#" wire:click="setLoanID({{$loan->id}})" class="menu-link px-5"> Default Loan </a>
                                 </div>
-                                {{-- <div class="menu-item px-5">
-                                    <a href="#" wire:click="accept({{$loan->id}})" class="menu-link px-5"> Approve </a>
-                                </div> --}}
+                                <div class="menu-item px-5">
+                                    <a href="#" wire:click="accept({{$loan->id}})" class="menu-link px-5"> Continue to Verification </a>
+                                </div>
                         </div>
                     </div>
 

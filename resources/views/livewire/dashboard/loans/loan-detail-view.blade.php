@@ -289,7 +289,8 @@
         @include('livewire.dashboard.__parts.dash-alerts')
     </div>
 
-    @if($loan->complete == 1)
+    @if(true)
+    {{-- @if($loan->complete == 1) --}}
     @switch(strtolower($current->stage))
         
         @case('processing')

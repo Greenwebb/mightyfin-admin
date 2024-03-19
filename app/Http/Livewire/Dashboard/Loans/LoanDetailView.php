@@ -35,15 +35,13 @@ class LoanDetailView extends Component
         try {
             $this->authorize('processes loans');
             $this->loan = $this->get_loan_details($this->loan_id);
-            $this->principal_amt = $this->loan->amount;
+            // $this->amo_duration = $this->loan->repayment_plan;
+            // $this->amo_principal = $this->loan->amount;
             $this->loan_product = $this->get_loan_product($this->loan->loan_product_id);
             $this->loan_stage = $this->get_loan_current_stage($this->loan->loan_product_id);
             $this->denied_status = Status::where('stage', 'denied')->orderBy('id')->get();
             $this->current = ApplicationStage::where('application_id', $this->loan->id)->first();
-            // $this->amortizationSchedule = $this->calculateAmortizationSchedule(
-            //     $this->loan->amount, 
-            //     $this->loan->repayment_plan, 
-            //     $this->loan->loan_product_id);
+            // $this->calculateAmoritization();
             $this->change_status();
             return view('livewire.dashboard.loans.loan-detail-view')
             ->layout('layouts.admin');
