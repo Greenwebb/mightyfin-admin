@@ -86,10 +86,10 @@
                                     <th class="min-w-90">Status</th>
                                     
                                     @if($this->current_configs('loan-approval')->value == 'spooling')
-                                    <th class="min-w-100px"></th>
+                                    <th class="min-w-60px"></th>
                                     @endif
                                     @if($this->current_configs('loan-approval')->value == 'manual')
-                                    <th class="min-w-100px"></th>
+                                    <th class="min-w-60px"></th>
                                     @endif
                                     <th class="min-w-140px text-end">Actions</th>
                                 </tr>
@@ -145,7 +145,7 @@
                                         @if($this->current_configs('loan-approval')->value == 'spooling')
                                         <td class="text-success">
                                             @role('admin')
-                                                Spooling Mode
+                                                
                                             @else
                                                 @can('review loan')
                                                     @if($loan->status == 0 || $loan->status == 3)
