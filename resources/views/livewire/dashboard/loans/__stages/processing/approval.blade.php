@@ -158,17 +158,23 @@
                     <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-8">
                         <li class="nav-item">
                             <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab"
-                                href="#kt_customer_view_overview_tab">Amoritization</a>
+                                href="#kt_customer_view_overview_tab">
+                                <small>Amoritization</small>
+                            </a>
                         </li>
                         
                         <li class="nav-item">
                             <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
-                                href="#kt_customer_view_overview_loan_details">Loan Information</a>
+                                href="#kt_customer_view_overview_loan_details">
+                                <small>Loan Info</small>
+                            </a>
                         </li>
                         
                         <li class="nav-item">
                             <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true"
-                                data-bs-toggle="tab" href="#kt_customer_view_documents">Documents</a>
+                                data-bs-toggle="tab" href="#kt_customer_view_documents">
+                                <small>Uploads</small>
+                            </a>
                         </li>
                         
                         {{-- <li class="nav-item">
@@ -258,131 +264,53 @@
 
 
                                 <div class="col-xl-12">
-
-                                    <!--begin::List Widget 2-->
-                                    <div class="card pt-4 card-xl-stretch mb-xl-2">
-                                        <!--begin::Header-->
-                                        <div class="card-header border-0">
-                                            <div class="card-title">
-                                                <h4 class="card-title fw-bold text-gray-900">Parties Information</h4>
-                                            </div>
-                                            <div class="card-toolbar">
-                                                <!--begin::Menu-->
-                                                {{-- <button type="button"
-                                                    class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
-                                                    data-kt-menu-trigger="click"
-                                                    data-kt-menu-placement="bottom-end">
-                                                    <i class="ki-duotone ki-category fs-6"><span
-                                                            class="path1"></span><span
-                                                            class="path2"></span><span
-                                                            class="path3"></span><span
-                                                            class="path4"></span></i> </button> --}}
-                                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px"
-                                                    data-kt-menu="true">
-                                                    <div class="menu-item px-3">
-                                                        <div
-                                                            class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">
-                                                            Quick Actions</div>
-                                                    </div>
-                                                    
-                                                    <div class="separator mb-3 opacity-75"></div>
-                                                
-                                                    <div class="menu-item px-3">
-                                                        <a href="#" class="menu-link px-3">
-                                                            New Ticket
-                                                        </a>
-                                                    </div>
-                                                    
-                                                    <div class="menu-item px-3">
-                                                        <a href="#" class="menu-link px-3">
-                                                            New Customer
-                                                        </a>
-                                                    </div>
-                                                    
-                                                    <div class="menu-item px-3" data-kt-menu-trigger="hover"
-                                                        data-kt-menu-placement="right-start">
-                                                        
-                                                        <a href="#" class="menu-link px-3">
-                                                            <span class="menu-title">New Group</span>
-                                                            <span class="menu-arrow"></span>
-                                                        </a>
-                                                        
-                                                        <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                                        
-                                                            <div class="menu-item px-3">
-                                                                <a href="#" class="menu-link px-3">
-                                                                    Admin Group
-                                                                </a>
-                                                            </div>
-                                                            
-                                                            <div class="menu-item px-3">
-                                                                <a href="#" class="menu-link px-3">
-                                                                    Staff Group
-                                                                </a>
-                                                            </div>
-                                                            
-                                                            <div class="menu-item px-3">
-                                                                <a href="#" class="menu-link px-3">
-                                                                    Member Group
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="menu-item px-3">
-                                                        <a href="#" class="menu-link px-3">
-                                                            New Contact
-                                                        </a>
-                                                    </div>
-                                                
-                                                    <div class="separator mt-3 opacity-75"></div>
-                                                
-                                                    <div class="menu-item px-3">
-                                                        <div class="menu-content px-3 py-3">
-                                                            <a class="btn btn-primary  btn-sm px-4"
-                                                                href="#">
-                                                                Generate Reports
-                                                            </a>
+                                    <div class="card pt-4 mb-6 mb-xl-9">
+                                        <div id="kt_customer_view_payment_method" class="card-body pt-0">
+                                            <div class="py-0" data-kt-customer-payment-method="row">
+                                                <div id="kt_customer_view_payment_method_1"
+                                                    class="collapse show fs-6 ps-10"
+                                                    data-bs-parent="#kt_customer_view_payment_method">
+                                                    <div class="d-flex flex-wrap py-5">
+                                                        <div class="flex-equal me-5">
+                                                            <table class="table table-flush fw-semibold gy-1">
+                                                                <tr>
+                                                                    <td class="text-muted min-w-125px w-125px">Amount</td>
+                                                                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                                    <td class="text-gray-800"><b>K{{ $loan->amount }}</b></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted min-w-125px w-125px">Loan Product</td>
+                                                                    <td>&nbsp;&nbsp;&nbsp;</td>
+                                                                    <td class="text-gray-800">{{ $loan_product->name}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted min-w-125px w-125px">KYC</td>
+                                                                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                                    <td class="text-gray-800">
+                                                                        <small class="text-white d-block fw-bold mt-2">
+                                                                            @if($loan->complete == 1)
+                                                                                <small class="text-white bg-success p-2 rounded">{{ 'Completed' }}</small>
+                                                                            @else
+                                                                                <small class="text-white bg-danger p-2 rounded">{{ 'Incomplete' }}</small>
+                                                                            @endif        
+                                                                        </small>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted min-w-125px w-125px">Created On</td>
+                                                                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                                    <td class="text-gray-800">
+                                                                        <small class="text-dark d-block fw-bold mt-2">
+                                                                                {{ $loan->created_at->toFormattedDateString() }}      
+                                                                        </small>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
                                             </div>
                                         </div>
-                                        
-                                        <div class="card-body pt-2">
-                                            <div class="d-flex align-items-center mb-2">
-                                                {{-- <div class="symbol symbol-50px me-5">
-                                                    <img src="{{ asset('public/mfs/admin/assets/avatars/blank.png') }}"
-                                                        class="" alt="">
-                                                </div> --}}
-                                                <div class="flex-grow-1">
-                                                    <a href="#"class="text-gray-900 fw-bold text-hover-primary fs-6">{{ $loan_product->name}}</a>
-
-                                                    <span class="text-muted d-block fw-bold">ZMW {{ $loan->amount }}</span>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="d-flex align-items-center mb-2">
-                                                {{-- <div class="symbol symbol-50px me-5">
-                                                    <img src="{{ asset('public/mfs/admin/assets/avatars/blank.png') }}" class="" alt="">
-                                                </div> --}}
-                                                
-                                                <div class="flex-grow-1">
-                                                    <a href="#" class="text-gray-900 fw-bold text-hover-primary fs-6">
-                                                        KYC Status
-                                                    </a>
-                                                    <span class="text-muted d-block fw-bold mt-2">
-                                                        @if($loan->complete == 1)
-                                                            <span class="text-white bg-success p-2 rounded">{{ 'Completed' }}</span>
-                                                        @else
-                                                            <span class="text-primary bg-danger p-2 rounded">{{ 'Incomplete' }}</span>
-                                                        @endif        
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-
                                     </div>
 
                                     <div class="card pt-4 mb-6 mb-xl-9">

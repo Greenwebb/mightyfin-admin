@@ -10,7 +10,7 @@ trait CalculatorTrait{
     public function calculateAmortizationSchedule($loanAmount, $loanTermYears, $loanProductId) {
         
         try {
-            $info = $this->getLoanProductDetails($loanProductId);
+            $info = $this->get_LoanProductDetails($loanProductId);
 
             switch ($info->interest_methods->first()->interest_method->name) {
                 case 'Flat Rate':
@@ -24,8 +24,8 @@ trait CalculatorTrait{
         } catch (\Throwable $th) {
             dd($th);
         }
-
     }
+
     function flatRateAmortization($principal, $termMonths, $info) {
             $schedule = [];
             $monthlyInterestRate = $info->def_loan_interest / 100 / 12;
@@ -48,7 +48,10 @@ trait CalculatorTrait{
             }
             return $schedule;
     }
-    public function getLoanProductDetails($id){
+
+
+    // Getters
+    public function get_LoanProductDetails($id){
         return LoanProduct::where('id', $id)->with([
             'disbursed_by.disbursed_by',
             'interest_methods.interest_method', 

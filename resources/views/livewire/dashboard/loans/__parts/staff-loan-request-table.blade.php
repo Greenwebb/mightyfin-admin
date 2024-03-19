@@ -11,7 +11,15 @@
                     
                     <div class="card-toolbar">
                         <!--begin::Filter-->
-                        <button onclick="deleteBulk()" type="button" id="deleteBtn" class="btn btn-sm btn-flex btn-light-danger"
+                        <button onclick="resetBulk()" type="button" id="resetBtn" class="btn btn-sm btn-flex btn-light"
+                            data-bs-toggle="modal" data-bs-target="#kt_modal_add_payment">
+                            <i class="ki-duotone ki-plus-cross fs-3">
+                                <span class="path1"></span>
+                                <span class="path2"></span>
+                                <span class="path3"></span>
+                            </i>Reset
+                        </button>
+                        <button onclick="deleteBulk()" type="button" id="deleteBtn" class="btn mx-2 btn-sm btn-flex btn-light-danger"
                             data-bs-toggle="modal" data-bs-target="#kt_modal_add_payment">
                             <i class="ki-duotone ki-plus-cross fs-3">
                                 <span class="path1"></span>
@@ -67,7 +75,7 @@
                                 <tr class="fw-bold text-muted">
                                     <th class="w-20px">
                                         <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                            <input onclick="showDelBtn()" class="form-check-input" type="checkbox" value="1" data-kt-check="true" data-kt-check-target=".widget-13-check" />
+                                            <input onclick="showBulkOps()" class="form-check-input" type="checkbox" value="1" data-kt-check="true" data-kt-check-target=".widget-13-check" />
                                         </div>
                                     </th>
                                     <th class="min-w-100px">Loan Type</th>
@@ -92,7 +100,7 @@
                                     <tr>
                                         <td>
                                             <div class="form-check form-check-sm form-check-custom form-check-solid">
-                                                <input onclick="showDelBtn()" class="form-check-input widget-13-check" type="checkbox" name="items[]" value="{{ $loan->id }}" />
+                                                <input onclick="showBulkOps()" class="form-check-input widget-13-check" type="checkbox" name="items[]" value="{{ $loan->id }}" />
                                             </div>
                                         </td>
                                         <td>
@@ -231,9 +239,47 @@
 
     <script>
         const delBtn = document.getElementById('deleteBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        
         delBtn.style.display = 'none';
-        function showDelBtn(){
+        resetBtn.style.display = 'none';
+        function showBulkOps(){
             delBtn.style.display = 'block';
+            resetBtn.style.display = 'block';
+        }
+        
+        function resetBulk() {
+            // Fetch all selected checkboxes
+            const checkboxes = document.querySelectorAll('input[name="items[]"]:checked');
+            const selectedIds = Array.from(checkboxes).map(checkbox => checkbox.value);
+            
+            if (selectedIds.length > 0) {
+                // Confirm deletion
+                const confirmDelete = confirm("Are you sure you want to reset to processing on the selected loan applications?");
+                
+                if (confirmDelete) {
+                    // Send an AJAX request to the Laravel route with the selected IDs
+                    fetch('reset-loans', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                        },
+                        body: JSON.stringify({ ids: selectedIds }),
+                    })
+                    .then(response => {
+                        if (response.ok) {
+                            console.log('Items deleted successfully.');
+                            window.location.reload(true);
+                        } else {
+                            console.error('Failed to delete items.');
+                        }
+                    })
+                    .catch(error => console.error('Error:', error));
+                }
+            } else {
+                alert("No items selected for deletion.");
+            }
         }
         function deleteBulk() {
             // Fetch all selected checkboxes

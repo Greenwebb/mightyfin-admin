@@ -91,7 +91,6 @@
                                             <li class="active"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">1</span>Application Submitted</a></li>
                                             @php
                                                 $count = 1;
-                                                
                                             @endphp
                                             @forelse ($loan_product->loan_status->where('stage', 'processing') as $key => $step)
                                                 @php
@@ -99,7 +98,11 @@
                                                 @endphp
                                                 <li class="{{ $current->position >= $count ? 'completed' : '' }}" id="{{$step->stage}}"><a href="#w{{ $step->id }}" data-toggle="tab" aria-expanded="false"><span class="nmbr">{{ $count }}</span>{{ $step->status->name }}</a></li>
                                             @empty
-                                            @endforelse    
+                                                <li class="{{ $current->position >= 2 ? 'completed' : '' }}"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">2</span>Verify</a></li>
+                                                <li class="{{ $current->position >= 3 ? 'completed' : '' }}"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">3</span>Approval</a></li>
+                                                <li class="{{ $current->position >= 4 ? 'completed' : '' }}"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">4</span>Disburse Funds</a></li>
+                                            @endforelse   
+ 
                                         </ul>
                                     </div>
                                 @break
@@ -115,7 +118,9 @@
                                 <div class="tabbable">
                                     <ul class="nav nav-tabss wizard">
                                         <li class="active"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">1</span>Application Submitted</a></li>
-                                        @php
+                                        {{-- <li class="active"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">2</span>Verify</a></li> --}}
+
+                                        {{-- @php
                                             $count = 1;
                                         @endphp
                                         @forelse ($loan_product->loan_status->where('stage', 'processing') as $key => $step)
@@ -124,7 +129,7 @@
                                             @endphp
                                             <li class="" id="{{$step->stage}}"><a href="#w{{ $step->id }}" data-toggle="tab" aria-expanded="false"><span class="nmbr">{{ $count }}</span>{{ $step->status->name }}</a></li>
                                         @empty
-                                        @endforelse    
+                                        @endforelse     --}}
                                     </ul>
                                 </div>
                                 @break
@@ -319,7 +324,7 @@
         @case('denied')
             @switch(strtolower($current->status))
                 @case('incomplet kyc')
-                    @include('livewire.dashboard.loans.__stages.denied.incomplet-kyc')
+                    @include('livewire.dashboard.loans.__stages.denied.incomplete-kyc')
                 @break
                 @case('incomplete crb')
                     @include('livewire.dashboard.loans.__stages.denied.incomplete-crb')
@@ -353,7 +358,7 @@
         </div>                                                                                                  
     @endswitch
     @else
-    @include('livewire.dashboard.loans.__stages.denied.incomplet-kyc')
+    @include('livewire.dashboard.loans.__stages.denied.incomplete-kyc')
     @endif
 
     @include('livewire.dashboard.loans.__modals.review-warning')

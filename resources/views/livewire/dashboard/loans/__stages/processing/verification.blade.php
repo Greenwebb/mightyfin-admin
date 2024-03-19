@@ -158,22 +158,28 @@
                     <ul class="nav nav-custom nav-tabs nav-line-tabs nav-line-tabs-2x border-0 fs-4 fw-semibold mb-8">
                         <li class="nav-item">
                             <a class="nav-link text-active-primary pb-4 active" data-bs-toggle="tab"
-                                href="#kt_customer_view_overview_tab">CRB</a>
+                                href="#kt_customer_view_overview_tab">
+                                <small>CRB</small>
+                            </a>
                         </li>
                         
                         <li class="nav-item">
                             <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
-                                href="#kt_credit_assement_tab">Risk Assement</a>
+                                href="#kt_credit_assement_tab">
+                                <small>Risk Assement</small>
+                            </a>
                         </li>
                         
                         <li class="nav-item">
                             <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
-                                href="#kt_customer_view_overview_loan_details">Loan Information</a>
+                                href="#kt_customer_view_overview_loan_details">
+                                <small>Loan Info</small></a>
                         </li>
                         
                         <li class="nav-item">
                             <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true"
-                                data-bs-toggle="tab" href="#kt_customer_view_documents">Documents</a>
+                                data-bs-toggle="tab" href="#kt_customer_view_documents">
+                                <small>Uploads</small></a>
                         </li>
                         
                         {{-- <li class="nav-item">
@@ -185,11 +191,11 @@
                     <div class="tab-content" id="myTabContent">
                         <div class="tab-pane fade show active" id="kt_customer_view_overview_tab" role="tabpanel">
                             <div class="card pt-4 mb-6 mb-xl-9">
-                                <div class="card-header border-0">
+                                {{-- <div class="card-header border-0">
                                     <div class="card-title">
-                                        <h4 class="fw-bold mb-0">CRB Checker</h4>
+                                        <h4 class="fw-bold mb-0">CRB </h4>
                                     </div>
-                                </div>
+                                </div> --}}
                                 
                                 <div id="kt_customer_view_payment_method" class="card-body pt-0">
                                     <div class="py-0" data-kt-customer-payment-method="row">
@@ -273,17 +279,15 @@
                                 </div>
                             </div>
                         </div>
-                        <!--end:::Tab pane-->
-
                         
                         <div class="tab-pane fade" id="kt_credit_assement_tab"
                             role="tabpanel">
                             <div class="card pt-4 mb-6 mb-xl-9">
-                                <div class="card-header border-0">
+                                {{-- <div class="card-header border-0">
                                     <div class="card-title">
                                         <h4 class="fw-bold mb-0">Risk Assement</h4>
                                     </div>
-                                </div>
+                                </div> --}}
                                 
                                 <div id="kt_customer_view_payment_method" class="card-body pt-0">
                                     <div class="py-0" data-kt-customer-payment-method="row">
@@ -330,131 +334,53 @@
 
 
                                 <div class="col-xl-12">
-
-                                    <!--begin::List Widget 2-->
-                                    <div class="card pt-4 card-xl-stretch mb-xl-2">
-                                        <!--begin::Header-->
-                                        <div class="card-header border-0">
-                                            <div class="card-title">
-                                                <h4 class="card-title fw-bold text-gray-900">Parties Information</h4>
-                                            </div>
-                                            <div class="card-toolbar">
-                                                <!--begin::Menu-->
-                                                {{-- <button type="button"
-                                                    class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary"
-                                                    data-kt-menu-trigger="click"
-                                                    data-kt-menu-placement="bottom-end">
-                                                    <i class="ki-duotone ki-category fs-6"><span
-                                                            class="path1"></span><span
-                                                            class="path2"></span><span
-                                                            class="path3"></span><span
-                                                            class="path4"></span></i> </button> --}}
-                                                <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px"
-                                                    data-kt-menu="true">
-                                                    <div class="menu-item px-3">
-                                                        <div
-                                                            class="menu-content fs-6 text-gray-900 fw-bold px-3 py-4">
-                                                            Quick Actions</div>
-                                                    </div>
-                                                    
-                                                    <div class="separator mb-3 opacity-75"></div>
-                                                
-                                                    <div class="menu-item px-3">
-                                                        <a href="#" class="menu-link px-3">
-                                                            New Ticket
-                                                        </a>
-                                                    </div>
-                                                    
-                                                    <div class="menu-item px-3">
-                                                        <a href="#" class="menu-link px-3">
-                                                            New Customer
-                                                        </a>
-                                                    </div>
-                                                    
-                                                    <div class="menu-item px-3" data-kt-menu-trigger="hover"
-                                                        data-kt-menu-placement="right-start">
-                                                        
-                                                        <a href="#" class="menu-link px-3">
-                                                            <span class="menu-title">New Group</span>
-                                                            <span class="menu-arrow"></span>
-                                                        </a>
-                                                        
-                                                        <div class="menu-sub menu-sub-dropdown w-175px py-4">
-                                                        
-                                                            <div class="menu-item px-3">
-                                                                <a href="#" class="menu-link px-3">
-                                                                    Admin Group
-                                                                </a>
-                                                            </div>
-                                                            
-                                                            <div class="menu-item px-3">
-                                                                <a href="#" class="menu-link px-3">
-                                                                    Staff Group
-                                                                </a>
-                                                            </div>
-                                                            
-                                                            <div class="menu-item px-3">
-                                                                <a href="#" class="menu-link px-3">
-                                                                    Member Group
-                                                                </a>
-                                                            </div>
-                                                        </div>
-                                                    </div>
-                                                    
-                                                    <div class="menu-item px-3">
-                                                        <a href="#" class="menu-link px-3">
-                                                            New Contact
-                                                        </a>
-                                                    </div>
-                                                
-                                                    <div class="separator mt-3 opacity-75"></div>
-                                                
-                                                    <div class="menu-item px-3">
-                                                        <div class="menu-content px-3 py-3">
-                                                            <a class="btn btn-primary  btn-sm px-4"
-                                                                href="#">
-                                                                Generate Reports
-                                                            </a>
+                                    <div class="card pt-4 mb-6 mb-xl-9">
+                                        <div id="kt_customer_view_payment_method" class="card-body pt-0">
+                                            <div class="py-0" data-kt-customer-payment-method="row">
+                                                <div id="kt_customer_view_payment_method_1"
+                                                    class="collapse show fs-6 ps-10"
+                                                    data-bs-parent="#kt_customer_view_payment_method">
+                                                    <div class="d-flex flex-wrap py-5">
+                                                        <div class="flex-equal me-5">
+                                                            <table class="table table-flush fw-semibold gy-1">
+                                                                <tr>
+                                                                    <td class="text-muted min-w-125px w-125px">Amount</td>
+                                                                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                                    <td class="text-gray-800"><b>K{{ $loan->amount }}</b></td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted min-w-125px w-125px">Loan Product</td>
+                                                                    <td>&nbsp;&nbsp;&nbsp;</td>
+                                                                    <td class="text-gray-800">{{ $loan_product->name}}</td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted min-w-125px w-125px">KYC</td>
+                                                                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                                    <td class="text-gray-800">
+                                                                        <small class="text-white d-block fw-bold mt-2">
+                                                                            @if($loan->complete == 1)
+                                                                                <small class="text-white bg-success p-2 rounded">{{ 'Completed' }}</small>
+                                                                            @else
+                                                                                <small class="text-white bg-danger p-2 rounded">{{ 'Incomplete' }}</small>
+                                                                            @endif        
+                                                                        </small>
+                                                                    </td>
+                                                                </tr>
+                                                                <tr>
+                                                                    <td class="text-muted min-w-125px w-125px">Created On</td>
+                                                                    <td>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</td>
+                                                                    <td class="text-gray-800">
+                                                                        <small class="text-dark d-block fw-bold mt-2">
+                                                                                {{ $loan->created_at->toFormattedDateString() }}      
+                                                                        </small>
+                                                                    </td>
+                                                                </tr>
+                                                            </table>
                                                         </div>
                                                     </div>
                                                 </div>
-                                                
                                             </div>
                                         </div>
-                                        
-                                        <div class="card-body pt-2">
-                                            <div class="d-flex align-items-center mb-2">
-                                                {{-- <div class="symbol symbol-50px me-5">
-                                                    <img src="{{ asset('public/mfs/admin/assets/avatars/blank.png') }}"
-                                                        class="" alt="">
-                                                </div> --}}
-                                                <div class="flex-grow-1">
-                                                    <a href="#"class="text-gray-900 fw-bold text-hover-primary fs-6">{{ $loan_product->name}}</a>
-
-                                                    <span class="text-muted d-block fw-bold">ZMW {{ $loan->amount }}</span>
-                                                </div>
-                                            </div>
-                                            
-                                            <div class="d-flex align-items-center mb-2">
-                                                {{-- <div class="symbol symbol-50px me-5">
-                                                    <img src="{{ asset('public/mfs/admin/assets/avatars/blank.png') }}" class="" alt="">
-                                                </div> --}}
-                                                
-                                                <div class="flex-grow-1">
-                                                    <a href="#" class="text-gray-900 fw-bold text-hover-primary fs-6">
-                                                        KYC Status
-                                                    </a>
-                                                    <span class="text-muted d-block fw-bold mt-2">
-                                                        @if($loan->complete == 1)
-                                                            <span class="text-white bg-success p-2 rounded">{{ 'Completed' }}</span>
-                                                        @else
-                                                            <span class="text-primary bg-danger p-2 rounded">{{ 'Incomplete' }}</span>
-                                                        @endif        
-                                                    </span>
-                                                </div>
-                                            </div>
-                                        </div>
-
                                     </div>
 
                                     <div class="card pt-4 mb-6 mb-xl-9">
@@ -496,10 +422,7 @@
                                         </div>
                                     </div>
                                 </div>
-
-
                             </div>
-                            <!--end::Card-->
                         </div>
                         <!--end:::Tab pane-->
                         <!--begin:::Tab pane-->
@@ -507,7 +430,7 @@
                             <!--begin::Earnings-->
                             <div class="card pt-4 mb-6 mb-xl-9">
                                 <!--begin::Card header-->
-                                <div class="card-header border-0">
+                                {{-- <div class="card-header border-0">
                                     <!--begin::Card title-->
                                     <div class="card-title">
                                         <h4>KYC Documents</h4>
@@ -516,13 +439,13 @@
                                     <!--begin::Card toolbar-->
                                     <div class="card-toolbar">
                                         <!--begin::Button-->
-                                        {{-- <button type="button" class="btn btn-sm btn-light-primary">
+                                        <button type="button" class="btn btn-sm btn-light-primary">
                                             <i class="ki-duotone ki-cloud-download fs-3">
                                                 <span class="path1"></span>
                                                 <span class="path2"></span>
-                                            </i>Download Report</button> --}}
+                                            </i>Download Report</button>
                                     </div>
-                                </div>
+                                </div> --}}
                                 
                                 <div class="card-body py-0">
 
@@ -625,273 +548,6 @@
                                 </div>
                                 
                             </div>
-                        </div>
-                        <div class="tab-pane fade" id="kt_customer_view_activity" role="tabpanel">
-                            <!--begin::Earnings-->
-
-                            <div class="card pt-4 mb-6 mb-xl-9">
-                                <!--begin::Card header-->
-                                <div class="card-header border-0">
-                                    <!--begin::Card title-->
-                                    <div class="card-title">
-                                        <h2>Events</h2>
-                                    </div>
-                                    <!--end::Card title-->
-                                    <!--begin::Card toolbar-->
-                                    <div class="card-toolbar">
-                                        <!--begin::Button-->
-                                        <button type="button" class="btn btn-sm btn-light-primary">
-                                            <i class="ki-duotone ki-cloud-download fs-3">
-                                                <span class="path1"></span>
-                                                <span class="path2"></span>
-                                            </i>Download Report</button>
-                                        <!--end::Button-->
-                                    </div>
-                                    <!--end::Card toolbar-->
-                                </div>
-                                <!--end::Card header-->
-                                <!--begin::Card body-->
-                                <div class="card-body py-0">
-                                    <!--begin::Table-->
-                                    <table
-                                        class="table align-middle table-row-dashed fs-6 text-gray-100 fw-semibold gy-5"
-                                        id="kt_table_customers_events">
-                                        <tbody>
-                                            <tr>
-                                                <td class="min-w-400px">Invoice
-                                                    <a href="#"
-                                                        class="fw-bold text-gray-900 text-hover-primary me-1">#WER-45670</a>is
-                                                    <span class="badge badge-light-info">In Progress</span>
-                                                </td>
-                                                <td class="pe-0 text-gray-100 text-end min-w-200px">10 Nov 2023,
-                                                    10:30 am</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="min-w-400px">
-                                                    <a href="#"
-                                                        class="text-gray-100 text-hover-primary me-1">Melody
-                                                        Macy</a>has made payment to
-                                                    <a href="#"
-                                                        class="fw-bold text-gray-900 text-hover-primary">#XRS-45670</a>
-                                                </td>
-                                                <td class="pe-0 text-gray-100 text-end min-w-200px">05 May 2023,
-                                                    10:30 am</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="min-w-400px">Invoice
-                                                    <a href="#"
-                                                        class="fw-bold text-gray-900 text-hover-primary me-1">#LOP-45640</a>has
-                                                    been
-                                                    <span class="badge badge-light-danger">Declined</span>
-                                                </td>
-                                                <td class="pe-0 text-gray-100 text-end min-w-200px">15 Apr 2023,
-                                                    6:43 am</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="min-w-400px">
-                                                    <a href="#"
-                                                        class="text-gray-100 text-hover-primary me-1">Max
-                                                        Smith</a>has made payment to
-                                                    <a href="#"
-                                                        class="fw-bold text-gray-900 text-hover-primary">#SDK-45670</a>
-                                                </td>
-                                                <td class="pe-0 text-gray-100 text-end min-w-200px">19 Aug 2023,
-                                                    10:30 am</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="min-w-400px">Invoice
-                                                    <a href="#"
-                                                        class="fw-bold text-gray-900 text-hover-primary me-1">#KIO-45656</a>status
-                                                    has changed from
-                                                    <span class="badge badge-light-succees me-1">In
-                                                        Transit</span>to
-                                                    <span class="badge badge-light-success">Approved</span>
-                                                </td>
-                                                <td class="pe-0 text-gray-100 text-end min-w-200px">10 Nov 2023,
-                                                    5:30 pm</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="min-w-400px">
-                                                    <a href="#"
-                                                        class="text-gray-100 text-hover-primary me-1">Brian
-                                                        Cox</a>has made payment to
-                                                    <a href="#"
-                                                        class="fw-bold text-gray-900 text-hover-primary">#OLP-45690</a>
-                                                </td>
-                                                <td class="pe-0 text-gray-100 text-end min-w-200px">19 Aug 2023,
-                                                    9:23 pm</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="min-w-400px">Invoice
-                                                    <a href="#"
-                                                        class="fw-bold text-gray-900 text-hover-primary me-1">#LOP-45640</a>has
-                                                    been
-                                                    <span class="badge badge-light-danger">Declined</span>
-                                                </td>
-                                                <td class="pe-0 text-gray-100 text-end min-w-200px">24 Jun 2023,
-                                                    10:10 pm</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="min-w-400px">
-                                                    <a href="#"
-                                                        class="text-gray-100 text-hover-primary me-1">Max
-                                                        Smith</a>has made payment to
-                                                    <a href="#"
-                                                        class="fw-bold text-gray-900 text-hover-primary">#SDK-45670</a>
-                                                </td>
-                                                <td class="pe-0 text-gray-100 text-end min-w-200px">25 Jul 2023,
-                                                    2:40 pm</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="min-w-400px">Invoice
-                                                    <a href="#"
-                                                        class="fw-bold text-gray-900 text-hover-primary me-1">#KIO-45656</a>status
-                                                    has changed from
-                                                    <span class="badge badge-light-succees me-1">In
-                                                        Transit</span>to
-                                                    <span class="badge badge-light-success">Approved</span>
-                                                </td>
-                                                <td class="pe-0 text-gray-100 text-end min-w-200px">25 Jul 2023,
-                                                    8:43 pm</td>
-                                            </tr>
-                                            <tr>
-                                                <td class="min-w-400px">
-                                                    <a href="#"
-                                                        class="text-gray-100 text-hover-primary me-1">Melody
-                                                        Macy</a>has made payment to
-                                                    <a href="#"
-                                                        class="fw-bold text-gray-900 text-hover-primary">#XRS-45670</a>
-                                                </td>
-                                                <td class="pe-0 text-gray-100 text-end min-w-200px">25 Oct 2023,
-                                                    10:30 am</td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
-                                    <!--end::Table-->
-                                </div>
-                                <!--end::Card body-->
-                            </div>
-                            <div class="card pt-4 mb-6 mb-xl-9">
-                                <!--begin::Card header-->
-                                <div class="card-header border-0">
-                                    <!--begin::Card title-->
-                                    <div class="card-title">
-                                        <h2>Logs</h2>
-                                    </div>
-                                    <!--end::Card title-->
-                                    <!--begin::Card toolbar-->
-                                    <div class="card-toolbar">
-                                        <!--begin::Button-->
-                                        <button type="button" class="btn btn-sm btn-light-primary">
-                                            <i class="ki-duotone ki-cloud-download fs-3">
-                                                <span class="path1"></span>
-                                                <span class="path2"></span>
-                                            </i>Download Report</button>
-                                        <!--end::Button-->
-                                    </div>
-                                    <!--end::Card toolbar-->
-                                </div>
-                                <!--end::Card header-->
-                                <!--begin::Card body-->
-                                <div class="card-body py-0">
-                                    <!--begin::Table wrapper-->
-                                    <div class="table-responsive">
-                                        <!--begin::Table-->
-                                        <table
-                                            class="table align-middle table-row-dashed fw-semibold text-gray-100 fs-6 gy-5"
-                                            id="kt_table_customers_logs">
-                                            <tbody>
-                                                <tr>
-                                                    <td class="min-w-70px">
-                                                        <div class="badge badge-light-success">200 OK</div>
-                                                    </td>
-                                                    <td>POST /v1/invoices/in_9381_6519/payment</td>
-                                                    <td class="pe-0 text-end min-w-200px">15 Apr 2023, 6:05 pm
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="min-w-70px">
-                                                        <div class="badge badge-light-success">200 OK</div>
-                                                    </td>
-                                                    <td>POST /v1/invoices/in_5959_3541/payment</td>
-                                                    <td class="pe-0 text-end min-w-200px">25 Jul 2023, 2:40 pm
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="min-w-70px">
-                                                        <div class="badge badge-light-warning">404 WRN</div>
-                                                    </td>
-                                                    <td>POST /v1/customer/c_64b784ba36261/not_found</td>
-                                                    <td class="pe-0 text-end min-w-200px">10 Mar 2023, 2:40 pm
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="min-w-70px">
-                                                        <div class="badge badge-light-success">200 OK</div>
-                                                    </td>
-                                                    <td>POST /v1/invoices/in_9381_6519/payment</td>
-                                                    <td class="pe-0 text-end min-w-200px">19 Aug 2023, 10:10 pm
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="min-w-70px">
-                                                        <div class="badge badge-light-success">200 OK</div>
-                                                    </td>
-                                                    <td>POST /v1/invoices/in_6751_5507/payment</td>
-                                                    <td class="pe-0 text-end min-w-200px">10 Nov 2023, 5:20 pm
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="min-w-70px">
-                                                        <div class="badge badge-light-danger">500 ERR</div>
-                                                    </td>
-                                                    <td>POST /v1/invoice/in_7903_5155/invalid</td>
-                                                    <td class="pe-0 text-end min-w-200px">20 Dec 2023, 8:43 pm
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="min-w-70px">
-                                                        <div class="badge badge-light-success">200 OK</div>
-                                                    </td>
-                                                    <td>POST /v1/invoices/in_9381_6519/payment</td>
-                                                    <td class="pe-0 text-end min-w-200px">19 Aug 2023, 10:10 pm
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="min-w-70px">
-                                                        <div class="badge badge-light-danger">500 ERR</div>
-                                                    </td>
-                                                    <td>POST /v1/invoice/in_5250_9522/invalid</td>
-                                                    <td class="pe-0 text-end min-w-200px">24 Jun 2023, 11:05 am
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="min-w-70px">
-                                                        <div class="badge badge-light-warning">404 WRN</div>
-                                                    </td>
-                                                    <td>POST /v1/customer/c_64b784ba3625f/not_found</td>
-                                                    <td class="pe-0 text-end min-w-200px">10 Mar 2023, 5:20 pm
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td class="min-w-70px">
-                                                        <div class="badge badge-light-success">200 OK</div>
-                                                    </td>
-                                                    <td>POST /v1/invoices/in_6751_5507/payment</td>
-                                                    <td class="pe-0 text-end min-w-200px">10 Mar 2023, 5:20 pm
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                        </table>
-                                    </div>
-                                    <!--end::Table wrapper-->
-                                </div>
-                                <!--end::Card body-->
-                            </div>
-                            <!--end::Earnings-->
-                            <!--begin::Statements-->
-
-                            <!--end::Statements-->
                         </div>
                         <!--end:::Tab pane-->
                     </div>

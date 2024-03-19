@@ -11,7 +11,11 @@
                         <!--begin: Pic-->
                         <div class="me-7 mb-4">
                             <div class="symbol symbol-100px symbol-lg-160px symbol-fixed position-relative">
-                                <img src="assets/media/avatars/300-1.jpg" alt="image" />
+                                @if ($loan->user->profile_photo_path)
+                                    <img src="{{ '../public/'.Storage::url($loan->user->profile_photo_path) }}" alt="image" />
+                                @else
+                                    <img src="https://thumbs.dreamstime.com/b/default-avatar-profile-image-vector-social-media-user-icon-potrait-182347582.jpg" alt="image"/>
+                                @endif
                                 <div class="position-absolute translate-middle bottom-0 start-100 mb-6 bg-success rounded-circle border border-4 border-body h-20px w-20px"></div>
                             </div>
                         </div>
@@ -24,7 +28,7 @@
                                 <div class="d-flex flex-column">
                                     <!--begin::Name-->
                                     <div class="d-flex align-items-center mb-2">
-                                        <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">Max Smith</a>
+                                        <a href="#" class="text-gray-900 text-hover-primary fs-2 fw-bold me-1">{{ $loan->user->fname.' '.$loan->user->lname }}</a>
                                         <a href="#">
                                             <i class="ki-duotone ki-verify fs-1 text-primary">
                                                 <span class="path1"></span>
@@ -34,30 +38,55 @@
                                     </div>
                                     <!--end::Name-->
                                     <!--begin::Info-->
-                                    <div class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
-                                        <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
-                                        <i class="ki-duotone ki-profile-circle fs-4 me-1">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                            <span class="path3"></span>
-                                        </i>Developer</a>
-                                        <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
-                                        <i class="ki-duotone ki-geolocation fs-4 me-1">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>SF, Bay Area</a>
-                                        <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary mb-2">
-                                        <i class="ki-duotone ki-sms fs-4 me-1">
-                                            <span class="path1"></span>
-                                            <span class="path2"></span>
-                                        </i>max@kt.com</a>
+                                    <div class="d-flex gap-4 flex-wrap fw-semibold fs-6 mb-4 pe-2">
+                                        @if($loan->user->nrc_no)
+                                        <a href="#" class="d-flex align-items-center text-primary text-hover-primary me-5 mb-2">
+                                            {{ $loan->user->id_type ?? 'NRC: '}}
+                                            {{ $loan->user->nrc_no ?? $loan->user->nrc}}</a>
+                                        @endif
+                                        
+                                        @if($loan->user->occupation)
+                                        <a href="#" class="d-flex align-items-center text-primary text-hover-primary me-5 mb-2">
+                                            {{ $loan->user->occupation }}</a>
+                                        @endif
+
+                                        @if($loan->user->jobTitle)
+                                        <a href="#" class="d-flex align-items-center text-primary text-hover-primary me-5 mb-2">
+                                            {{ $loan->user->jobTitle }}</a>
+                                        @endif
+                                        
+                                        @if($loan->user->address)
+                                        <a href="#" class="d-flex align-items-center text-primary text-hover-primary me-5 mb-2">
+                                            {{ $loan->user->address }}</a>
+                                        @endif
+
+                                        @if($loan->user->email)
+                                        <a href="#" class="d-flex align-items-center text-primary text-hover-primary mb-2">
+                                            {{ $loan->user->email }}</a>
+                                        @endif
+
+                                        @if($loan->user->phone)
+                                        <a href="#" class="d-flex align-items-center text-primary text-hover-primary mb-2">
+                                            {{ $loan->user->phone }}</a>
+                                        @endif
+
+                                        @if($loan->user->dob)
+                                        <a href="#" class="d-flex align-items-center text-primary text-hover-primary mb-2">
+                                            DOB:{{ $loan->user->dob }}</a>
+                                        @endif
+
+                                        @if($loan->user->gender)
+                                        <a href="#" class="d-flex align-items-center text-primary text-hover-primary mb-2">
+                                            {{ $loan->user->gender }}</a>
+                                        @endif
                                     </div>
                                     <!--end::Info-->
                                 </div>
                                 <!--end::User-->
                                 <!--begin::Actions-->
                                 <div class="d-flex my-4">
-                                    <a href="#" class="btn btn-sm btn-light me-2" id="kt_user_follow_button">
+                                    {{-- !mportant --}}
+                                    {{-- <a href="#" class="btn btn-sm btn-light me-2" id="kt_user_follow_button">
                                         <i class="ki-duotone ki-check fs-3 d-none"></i>
                                         <!--begin::Indicator label-->
                                         <span class="indicator-label">Follow</span>
@@ -66,13 +95,15 @@
                                         <span class="indicator-progress">Please wait...
                                         <span class="spinner-border spinner-border-sm align-middle ms-2"></span></span>
                                         <!--end::Indicator progress-->
-                                    </a>
-                                    <a href="#" class="btn btn-sm btn-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal">Hire Me</a>
+                                    </a> --}}
+                                    {{-- <a href="#" class="btn btn-sm btn-primary me-3" data-bs-toggle="modal" data-bs-target="#kt_modal_offer_a_deal">Hire Me</a> --}}
                                     <!--begin::Menu-->
                                     <div class="me-0">
-                                        <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+
+                                        {{-- !mportant --}}
+                                        {{-- <button class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
                                             <i class="ki-solid ki-dots-horizontal fs-2x"></i>
-                                        </button>
+                                        </button> --}}
                                         <!--begin::Menu 3-->
                                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px py-3" data-kt-menu="true">
                                             <!--begin::Heading-->
@@ -171,15 +202,15 @@
                                         <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                                             <!--begin::Number-->
                                             <div class="d-flex align-items-center">
-                                                <i class="ki-duotone ki-arrow-up fs-3 text-success me-2">
+                                                {{-- <i class="ki-duotone ki-arrow-up fs-3 text-success me-2">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>
-                                                </i>
-                                                <div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="4500" data-kt-countup-prefix="$">0</div>
+                                                </i> --}}
+                                                <div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="{{ $loan->amount }}" data-kt-countup-prefix="K">0</div>
                                             </div>
                                             <!--end::Number-->
                                             <!--begin::Label-->
-                                            <div class="fw-semibold fs-6 text-gray-400">Earnings</div>
+                                            <div class="fw-semibold fs-6 text-gray-400">Principal Amount</div>
                                             <!--end::Label-->
                                         </div>
                                         <!--end::Stat-->
@@ -187,15 +218,15 @@
                                         <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                                             <!--begin::Number-->
                                             <div class="d-flex align-items-center">
-                                                <i class="ki-duotone ki-arrow-down fs-3 text-danger me-2">
+                                                {{-- <i class="ki-duotone ki-arrow-down fs-3 text-danger me-2">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>
-                                                </i>
-                                                <div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="80">0</div>
+                                                </i> --}}
+                                                <div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-prefix="K" data-kt-countup-value="{{ App\Models\Application::payback($loan->amount, $loan->repayment_plan, $loan_product->id) }}">0</div>
                                             </div>
                                             <!--end::Number-->
                                             <!--begin::Label-->
-                                            <div class="fw-semibold fs-6 text-gray-400">Projects</div>
+                                            <div class="fw-semibold fs-6 text-gray-400">Est. Repayment</div>
                                             <!--end::Label-->
                                         </div>
                                         <!--end::Stat-->
@@ -203,15 +234,15 @@
                                         <div class="border border-gray-300 border-dashed rounded min-w-125px py-3 px-4 me-6 mb-3">
                                             <!--begin::Number-->
                                             <div class="d-flex align-items-center">
-                                                <i class="ki-duotone ki-arrow-up fs-3 text-success me-2">
+                                                {{-- <i class="ki-duotone ki-arrow-up fs-3 text-success me-2">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>
-                                                </i>
-                                                <div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="60" data-kt-countup-prefix="%">0</div>
+                                                </i> --}}
+                                                <div class="fs-2 fw-bold" data-kt-countup="true" data-kt-countup-value="{{ App\Models\Loans::customer_balance($loan->user->id) }}" data-kt-countup-prefix="K">0</div>
                                             </div>
                                             <!--end::Number-->
                                             <!--begin::Label-->
-                                            <div class="fw-semibold fs-6 text-gray-400">Success Rate</div>
+                                            <div class="fw-semibold fs-6 text-gray-400">Pending Repayments</div>
                                             <!--end::Label-->
                                         </div>
                                         <!--end::Stat-->
@@ -220,7 +251,7 @@
                                 </div>
                                 <!--end::Wrapper-->
                                 <!--begin::Progress-->
-                                <div class="d-flex align-items-center w-200px w-sm-300px flex-column mt-3">
+                                {{-- <div class="d-flex align-items-center w-200px w-sm-300px flex-column mt-3">
                                     <div class="d-flex justify-content-between w-100 mt-auto mb-2">
                                         <span class="fw-semibold fs-6 text-gray-400">Profile Compleation</span>
                                         <span class="fw-bold fs-6">50%</span>
@@ -228,7 +259,7 @@
                                     <div class="h-5px mx-3 w-100 bg-light mb-3">
                                         <div class="bg-success rounded h-5px" role="progressbar" style="width: 50%;" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100"></div>
                                     </div>
-                                </div>
+                                </div> --}}
                                 <!--end::Progress-->
                             </div>
                             <!--end::Stats-->
@@ -240,32 +271,44 @@
                     <ul class="nav nav-stretch nav-line-tabs nav-line-tabs-2x border-transparent fs-5 fw-bold">
                         <!--begin::Nav item-->
                         <li class="nav-item mt-2">
-                            <a class="nav-link text-active-primary ms-0 me-10 py-5" href="pages/user-profile/overview.html">Overview</a>
+                            <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#repayments_tablet">Repayments</a>
                         </li>
                         <!--end::Nav item-->
                         <!--begin::Nav item-->
                         <li class="nav-item mt-2">
-                            <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="pages/user-profile/projects.html">Repayment Details</a>
+                            <a class="nav-link text-active-primary ms-0 me-10 py-5 active" href="#repayments_tablet">Loan Terms</a>
                         </li>
                         <!--end::Nav item-->
                         <!--begin::Nav item-->
                         <li class="nav-item mt-2">
-                            <a class="nav-link text-active-primary ms-0 me-10 py-5" href="pages/user-profile/campaigns.html">Campaigns</a>
+                            <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#repayments_tablet">Loan Schedule</a>
                         </li>
                         <!--end::Nav item-->
                         <!--begin::Nav item-->
                         <li class="nav-item mt-2">
-                            <a class="nav-link text-active-primary ms-0 me-10 py-5" href="pages/user-profile/documents.html">Documents</a>
+                            <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#repayments_tablet">Pending Settings</a>
                         </li>
                         <!--end::Nav item-->
                         <!--begin::Nav item-->
                         <li class="nav-item mt-2">
-                            <a class="nav-link text-active-primary ms-0 me-10 py-5" href="pages/user-profile/followers.html">Followers</a>
+                            <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#repayments_tablet">Loan Collateral</a>
                         </li>
                         <!--end::Nav item-->
                         <!--begin::Nav item-->
                         <li class="nav-item mt-2">
-                            <a class="nav-link text-active-primary ms-0 me-10 py-5" href="pages/user-profile/activity.html">Activity</a>
+                            <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#repayments_tablet">Expenses</a>
+                        </li>
+                        <li class="nav-item mt-2">
+                            <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#repayments_tablet">Other Income</a>
+                        </li>
+                        <li class="nav-item mt-2">
+                            <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#repayments_tablet">Loan Files</a>
+                        </li>
+                        <li class="nav-item mt-2">
+                            <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#repayments_tablet">Loan Comments</a>
+                        </li>
+                        <li class="nav-item mt-2">
+                            <a class="nav-link text-active-primary ms-0 me-10 py-5" href="#repayments_tablet">Guarantors</a>
                         </li>
                         <!--end::Nav item-->
                     </ul>
@@ -277,7 +320,8 @@
             <div class="d-flex flex-wrap flex-stack mb-6">
                 <!--begin::Heading-->
                 <h3 class="fw-bold my-2">Repayment Details
-                <span class="fs-6 text-gray-400 fw-semibold ms-1">Active</span></h3>
+                {{-- !mportant --}}
+                {{-- <span class="fs-6 text-gray-400 fw-semibold ms-1">Active</span></h3>
                 <!--end::Heading-->
                 <!--begin::Actions-->
                 <div class="d-flex flex-wrap my-2">
@@ -292,7 +336,7 @@
                         <!--end::Select-->
                     </div>
                     <a href="#" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#kt_modal_create_project">New Project</a>
-                </div>
+                </div> --}}
                 <!--end::Actions-->
             </div>
 
@@ -300,7 +344,7 @@
                 <!--begin::Col-->
                 <div class="col-md-6 col-xl-4">
                     <!--begin::Card-->
-                    <a href="apps/projects/project.html" class="card border-hover-primary">
+                    <a href="#" class="card border-hover-primary">
                         <!--begin::Card header-->
                         
                         <!--end:: Card header-->
@@ -316,10 +360,10 @@
                             <div class="d-flex flex-wrap mb-5">
                                 <!--end::Due-->
                                 <!--begin::Budget-->
-                                <div class="border border-gray-300 border-dashed rounded w-125px py-3 px-4 mb-3">
+                                {{-- <div class="border border-gray-300 border-dashed rounded w-125px py-3 px-4 mb-3">
                                     <div class="fs-6 text-gray-800 fw-bold">$284,900.00</div>
                                     <div class="fw-semibold text-gray-400">Apr 31, 2024</div>
-                                </div>
+                                </div> --}}
                                 <!--end::Budget-->
                             </div>
                             <!--end::Info-->
@@ -1547,7 +1591,7 @@
                                                                 <!--end::Avatar-->
                                                                 <!--begin::Details-->
                                                                 <div class="ms-5">
-                                                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary mb-2">Max Smith</a>
+                                                                    <a href="#" class="fs-5 fw-bold text-gray-900 text-hover-primary mb-2">{{ $loan->user->fname }}</a>
                                                                     <div class="fw-semibold text-muted">max@kt.com</div>
                                                                 </div>
                                                                 <!--end::Details-->

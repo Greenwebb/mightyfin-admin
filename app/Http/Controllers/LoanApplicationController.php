@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Application;
+use App\Models\ApplicationStage;
 use App\Models\User;
 use App\Models\WithdrawRequest;
 use Illuminate\Http\Request;
@@ -562,6 +563,31 @@ class LoanApplicationController extends Controller
         } catch (\Throwable $th) {
             dd($th);
         }
+    }
+    public function resetLoans(Request $request)
+    {
+        $loanIds = $request->toArray(); // Assuming $request->toArray() contains an array of loan IDs
+    
+        foreach ($loanIds as $id) {
+            // Assuming 'Application' is the model representing your loans table
+            $loan = Application::where('id',$id)->first();
+    
+            if ($loan) {
+                $loan->status = 2;
+                $loan->save();
+            }
+
+            // $stage = ApplicationStage::where('application_id', $loan->id)->first();
+            // $stage->status = 'verification';
+            // $stage->stage = 'processing';
+            // $stage->state = 'current';
+            // $stage->position = 1;
+            // $stage->save();
+        }
+        return response()->json([
+            "status" => 200, 
+            "success" => true
+        ]);
     }
     public function deleteLoans(Request $request)
     {
