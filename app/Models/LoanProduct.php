@@ -19,11 +19,11 @@ class LoanProduct extends Model
         'auto_payment',
         'loan_duration_period',
         'loan_interest_period',
-        
+
         'min_principal_amount',
         'def_principal_amount',
         'max_principal_amount',
-        
+
         'min_loan_duration',
         'def_loan_duration',
         'max_loan_duration',
@@ -72,6 +72,9 @@ class LoanProduct extends Model
 
     public function loan_institutes(){
         return $this->hasMany(LoanProductInstitution::class);
+    }
+    public function loan_crb(){
+        return $this->hasMany(LoanCrbProduct::class);
     }
 
 }

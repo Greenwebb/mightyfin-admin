@@ -22,14 +22,17 @@ use App\Models\Penalty;
 use App\Models\RepaymentCycle;
 use App\Models\RepaymentOrder;
 use App\Models\ServiceCharge;
+use App\Models\CrbProduct;
+use App\Models\LoanCrbProduct;
 use App\Traits\DisbursementTrait;
 use Illuminate\Support\Facades\Session;
+
 
 class UpdateSetting extends Component
 {
     use LoanTrait, DisbursementTrait;
     public $page;
-    
+
     // Preset Data
     public $interest_methods, $interest_types, $disbursements, $repayment_cycles;
     public $repayment_orders, $decimal_places, $company_accounts, $service_charges;
@@ -40,11 +43,10 @@ class UpdateSetting extends Component
     public $loan_interest_period, $minimum_loan_interest, $default_loan_interest;
     public $maximum_loan_interest, $loan_duration_period, $minimum_loan_duration;
     public $loan_decimal_place, $add_automatic_payments, $loan_product, $new_loan_desc, $new_loan_icon,$new_loan_icon_alt;
-
-    public $default_loan_duration, $maximum_loan_duration, $default_num_of_repayments; 
-    public $maximum_num_of_repayments, $minimum_num_of_repayments; 
+    public $default_loan_duration, $maximum_loan_duration, $default_num_of_repayments;
+    public $maximum_num_of_repayments, $minimum_num_of_repayments;
     public $auto_payment_sources = [];
-    public $loan_disbursed_by = []; 
+    public $loan_disbursed_by = [];
     public $loan_repayment_cycle = [];
     public $extra_fees = [];
 
@@ -56,8 +58,6 @@ class UpdateSetting extends Component
     public $no_taken_up = [];
     public $loan_institution = [];
 
-
-
     // Other Update Data
     public $disbursement_name, $disbursement;
     public $repayment_cycle_name,$repayment_cycle_method;
@@ -65,6 +65,10 @@ class UpdateSetting extends Component
     public $loan_charge, $loan_charge_name, $loan_charge_amount, $institutions, $institution;
     public $loan_institute_name, $loan_institute_type;
     public $current_statuses = [];
+
+    public $crb_products;
+    public $crb_selected_products = [];
+
     public function render()
     {
         $this->page = $_GET['page'];
@@ -109,14 +113,14 @@ class UpdateSetting extends Component
                 $this->loan_institute_name = $this->institution->name;
                 $this->loan_institute_type = $this->institution->type;
             break;
-            
+
             default:
             break;
         }
         return view('livewire.dashboard.site-settings.update-setting')
         ->layout('layouts.admin');
     }
-    
+
 
     public function get_data(){
         $this->interest_methods =  InterestMethod::get();
@@ -127,10 +131,11 @@ class UpdateSetting extends Component
         $this->company_accounts = AccountPayment::get();
         $this->service_charges = ServiceCharge::get();
         $this->institutions = Institution::where('status', 1)->get();
+        $this->crb_products = CrbProduct::get();
     }
 
 
-    
+
     public function update_loan_product(){
         try {
             LoanProduct::where('id', $this->loan_product->id)->update([
@@ -155,53 +160,53 @@ class UpdateSetting extends Component
                 'def_num_of_repayments' => $this->default_num_of_repayments,
                 'max_num_of_repayments' => $this->maximum_num_of_repayments,
             ]);
-    
+
             // Replace rand() with respective Parent table Primary key IDs
             // Disbursed Bys ****Loop
             foreach ($this->loan_disbursed_by as $value) {
                 LoanDisbursedBy::where('loan_product_id', $this->loan_product->id)
-                    ->update([             
+                    ->update([
                         'disbursed_by_id' => $value,
                         'loan_product_id' => $this->loan_product->id,
                     ]);
             }
-    
+
             // Interest Methods
             LoanInterestMethod::where('loan_product_id', $this->loan_product->id)
-            ->update([             
+            ->update([
                 'interest_method_id' => $this->loan_interest_method,
                 'loan_product_id' => $this->loan_product->id
             ]);
-            
+
             // Interest Types
             LoanInterestType::where('loan_product_id', $this->loan_product->id)
             ->update([
                 'interest_type_id' => $this->loan_interest_type,
                 'loan_product_id' => $this->loan_product->id
             ]);
-    
+
             // Repayment Cycles ****Loop
             foreach ($this->loan_repayment_cycle as $key => $value) {
                 LoanRepaymentCycle::where('loan_product_id', $this->loan_product->id)
-                    ->update([             
+                    ->update([
                         'repayment_cycle_id' => $value,
                         'loan_product_id' => $this->loan_product->id
                     ]);
             }
-    
+
             // Loan Decimal Places
             LoanDecimalPlace::where('loan_product_id', $this->loan_product->id)
             ->update([
                 'value' => $this->loan_decimal_place,
                 'loan_product_id' => $this->loan_product->id
             ]);
-    
+
             // Loan Repayment Orders ****Loop
             // LoanRepaymentOrder::Create([
             //     'repayment_order_id' => rand(1, 12),
             //     'loan_product_id' => $loan_product->id
             // ]);
-    
+
             // Loan Service Charges ****Loop
             foreach ($this->extra_fees as $key => $value) {
                 LoanServiceCharge::where('loan_product_id', $this->loan_product->id)
@@ -210,7 +215,7 @@ class UpdateSetting extends Component
                     'loan_product_id' => $this->loan_product->id
                 ]);
             }
-    
+
             // Loan Automated Payments ****Loop
             foreach ($this->auto_payment_sources as $key => $value) {
                 LoanAccountPayment::where('loan_product_id', $this->loan_product->id)
@@ -227,17 +232,26 @@ class UpdateSetting extends Component
                     'loan_product_id' => $this->loan_product->id
                 ]);
             }
-            
+
+            // CRBs
+            foreach ($this->crb_selected_products as $key => $value) {
+                LoanCrbProduct::where('loan_product_id', $this->loan_product->id)
+                ->update([
+                    'crb_product_id' => $value,
+                    'loan_product_id' => $loan_product->id
+                ]);
+            }
+
             Session::flash('success', "Loan product updated successfully.");
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-types']);
-            
+
         } catch (\Throwable $th) {
             Session::flash('error', "Failed. ". $th->getMessage());
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-types']);
-        
+
         }
     }
-    
+
     public function update_institution(){
         try {
             Institution::where('id', $this->institution->id)->update([
@@ -256,28 +270,28 @@ class UpdateSetting extends Component
         try{
             DisbursedBy::where('id', $this->disbursement->id)->update([
                 'name' => $this->disbursement_name,
-            ]);            
+            ]);
             Session::flash('success', "Disbursement method updated successfully.");
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-disbursements']);
-            
+
         } catch (\Throwable $th) {
             Session::flash('error', "Failed. ". $th->getMessage());
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-disbursements']);
-        
+
         }
     }
     public function update_repayment_cycle(){
         try{
             RepaymentCycle::where('id', $this->repayment_cycle_method->id)->update([
                 'name' => $this->repayment_cycle_name,
-            ]);            
+            ]);
             Session::flash('success', "Loan Repayment Cycle updated successfully.");
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-repayment-cycle']);
-            
+
         } catch (\Throwable $th) {
             Session::flash('error', "Failed. ". $th->getMessage());
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-repayment-cycle']);
-        
+
         }
     }
 
@@ -287,29 +301,29 @@ class UpdateSetting extends Component
                 'name' => $this->penalty_name,
                 'value' => $this->penalty_amount,
                 'grace_period' => $this->penalty_grace,
-                'tag' => strtolower(str_replace(' ', '-', $this->disbursement_name)) 
+                'tag' => strtolower(str_replace(' ', '-', $this->disbursement_name))
             ]);
-            
+
             Session::flash('success', "Penalty created successfully.");
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-penalty-settings']);
-            
+
         } catch (\Throwable $th) {
             Session::flash('error', "Failed. ". $th->getMessage());
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-penalty-settings']);
         }
     }
 
-    public function update_loan_fee(){ 
+    public function update_loan_fee(){
         try {
             ServiceCharge::Create([
                 'name' => $this->loan_charge_name,
                 'value' => $this->loan_charge_amount,
-                'tag' => strtolower(str_replace(' ', '-', $this->loan_charge_name)) 
+                'tag' => strtolower(str_replace(' ', '-', $this->loan_charge_name))
             ]);
-            
+
             Session::flash('success', "Loan Fee created successfully.");
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-fees']);
-            
+
         } catch (\Throwable $th) {
             Session::flash('error', "Failed. ". $th->getMessage());
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-fees']);
@@ -323,8 +337,8 @@ class UpdateSetting extends Component
     // ---- Setters
     public function set_loan_product_values(){
         // Loan Product
-        $this->new_loan_name = $this->loan_product->name; 
-        $this->loan_release_date = $this->loan_product->release_date; 
+        $this->new_loan_name = $this->loan_product->name;
+        $this->loan_release_date = $this->loan_product->release_date;
         $this->new_loan_desc = $this->loan_product->description;
         $this->new_loan_icon = $this->loan_product->icon;
         $this->new_loan_icon_alt = $this->loan_product->icon_alt;
@@ -333,8 +347,8 @@ class UpdateSetting extends Component
 
         // Decimal Places
         $this->loan_decimal_place = $this->loan_product->loan_decimal_places->first()->value;
-        
-        // Dropdowns 
+
+        // Dropdowns
         $this->loan_interest_method = $this->loan_product->interest_methods->first()->id;
         $this->loan_interest_type = $this->loan_product->interest_types->first()->id;
 
@@ -343,46 +357,47 @@ class UpdateSetting extends Component
         $this->loan_repayment_cycle = $this->loan_product->repayment_cycle->pluck('id')->all();
         $this->auto_payment_sources = $this->loan_product->loan_accounts->pluck('id')->all();
         $this->loan_institution = $this->loan_product->loan_institutes->pluck('id')->all();
+        $this->crb_selected_products = $this->loan_product->loan_crb->pluck('id')->all();
 
         // Durations
-        $this->loan_duration_period = $this->loan_product->loan_duration_period; 
+        $this->loan_duration_period = $this->loan_product->loan_duration_period;
         $this->loan_interest_period = $this->loan_product->loan_interest_period;
 
         // Principal
-        $this->minimum_loan_principal_amount = $this->loan_product->min_principal_amount; 
-        $this->default_loan_principal_amount = $this->loan_product->def_principal_amount; 
-        $this->maximum_principal_amount = $this->loan_product->max_principal_amount; 
+        $this->minimum_loan_principal_amount = $this->loan_product->min_principal_amount;
+        $this->default_loan_principal_amount = $this->loan_product->def_principal_amount;
+        $this->maximum_principal_amount = $this->loan_product->max_principal_amount;
 
         // Interest
-        $this->minimum_loan_interest = $this->loan_product->min_loan_interest; 
+        $this->minimum_loan_interest = $this->loan_product->min_loan_interest;
         $this->default_loan_interest = $this->loan_product->def_loan_interest;
         $this->maximum_loan_interest = $this->loan_product->max_loan_interest;
-        
+
         // Duration
         $this->minimum_loan_duration = $this->loan_product->min_loan_duration;
-        $this->default_loan_duration = $this->loan_product->def_loan_duration; 
-        $this->maximum_loan_duration = $this->loan_product->max_loan_duration; 
+        $this->default_loan_duration = $this->loan_product->def_loan_duration;
+        $this->maximum_loan_duration = $this->loan_product->max_loan_duration;
 
         // Repayments
-        $this->default_num_of_repayments = $this->loan_product->min_num_of_repayments; 
-        $this->maximum_num_of_repayments = $this->loan_product->def_num_of_repayments; 
-        $this->minimum_num_of_repayments = $this->loan_product->max_num_of_repayments; 
+        $this->default_num_of_repayments = $this->loan_product->min_num_of_repayments;
+        $this->maximum_num_of_repayments = $this->loan_product->def_num_of_repayments;
+        $this->minimum_num_of_repayments = $this->loan_product->max_num_of_repayments;
     }
 
     public function set_disbursements_values(){
-        $this->disbursement_name = $this->disbursement->name; 
+        $this->disbursement_name = $this->disbursement->name;
     }
     public function set_repayment_cycle(){
-        $this->repayment_cycle_name = $this->repayment_cycle_method->name; 
+        $this->repayment_cycle_name = $this->repayment_cycle_method->name;
     }
     public function set_penalty_settings(){
-        $this->penalty_amount = $this->penalty->value; 
-        $this->penalty_name = $this->penalty->name; 
-        $this->penalty_grace = $this->penalty->grace_period; 
-        
+        $this->penalty_amount = $this->penalty->value;
+        $this->penalty_name = $this->penalty->name;
+        $this->penalty_grace = $this->penalty->grace_period;
+
     }
     public function set_loan_fees(){
-        $this->loan_charge_name = $this->loan_charge->name; 
-        $this->loan_charge_amount = $this->loan_charge->value; 
+        $this->loan_charge_name = $this->loan_charge->name;
+        $this->loan_charge_amount = $this->loan_charge->value;
     }
 }

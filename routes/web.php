@@ -42,6 +42,7 @@ use App\Http\Livewire\Dashboard\Loans\LoanRatesView;
 use App\Http\Livewire\Dashboard\Loans\LoanRepaymentCalculatorView;
 use App\Http\Livewire\Dashboard\Loans\LoanRepaymentView;
 use App\Http\Livewire\Dashboard\Loans\LoanRequestView;
+use App\Http\Livewire\Dashboard\Loans\LoanViewAllView;
 use App\Http\Livewire\Dashboard\Loans\LoanTrackingView;
 use App\Http\Livewire\Dashboard\Loans\MissedRepaymentsView;
 use App\Http\Livewire\Dashboard\Loans\NewLoanView;
@@ -115,9 +116,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
     Route::get('otp-verification', [OTPController::class, 'index'])->name('otp');
     Route::get('/dashboard', DashboardView::class)->name('dashboard');
-  // Route::get('/home', DashboardView::class)->name('dashboard');
     Route::get('/search', SearchEngineView::class)->name('search');
     // Administrator
+    Route::get('view-all-loans', LoanViewAllView::class)->name('loans');
     Route::get('open-loans', ApprovedLoansView::class)->name('approved-loans');
     Route::get('new-loan-request', NewLoanView::class)->name('new-loan');
     Route::get('client-loan-requests', LoanRequestView::class)->name('view-loan-requests');
@@ -159,9 +160,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::post('reset-loans', [LoanApplicationController::class, 'resetLoans'])->name('reset-loans');
     Route::post('update-loan-statuses', [LoanProductController::class, 'updateLoanStatus'])->name('update-loan-statuses');
     Route::get('delete-loan-step/{loan_step}', [LoanProductController::class, 'deleteStep'])->name('delete-loan-step');
-    
+
     // Data Import & Export
-    
+
     Route::post('export-loans', [ExportController::class, 'export_loans'])->name('export-loans');
     Route::post('import-loans', [ImportController::class, 'import_loans'])->name('import-loans');
 
@@ -204,7 +205,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     // ------ Role Permission
     Route::post('create-role', [RoleController::class, 'store'])->name('create-role');
     Route::post('update-role', [RoleController::class, 'update'])->name('update-role');
-    
+
     // ----- System Settings
     Route::get('system-settings', SystemSettings::class)->name('sys-settings');
     Route::get('system-property-settings', SystemItemSettings::class)->name('item-settings');

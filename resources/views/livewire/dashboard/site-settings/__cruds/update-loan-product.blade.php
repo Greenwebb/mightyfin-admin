@@ -14,7 +14,7 @@
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
         <form wire:submit.prevent="update_loan_product" id="kt_content_container" class="container-xxl">
-            
+
             <div class="card-header border-0 cursor-pointer">
                 <div class="alert alert-primary mt-2">
                     <small>
@@ -127,7 +127,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <div class="card mb-5 mb-xl-10">
                 <!--begin::Card header-->
                 <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
@@ -144,7 +144,7 @@
                     <div id="kt_account_profile_details_form" class="form">
                         <!--begin::Card body-->
                         <div class="card-body border-top p-9">
-                            
+
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Disbursed By</label>
                                 <div class="col-lg-8 fv-row">
@@ -158,7 +158,7 @@
                                         @empty
                                             <p>No Sources</p>
                                         @endforelse
-                                    
+
                                     </div>
                                 </div>
                             </div>
@@ -222,7 +222,7 @@
                             </div> --}}
                             <!--end::Input group-->
                         </div>
-                        
+
                     </div>
                     <!--end::Form-->
                 </div>
@@ -246,7 +246,7 @@
                     <div id="kt_account_profile_details_form" class="form">
                         <!--begin::Card body-->
                         <div class="card-body border-top p-9">
-                        
+
                             <!--end::Input group-->
                             <!--begin::Input group-->
                             <div class="row mb-6">
@@ -266,7 +266,7 @@
                                             <span>No Methods</span>
                                         @endforelse
                                     </select>
-                                    
+
                                 </div>
                                 <!--end::Col-->
                             </div>
@@ -295,7 +295,7 @@
                                             </label>
                                         @empty
                                             <!-- Handle the case when there are no interest types -->
-                                        @endforelse                                    
+                                        @endforelse
                                     </div>
                                 </div>
                                 <!--end::Col-->
@@ -349,7 +349,7 @@
                                 </div>
                                 <!--end::Col-->
                             </div>
-                            
+
                         </div>
                     </div>
                     <!--end::Form-->
@@ -461,14 +461,14 @@
                                 </div>
                                 <!--end::Col-->
                             </div>
-                            
+
                         </div>
                     </div>
                     <!--end::Form-->
                 </div>
                 <!--end::Content-->
             </div>
-            
+
 
             <div class="card mb-5 mb-xl-10">
                 <!--begin::Card header-->
@@ -500,7 +500,7 @@
                                             </label>
                                             <br>
                                         @empty
-                                            
+
                                         @endforelse
                                     </div>
                                 </div>
@@ -551,7 +551,7 @@
                             </div>
                             <!--end::Input group-->
                         </div>
-                        
+
                     </div>
                     <!--end::Form-->
                 </div>
@@ -633,7 +633,7 @@
                                 <!--end::Label-->
                                 <!--begin::Col-->
                                 <div class="col-lg-8 fv-row">
-                                
+
                                     <select wire:model.defer="num_of_steps" class="form-select form-control form-control-lg form-control-solid" id="loan_product_wiz_steps">
                                     </select>
                                 </div>
@@ -672,7 +672,7 @@
                                 <!--end::Label-->
                                 <!--begin::Col-->
                                 <div class="col-lg-8 fv-row">
-                                    
+
                                 </div>
                                 <!--end::Col-->
                             </div>
@@ -726,13 +726,67 @@
                                 </div>
                             </div>
                         </div>
-                        
-                        
+
+
                     </div>
                     <!--end::Form-->
                 </div>
                 <!--end::Content-->
             </div>
+
+            <div class="card mb-5 mb-xl-10">
+                <!--begin::Card header-->
+                <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+                    <!--begin::Card title-->
+                    <div class="card-title m-0">
+                        <h3 class="fw-bold text-info m-0">Loan CRB:</h3>
+                    </div>
+                    <div class="alert alert-primary mt-2">
+                        <small>
+                            Please ensure to make a selection for the Credit Bureau (CRB) product to be linked with this specific loan product. This decision plays a critical role in shaping the credit assessment and reporting processes aligned with the loan.
+                        </small>
+                    </div>
+                    <!--end::Card title-->
+                </div>
+                <!--begin::Card header-->
+                <!--begin::Content-->
+                <div id="kt_account_settings_profile_details" class="collapse show">
+                    <!--begin::Form-->
+                    <div id="kt_account_profile_details_form" class="form">
+                        <!--begin::Card body-->
+                        <div class="card-body border-top p-9">
+                            {{-- <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label fw-bold fs-6">Sector</label>
+                                <div class="col-lg-8 fv-row">
+                                    <select type="text" wire:model="sector" class="form-select form-control form-control-lg form-control-solid">
+                                        <option value="">--select--</option>
+                                        <option value="public">Public</option>
+                                        <option value="private">Private</option>
+                                        <option value="ngo">NGO</option>
+                                    </select>
+                                </div>
+                            </div> --}}
+                            <div class="row mb-6">
+                                <label class="col-lg-4 col-form-label required fw-bold fs-6">CRB Products</label>
+                                <div class="col-lg-8 fv-row">
+                                    <div class="d-block mt-3">
+                                        @forelse ($crb_products as $k => $crbp)
+                                        <label for="{{ $k.''.$crbp->name }}" class="mt-2 form-check form-check-custom form-check-inline form-check-solid me-5">
+                                            <input id="{{ $k.''.$crbp->name }}" class="form-check-input" wire:model.lazy="crb_selected_products" type="checkbox" value="{{ $crbp->id }}" />
+                                            <span class="fw-semibold ps-2 fs-6">{{ $crbp->name }} </span>
+                                        </label>
+                                        <br>
+                                        @empty
+                                            <p>No CRB Products</p>
+                                        @endforelse
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
             <div class="card mb-5 mb-xl-10">
                 <!--begin::Card header-->
                 <div class="card-header border-0 cursor-pointer py-3" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
@@ -797,7 +851,7 @@
                                                 </label>
                                                 <br>
                                             @empty
-                                                
+
                                             @endforelse
                                         </div>
                                         <div class="p-2 py-3">
@@ -826,7 +880,7 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy2" viewBox="0 0 16 16">
                                 <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v3.5A1.5 1.5 0 0 1 11.5 6h-7A1.5 1.5 0 0 1 3 4.5V1H1.5a.5.5 0 0 0-.5.5m9.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z"/>
                             </svg>
-                        </span>    
+                        </span>
                         Save
                     </button>
                 </div>

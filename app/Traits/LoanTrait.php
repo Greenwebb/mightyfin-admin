@@ -27,7 +27,7 @@ trait LoanTrait{
     public function get_all_loan_products(){
         return LoanProduct::with([
             'disbursed_by.disbursed_by',
-            'interest_methods.interest_method', 
+            'interest_methods.interest_method',
             'interest_types.interest_type',
             ])->get();
     }
@@ -35,7 +35,7 @@ trait LoanTrait{
     public function get_loan_product($id){
         return LoanProduct::where('id', $id)->with([
             'disbursed_by.disbursed_by',
-            'interest_methods.interest_method', 
+            'interest_methods.interest_method',
             'interest_types.interest_type',
             'loan_accounts.account_payment',
             'loan_status.status',
@@ -82,7 +82,7 @@ trait LoanTrait{
                 case 'auto':
                     # code...
                     break;
-                
+
                 default:
                     # code...
                 break;
@@ -110,12 +110,12 @@ trait LoanTrait{
                     ->where('status', 1)
                     ->where('complete', 1)
                     ->get();
-    
+
                     break;
                 case 'auto':
                     # code...
                     break;
-                
+
                 default:
                     # code...
                 break;
@@ -128,7 +128,7 @@ trait LoanTrait{
     }
 
     public function removeLoanPackage($id){
-        $package = LoanPackage::find($id); 
+        $package = LoanPackage::find($id);
         if ($package) {
             $package->delete();
             return true;
@@ -152,11 +152,11 @@ trait LoanTrait{
 
     public function apply_loan($data){
             try {
-                // check if user already created a loan application 
+                // check if user already created a loan application
                 // that is not approved yet and not complete
                 $check = Application::where('status', 0)->where('complete', 0)
                                     ->where('user_id', $data['user_id'])->orderBy('created_at', 'desc')->get();
-                
+
                 if($data['email'] != ''){
                     $mail = [
                         'name' => $data['fname'].' '.$data['lname'],
@@ -169,7 +169,7 @@ trait LoanTrait{
                         'message2'=>'Before proceeding, please fill out the attached Pre-approval form and submit it for the final processing of your '.$data['type'].' loan application.'
                     ];
                 }
-                
+
                 if(empty($check->toArray())){
                     $item = Application::create($data);
                     if($data['email'] != ''){
@@ -184,7 +184,7 @@ trait LoanTrait{
                         ->where('loan_statuses.loan_product_id', $data['loan_product_id'])
                         ->orderBy('loan_statuses.id', 'asc')
                         ->first();
-                        
+
                     // Create a new application stage.
                     DB::table('application_stages')->insert([
                         'application_id' => $item->id,
@@ -196,7 +196,7 @@ trait LoanTrait{
                         'curr_status' => '',
                         'position' => 1
                     ]);
-                    
+
                     return $item->id;
                 }else{
                     // redirect to you already have loan request
@@ -248,25 +248,25 @@ trait LoanTrait{
                 'final_due_date' => $due,
                 'closed' => 0
             ]);
-    
+
             $payback_amount = Application::payback($x->amount, $x->repayment_plan);
             $installments = $payback_amount / $x->repayment_plan;
-            
-            for ($i=0; $i < $x->repayment_plan; $i++) { 
+
+            for ($i=0; $i < $x->repayment_plan; $i++) {
                 if($x->doa !== null){
                     $date_str = $x->doa;
                     $date = DateTime::createFromFormat('Y-m-d H:i:s', $date_str);
                     $moths = 'P'. $i+1 .'M';
                     $next_due = $date->add(new DateInterval($moths));
-                    
+
                 }else{
                     $due = Carbon::now()->addMonth($x->repayment_plan);
                     $next_due = Carbon::now()->addMonth($i+1);
                 }
-                
+
                 LoanInstallment::create([
-                    'loan_id' => $loan->id, 
-                    'next_dates' => $next_due, 
+                    'loan_id' => $loan->id,
+                    'next_dates' => $next_due,
                     'amount' => $installments
                 ]);
             }
@@ -339,7 +339,7 @@ trait LoanTrait{
         $approvers = LoanManualApprover::where('application_id', $application_id)->get();
         $userPriority = $approvers->where('user_id', auth()->user()->id)->pluck('priority')->first();
         $is_passed = $approvers->where('user_id', auth()->user()->id)->pluck('is_passed')->first();
-        
+
         // dd((int)$approvers->count());
         // dd((int)$userPriority);
 
@@ -389,15 +389,15 @@ trait LoanTrait{
         // Elevate to the next priority
         $update = $approvers->where('priority', $userPriority + 1)->first();
         if($update){
-            
+
             $update->complete = 1; //optional - remove
             $update->is_active = 1;
             $update->is_processing = 1;
             $update->save();
         }
-    } 
+    }
     public function final_upvote($application_id){
-        
+
         // dd($application_id);
         $approvers = LoanManualApprover::where('application_id', $application_id)->get();
         $userPriority = $approvers->where('user_id', auth()->user()->id)->pluck('priority')->first();
@@ -416,7 +416,7 @@ trait LoanTrait{
         $update->is_active = 1;
         $update->is_processing = 1;
         $update->save();
-    } 
-    
+    }
+
 
 }

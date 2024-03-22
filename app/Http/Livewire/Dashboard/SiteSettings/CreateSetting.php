@@ -18,6 +18,8 @@ use App\Models\LoanRepaymentCycle;
 use App\Models\LoanRepaymentOrder;
 use App\Models\LoanServiceCharge;
 use App\Models\Penalty;
+use App\Models\CrbProduct;
+use App\Models\LoanCrbProduct;
 use App\Models\RepaymentCycle;
 use App\Models\RepaymentOrder;
 use App\Models\ServiceCharge;
@@ -36,10 +38,10 @@ class CreateSetting extends Component
     // Loan Product
     public $new_loan_name, $loan_release_date, $minimum_loan_principal_amount, $default_loan_principal_amount, $maximum_principal_amount, $loan_interest_method, $loan_interest_type;
     public $loan_interest_period, $minimum_loan_interest, $default_loan_interest, $maximum_loan_interest, $loan_duration_period, $minimum_loan_duration;
-    public $default_loan_duration, $maximum_loan_duration, $default_num_of_repayments, $maximum_num_of_repayments, $minimum_num_of_repayments; 
+    public $default_loan_duration, $maximum_loan_duration, $default_num_of_repayments, $maximum_num_of_repayments, $minimum_num_of_repayments;
     public $loan_decimal_place, $add_automatic_payments, $new_loan_desc, $new_loan_icon, $new_loan_icon_alt, $num_of_steps;
     public $auto_payment_sources = [];
-    public $loan_disbursed_by = []; 
+    public $loan_disbursed_by = [];
     public $loan_repayment_cycle = [];
     public $extra_fees = [];
     public $loan_institution = [];
@@ -49,7 +51,10 @@ class CreateSetting extends Component
     public $loan_charge_name, $loan_charge_amount, $institutions;
     public $sector;
 
-    
+    public $crb_products;
+    public $crb_selected_products = [];
+
+
     public function render()
     {
         $this->page = $_GET['page'];
@@ -67,6 +72,7 @@ class CreateSetting extends Component
         $this->company_accounts = AccountPayment::get();
         $this->service_charges = ServiceCharge::get();
         $this->institutions = Institution::where('status', 1)->get();
+        $this->crb_products = CrbProduct::get();
     }
 
     public function updatedSector()
@@ -88,7 +94,7 @@ class CreateSetting extends Component
     }
 
     public function create_loan_product(){
-        
+
         try {
             // Create loan product
             $loan_product = LoanProduct::Create([
@@ -105,7 +111,7 @@ class CreateSetting extends Component
                 'min_principal_amount' => $this->minimum_loan_principal_amount,
                 'def_principal_amount' => $this->default_loan_principal_amount,
                 'max_principal_amount' => $this->maximum_principal_amount,
-                
+
                 'min_loan_duration' => $this->minimum_loan_duration,
                 'def_loan_duration' => $this->default_loan_duration,
                 'max_loan_duration' => $this->maximum_loan_duration,
@@ -113,7 +119,7 @@ class CreateSetting extends Component
                 'min_loan_interest' => $this->minimum_loan_interest,
                 'def_loan_interest' => $this->default_loan_interest,
                 'max_loan_interest' => $this->maximum_loan_interest,
-        
+
                 'min_num_of_repayments' => $this->minimum_num_of_repayments,
                 'def_num_of_repayments' => $this->default_num_of_repayments,
                 'max_num_of_repayments' => $this->maximum_num_of_repayments
@@ -182,10 +188,17 @@ class CreateSetting extends Component
                     'loan_product_id' => $loan_product->id
                 ]);
             }
-            
+            // CRBs
+            foreach ($this->crb_selected_products as $key => $value) {
+                LoanCrbProduct::Create([
+                    'crb_product_id' => $value,
+                    'loan_product_id' => $loan_product->id
+                ]);
+            }
+
             Session::flash('success', "Loan product created successfully.");
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-types']);
-            
+
         } catch (\Throwable $th) {
             Session::flash('error', "Failed. ". $th->getMessage());
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-types']);
@@ -199,12 +212,12 @@ class CreateSetting extends Component
         try {
             DisbursedBy::Create([
                 'name' => $this->disbursement_name,
-                'tag' => strtolower(str_replace(' ', '-', $this->disbursement_name)) 
+                'tag' => strtolower(str_replace(' ', '-', $this->disbursement_name))
             ]);
-            
+
             Session::flash('success', "Disbursement method created successfully.");
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-disbursements']);
-            
+
         } catch (\Throwable $th) {
             Session::flash('error', "Failed. ". $th->getMessage());
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-disbursements']);
@@ -218,12 +231,12 @@ class CreateSetting extends Component
                 'name' => $this->penalty_name,
                 'value' => $this->penalty_amount,
                 'grace_period' => $this->penalty_grace,
-                'tag' => strtolower(str_replace(' ', '-', $this->disbursement_name)) 
+                'tag' => strtolower(str_replace(' ', '-', $this->disbursement_name))
             ]);
-            
+
             Session::flash('success', "Penalty created successfully.");
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-penalty-settings']);
-            
+
         } catch (\Throwable $th) {
             Session::flash('error', "Failed. ". $th->getMessage());
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-penalty-settings']);
@@ -235,12 +248,12 @@ class CreateSetting extends Component
         try {
             RepaymentCycle::Create([
                 'name' => $this->repayment_cycle_name,
-                'tag' => strtolower(str_replace(' ', '-', $this->repayment_cycle_name)) 
+                'tag' => strtolower(str_replace(' ', '-', $this->repayment_cycle_name))
             ]);
-            
+
             Session::flash('success', "Repayment Cycle created successfully.");
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-repayment-cycle']);
-            
+
         } catch (\Throwable $th) {
             Session::flash('error', "Failed. ". $th->getMessage());
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-repayment-cycle']);
@@ -248,17 +261,17 @@ class CreateSetting extends Component
     }
 
 
-    public function create_loan_fee(){ 
+    public function create_loan_fee(){
         try {
             ServiceCharge::Create([
                 'name' => $this->loan_charge_name,
                 'value' => $this->loan_charge_amount,
-                'tag' => strtolower(str_replace(' ', '-', $this->loan_charge_name)) 
+                'tag' => strtolower(str_replace(' ', '-', $this->loan_charge_name))
             ]);
-            
+
             Session::flash('success', "Loan Fee created successfully.");
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-fees']);
-            
+
         } catch (\Throwable $th) {
             Session::flash('error', "Failed. ". $th->getMessage());
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-fees']);
