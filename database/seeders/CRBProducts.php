@@ -16,39 +16,27 @@ class CRBProducts extends Seeder
     public function run()
     {
         CrbProduct::create([
-            'name' => 'Product101',
-            'description' => '',
-            'code' => '101',
-            'tag' => 'crb'
-        ]);
-        CrbProduct::create([
-            'name' => 'Product102',
-            'description' => '',
-            'code' => '102',
-            'tag' => 'crb'
-        ]);
-        CrbProduct::create([
-            'name' => 'Product103',
-            'description' => '',
-            'code' => '103',
-            'tag' => 'crb'
-        ]);
-        CrbProduct::create([
-            'name' => 'Product104',
-            'description' => '',
+            'name' => 'Consumer Loans',
+            'description' => 'Personal loans, GRZ & Private institutional salary advances.',
             'code' => '104',
             'tag' => 'crb'
         ]);
         CrbProduct::create([
-            'name' => 'Product105',
-            'description' => '',
-            'code' => '105',
+            'name' => 'SME Loans',
+            'description' => 'Business Loans.',
+            'code' => '152',
             'tag' => 'crb'
         ]);
         CrbProduct::create([
-            'name' => 'Product106',
-            'description' => '',
-            'code' => '106',
+            'name' => 'Ticket Loans',
+            'description' => 'Small ticket loans.',
+            'code' => '124',
+            'tag' => 'crb'
+        ]);
+        CrbProduct::create([
+            'name' => 'Consumer Loans (credit score)',
+            'description' => 'Comes with a credit score cost.',
+            'code' => '109',
             'tag' => 'crb'
         ]);
     }
