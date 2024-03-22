@@ -15,7 +15,6 @@ use Illuminate\Support\Facades\Auth;
 
 class DashboardView extends Component
 {
-
     use EmailTrait, WalletTrait, LoanTrait, UserTrait;
     public $loan_requests, $loan_request, $all_loan_requests, $my_loan, $wallet;
     public $payment_method, $withdraw_amount, $mobile_number, $card_name, $bank_name, $card_number;
@@ -28,7 +27,9 @@ class DashboardView extends Component
         if (auth()->user()->hasRole('user')) {
             Auth::logout(); // Logout the user
         } else {
-            $this->all_loan_requests = Application::orderBy('created_at', 'desc')->take(5)->get();
+            $this->all_loan_requests = Application::orWhere('status', 2)
+                ->orWhere('status', 0)
+                ->orderBy('created_at', 'desc')->take(5)->get();
             return view('livewire.dashboard.dashboard-view')
                 ->layout('layouts.admin');
         }
@@ -80,7 +81,7 @@ class DashboardView extends Component
             $x = Application::find($id);
             $x->status = 2;
             $x->save();
-            
+
             $mail = [
                 'user_id' => '',
                 'application_id' => $x->id,
@@ -104,7 +105,7 @@ class DashboardView extends Component
             $x = Application::find($id);
             $x->status = 3;
             $x->save();
-            
+
             $mail = [
                 'user_id' => '',
                 'application_id' => $x->id,
