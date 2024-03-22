@@ -4,7 +4,8 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-
+use Illuminate\Support\Facades\DB;
+use Carbon\Carbon;
 class Application extends Model
 {
     use HasFactory;
@@ -73,9 +74,7 @@ class Application extends Model
         'is_zambian',
         'nationality',
         'continue',
-        'is_assigned',
-        'c_stage',
-        'c_status',
+        'is_assigned'
     ];
     protected $appends = [
         'done_by',
@@ -148,6 +147,9 @@ class Application extends Model
     //     // }
     // }
 
+    public static function loanProduct($id){
+        return LoanProduct::where('id', $id)->first();
+    }
     // Pending for approval
     public static function currentApplication(){
         return Application::where('user_id', auth()->user()->id)
@@ -161,83 +163,68 @@ class Application extends Model
         ->where('status', 1)->where('complete', 1)->first();
     }
 
-    // About to Deprecate
+    // !important
     public static function payback($principal, $duration, $product_id = null){
-        // 1 month
-        if( $duration == 1){
-            $interest = (($principal * 0.21) * 1) + $principal;
-            return number_format($interest, 2, '.', '');
-        }
-        
-        // 2 months
-        if( $duration == 2 ){
-            $interest = (($principal * 1.2 *  1.1) - $principal) + $principal;
-            return number_format($interest, 2, '.', '');
-        }
-        
-        // 3 months
-        if( $duration == 3){
-            $interest = (($principal * 1.2 * 1.15) - $principal) + $principal;
-            return number_format($interest, 2, '.', '');
-        }
-        
-        // 4 months
-        if( $duration == 4){
-            $interest=(($principal * 1.2 * 1.2) - $principal) + $principal;
-            return number_format($interest, 2, '.', '');
-        }
-        
-        // 5 months
-        if( $duration == 5){
-            $interest = (($principal * 1.2 * 1.25) - $principal) + $principal;
-            return number_format($interest, 2, '.', '');
-        }
-        
-        // 6 months
-        if( $duration == 6){
-            $interest = (($principal * 1.2 * 1.3) - $principal) + $principal;
-            return number_format($interest, 2, '.', '');
-        }
+        $product = LoanProduct::where('id', $product_id)->with([
+            'disbursed_by.disbursed_by',
+            'interest_methods.interest_method', 
+            'interest_types.interest_type',
+            'loan_accounts.account_payment',
+            'loan_status.status',
+            'loan_decimal_places',
+            'service_fees.service_charge'
+            ])->first();
 
-
-        // 7 months
-        if( $duration == 7){
-            $interest = (($principal * 1.2 * 1.35) - $principal) + $principal;
-            return number_format($interest, 2, '.', '');
-        }
-        
-        // 8 months
-        if( $duration == 8){
-            $interest = (($principal * 1.2 * 1.4) - $principal) + $principal;
-            return number_format($interest, 2, '.', '');
-        }
-        
-        // 9 months
-        if( $duration == 9){
-            $interest = (($principal * 1.2 * 1.45) - $principal) + $principal;
-            return number_format($interest, 2, '.', '');
-        }
-        
-        // 10 months
-        if( $duration == 10){
-            $interest = (($principal * 1.2 * 1.5) - $principal) + $principal;
-            return number_format($interest, 2, '.', '');
-        }
-        
-        // 11 months
-        if( $duration == 11){
-            $interest = (($principal * 1.2 * 1.55) - $principal) + $principal;
-            return number_format($interest, 2, '.', '');
-        }
-        
-        // 12 months
-        if( $duration == 12){
-            $interest = (($principal * 1.2 * 1.6) - $principal) + $principal;
-            return number_format($interest, 2, '.', '');
-        }
-    
+        $rate = (float)$product->def_loan_interest / 100;
+        $interest = ($principal * $rate * $duration);
+        $payback = $principal + $interest;
+        return number_format($payback, 2, '.', '');
     }
 
+
+    public static function receiveAmount($principal, $duration, $product_id = null){
+        $discount = $principal * 0.1;
+        $finalPayback = $principal - $discount;
+        return number_format($finalPayback, 2, '.', '');
+    }
+
+    
+    // !important
+    public static function paybackInstallment($principal, $duration, $product_id = null){
+        $product = LoanProduct::where('id', $product_id)->with([
+            'disbursed_by.disbursed_by',
+            'interest_methods.interest_method', 
+            'interest_types.interest_type',
+            'loan_accounts.account_payment',
+            'loan_status.status',
+            'loan_decimal_places',
+            'service_fees.service_charge'
+            ])->first();
+
+        $rate = (float)$product->def_loan_interest / 100;
+        $interest = ($principal * $rate * $duration);
+        $payback = $principal + $interest;
+        $inst = $payback / $duration;
+        return number_format($inst, 2, '.', '');
+    }
+
+    public static function paybackNextDate($application){
+        // Assuming $application->created_at is a Carbon instance
+        if($application){
+            try {
+                $nextDate = $application->created_at;
+        
+                return $nextDate;
+            } catch (\Throwable $th) {
+                return 'No Date';
+            }
+        }else{
+            return 'No Application';
+        }
+    }
+    
+
+    // Deprecating
     public static function interest_amount($principal, $duration){
         // 1 month
         if( $duration == 1){
@@ -314,24 +301,6 @@ class Application extends Model
     
     }
 
-    // public static function interest_amount($principal, $duration){
-    //     // 1 month
-    //     if( $duration < 2){
-    //         return ($principal * 0.2);
-    //     }
-
-    //     // 2 to 6 months
-    //     if( $duration > 1 && $duration < 7 ){
-    //         return ($principal * 0.44);
-    //     } 
-        
-    //     // // 3 months and above
-    //     // if( $duration > 3){
-    //     //     return ($principal * 1.44);
-    //     // }
-
-    // }
-
     public static function interest_rate($product_id){
         $loan_product = LoanProduct::where('id', $product_id)->with([
             'disbursed_by.disbursed_by',
@@ -341,15 +310,18 @@ class Application extends Model
             'loan_status.status',
             'loan_decimal_places'
             ])->first();
-            
-        if( $loan_product->interest_types->first()->interest_type->first()->name == 'Percentage' ){
-            return $loan_product->def_loan_interest.'%';
-        }else{
-            return 'K '.$loan_product->def_loan_interest;
-        }
+            if(!empty($loan_product->interest_types->toArray())){
+                if( $loan_product->interest_types->first()->interest_type->first()->name == 'Percentage' ){
+                    return $loan_product->def_loan_interest.'%';
+                }else{
+                    return 'K '.$loan_product->def_loan_interest;
+                }
+            }else{
+                return 'Not Set';
+            }
     }
     
-
+    //Depricated
     public static function monthly_installment($amount, $duration){
         try {
             $total_collectable = Application::payback($amount, $duration);

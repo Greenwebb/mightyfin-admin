@@ -1,4 +1,5 @@
 {
+<<<<<<< HEAD
     "liveServer.settings.fullReload": true,
     "liveServer.settings.port": 0,
     "liveServer.settings.host": "http://localhost/mfs",
@@ -12,3 +13,7 @@
     "liveServer.settings.useLocalIp": false,
     "liveServer.settings.useWebExt": true,
 }
+=======
+    "CodeGPT.apiKey": "CodeGPT Plus Beta"
+}
+>>>>>>> 8cac80062ec17e79feb8c70a57e8a476c4c991ea

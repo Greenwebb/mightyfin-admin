@@ -57,6 +57,12 @@
 <body id="kt_body" class="auth-bg">
     <!--begin::Theme mode setup on page load-->
 
+    <x-jet-validation-errors class="mb-4 text-danger" />
+    @if (session('status'))
+        <div class="mb-4 font-medium text-sm text-green-600">
+            {{ session('status') }}
+        </div>
+    @endif
     <!--end::Theme mode setup on page load-->
     <!--begin::Main-->
     <!--begin::Root-->
@@ -97,7 +103,7 @@
                             <!--begin::Input group=-->
                             <div class="fv-row mb-8">
                                 <!--begin::Email-->
-                                <input type="text" placeholder="Email" name="email" autocomplete="off"
+                                <input type="email" placeholder="Email" name="email" autocomplete="off"
                                     class="form-control bg-transparent" />
                                 <!--end::Email-->
                             </div>

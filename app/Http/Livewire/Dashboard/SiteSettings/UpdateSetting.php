@@ -54,6 +54,7 @@ class UpdateSetting extends Component
     public $defaulted = [];
     public $denied = [];
     public $no_taken_up = [];
+    public $loan_institution = [];
 
 
 
@@ -61,7 +62,8 @@ class UpdateSetting extends Component
     public $disbursement_name, $disbursement;
     public $repayment_cycle_name,$repayment_cycle_method;
     public $penalty_amount, $penalty_name, $penalty_grace, $penalty;
-    public $loan_charge, $loan_charge_name, $loan_charge_amount, $loan_institution, $institutions;
+    public $loan_charge, $loan_charge_name, $loan_charge_amount, $institutions, $institution;
+    public $loan_institute_name, $loan_institute_type;
     public $current_statuses = [];
     public function render()
     {
@@ -101,7 +103,12 @@ class UpdateSetting extends Component
                 $this->current_statuses = $this->get_loan_statuses($_GET['item_id']);
                 $this->set_loan_product_values();
             break;
-            
+
+            case 'institutes':
+                $this->institution = Institution::where('id', $_GET['item_id'])->where('status', 1)->first();
+                $this->loan_institute_name = $this->institution->name;
+                $this->loan_institute_type = $this->institution->type;
+            break;
             
             default:
             break;
@@ -212,13 +219,15 @@ class UpdateSetting extends Component
                     'loan_product_id' => $this->loan_product->id
                 ]);
             }
-            
             // Institutions
-            LoanProductInstitution::Create([
-                'institution_id' => $this->loan_institution,
-                'loan_product_id' => $this->loan_product->id
-            ]);
-
+            foreach ($this->loan_institution as $key => $value) {
+                LoanProductInstitution::where('loan_product_id', $this->loan_product->id)
+                ->update([
+                    'institution_id' => $value,
+                    'loan_product_id' => $this->loan_product->id
+                ]);
+            }
+            
             Session::flash('success', "Loan product updated successfully.");
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-types']);
             
@@ -226,6 +235,20 @@ class UpdateSetting extends Component
             Session::flash('error', "Failed. ". $th->getMessage());
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-types']);
         
+        }
+    }
+    
+    public function update_institution(){
+        try {
+            Institution::where('id', $this->institution->id)->update([
+                'name' => $this->loan_institute_name,
+                'type' => $this->loan_institute_type
+            ]);
+            Session::flash('success', "Loan Institution created successfully.");
+            return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'institutes']);
+        } catch (\Throwable $th) {
+            Session::flash('error', "Failed. ". $th->getMessage());
+            return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'institutes']);
         }
     }
 
@@ -311,7 +334,7 @@ class UpdateSetting extends Component
         // Decimal Places
         $this->loan_decimal_place = $this->loan_product->loan_decimal_places->first()->value;
         
-        //Dropdowns 
+        // Dropdowns 
         $this->loan_interest_method = $this->loan_product->interest_methods->first()->id;
         $this->loan_interest_type = $this->loan_product->interest_types->first()->id;
 
@@ -319,6 +342,7 @@ class UpdateSetting extends Component
         $this->loan_disbursed_by = $this->loan_product->disbursed_by->pluck('id')->all();
         $this->loan_repayment_cycle = $this->loan_product->repayment_cycle->pluck('id')->all();
         $this->auto_payment_sources = $this->loan_product->loan_accounts->pluck('id')->all();
+        $this->loan_institution = $this->loan_product->loan_institutes->pluck('id')->all();
 
         // Durations
         $this->loan_duration_period = $this->loan_product->loan_duration_period; 

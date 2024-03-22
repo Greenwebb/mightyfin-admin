@@ -111,6 +111,11 @@ class User extends Authenticatable
         return User::where('id', auth()->user()->id)->with(['uploads', 'next_of_king', 'refs','bank'])->first();
     }
 
+    public static function user_meta($id){
+        return User::where('id', $id)->with(['uploads', 'next_of_king', 'refs','bank'])->first()->toArray();
+       
+    }
+
     public static function totalCustomerBorrowed($user){
         $loans = Application::where('user_id', $user->id)
         ->where('complete', 1)

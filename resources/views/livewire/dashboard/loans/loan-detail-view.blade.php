@@ -1,14 +1,14 @@
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-    
+
     <div class="post d-flex flex-column-fluid" id="kt_post">
-        
+
         <div id="kt_content_container" class="container-xxl">
             <div style="margin-top: -4%; z-index: 5; background-image: url( {{ asset('public/mfs/admin/assets/media/product/loan_header.webp') }}); width: 109%;
             left: -5%;"
                 class="card mb-6">
                 <div class="card-body pt-9 pb-0">
                     <div class="d-flex flex-wrap flex-sm-nowrap">
-                        
+
                         <div style="margin-left: 2%;" class="flex-grow-1">
                             <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
                                 <div class="d-flex flex-column">
@@ -21,7 +21,7 @@
                                             </i>
                                         </a>
                                     </div>
-                                    
+
                                     <div class="d-flex flex-wrap fw-semibold fs-6 mb-4 pe-2">
                                         <a href="#" class="d-flex align-items-center text-gray-400 text-hover-primary me-5 mb-2">
                                             <i class="ki-duotone ki-profile-circle fs-4 me-1">
@@ -32,7 +32,7 @@
                                         </a>
                                     </div>
                                 </div>
-                                
+
                                 <div class="d-flex">
                                     <div class="row">
                                         <div class="col-4">
@@ -75,13 +75,14 @@
                             </div>
                         </div>
                     </div>
-                    
+
                 </div>
             </div>
             <div style=" width: 109%; top:-5%; left: -5%;" class="card">
                 <div style="margin-top: -4%; padding: 0px;" class="card-body pt-5 pb-0">
                     <!--begin::Details-->
                     <div class="col-12">
+                        @if(true)
                         @if($loan_product->loan_status !== null || $loan_product !== null)
                             @switch(strtolower($current->stage))
                                 @case('processing')
@@ -90,7 +91,6 @@
                                             <li class="active"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">1</span>Application Submitted</a></li>
                                             @php
                                                 $count = 1;
-                                                
                                             @endphp
                                             @forelse ($loan_product->loan_status->where('stage', 'processing') as $key => $step)
                                                 @php
@@ -98,7 +98,11 @@
                                                 @endphp
                                                 <li class="{{ $current->position >= $count ? 'completed' : '' }}" id="{{$step->stage}}"><a href="#w{{ $step->id }}" data-toggle="tab" aria-expanded="false"><span class="nmbr">{{ $count }}</span>{{ $step->status->name }}</a></li>
                                             @empty
-                                            @endforelse    
+                                                <li class="{{ $current->position >= 2 ? 'completed' : '' }}"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">2</span>Verify</a></li>
+                                                <li class="{{ $current->position >= 3 ? 'completed' : '' }}"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">3</span>Approval</a></li>
+                                                <li class="{{ $current->position >= 4 ? 'completed' : '' }}"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">4</span>Disburse Funds</a></li>
+                                            @endforelse
+
                                         </ul>
                                     </div>
                                 @break
@@ -114,6 +118,7 @@
                                 <div class="tabbable">
                                     <ul class="nav nav-tabss wizard">
                                         <li class="active"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">1</span>Application Submitted</a></li>
+                                        {{-- <li class="active"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">2</span>Verify</a></li> --}}
                                         @php
                                             $count = 1;
                                         @endphp
@@ -123,14 +128,18 @@
                                             @endphp
                                             <li class="" id="{{$step->stage}}"><a href="#w{{ $step->id }}" data-toggle="tab" aria-expanded="false"><span class="nmbr">{{ $count }}</span>{{ $step->status->name }}</a></li>
                                         @empty
-                                        @endforelse    
+                                            <li class="{{ $current->position >= 2 ? 'completed' : '' }}"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">2</span>Verify</a></li>
+                                            <li class="{{ $current->position >= 3 ? 'completed' : '' }}"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">3</span>Approval</a></li>
+                                            <li class="{{ $current->position >= 4 ? 'completed' : '' }}"><a href="#i9" data-toggle="tab" aria-expanded="false"><span class="nmbr">4</span>Disburse Funds</a></li>
+                                        @endforelse
                                     </ul>
                                 </div>
                                 @break
                             @endswitch
-                        @else                                                                         
+                        @else
                         @endif
-                        
+                        @endif
+
                         <style>
                             .nav-tabss.wizard {
                                 background-color: transparent;
@@ -269,29 +278,20 @@
                                 }
                             }
                         </style>
-
                     </div>
-                    <!--end::Details-->
-                    <!--begin::Navs-->
-
-                    <!--begin::Navs-->
                 </div>
             </div>
-
-            <!--end::Navbar-->
-            <!--end::Container-->
         </div>
 
-
-        <!--end::Post-->
     </div>
-    
+
     <div class="mx-4">
         @include('livewire.dashboard.__parts.dash-alerts')
     </div>
-    
+
+    @if(true)
+    {{-- @if($loan->complete == 1) --}}
     @switch(strtolower($current->stage))
-        
         @case('processing')
             @switch(strtolower($current->status))
                 @case('reviewing')
@@ -313,7 +313,6 @@
         @break
 
         @case('open')
-            
             @switch(strtolower($current->status))
                 @case('current loan')
                     @include('livewire.dashboard.loans.__stages.open.current-loan')
@@ -327,7 +326,7 @@
         @case('denied')
             @switch(strtolower($current->status))
                 @case('incomplet kyc')
-                    @include('livewire.dashboard.loans.__stages.denied.incomplet-kyc')
+                    @include('livewire.dashboard.loans.__stages.denied.incomplete-kyc')
                 @break
                 @case('incomplete crb')
                     @include('livewire.dashboard.loans.__stages.denied.incomplete-crb')
@@ -358,10 +357,13 @@
                     </div>
                 </div>
             </div>
-        </div>                                                                                                  
+        </div>
     @endswitch
-    
+    @else
+    @include('livewire.dashboard.loans.__stages.denied.incomplete-kyc')
+    @endif
 
+    @include('livewire.dashboard.loans.__modals.rollback-warning')
     @include('livewire.dashboard.loans.__modals.review-warning')
     @include('livewire.dashboard.loans.__modals.decline-loan')
 </div>

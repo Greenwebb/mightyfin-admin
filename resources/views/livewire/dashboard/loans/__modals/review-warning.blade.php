@@ -6,14 +6,14 @@
                 <input type="hidden" wire:model="loan_id" name="application_id">
                 <div class="modal-header" id="kt_modal_add_customer_header">
                     <h2 class="fw-bold text-primary">Start Review</h2>
-                    <div wire:click="$emit('closeModal')" id="kt_modal_add_customer_close" class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal" aria-label="Close">
+                    <div data-bs-dismiss="modal" type="button" wire:click="$emit('closeModal')" id="kt_modal_add_customer_close" class="btn btn-icon btn-sm btn-active-icon-primary" data-bs-dismiss="modal" aria-label="Close">
                         <i class="ki-duotone ki-cross fs-1">
                             <span class="path1"></span>
                             <span class="path2"></span>
                         </i>
                     </div>
                 </div>
-            
+
                 <div class="modal-body py-2">
                     <div class="settings mb-2">
                         <div wire:loading.remove wire:target="reviewLoan" class="alert alert-warning">
@@ -33,14 +33,14 @@
                                 <button type="submit" class="btn btn-primary btn-xs">Continue</button>
                             </div>
                         </div>
-                        
+
                         <div wire:loading wire:target="reviewLoan" class="text-center">
                             <div class="d-flex justify-content-center align-items-center gap-4 text-center items-center">
                                 <span class="spinner-border text-primary" role="status"></span>
                                 <p class="mt-2">Retrieving loan application details...</p>
                             </div>
                         </div>
-                        
+
                     </div>
                 </div>
             </form>

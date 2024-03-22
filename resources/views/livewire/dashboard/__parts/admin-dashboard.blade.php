@@ -146,7 +146,7 @@
                         <div class="card-header border-0 pt-5">
                             <h3 class="card-title align-items-start flex-column">
                                 <span class="card-label fw-bold fs-3 mb-1">Latest Loan Requests</span>
-                                <span class="text-muted mt-1 fw-semibold fs-7">More than 400 new products</span>
+                                <span class="text-muted mt-1 fw-semibold fs-7">More than {{ $all_loan_requests->count() }} total loan requests</span>
                             </h3>
                             <div class="card-toolbar">
                                 {{-- <ul class="nav">
@@ -199,15 +199,16 @@
                                                         <a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">
                                                             {{ $loan->fname.' '.$loan->lname }}
                                                         </a>
-                                                        <span class="text-muted fw-semibold d-block">{{ $loan->phone }}  {{ $loan->email }} </span>
+                                                        <span class="text-muted fw-semibold d-block">
+                                                            <a href="tel:{{ $loan->user->phone }}">{{ $loan->user->phone }}</a> <br> {{ $loan->email }} </span>
                                                     </td>
                                                     <td class="text-end text-muted fw-bold"><small>Requested on</small><br>{{ $loan->created_at->toFormattedDateString() }}</td>
                                                     <td class="text-end">
-                                                        <span class="badge badge-light-success">K {{ $loan->amount }}</span>
-                                                        <span class="badge badge-light-success">Approved</span>
+                                                        <span class="badge badge-light-primary">K {{ $loan->amount }}</span>
+                                                        {{-- <span class="badge badge-light-success">Approved</span> --}}
                                                     </td>
                                                     <td class="text-end">
-                                                        <a href="{{ route('loan-details',['id' => $loan->id]) }}" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
+                                                        <a href="{{ route('loan-details',['id' => $loan->id]) }}" class="btn btn-sm btn-icon btn-bg-primary btn-active-color-primary">
                                                             <i class="ki-duotone ki-arrow-right fs-2">
                                                                 <span class="path1"></span>
                                                                 <span class="path2"></span>

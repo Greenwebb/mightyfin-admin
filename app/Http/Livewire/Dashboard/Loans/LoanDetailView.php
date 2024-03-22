@@ -8,6 +8,8 @@ use App\Models\LoanManualApprover;
 use App\Models\LoanStatus;
 use App\Models\Status;
 use App\Models\User;
+use App\Traits\CalculatorTrait;
+use App\Traits\CRBTrait;
 use App\Traits\EmailTrait;
 use App\Traits\LoanTrait;
 use App\Traits\WalletTrait;
@@ -19,15 +21,12 @@ use Illuminate\Support\Facades\Redirect;
 
 class LoanDetailView extends Component
 {
-    use EmailTrait, WalletTrait, LoanTrait, AuthorizesRequests;
+    use CalculatorTrait, EmailTrait, WalletTrait, LoanTrait, CRBTrait, AuthorizesRequests;
     public $loan, $user, $loan_id, $msg, $due_date, $reason, $loan_product;
-    public $loan_stage, $denied_status, $picked_status, $current;
+    public $loan_stage, $denied_status, $picked_status, $current, $principal_amt, $code, $crb, $crb_results;
+    public $amortizationSchedule,$amo_principal, $amo_duration;
+    public $debt_ratio, $gross_pay, $net_pay, $result_amount;
     public function mount($id){
-        /**
-            *loan main details
-            *Loan owner
-            *Loan status timeline
-        **/
         $this->loan_id = $id;
     }
 
@@ -38,19 +37,41 @@ class LoanDetailView extends Component
             $this->loan = $this->get_loan_details($this->loan_id);
             $this->loan_product = $this->get_loan_product($this->loan->loan_product_id);
             $this->loan_stage = $this->get_loan_current_stage($this->loan->loan_product_id);
-            $this->denied_status = Status::where('stage', 'denied')
-            ->orderBy('id')
-            ->get();
+            $this->denied_status = Status::where('stage', 'denied')->orderBy('id')->get();
             $this->current = ApplicationStage::where('application_id', $this->loan->id)->first();
             $this->change_status();
-            
             return view('livewire.dashboard.loans.loan-detail-view')
             ->layout('layouts.admin');
         } catch (\Throwable $th) {
-            dd($th);
+
         }
     }
-    
+
+    public function CheckCRB()
+    {
+        $response = $this->soapApiCRBRequest($this->code, $this->loan->user);
+        $parser = xml_parser_create();
+        xml_parse_into_struct($parser, $response, $values, $index);
+        xml_parser_free($parser);
+
+        $this->crb_results = [
+            'values' => $values,
+            'index' => $index
+        ];
+    }
+
+    public function checkRisk(){
+        $this->result_amount =  $this->net_pay - ($this->gross_pay * $this->debt_ratio);
+    }
+
+    public function calculateAmoritization(){
+        $this->amortizationSchedule = $this->calculateAmortizationSchedule(
+            $this->amo_principal,
+            $this->amo_duration,
+            $this->loan->loan_product_id);
+    }
+
+
     public function setLoanID($id){
         $this->loan_id = $id;
     }
@@ -68,15 +89,52 @@ class LoanDetailView extends Component
     // This method activates the reviewing state
     public function reviewLoan()
     {
-
         Application::where('id', $this->loan_id)->update(['status' => 2]);
         LoanManualApprover::where('user_id', auth()->id())->update(['is_processing' => 1]);
         // Redirect to other page here
         Redirect::route('loan-details',['id' => $this->loan_id]);
         session()->flash('success', 'Loan successfully set under review!');
         sleep(3);
-
     }
+    public function rollbackLoan(){
+        try {
+            switch (strtolower($this->current->status)) {
+                case 'approval':
+                    // Update the approval to the previous stage Verificiation
+                    $this->current->update([
+                        'state' => 'current',
+                        'status' => 'verification',
+                        'stage' => 'processing',
+                        'prev_status' => 'complete',
+                        'curr_status' => 'bg-white',
+                        'position' => $this->current->position - 1, // Decrease position to go backwards
+                    ]);
+                    break;
+                case 'disbursements':
+                    // Update the approval to the previous stage Approval
+                    $this->current->update([
+                        'state' => 'current',
+                        'status' => 'approval',
+                        'stage' => 'processing',
+                        'prev_status' => 'complete',
+                        'curr_status' => 'bg-white',
+                        'position' => $this->current->position - 1, // Decrease position to go backwards
+                    ]);
+                    break;
+
+                default:
+                    break;
+            }
+            // Flash success message
+            session()->flash('success', 'Loan successfully rolled back!');
+            // Redirect back with success message
+            return redirect()->route('loan-details',$this->loan_id);
+
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+    }
+
 
     // This method is the actual approval process - Recommended
     public function accept($id){
@@ -115,7 +173,7 @@ class LoanDetailView extends Component
             ->skip($this->current->position) // $this->current is 0-indexed, no need to subtract 1
             ->take(1)
             ->first();
-            
+
             $this->current->update([
                 'state' => 'current',
                 'status' => $next_status->status->name,
@@ -131,7 +189,7 @@ class LoanDetailView extends Component
 
     public function change_status(){
         try {
-            
+
             $application = Application::find($this->loan_id);
             if ($this->current->stage == 'open') {
                 $application->status = 1;
@@ -146,7 +204,7 @@ class LoanDetailView extends Component
             $application->save();
         } catch (\Throwable $th) {
             dd('Cant Change Status: '.$th->getMessage());
-        }        
+        }
     }
 
     public function approve_continue($id){
@@ -158,7 +216,7 @@ class LoanDetailView extends Component
             $this->upvote($x->id);
             $x->status = 1; //Set loan stage to OPEN
             $x->save();
-            
+
             if($x->email != null){
                 $mail = [
                     'user_id' => $x->user_id,
@@ -255,7 +313,7 @@ class LoanDetailView extends Component
             $x = Application::find($this->loan_id);
             $x->status = 3;
             $x->save();
-            
+
             $this->current->update([
                 'state' => 'current',
                 'status' => $this->picked_status,

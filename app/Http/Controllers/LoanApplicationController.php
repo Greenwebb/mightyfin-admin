@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Application;
+use App\Models\ApplicationStage;
 use App\Models\User;
 use App\Models\WithdrawRequest;
 use Illuminate\Http\Request;
@@ -302,26 +303,13 @@ class LoanApplicationController extends Controller
 
     public function new_proxy_loan(Request $request)
     {
-        DB::beginTransaction();
+        // DB::beginTransaction();
         try {
             $form = $request->toArray();
             // dd($form);
-            // Add Payslip and TPIN file if they are uploaded
-            if($request->file('tpin_file') !== null){               
-                $tpin_file = $request->file('tpin_file')->store('tpin_file', 'public');                
-            }
-            if($request->file('payslip_file') !== null){               
-                $payslip_file = $request->file('payslip_file')->store('payslip_file', 'public');         
-            }
-            if($request->file('nrc_file') !== null){               
-                $nrc_file = $request->file('nrc_file')->store('nrc_file', 'public');         
-            }
-    
-            // Update the User's Basic & Net Pay (Automatically placed in the input field)
+            // First Upload the files
+            $this->uploadCommonFiles($request);
             $user = User::where('id', $form['borrower_id'])->first();
-            $user->basic_pay = $form['basic_pay'];
-            $user->net_pay = $form['net_pay'];
-            $user->save();
             
             // Collect the loan application data
             $data = [
@@ -332,52 +320,22 @@ class LoanApplicationController extends Controller
                 'amount'=> $form['amount'],
                 'phone'=> $user->phone,
                 'gender'=> $user->gender,
-                'type'=> $form['type'],
+                'loan_product_id'=> $form['loan_product_id'],
                 'repayment_plan'=> $form['repayment_plan'],
-
-                'glname'=> $form['glname'],
-                'gfname'=> $form['gfname'],
-                'gemail'=> $form['gemail'],
-                'gphone'=> $form['gphone'],
-                'g_gender'=> $form['g_gender'],
-                'g_relation'=> $form['g_relation'],
-    
-                'g2lname'=> $form['g2lname'],
-                'g2fname'=> $form['g2fname'],
-                'g2email'=> $form['g2email'],
-                'g2phone'=> $form['g2phone'],
-                'g2_gender'=> $form['g2_gender'],
-                'g2_relation'=> $form['g2_relation'],
-    
-                'tpin_file' => $tpin_file ?? 'no file',
-                'payslip_file' => $payslip_file ?? 'no file',
-                'nrc_file' => $nrc_file ?? 'no file',
-                
-                'doa' => $form['datepicker'],
                 'processed_by'=> auth()->user()->id
             ];
-            // Skip the updating of KYC
-            if($form['bypass']){
-                $data['complete'] = 1;
-            }else{
-                $data['complete'] = 0;
-            }
-
-
-            // Enter Next of King if its personal loan
-            if($form['type'] !== 'Asset Financing'){
-                $nok = [
-                    'nok_email' => $form['nok_email'],
-                    'nok_fname' => $form['nok_fname'],
-                    'nok_lname' => $form['nok_lname'],
-                    'nok_phone' => $form['nok_phone'],
-                    'nok_relation' => $form['nok_relation'],
-                    'nok_gender' => $form['nok_gender'],
-                    'user_id' => $form['borrower_id']
-                ];
-                $this->createNOK($nok);
-            }
-
+            
+            $nok = [
+                'nok_email' => $form['nok_email'],
+                'nok_fname' => $form['nok_fname'],
+                'nok_lname' => $form['nok_lname'],
+                'nok_phone' => $form['nok_phone'],
+                'nok_relation' => $form['nok_relation'],
+                'nok_gender' => $form['nok_gender'],
+                'user_id' => $form['borrower_id']
+            ];
+            $this->createNOK($nok);
+                
             // Create a loan request application and send email to borrower
             $application = $this->apply_loan($data);
 
@@ -413,10 +371,11 @@ class LoanApplicationController extends Controller
                     return redirect()->back();
                 }
             } 
-            DB::commit();
+            // DB::commit();
         } catch (\Throwable $th) {
-            DB::rollback();
-            return redirect()->back();
+            dd($th);
+            // DB::rollback();
+            // return redirect()->back();
         }      
     }
 
@@ -425,28 +384,10 @@ class LoanApplicationController extends Controller
         DB::beginTransaction();
         try {
             $form = $request->toArray();
-      
             // Update files
-            if($request->file('tpin_file') !== null){               
-                $tpin_file = $request->file('tpin_file')->store('tpin_file', 'public');                
-            }
-    
-            if($request->file('payslip_file') !== null){               
-                $payslip_file = $request->file('payslip_file')->store('payslip_file', 'public');         
-            }
-    
-            if($request->file('nrc_file') !== null){               
-                $nrc_file = $request->file('nrc_file')->store('nrc_file', 'public');         
-            }
-    
-            // Update User info
-            $loan_req = Application::where('id', $form['loan_id'])->first();
+            $this->uploadCommonFiles($request);
             $user = User::where('id', $form['borrower_id'])->first();
-            $user->basic_pay = $form['basic_pay'];
-            $user->net_pay = $form['net_pay'];
-            $user->save();
             
-            // Update Application Details
             $data = [
                 'user_id'=> $form['borrower_id'],
                 'lname'=> $user->lname,
@@ -455,89 +396,50 @@ class LoanApplicationController extends Controller
                 'amount'=> $form['amount'],
                 'phone'=> $user->phone,
                 'gender'=> $user->gender,
-                'type'=> $form['type'],
+                'loan_product_id'=> $form['loan_product_id'],
                 'repayment_plan'=> $form['repayment_plan'],
 
-                'glname'=> $form['glname'],
-                'gfname'=> $form['gfname'],
-                'gemail'=> $form['gemail'],
-                'gphone'=> $form['gphone'],
-                'g_gender'=> $form['g_gender'],
-                'g_relation'=> $form['g_relation'],
+                // 'glname'=> $form['glname'],
+                // 'gfname'=> $form['gfname'],
+                // 'gemail'=> $form['gemail'],
+                // 'gphone'=> $form['gphone'],
+                // 'g_gender'=> $form['g_gender'],
+                // 'g_relation'=> $form['g_relation'],
     
-                'g2lname'=> $form['g2lname'],
-                'g2fname'=> $form['g2fname'],
-                'g2email'=> $form['g2email'],
-                'g2phone'=> $form['g2phone'],
-                'g2_gender'=> $form['g2_gender'],
-                'g2_relation'=> $form['g2_relation'],
+                // 'g2lname'=> $form['g2lname'],
+                // 'g2fname'=> $form['g2fname'],
+                // 'g2email'=> $form['g2email'],
+                // 'g2phone'=> $form['g2phone'],
+                // 'g2_gender'=> $form['g2_gender'],
+                // 'g2_relation'=> $form['g2_relation'],
 
-                'doa' => $form['doa'] ?? $loan_req->doa,
+                // 'doa' => $form['doa'] ?? $loan_req->doa,
 
-                'tpin_file' => $form['tpin_file'] ?? $tpin_file,
-                'payslip_file' => $form['payslip_file'] ?? $payslip_file,
-                'nrc_file' => $form['nrc_file'] ?? $nrc_file,
-                'complete' => $form['complete'],
+                // 'tpin_file' => $form['tpin_file'] ?? $tpin_file,
+                // 'payslip_file' => $form['payslip_file'] ?? $payslip_file,
+                // 'nrc_file' => $form['nrc_file'] ?? $nrc_file,
+                // 'complete' => $form['complete'],
                 'processed_by'=> auth()->user()->id
             ];
-
-            // Enter Next of King if its personal loan
-            if($form['type'] !== 'Asset Financing'){
-                $nok = [
-                    'nok_email' => $form['nok_email'],
-                    'nok_fname' => $form['nok_fname'],
-                    'nok_lname' => $form['nok_lname'],
-                    'nok_phone' => $form['nok_phone'],
-                    'nok_relation' => $form['nok_relation'],
-                    'nok_gender' => $form['nok_gender'],
-                    'user_id' => $form['borrower_id']
-                ];
-                $this->updateNOK($nok);
-            }
-
-            $application = $this->apply_update_loan($data, $form['loan_id']);
-            if($form['loan_status'] == 1){
-                // Update borrower wallet
-                $this->updateUserWallet($form['borrower_id'], $form['amount'], $form['old_amount']);
+            
+            $this->apply_update_loan($data, $form['loan_id']);
+            // if($form['loan_status'] == 1){
+            //     // Update borrower wallet
+            //     $this->updateUserWallet($form['borrower_id'], $form['amount'], $form['old_amount']);
                 
-                // Delete Withdrawal requests
-                WithdrawRequest::where('user_id', '=', $form['borrower_id'])->delete();
+            //     // Delete Withdrawal requests
+            //     WithdrawRequest::where('user_id', '=', $form['borrower_id'])->delete();
 
-                // Update due date
-                if($form['new_due_date'] !== null){
-                    $this->remake_loan($form['loan_id'], $form['new_due_date']);
-                }
-            }
-
-            $mail = [
-                'user_id' => '',
-                'application_id' => $application,
-                'name' => $user->fname.' '.$user->lname,
-                'loan_type' => $form['type'],
-                'phone' => $user->phone,
-                'duration' => $form['repayment_plan'],
-                'amount' => $form['amount'],
-                'type' => 'loan-application',
-                'msg' => 'You have new a '.$form['type'].' loan application request from '.$user->fname.' '.$user->lname.' has been updated, please visit the site to view more details'
-            ];
+            //     // Update due date
+            //     if($form['new_due_date'] !== null){
+            //         $this->remake_loan($form['loan_id'], $form['new_due_date']);
+            //     }
+            // }
     
             // Email going to the Administrator
             // $process = $this->send_loan_email($mail);
-    
-            if($request->wantsJson()){
-                return response()->json([
-                    "status" => 200, 
-                    "success" => true, 
-                    "message" => "Your loan has been sent.", 
-                    "data" => $application
-                ]);
-            }else{
-                DB::commit();
-                return redirect()->back();
-            } 
-            
             DB::commit();
-            return redirect()->route('view-loan-requests');
+            return redirect()->back();
         } catch (\Throwable $th) {
             // dd($th);
             DB::rollback();
@@ -662,8 +564,47 @@ class LoanApplicationController extends Controller
             dd($th);
         }
     }
-    public function destroy($id)
+    public function resetLoans(Request $request)
     {
-        //
+        $loanIds = $request->toArray(); // Assuming $request->toArray() contains an array of loan IDs
+    
+        foreach ($loanIds as $id) {
+            // Assuming 'Application' is the model representing your loans table
+            $loan = Application::where('id',$id)->first();
+    
+            if ($loan) {
+                $loan->status = 2;
+                $loan->save();
+            }
+
+            // $stage = ApplicationStage::where('application_id', $loan->id)->first();
+            // $stage->status = 'verification';
+            // $stage->stage = 'processing';
+            // $stage->state = 'current';
+            // $stage->position = 1;
+            // $stage->save();
+        }
+        return response()->json([
+            "status" => 200, 
+            "success" => true
+        ]);
     }
+    public function deleteLoans(Request $request)
+    {
+        $loanIds = $request->toArray(); // Assuming $request->toArray() contains an array of loan IDs
+    
+        foreach ($loanIds as $id) {
+            // Assuming 'Application' is the model representing your loans table
+            $loan = Application::where('id',$id)->first();
+    
+            if ($loan) {
+                $loan->delete();
+            }
+        }
+        return response()->json([
+            "status" => 200, 
+            "success" => true
+        ]);
+    }
+    
 }

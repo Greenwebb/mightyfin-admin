@@ -18,6 +18,9 @@
         @case('loan-statuses')
             @include('livewire.dashboard.site-settings.__cruds.update-loan-statuses')
         @break
+        @case('institutes')
+            @include('livewire.dashboard.site-settings.__cruds.update-institutions')
+        @break
         
         @default
 

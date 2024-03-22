@@ -41,7 +41,7 @@ trait LoanTrait{
             'loan_status.status',
             'loan_decimal_places',
             'service_fees.service_charge',
-            'loan_products.institutions'
+            'loan_institutes.institutions'
         ])->first();
     }
 
@@ -59,14 +59,13 @@ trait LoanTrait{
 
         if(auth()->user()->hasRole('admin')){
             // dd('here');
-            return Application::with('loan_product')->where('complete', 1)
-            ->where('status', 2)->orWhere('status', 0)->get();
+            return Application::with('loan_product')->get();
         }else{
             switch ($type) {
                 case 'spooling':
-                    return Application::with('loan_product')->where('complete', 1)
-                    ->orWhere('status', 2)->orWhere('status', 0)->get();
+                    return Application::with('loan_product')->get();
                     break;
+
                 case 'manual':
                     return Application::with('loan_product')->with(['manual_approvers' => function ($query) use ($userId) {
                         $query->where('user_id', $userId);
@@ -78,8 +77,8 @@ trait LoanTrait{
                     ->orWhere('status', 2)->orWhere('status', 0)
                     ->where('complete', 1)
                     ->get();
-    
                     break;
+
                 case 'auto':
                     # code...
                     break;
@@ -157,12 +156,12 @@ trait LoanTrait{
                 // that is not approved yet and not complete
                 $check = Application::where('status', 0)->where('complete', 0)
                                     ->where('user_id', $data['user_id'])->orderBy('created_at', 'desc')->get();
-                // dd(empty($check->toArray()));
+                
                 if($data['email'] != ''){
                     $mail = [
                         'name' => $data['fname'].' '.$data['lname'],
                         'to' => $data['email'],
-                        'from' => 'admin@mightyfinance.co.zm',
+                        'from' => 'info@mightyfinance.co.zm',
                         'phone' => $data['phone'],
                         'payback' => Application::payback($data['amount'], $data['repayment_plan']),
                         'subject' => $data['type'].' Loan Application',
@@ -170,7 +169,7 @@ trait LoanTrait{
                         'message2'=>'Before proceeding, please fill out the attached Pre-approval form and submit it for the final processing of your '.$data['type'].' loan application.'
                     ];
                 }
-                // dd(empty($check->toArray()));
+                
                 if(empty($check->toArray())){
                     $item = Application::create($data);
                     if($data['email'] != ''){
@@ -178,20 +177,20 @@ trait LoanTrait{
                         Mail::to($data['email'])->send($loan_data);
                     }
 
-                    // Fetch the loan status with relationships
+                    // Fetch the loan status with relationships.
                     $status = DB::table('loan_statuses')
                         ->join('statuses', 'loan_statuses.status_id', '=', 'statuses.id')
                         ->select('loan_statuses.*', 'statuses.status')
-                        ->where('loan_statuses.loan_product_id', 1)
+                        ->where('loan_statuses.loan_product_id', $data['loan_product_id'])
                         ->orderBy('loan_statuses.id', 'asc')
                         ->first();
-
-                    // Create a new application stage
+                        
+                    // Create a new application stage.
                     DB::table('application_stages')->insert([
                         'application_id' => $item->id,
                         'loan_status_id' => 1,
                         'state' => 'current',
-                        'status' => $status->status, // Using the status retrieved from the query
+                        'status' => $status->status ?? 'verification', // Using the status retrieved from the query
                         'stage' => 'processing',
                         'prev_status' => 'current',
                         'curr_status' => '',
@@ -202,18 +201,10 @@ trait LoanTrait{
                 }else{
                     // redirect to you already have loan request
                     return 'exists';
-                    
-                    // $item = Application::create($data);
-                    // if($data['email'] != ''){
-                    //     $loan_data = new LoanApplication($mail);
-                    //     Mail::to($data['email'])->send($loan_data);
-                    // }
-                    // return $item->id;
                 }
 
             } catch (\Throwable $th) {
                 dd($th);
-                // return false;
             }
     }
 
@@ -221,26 +212,7 @@ trait LoanTrait{
             try {
                 // check if user already created a loan application that is not approved yet and not complete
                 $check = Application::where('id', $loan_id)->first();
-                    
-                if($data['email'] != ''){
-                    $mail = [
-                        'name' => $data['fname'].' '.$data['lname'],
-                        'to' => $data['email'],
-                        'from' => 'admin@mightyfinance.co.zm',
-                        'phone' => $data['phone'],
-                        'subject' => 'Mighty Finance Loan Application',
-                        'message' => 'Hey '.$data['fname'].' '.$data['lname'].', Your loan details have been updated',
-                    ];
-                }
-                
-                if(!empty($check->toArray())){
-                    $check->update($data);
-                    if($data['email'] != ''){
-                        $contact_email = new LoanApplication($mail);
-                        Mail::to($data['email'])->send($contact_email);
-                    }
-                    return $check->id;
-                }
+                $check->update($data);
 
             } catch (\Throwable $th) {
                 return 0;

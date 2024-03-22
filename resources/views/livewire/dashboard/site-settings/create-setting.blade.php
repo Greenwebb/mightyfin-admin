@@ -15,6 +15,9 @@
         @case('loan-fees')
             @include('livewire.dashboard.site-settings.__cruds.create-loan-fees')
         @break
+        @case('loan-institution')
+            @include('livewire.dashboard.site-settings.__cruds.create-loan-institution')
+        @break
         
         @default
 

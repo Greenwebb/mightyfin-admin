@@ -3,6 +3,8 @@
 use App\Http\Controllers\Admin\RoleController;
 use App\Http\Controllers\Admin\UserController;
 use App\Http\Controllers\Auth\OTPController;
+use App\Http\Controllers\ExportController;
+use App\Http\Controllers\ImportController;
 use App\Http\Controllers\LoanApplicationController;
 use App\Http\Controllers\LoanProductController;
 use App\Http\Livewire\AlreadyExistPage;
@@ -30,6 +32,10 @@ use App\Http\Livewire\Dashboard\Loans\CreateLoanView;
 use App\Http\Livewire\Dashboard\Loans\EligibilityScoreView;
 use App\Http\Livewire\Dashboard\Loans\GuarantorsView;
 use App\Http\Livewire\Dashboard\Loans\LoanApplicationStandaloneView;
+use App\Http\Livewire\Dashboard\Loans\LoanArears;
+use App\Http\Livewire\Dashboard\Loans\LoanCalculator;
+use App\Http\Livewire\Dashboard\Loans\LoanCalcutor;
+use App\Http\Livewire\Dashboard\Loans\LoanDetailedView;
 use App\Http\Livewire\Dashboard\Loans\LoanDetailView;
 use App\Http\Livewire\Dashboard\Loans\LoanHistoryView;
 use App\Http\Livewire\Dashboard\Loans\LoanRatesView;
@@ -39,7 +45,11 @@ use App\Http\Livewire\Dashboard\Loans\LoanRequestView;
 use App\Http\Livewire\Dashboard\Loans\LoanTrackingView;
 use App\Http\Livewire\Dashboard\Loans\MissedRepaymentsView;
 use App\Http\Livewire\Dashboard\Loans\NewLoanView;
+use App\Http\Livewire\Dashboard\Loans\NoRepayments;
+use App\Http\Livewire\Dashboard\Loans\OneMonthLate;
 use App\Http\Livewire\Dashboard\Loans\PastMaturityDateView;
+use App\Http\Livewire\Dashboard\Loans\PrincipalOutstanding;
+use App\Http\Livewire\Dashboard\Loans\ThreeMonthLate;
 use App\Http\Livewire\Dashboard\Loans\UpdateLoanView;
 use App\Http\Livewire\Dashboard\NotificationView;
 use App\Http\Livewire\Dashboard\PaymentGatePage;
@@ -93,9 +103,12 @@ use Illuminate\Support\Facades\Route;
 //     Artisan::call('storage:link');
 // });
 Route::get('/', function () {
-    return redirect()->route('login');
+  return redirect()->route('login');
 })->name('home');
-// Route::get('/posts', [PostController::class, 'index'])->name('posts.index');
+Route::get('/welcome', function () {
+    return redirect()->route('login');
+})->name('welcome');
+
 Route::post('/share-docs', [UserController::class, 'share_doc'])->name('share.docs');
 
 Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified'])->group(function () {
@@ -112,7 +125,7 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     Route::get('track-repayments/{id}', LoanTrackingView::class)->name('track-repayments');
     Route::get('closed-loans', ClosedLoanView::class)->name('closed-loans');
     Route::get('edit-loan-details/{id}', UpdateLoanView::class)->name('edit-loan');
-    Route::get('new-customer', CreateLoanView::class)->name('proxy-loan-create');
+    Route::get('new-loan', CreateLoanView::class)->name('proxy-loan-create');
     Route::get('withdraw-requests', WithdrawRequestView::class)->name('withdraw-requests');
     Route::get('client-loan-history', LoanHistoryView::class)->name('view-loan-history');
     Route::get('loan-rates', LoanRatesView::class)->name('view-loan-rates');
@@ -128,16 +141,30 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
 
     // ---- loans
     Route::get('apply-for-a-loan/{id}', LoanApplicationStandaloneView::class)->name('apply-for');
-    Route::get('loan-details/{id}', LoanDetailView::class)->name('loan-details');
+    Route::get('loan-approval/{id}', LoanDetailView::class)->name('loan-details');
+    Route::get('loan-details/{id}', LoanDetailedView::class)->name('detailed');
+    Route::get('no-repayments', NoRepayments::class)->name('no-repayments');
+    Route::get('loan-calculator', LoanCalculator::class)->name('loan-calculator');
+    Route::get('loan-arrears', LoanArears::class)->name('loan-arrears');
+    Route::get('principal-outstanding', PrincipalOutstanding::class)->name('principal-outstanding');
+    Route::get('one-month-late-loans', OneMonthLate::class)->name('one-month-late');
+    Route::get('three-months-late-loans', ThreeMonthLate::class)->name('three-month-late');
     Route::get('past-maturity-date', PastMaturityDateView::class)->name('past-maturity-date');
     Route::get('guarantors', GuarantorsView::class)->name('guarantors');
     Route::get('missed-repayments', MissedRepaymentsView::class)->name('missed-repayments');
     Route::post('apply-for-loan', [LoanApplicationController::class, 'new_loan'])->name('apply-loan');
     Route::post('apply-proxy-loan', [LoanApplicationController::class, 'new_proxy_loan'])->name('proxy-apply-loan');
     Route::post('update-loan', [LoanApplicationController::class, 'updateLoanDetails'])->name('update-loan-details');
+    Route::post('delete-loans', [LoanApplicationController::class, 'deleteLoans'])->name('delete-loans');
+    Route::post('reset-loans', [LoanApplicationController::class, 'resetLoans'])->name('reset-loans');
     Route::post('update-loan-statuses', [LoanProductController::class, 'updateLoanStatus'])->name('update-loan-statuses');
     Route::get('delete-loan-step/{loan_step}', [LoanProductController::class, 'deleteStep'])->name('delete-loan-step');
     
+    // Data Import & Export
+    
+    Route::post('export-loans', [ExportController::class, 'export_loans'])->name('export-loans');
+    Route::post('import-loans', [ImportController::class, 'import_loans'])->name('import-loans');
+
     // ---- Payments
     Route::get('make-payments', PaymentPage::class)->name('payments');
     Route::get('/payments-portal', PaymentGatePage::class)->name('payment.gate');

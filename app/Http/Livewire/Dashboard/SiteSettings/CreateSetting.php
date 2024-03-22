@@ -31,7 +31,7 @@ class CreateSetting extends Component
     // Preset Data
     public $interest_methods, $interest_types, $disbursements, $repayment_cycles;
     public $repayment_orders, $decimal_places, $company_accounts, $service_charges;
-    
+    public $loan_institute_name,$loan_institute_type;
 
     // Loan Product
     public $new_loan_name, $loan_release_date, $minimum_loan_principal_amount, $default_loan_principal_amount, $maximum_principal_amount, $loan_interest_method, $loan_interest_type;
@@ -42,10 +42,11 @@ class CreateSetting extends Component
     public $loan_disbursed_by = []; 
     public $loan_repayment_cycle = [];
     public $extra_fees = [];
+    public $loan_institution = [];
 
     // Disbursements
     public $disbursement_name, $penalty_name, $penalty_amount, $penalty_grace, $repayment_cycle_name;
-    public $loan_charge_name, $loan_charge_amount, $loan_institution, $institutions;
+    public $loan_charge_name, $loan_charge_amount, $institutions;
     public $sector;
 
     
@@ -65,7 +66,7 @@ class CreateSetting extends Component
         $this->repayment_orders = RepaymentOrder::get();
         $this->company_accounts = AccountPayment::get();
         $this->service_charges = ServiceCharge::get();
-        // $this->institutions = Institution::where('status', 1)->get();
+        $this->institutions = Institution::where('status', 1)->get();
     }
 
     public function updatedSector()
@@ -175,10 +176,12 @@ class CreateSetting extends Component
                 ]);
             }
             // Institutions
-            LoanProductInstitution::Create([
-                'institution_id' => $this->loan_institution,
-                'loan_product_id' => $loan_product->id
-            ]);
+            foreach ($this->loan_institution as $key => $value) {
+                LoanProductInstitution::Create([
+                    'institution_id' => $value,
+                    'loan_product_id' => $loan_product->id
+                ]);
+            }
             
             Session::flash('success', "Loan product created successfully.");
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-types']);
@@ -262,5 +265,17 @@ class CreateSetting extends Component
         }
     }
 
-    
+    public function create_institution(){
+        try {
+            Institution::create([
+                'name' => $this->loan_institute_name,
+                'type' => $this->loan_institute_type
+            ]);
+            Session::flash('success', "Loan Institution created successfully.");
+            return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'institutes']);
+        } catch (\Throwable $th) {
+            Session::flash('error', "Failed. ". $th->getMessage());
+            return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'institutes']);
+        }
+    }
 }

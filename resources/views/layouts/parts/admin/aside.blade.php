@@ -992,25 +992,146 @@
                     
                     <div class="menu-sub menu-sub-accordion">
                         
-                        @can('create loan')
-                        {{-- <div class="menu-item">
-                            <a class="menu-link" href="{{ route('proxy-loan-create') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                
-                                <span class="menu-title">Create Loan</span>
-                            </a>
-                        </div> --}}
-                        @endcan
-                        
                         @can('view pending')
                         <div class="menu-item">
                             <a class="menu-link" href="{{ route('view-loan-requests') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
-                                <span class="menu-title">Pending Loans</span>
+                                <span class="menu-title">View all Loans</span>
+                            </a>
+                        </div>
+                        @endcan
+                        
+                        {{-- @can('create loan') --}}
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('proxy-loan-create') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                
+                                <span class="menu-title">Add Loan</span>
+                            </a>
+                        </div>
+                        {{-- @endcan --}}
+                        @can('view pending')
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('approved-loans') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Due Loans</span>
+                            </a>
+                        </div>
+                        @endcan
+                        
+                        @can('view pending repayments')
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('repayments') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Pending Repayments</span>
+                            </a>
+                        </div>
+                        @endcan
+                        @can('view missed repayments')
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('missed-repayments') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Missed Repayments</span>
+                            </a>
+                        </div>
+                        @endcan
+                        @can('view pending')
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('loan-arrears') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Loans in Arrears</span>
+                            </a>
+                        </div>
+                        @endcan
+                        @can('view pending')
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('no-repayments') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">No Repayments</span>
+                            </a>
+                        </div>
+                        @endcan
+                        @can('view past maturity')
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('past-maturity-date') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Past Maturity Date</span>
+                            </a>
+                        </div>
+                        @endcan
+                        @can('view pending')
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('principal-outstanding') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Principal Outstanding</span>
+                            </a>
+                        </div>
+                        @endcan
+                        @can('view pending')
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('one-month-late') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">1 Month Late Loans</span>
+                            </a>
+                        </div>
+                        @endcan
+                        @can('view pending')
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('three-month-late') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">3 Months Late Loans</span>
+                            </a>
+                        </div>
+                        @endcan
+                        @can('view pending')
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('loan-calculator') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Loan Calculator</span>
+                            </a>
+                        </div>
+                        @endcan
+                        @can('view pending')
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('approved-loans') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Guarantors</span>
+                            </a>
+                        </div>
+                        @endcan
+                        @can('view pending')
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('approved-loans') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">Approve Loans</span>
                             </a>
                         </div>
                         @endcan
@@ -1033,56 +1154,6 @@
                                     <span class="bullet bullet-dot"></span>
                                 </span>
                                 <span class="menu-title">Closed Loans</span>
-                            </a>
-                        </div>
-                        @endcan
-                    </div>
-                </div>
-                @endcan
-                
-                @can('view repayments')
-                <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                    <span class="menu-link">
-                        <span class="menu-icon">
-                            <i class="ki-duotone ki-user fs-2">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                            </i>
-                        </span>
-                        <span class="menu-title">Repayements</span>
-                        <span class="menu-arrow"></span>
-                    </span>
-                    
-                    <div class="menu-sub menu-sub-accordion">
-                        @can('view pending repayments')
-                        <div class="menu-item">
-                            <a class="menu-link" href="{{ route('repayments') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Pending Repayments</span>
-                            </a>
-                        </div>
-                        @endcan
-
-                        @can('view missed repayments')
-                        <div class="menu-item">
-                            <a class="menu-link" href="{{ route('missed-repayments') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Missed Repayments</span>
-                            </a>
-                        </div>
-                        @endcan
-
-                        @can('view past maturity')
-                        <div class="menu-item">
-                            <a class="menu-link" href="{{ route('past-maturity-date') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">Past Maturity Date</span>
                             </a>
                         </div>
                         @endcan

@@ -39,6 +39,7 @@
                                     <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'loan-remainder-settings']) }}" class="fs-6 text-info fw-bold">Loan Remainder Settngs</a></li> 
                                     <li><a href="#" class="fs-6 text-muted fw-bold">Loan Adjustments</a></li> 
                                     <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'send-borrower-otp']) }}" class="fs-6 text-info fw-bold">Send OTP to Borrower before Loan Disbursment</a></li> 
+                                    <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'institutes']) }}" class="fs-6 text-info fw-bold">Loan Institutions</a></li> 
                                 </ul>
                             </div>
                         </div>
@@ -89,6 +90,7 @@
                                     <li><a href="#" class="fs-6 text-muted disabled fw-bold">Manage Loan Officers</a></li> 
                                     <li><a href="#" class="fs-6 text-muted disabled fw-bold">Invite Borrowers Settings</a></li> 
                                     <li><a href="#" class="fs-6 text-muted disabled fw-bold">Bulk Update Borrowers With Loan Officers</a></li> 
+                                    <li><a href="{{ route('item-settings', ['confg' => 'loan','settings' => 'crb']) }}" class="fs-6 text-info fw-bold">CRB Checks</a></li> 
                                 </ul>
                             </div>
                         </div>
