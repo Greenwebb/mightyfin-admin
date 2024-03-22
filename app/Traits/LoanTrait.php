@@ -59,11 +59,11 @@ trait LoanTrait{
 
         if(auth()->user()->hasRole('admin')){
             // dd('here');
-            return Application::with('loan_product')->get();
+            return Application::orWhere('status', 0)->orWhere('status', 2)->with('loan_product')->get();
         }else{
             switch ($type) {
                 case 'spooling':
-                    return Application::with('loan_product')->get();
+                    return Application::orWhere('status', 0)->orWhere('status', 2)->with('loan_product')->get();
                     break;
 
                 case 'manual':
@@ -75,7 +75,6 @@ trait LoanTrait{
                         $query->where('is_active', 1);
                     })
                     ->orWhere('status', 2)->orWhere('status', 0)
-                    ->where('complete', 1)
                     ->get();
                     break;
 
