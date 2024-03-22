@@ -94,7 +94,7 @@ class CreateSetting extends Component
     }
 
     public function create_loan_product(){
-
+        
         try {
             // Create loan product
             $loan_product = LoanProduct::Create([

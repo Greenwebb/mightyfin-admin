@@ -713,15 +713,26 @@
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Institutions</label>
                                 <div class="col-lg-8 fv-row">
                                     <div class="d-block mt-3">
-                                        @forelse ($institutions as $key => $option)
-                                        <label for="{{ $key }}" class="mt-2 form-check form-check-custom form-check-inline form-check-solid me-5">
-                                            <input id="{{ $key }}" class="form-check-input" wire:model.lazy="loan_institution" type="checkbox" value="{{ $option->id }}" />
-                                            <span class="fw-semibold ps-2 fs-6">{{ $option->name }} </span>
-                                        </label>
-                                        <br>
-                                        @empty
-                                            <p>No Charges</p>
-                                        @endforelse
+                                        <select id="loan_institution" class="form-select form-control form-control-lg form-control-solid" multiple wire:model="loan_institution">
+                                            @foreach ($institutions as $key => $option)
+                                                <option value="{{ $option->id }}">{{ $option->name }}</option>
+                                            @endforeach
+                                        </select>
+
+                                        <script>
+                                            $(document).ready(function() {
+                                                $('#loan_institution').select2({
+                                                    placeholder: 'Select institutions',
+                                                    allowClear: true // Optional, enables the clear button
+                                                });
+
+                                                // Trigger Livewire wire:model.lazy binding when a selection is made or removed
+                                                $('#loan_institution').on('change', function (e) {
+                                                    @this.set('loan_institution', $(this).val());
+                                                });
+                                            });
+                                        </script>
+
                                     </div>
                                 </div>
                             </div>

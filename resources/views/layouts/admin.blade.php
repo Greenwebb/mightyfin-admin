@@ -38,7 +38,7 @@
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <link rel="stylesheet" href="{{ asset('public/mfs/admin/assets/css/wizard.min.css')}}">
-
+    {{-- <link href="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/css/select2.min.css" rel="stylesheet" /> --}}
     {{-- Custom --}}
     <style>
         .sm-btn{
@@ -3011,5 +3011,6 @@
     <!--end::Javascript-->
 </body>
 <!--end::Body-->
+<script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
 
 </html>

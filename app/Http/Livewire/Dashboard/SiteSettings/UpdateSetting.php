@@ -134,10 +134,7 @@ class UpdateSetting extends Component
         $this->crb_products = CrbProduct::get();
     }
 
-
-
     public function update_loan_product(){
-
         try {
             LoanProduct::where('id', $this->loan_product->id)->update([
                 'name' => $this->new_loan_name,
@@ -162,16 +159,14 @@ class UpdateSetting extends Component
                 'max_num_of_repayments' => $this->maximum_num_of_repayments,
             ]);
 
-            // Replace rand() with respective Parent table Primary key IDs
-            // Disbursed Bys ****Loop
-
-
-            //CRB
-            foreach ($this->crb_selected_products as $key => $value) {
-                LoanCrbProduct::updateOrCreate(
-                    ['loan_product_id' => $this->loan_product->id, 'crb_product_id' => $value],
-                    ['loan_product_id' => $this->loan_product->id, 'crb_product_id' => $value]
-                );
+            // Delete existing records where loan_product_id matches $this->loan_product->id
+            LoanCrbProduct::where('loan_product_id', $this->loan_product->id)->delete();
+            // Create new records based on $this->crb_selected_products
+            foreach ($this->crb_selected_products as $value) {
+                LoanCrbProduct::create([
+                    'loan_product_id' => $this->loan_product->id,
+                    'crb_product_id' => $value
+                ]);
             }
 
             foreach ($this->loan_disbursed_by as $value) {
