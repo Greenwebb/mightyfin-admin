@@ -1000,14 +1000,6 @@
                                 <span class="text-warning menu-title">Loan Requests</span>
                             </a>
                         </div>
-                        <div class="menu-item">
-                            <a class="menu-link" href="{{ route('loans') }}">
-                                <span class="menu-bullet">
-                                    <span class="bullet bullet-dot"></span>
-                                </span>
-                                <span class="menu-title">View all Loans</span>
-                            </a>
-                        </div>
                         @endcan
 
                         @can('view pending')
@@ -1153,6 +1145,14 @@
                             </a>
                         </div>
                         @endcan
+                        <div class="menu-item">
+                            <a class="menu-link" href="{{ route('loans') }}">
+                                <span class="menu-bullet">
+                                    <span class="bullet bullet-dot"></span>
+                                </span>
+                                <span class="menu-title">View all Loans</span>
+                            </a>
+                        </div>
                     </div>
                 </div>
                 @endcan
