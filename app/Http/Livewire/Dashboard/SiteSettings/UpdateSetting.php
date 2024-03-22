@@ -137,6 +137,7 @@ class UpdateSetting extends Component
 
 
     public function update_loan_product(){
+
         try {
             LoanProduct::where('id', $this->loan_product->id)->update([
                 'name' => $this->new_loan_name,
@@ -163,43 +164,54 @@ class UpdateSetting extends Component
 
             // Replace rand() with respective Parent table Primary key IDs
             // Disbursed Bys ****Loop
+
+
+            //CRB
+            foreach ($this->crb_selected_products as $key => $value) {
+                LoanCrbProduct::updateOrCreate(
+                    ['loan_product_id' => $this->loan_product->id, 'crb_product_id' => $value],
+                    ['loan_product_id' => $this->loan_product->id, 'crb_product_id' => $value]
+                );
+            }
+
             foreach ($this->loan_disbursed_by as $value) {
-                LoanDisbursedBy::where('loan_product_id', $this->loan_product->id)
-                    ->update([
-                        'disbursed_by_id' => $value,
-                        'loan_product_id' => $this->loan_product->id,
-                    ]);
+                LoanDisbursedBy::updateOrCreate(
+                    ['loan_product_id' => $this->loan_product->id],
+                    ['disbursed_by_id' => $value, 'loan_product_id' => $this->loan_product->id]
+                );
             }
 
             // Interest Methods
-            LoanInterestMethod::where('loan_product_id', $this->loan_product->id)
-            ->update([
-                'interest_method_id' => $this->loan_interest_method,
-                'loan_product_id' => $this->loan_product->id
-            ]);
+            LoanInterestMethod::updateOrCreate(
+                ['loan_product_id' => $this->loan_product->id],
+                ['interest_method_id' => $this->loan_interest_method, 'loan_product_id' => $this->loan_product->id]
+            );
+
 
             // Interest Types
-            LoanInterestType::where('loan_product_id', $this->loan_product->id)
-            ->update([
-                'interest_type_id' => $this->loan_interest_type,
-                'loan_product_id' => $this->loan_product->id
-            ]);
+            LoanInterestType::updateOrCreate(
+                ['loan_product_id' => $this->loan_product->id],
+                ['interest_type_id' => $this->loan_interest_type, 'loan_product_id' => $this->loan_product->id]
+            );
+
 
             // Repayment Cycles ****Loop
-            foreach ($this->loan_repayment_cycle as $key => $value) {
-                LoanRepaymentCycle::where('loan_product_id', $this->loan_product->id)
-                    ->update([
-                        'repayment_cycle_id' => $value,
-                        'loan_product_id' => $this->loan_product->id
-                    ]);
+            foreach ($this->loan_repayment_cycle as $value) {
+                LoanRepaymentCycle::updateOrCreate(
+                    ['loan_product_id' => $this->loan_product->id, 'repayment_cycle_id' => $value],
+                    ['repayment_cycle_id' => $value, 'loan_product_id' => $this->loan_product->id]
+                );
             }
 
+
             // Loan Decimal Places
-            LoanDecimalPlace::where('loan_product_id', $this->loan_product->id)
-            ->update([
-                'value' => $this->loan_decimal_place,
-                'loan_product_id' => $this->loan_product->id
-            ]);
+            foreach ($this->loan_decimal_place as $value) {
+                LoanDecimalPlace::updateOrCreate(
+                    ['loan_product_id' => $this->loan_product->id],
+                    ['value' => $value, 'loan_product_id' => $this->loan_product->id]
+                );
+            }
+
 
             // Loan Repayment Orders ****Loop
             // LoanRepaymentOrder::Create([
@@ -208,37 +220,28 @@ class UpdateSetting extends Component
             // ]);
 
             // Loan Service Charges ****Loop
-            foreach ($this->extra_fees as $key => $value) {
-                LoanServiceCharge::where('loan_product_id', $this->loan_product->id)
-                ->update([
-                    'service_charge_id' => $value,
-                    'loan_product_id' => $this->loan_product->id
-                ]);
+            foreach ($this->extra_fees as $value) {
+                LoanServiceCharge::updateOrCreate(
+                    ['loan_product_id' => $this->loan_product->id, 'service_charge_id' => $value],
+                    ['service_charge_id' => $value, 'loan_product_id' => $this->loan_product->id]
+                );
             }
 
+
             // Loan Automated Payments ****Loop
-            foreach ($this->auto_payment_sources as $key => $value) {
-                LoanAccountPayment::where('loan_product_id', $this->loan_product->id)
-                ->update([
-                    'account_payment_id' => $value,
-                    'loan_product_id' => $this->loan_product->id
-                ]);
+            foreach ($this->auto_payment_sources as $value) {
+                LoanAccountPayment::updateOrCreate(
+                    ['loan_product_id' => $this->loan_product->id, 'account_payment_id' => $value],
+                    ['account_payment_id' => $value, 'loan_product_id' => $this->loan_product->id]
+                );
             }
+
             // Institutions
             foreach ($this->loan_institution as $key => $value) {
                 LoanProductInstitution::where('loan_product_id', $this->loan_product->id)
                 ->update([
                     'institution_id' => $value,
                     'loan_product_id' => $this->loan_product->id
-                ]);
-            }
-
-            // CRBs
-            foreach ($this->crb_selected_products as $key => $value) {
-                LoanCrbProduct::where('loan_product_id', $this->loan_product->id)
-                ->update([
-                    'crb_product_id' => $value,
-                    'loan_product_id' => $loan_product->id
                 ]);
             }
 
