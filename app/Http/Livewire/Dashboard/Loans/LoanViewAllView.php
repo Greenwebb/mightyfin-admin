@@ -30,14 +30,14 @@ class LoanViewAllView extends Component
 
             if($this->current_configs('loan-approval')->value == 'auto'){
                 // get loan only if first review as approved
-                $this->loan_requests = $this->getLoanRequests('auto');
+                $this->loan_requests = $this->getAllLoanRequests('auto');
             }elseif($this->current_configs('loan-approval')->value == 'manual'){
 
-                $this->loan_requests = $this->getLoanRequests('manual');
-                $requests = $this->getLoanRequests('manual');
+                $this->loan_requests = $this->getAllLoanRequests('manual');
+                $requests = $this->getAllLoanRequests('manual');
             }else{
-                $this->loan_requests = $this->getLoanRequests('spooling');
-                $requests = $this->getLoanRequests('spooling');
+                $this->loan_requests = $this->getAllLoanRequests('spooling');
+                $requests = $this->getAllLoanRequests('spooling');
             }
             return view('livewire.dashboard.loans.loan-view-all-view',[
                 'requests'=>$requests

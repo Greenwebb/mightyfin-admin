@@ -1036,7 +1036,7 @@
                         {{-- @endcan --}}
                         @can('view pending')
                         <div class="menu-item">
-                            <a class="menu-link" href="{{ route('approved-loans') }}">
+                            <a class="menu-link" href="{{ route('due-loans') }}">
                                 <span class="menu-bullet">
                                     <span class="bullet bullet-dot"></span>
                                 </span>
