@@ -26,6 +26,8 @@ class LoanDetailView extends Component
     public $loan_stage, $denied_status, $picked_status, $current, $principal_amt, $code, $crb, $crb_results;
     public $amortizationSchedule,$amo_principal, $amo_duration;
     public $debt_ratio, $gross_pay, $net_pay, $result_amount;
+    public $crb_selected_products;
+
     public function mount($id){
         $this->loan_id = $id;
     }
@@ -36,6 +38,7 @@ class LoanDetailView extends Component
             $this->authorize('processes loans');
             $this->loan = $this->get_loan_details($this->loan_id);
             $this->loan_product = $this->get_loan_product($this->loan->loan_product_id);
+            $this->crb_selected_products = $this->loan_product->loan_crb;
             $this->loan_stage = $this->get_loan_current_stage($this->loan->loan_product_id);
             $this->denied_status = Status::where('stage', 'denied')->orderBy('id')->get();
             $this->current = ApplicationStage::where('application_id', $this->loan->id)->first();
@@ -49,7 +52,11 @@ class LoanDetailView extends Component
 
     public function CheckCRB()
     {
-        $response = $this->soapApiCRBRequest($this->code, $this->loan->user);
+        if($this->code === 's'){
+            $response = $this->soapApiCRBDemoRequest($this->code, $this->loan->user);
+        }else{
+            $response = $this->soapApiCRBRequest($this->code, $this->loan->user);
+        }
         $parser = xml_parser_create();
         xml_parse_into_struct($parser, $response, $values, $index);
         xml_parser_free($parser);

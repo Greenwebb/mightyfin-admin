@@ -1,14 +1,11 @@
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
-
     <div class="post d-flex flex-column-fluid" id="kt_post">
-
         <div id="kt_content_container" class="container-xxl">
             <div style="margin-top: -4%; z-index: 5; background-image: url( {{ asset('public/mfs/admin/assets/media/product/loan_header.webp') }}); width: 109%;
             left: -5%;"
                 class="card mb-6">
                 <div class="card-body pt-9 pb-0">
                     <div class="d-flex flex-wrap flex-sm-nowrap">
-
                         <div style="margin-left: 2%;" class="flex-grow-1">
                             <div class="d-flex justify-content-between align-items-start flex-wrap mb-2">
                                 <div class="d-flex flex-column">
@@ -28,7 +25,7 @@
                                                 <span class="path1"></span>
                                                 <span class="path2"></span>
                                                 <span class="path3"></span>
-                                            </i>{{$loan_product->name }}
+                                            </i>{{ $loan_product->name }}
                                         </a>
                                     </div>
                                 </div>
@@ -80,7 +77,6 @@
             </div>
             <div style=" width: 109%; top:-5%; left: -5%;" class="card">
                 <div style="margin-top: -4%; padding: 0px;" class="card-body pt-5 pb-0">
-                    <!--begin::Details-->
                     <div class="col-12">
                         @if(true)
                         @if($loan_product->loan_status !== null || $loan_product !== null)

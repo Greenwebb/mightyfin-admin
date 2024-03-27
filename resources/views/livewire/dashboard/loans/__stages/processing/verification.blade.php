@@ -203,14 +203,17 @@
                                              class="collapse show fs-6 ps-10"
                                              data-bs-parent="#kt_customer_view_payment_method">
                                             <label class="col-lg-4 col-form-label required fw-bold fs-6">CRB Product</label>
+
                                             <select type="text" wire:model.lazy="code"
                                                     class="form-control form-control-lg form-control-solid"
                                                     placeholder="" required>
-                                                <option value="101">Product 01</option>
-                                                <option value="102">Product 02</option>
-                                                <option value="103">Product 03</option>
-                                                <option value="104">Product 04</option>
-                                                <option value="105">Product 05</option>
+
+                                                <option value="s">Sample</option>
+                                                @forelse ($crb_selected_products as $item)
+                                                <option value="{{ $item->crb_product->name }}">{{ $item->crb_product->name }}</option>
+                                                @empty
+                                                <option value="">None</option>
+                                                @endforelse
                                             </select>
                                             <br>
                                             <!-- Show loading spinner while the action is processing -->
@@ -291,32 +294,31 @@
 
                                 <div id="kt_customer_view_payment_method" class="card-body pt-0">
                                     <div class="py-0" data-kt-customer-payment-method="row">
-                                        <div id="kt_customer_view_payment_method_1"
-                                            class="collapse show fs-6 ps-10"
-                                            data-bs-parent="#kt_customer_view_payment_method">
-                                            <div class="d-flex gap-2 flex-wrap py-5">
+                                        <div id="kt_customer_view_payment_method_1" class="collapse show fs-6 ps-10" data-bs-parent="#kt_customer_view_payment_method">
+                                            <div class="d-flex gap-10 flex-wrap py-5">
                                                 <div class="w-full">
-                                                    <span>Debt Ratio</span>
-                                                    <input type="number" class="form-control" wire:model.defer="debt_ratio" placeholder="{{$debt_ratio}}" id="amo2">
+                                                    <span class="font-bold"><b>Debt Ratio (%)</b></span>
+                                                    <input type="number" value="40" class="form-control" placeholder="{{$debt_ratio}}" id="debt_ratio">
                                                 </div>
 
                                                 <div class="w-full">
-                                                    <span>Gross Pay</span>
-                                                    <input type="number" class="form-control" wire:model.defer="gross_pay" placeholder="{{$gross_pay}}" id="amo3">
+                                                    <span class="font-bold"><b>Gross Pay</b></span>
+                                                    <input type="number" class="form-control" placeholder="{{$gross_pay}}" id="gross_pay">
                                                 </div>
 
                                                 <div class="w-full">
-                                                    <span>Net Pay</span>
-                                                    <input type="number" class="form-control" wire:model.defer="net_pay" placeholder="{{$net_pay}}" id="amo4">
+                                                    <span class="font-bold"><b>Net Pay</b></span>
+                                                    <input type="number" class="form-control" placeholder="{{$net_pay}}" id="net_pay">
                                                 </div>
 
                                                 <div class="w-full">
                                                     <span>Results</span>
-                                                    <input type="number" disabled class="form-control" wire:model.defer="result_amount" placeholder="{{$result_amount}}" id="amo6">
+                                                    <input type="text" disabled class="form-control" placeholder="{{$result_amount}}" id="result_amount">
                                                 </div>
                                             </div>
-                                            <button wire:click="checkRisk()" class="btn btn-sm btn-primary">Check</button>
+                                            <button id="calculateRisk" class="btn btn-sm btn-primary">Check</button>
                                         </div>
+
                                     </div>
 
                                 </div>
@@ -559,4 +561,22 @@
         <!--end::Container-->
     </div>
     <!--end::Post-->
+
+    <script>
+        document.getElementById('calculateRisk').addEventListener('click', function() {
+            var debtRatio = parseFloat(document.getElementById('debt_ratio').value);
+            var grossPay = parseFloat(document.getElementById('gross_pay').value);
+            var netPay = parseFloat(document.getElementById('net_pay').value);
+
+            // Perform the calculation
+            var debtR = debtRatio / 100;
+            var resultAmount = (grossPay * debtR) - netPay;
+
+            // Format the result with "K" prefix
+            var formattedResult =  "K " + resultAmount.toFixed(2);
+
+            // Update the result field
+            document.getElementById('result_amount').value = formattedResult;
+        });
+    </script>
 </div>

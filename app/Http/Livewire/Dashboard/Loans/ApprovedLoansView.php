@@ -13,7 +13,7 @@ use App\Traits\LoanTrait;
 use App\Traits\SettingTrait;
 
 class ApprovedLoansView extends Component
-{    
+{
     use EmailTrait, WalletTrait, LoanTrait, SettingTrait;
     public $loan_requests, $loan_request, $new_loan_user, $user_basic_pay, $user_net_pay, $loan_id;
     public $type = [];
@@ -21,12 +21,12 @@ class ApprovedLoansView extends Component
     public $view = 'list';
     public $users, $due_date;
     public $assignModal = false;
+    public $title = 'Open Loans';
     public function render()
     {
         try {
-            // Retrieve users with the 'user' role, excluding their applications
             $this->users = User::role('user')->without('applications')->get();
-    
+
             if($this->current_configs('loan-approval')->value == 'auto'){
                 // get loan only if first review as approved
                 $this->loan_requests = $this->getOpenLoanRequests('auto');
@@ -42,6 +42,7 @@ class ApprovedLoansView extends Component
             ])->layout('layouts.admin');
 
         } catch (\Throwable $th) {
+            dd($th);
             // If an exception occurs, set $loan_requests to an empty array
             $this->loan_requests = [];
             $requests = [];

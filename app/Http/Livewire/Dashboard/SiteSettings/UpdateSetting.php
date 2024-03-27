@@ -168,7 +168,6 @@ class UpdateSetting extends Component
                     'crb_product_id' => $value
                 ]);
             }
-
             foreach ($this->loan_disbursed_by as $value) {
                 LoanDisbursedBy::updateOrCreate(
                     ['loan_product_id' => $this->loan_product->id],
@@ -188,7 +187,6 @@ class UpdateSetting extends Component
                 ['loan_product_id' => $this->loan_product->id],
                 ['interest_type_id' => $this->loan_interest_type, 'loan_product_id' => $this->loan_product->id]
             );
-
 
             // Repayment Cycles ****Loop
             foreach ($this->loan_repayment_cycle as $value) {
