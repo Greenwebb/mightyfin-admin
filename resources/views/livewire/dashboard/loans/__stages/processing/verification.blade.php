@@ -286,42 +286,62 @@
                         <div class="tab-pane fade" id="kt_credit_assement_tab"
                             role="tabpanel">
                             <div class="card pt-4 mb-6 mb-xl-9">
-                                {{-- <div class="card-header border-0">
-                                    <div class="card-title">
-                                        <h4 class="fw-bold mb-0">Risk Assement</h4>
-                                    </div>
-                                </div> --}}
-
                                 <div id="kt_customer_view_payment_method" class="card-body pt-0">
                                     <div class="py-0" data-kt-customer-payment-method="row">
                                         <div id="kt_customer_view_payment_method_1" class="collapse show fs-6 ps-10" data-bs-parent="#kt_customer_view_payment_method">
                                             <div class="d-flex gap-10 flex-wrap py-5">
                                                 <div class="w-full">
                                                     <span class="font-bold"><b>Debt Ratio (%)</b></span>
-                                                    <input type="number" value="40" class="form-control" placeholder="{{$debt_ratio}}" id="debt_ratio">
+                                                    <input type="number" value="40" class="form-control" id="debt_ratio">
                                                 </div>
 
                                                 <div class="w-full">
                                                     <span class="font-bold"><b>Gross Pay</b></span>
-                                                    <input type="number" class="form-control" placeholder="{{$gross_pay}}" id="gross_pay">
+                                                    <input type="number" class="form-control" id="gross_pay">
                                                 </div>
 
                                                 <div class="w-full">
                                                     <span class="font-bold"><b>Net Pay</b></span>
-                                                    <input type="number" class="form-control" placeholder="{{$net_pay}}" id="net_pay">
+                                                    <input type="number" class="form-control" id="net_pay">
                                                 </div>
 
                                                 <div class="w-full">
-                                                    <span>Results</span>
+                                                    <span class="text-primary" style="color:blueviolet"><b>Possible Loan Principal (PLP)</b></span>
                                                     <input type="text" disabled class="form-control" placeholder="{{$result_amount}}" id="result_amount">
                                                 </div>
                                             </div>
                                             <button id="calculateRisk" class="btn btn-sm btn-primary">Check</button>
                                         </div>
-
                                     </div>
-
+                                    <div class="container mt-4">
+                                        <div class="alert alert-danger">
+                                            <div class="d-flex">
+                                                <span class="col-1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
+                                                        <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6m3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5"/>
+                                                    </svg>
+                                                </span>
+                                                <p class="col-10">
+                                                    Principal amount is more than the PLP, you might need to increase the number of months for
+                                                    the loan and also reduce the principal amount being requested.
+                                                </p>
+                                            </div>
+                                            <div class="justify-content-between d-flex">
+                                                @if ($loan_notifications)
+                                                    <button id="notifyUserBtn" class="btn btn-light btn-xs">
+                                                        Notify {{ $loan->user->fname .' '.$loan->user->lname }} about this
+                                                    </button>
+                                                @else
+                                                    <button id="notifyUserBtn" class="btn btn-light btn-xs">
+                                                        Notify {{ $loan->user->fname .' '.$loan->user->lname }} about this
+                                                    </button>
+                                                @endif
+                                                <button id="acceptSuggestionBtn" class="btn btn-primary btn-xs">Accept Suggestion</button>
+                                            </div>
+                                        </div>
+                                    </div>
                                 </div>
+
                             </div>
                         </div>
 
@@ -333,8 +353,6 @@
                             <!--end::Card-->
                             <!--begin::Card-->
                             <div class="row g-5 g-xl-12">
-
-
                                 <div class="col-xl-12">
                                     <div class="card pt-4 mb-6 mb-xl-9">
                                         <div id="kt_customer_view_payment_method" class="card-body pt-0">
@@ -570,7 +588,7 @@
 
             // Perform the calculation
             var debtR = debtRatio / 100;
-            var resultAmount = (grossPay * debtR) - netPay;
+            var resultAmount = netPay - (grossPay * debtR);
 
             // Format the result with "K" prefix
             var formattedResult =  "K " + resultAmount.toFixed(2);
@@ -579,4 +597,41 @@
             document.getElementById('result_amount').value = formattedResult;
         });
     </script>
+    <script>
+        $(document).ready(function() {
+            $('#notifyUserBtn').click(function() {
+                var $btn = $(this);
+                $.ajax({
+                    url: '{{ url("api/notify-onplp") }}',
+                    type: 'POST',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        user_id: '{{ $loan->user->id }}',
+                        application_id: '{{ $loan->id }}',
+                        suggested_months: '4',
+                        suggested_principal: '7000',
+                        // Add any additional data you need to send to the controller
+                    },
+                    beforeSend: function() {
+                        // Disable the button and show loading text or spinner
+                        $btn.prop('disabled', true).html('<span class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span> Processing...');
+                    },
+                    success: function(response) {
+                        if(response.resp){
+                            // Re-enable the button and revert back to the original text
+                            $btn.prop('disabled', false).html('<span class="text-success" style="color:green">Sent Notification to {{ $loan->user->fname }} about this</span>');
+                        }else{
+                            // Re-enable the button and revert back to the original text
+                            $btn.prop('disabled', false).html('<span>Resend Notification to {{ $loan->user->fname }} about this</span>');
+                        }
+                    },
+                    error: function(xhr, status, error) {
+                        // Handle errors
+                        console.error(xhr.responseText);
+                    }
+                });
+            });
+        });
+    </script>
+
 </div>

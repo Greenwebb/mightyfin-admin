@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\LoanNotificationController;
 use App\Http\Controllers\Api\LoanRequestController;
 use App\Http\Controllers\Api\SettingController;
 use App\Http\Controllers\Api\UserAuthenticationController;
@@ -57,6 +58,9 @@ Route::get('/get-loan-open-statuses', [SettingController::class, '__get_open_sta
 Route::get('/get-loan-defaulted-statuses', [SettingController::class, '__get_defaulted_status']);
 Route::get('/get-loan-denied-statuses', [SettingController::class, '__get_denied_status']);
 Route::get('/get-loan-not-taken-up-statuses', [SettingController::class, '__get_not_taken_status']);
+
+//Loan Notifications
+Route::post('/notify-onplp', [LoanNotificationController::class, 'plpNotification']);
 
 
 // Deprected

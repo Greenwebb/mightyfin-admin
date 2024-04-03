@@ -26,7 +26,7 @@ class LoanDetailView extends Component
     public $loan_stage, $denied_status, $picked_status, $current, $principal_amt, $code, $crb, $crb_results;
     public $amortizationSchedule,$amo_principal, $amo_duration;
     public $debt_ratio, $gross_pay, $net_pay, $result_amount;
-    public $crb_selected_products;
+    public $crb_selected_products, $loan_notifications;
 
     public function mount($id){
         $this->loan_id = $id;
@@ -37,6 +37,7 @@ class LoanDetailView extends Component
         try {
             $this->authorize('processes loans');
             $this->loan = $this->get_loan_details($this->loan_id);
+            $this->loan_notifications = $this->loan_notifications($this->loan->id);
             $this->loan_product = $this->get_loan_product($this->loan->loan_product_id);
             $this->crb_selected_products = $this->loan_product->loan_crb;
             $this->loan_stage = $this->get_loan_current_stage($this->loan->loan_product_id);

@@ -7,6 +7,7 @@ use App\Models\Application;
 use App\Models\ApplicationStage;
 use App\Models\LoanInstallment;
 use App\Models\LoanManualApprover;
+use App\Models\LoanNotification;
 use App\Models\LoanPackage;
 use App\Models\LoanProduct;
 use App\Models\Loans;
@@ -484,5 +485,8 @@ trait LoanTrait{
         $update->save();
     }
 
+    public function loan_notifications($id){
+        return LoanNotification::where('application_id', $id)->get();
+    }
 
 }

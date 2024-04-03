@@ -113,7 +113,7 @@ class User extends Authenticatable
 
     public static function user_meta($id){
         return User::where('id', $id)->with(['uploads', 'next_of_king', 'refs','bank'])->first()->toArray();
-       
+
     }
 
     public static function totalCustomerBorrowed($user){
@@ -130,7 +130,7 @@ class User extends Authenticatable
     public static function totalIncompleteKYCBorrowers(){
         return Application::where('complete', 1)->count();
     }
-    
+
     public function nextkin(){
         return $this->hasMany(NextOfKing::class);
     }
@@ -158,24 +158,32 @@ class User extends Authenticatable
 
     public function loans(){
         return $this->hasMany(Application::class)->orderBy('created_at', 'desc');
-    }    
+    }
 
     public function active_loans(){
         return $this->hasOne(Application::class)->where('status', 1)->where('complete', 1);
     }
+
     public function next_of_king()
     {
         return $this->hasMany(NextOfKing::class)->orderBy('created_at', 'desc');
     }
+
     public function refs()
     {
         return $this->hasMany(References::class)->orderBy('created_at', 'desc');
     }
+
     public function bank()
     {
         return $this->hasMany(BankDetails::class)->orderBy('created_at', 'desc');
     }
+    
     public function uploads(){
         return $this->hasMany(UserFile::class);
+    }
+
+    public function loan_notifications(){
+        return $this->hasMany(LoanNotification::class);
     }
 }

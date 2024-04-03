@@ -22,7 +22,7 @@ class Application extends Model
         'amount',
         'interest',
         'payback_amount',
-        
+
         'glname',
         'gfname',
         'gemail',
@@ -59,7 +59,7 @@ class Application extends Model
 
         'processed_by',
         'approved_by',
-        
+
         'complete',
         'doa',
 
@@ -74,7 +74,8 @@ class Application extends Model
         'is_zambian',
         'nationality',
         'continue',
-        'is_assigned'
+        'is_assigned',
+        'plp_sent'
     ];
     protected $appends = [
         'done_by',
@@ -126,6 +127,10 @@ class Application extends Model
         return $this->hasOne(Loans::class);
     }
 
+    public function loan_notifications(){
+        return $this->hasMany(LoanNotification::class);
+    }
+
     // public function approvalAction(){
     //     return $this->hasMany()
     // }
@@ -139,8 +144,8 @@ class Application extends Model
     //     // 2 to 6 months
     //     if( $duration > 1 && $duration < 7 ){
     //         return ($principal * 0.44) + $principal;
-    //     } 
-        
+    //     }
+
     //     // 3 months and above
     //     // if( $duration > 3){
     //     //     return ($principal * 1.44) + $principal;
@@ -167,7 +172,7 @@ class Application extends Model
     public static function payback($principal, $duration, $product_id = null){
         $product = LoanProduct::where('id', $product_id)->with([
             'disbursed_by.disbursed_by',
-            'interest_methods.interest_method', 
+            'interest_methods.interest_method',
             'interest_types.interest_type',
             'loan_accounts.account_payment',
             'loan_status.status',
@@ -188,12 +193,12 @@ class Application extends Model
         return number_format($finalPayback, 2, '.', '');
     }
 
-    
+
     // !important
     public static function paybackInstallment($principal, $duration, $product_id = null){
         $product = LoanProduct::where('id', $product_id)->with([
             'disbursed_by.disbursed_by',
-            'interest_methods.interest_method', 
+            'interest_methods.interest_method',
             'interest_types.interest_type',
             'loan_accounts.account_payment',
             'loan_status.status',
@@ -213,7 +218,7 @@ class Application extends Model
         if($application){
             try {
                 $nextDate = $application->created_at;
-        
+
                 return $nextDate;
             } catch (\Throwable $th) {
                 return 'No Date';
@@ -222,7 +227,7 @@ class Application extends Model
             return 'No Application';
         }
     }
-    
+
 
     // Deprecating
     public static function interest_amount($principal, $duration){
@@ -231,31 +236,31 @@ class Application extends Model
             $interest = ($principal * 0.21);
             return number_format($interest, 2, '.', '');
         }
-        
+
         // 2 months
         if( $duration == 2 ){
             $interest = ($principal * 1.2 *  1.1) - $principal;
             return number_format($interest, 2, '.', '');
         }
-        
+
         // 3 months
         if( $duration == 3){
             $interest = ($principal * 1.2 * 1.15) - $principal;
             return number_format($interest, 2, '.', '');
         }
-        
+
         // 4 months
         if( $duration == 4){
             $interest=($principal * 1.2 * 1.2) - $principal;
             return number_format($interest, 2, '.', '');
         }
-        
+
         // 5 months
         if( $duration == 5){
             $interest = ($principal * 1.2 * 1.25) - $principal;
             return number_format($interest, 2, '.', '');
         }
-        
+
         // 6 months
         if( $duration == 6){
             $interest = ($principal * 1.2 * 1.3) - $principal;
@@ -268,43 +273,43 @@ class Application extends Model
             $interest = ($principal * 1.2 * 1.35) - $principal;
             return number_format($interest, 2, '.', '');
         }
-        
+
         // 8 months
         if( $duration == 8){
             $interest = ($principal * 1.2 * 1.4) - $principal;
             return number_format($interest, 2, '.', '');
         }
-        
+
         // 9 months
         if( $duration == 9){
             $interest = ($principal * 1.2 * 1.45) - $principal;
             return number_format($interest, 2, '.', '');
         }
-        
+
         // 10 months
         if( $duration == 10){
             $interest = ($principal * 1.2 * 1.5) - $principal;
             return number_format($interest, 2, '.', '');
         }
-        
+
         // 11 months
         if( $duration == 11){
             $interest = ($principal * 1.2 * 1.55) - $principal;
             return number_format($interest, 2, '.', '');
         }
-        
+
         // 12 months
         if( $duration == 12){
             $interest = ($principal * 1.2 * 1.6) - $principal;
             return number_format($interest, 2, '.', '');
         }
-    
+
     }
 
     public static function interest_rate($product_id){
         $loan_product = LoanProduct::where('id', $product_id)->with([
             'disbursed_by.disbursed_by',
-            'interest_methods.interest_method', 
+            'interest_methods.interest_method',
             'interest_types.interest_type',
             'loan_accounts.account_payment',
             'loan_status.status',
@@ -320,7 +325,7 @@ class Application extends Model
                 return 'Not Set';
             }
     }
-    
+
     //Depricated
     public static function monthly_installment($amount, $duration){
         try {
@@ -350,7 +355,7 @@ class Application extends Model
         return Application::where('complete', 1)->sum('amount');
     }
     public static function totalAmountLoanedOut(){
-        //  Total amount for complete and approved loans 
+        //  Total amount for complete and approved loans
         return Application::where('complete', 1)->where('status', 1)->whereNotNull('due_date')->sum('amount');
     }
     public static function totalAmountPending(){
@@ -370,7 +375,7 @@ class Application extends Model
         $monthly_payment = Application::monthly_installment($loan->amount, $loan->repayment_plan); // Clear
         $maximum_deductable_amount = $net_pay * 0.75; // Clear
         $net_pay_alr = $net_pay * 0.25;; //Net Pay After Loan Recovery //Clear
-        
+
         // if($maximum_deductable_amount > 0){
             $credit_score = $monthly_payment < $maximum_deductable_amount;
         // }else{
