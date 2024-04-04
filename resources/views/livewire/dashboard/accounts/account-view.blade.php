@@ -37,7 +37,7 @@
                                     @if($role->name == 'user')
                                     <p>Borrower</p>
                                     @else
-                                    <p>{{ $role->name }}</p>
+                                    <p>{{ ucwords($role->name) }}</p>
                                     @endif
                                 @endforeach
                                 </div>
@@ -502,16 +502,6 @@
                                                 <!--end::Arrow-->
                                                 <!--begin::Logo-->
                                                 <img src="{{ asset('public/mfs/admin/assets/media/svg/card-logos/mastercard.svg')}}" class="w-40px me-3" alt="" />
-                                                <!--end::Logo-->
-                                                <!--begin::Summary-->
-                                                {{-- <div class="me-3">
-                                                    <div class="d-flex align-items-center">
-                                                        <div class="text-gray-800 fw-bold">Mastercard</div>
-                                                        <div class="badge badge-light-primary ms-5">Primary</div>
-                                                    </div>
-                                                    <div class="text-muted">Expires Dec 2024</div>
-                                                </div> --}}
-                                                <!--end::Summary-->
                                             </div>
                                             <!--end::Toggle-->
                                             <!--begin::Toolbar-->

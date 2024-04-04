@@ -35,24 +35,24 @@ class UserController extends Controller
         return view('admin.users.index');
     }
 
-    public function store(User $user, Request $request) 
+    public function store(User $user, Request $request)
     {
         DB::beginTransaction();
-        try {     
+        try {
             if ($request->file('image_path')) {
                 $url = Storage::put('public/users', $request->file('image_path'));
             }
-            
+
             $u = $user->create(array_merge($request->all(), [
                 'password' => bcrypt('mighty.@2023@'),
                 'active' => 1,
                 'profile_photo_path' => $url ?? ''
             ]));
-            
+
             $u->syncRoles($request->assigned_role);
 
             // Onyl users with Emails
-            if($u->email != null){ 
+            if($u->email != null){
                 $mail = [
                     'name' => $u->fname.' '.$u->lname,
                     'to' => $u->email,
@@ -62,7 +62,7 @@ class UserController extends Controller
                     'message' => 'Hello '.$u->fname.' '.$u->lname.' Your Might Finance account is now ready, Click on login to goto your dashboard. Your password is mighty.@2023@  -  feel free to change your password.',
                 ];
             }
-            
+
             try {
                 // Send Email to User with Email only about their New Account Created
                 if($u->email != null){
@@ -104,7 +104,7 @@ class UserController extends Controller
 
     }
 
-    
+
 
     /**
      * Show the form for editing the specified resource.
@@ -125,17 +125,17 @@ class UserController extends Controller
      * @param  \App\Models\User  $user
      * @return \Illuminate\Http\Response
      */
-    public function update(User $user, Request $request) 
+    public function update(User $user, Request $request)
     {
         DB::beginTransaction();
         try {
             // Role::firstOrCreate(['name' => 'employee']);
             //For demo purposes only. When creating user or inviting a user
-            // you should create a generated random password and email it to the user        
+            // you should create a generated random password and email it to the user
             if ($request->file('image_path')) {
                 $url = Storage::put('public/users', $request->file('image_path'));
             }
-            
+
             $user = User::find($request->user_edit_id);
             // dd($user);
             // $user->update(array_merge($request->all(), [
@@ -164,7 +164,7 @@ class UserController extends Controller
         } catch (\Throwable $th) {
             // dd($th);
             DB::rollback();
-            
+
             if($request->assigned_role == 'user'){
                 Session::flash('error_msg', 'Oops.. There is a borrower account already using this email.');
             }elseif($request->assigned_role == 'employee'){
@@ -190,21 +190,21 @@ class UserController extends Controller
 
     public function updatePic(Request $request)
     {
-        
+
         try {
             $request->validate([
                 'photo' => 'image|mimes:jpeg,png,jpg,gif|max:2048',
             ]);
-    
+
             if ($request->hasFile('photo')) {
                 // Process and save the file
                 $url = Storage::put('public/users', $request->file('photo'));
-    
+
                 // Update user's profile_photo_path
                 auth()->user()->update([
                     'profile_photo_path' => $url,
                 ]);
-    
+
                 return redirect()->back()->with('success', 'Profile photo updated successfully.');
             } else {
                 return redirect()->back()->with('error', 'No photo uploaded.');
@@ -224,30 +224,14 @@ class UserController extends Controller
                 'photo' => ['nullable', 'mimes:jpg,jpeg,png', 'max:1024'],
                 'phone' => ['required'],
                 'address' => ['required'],
-                'occupation' => ['required'],
-                'dob' => ['required'],
-                'nrc_no' => ['required'],
-                'id_type' => ['required'],
             ])->validateWithBag('updateProfileInformation');
 
             $user = auth()->user();
             $user->fname = $input['fname'];
             $user->lname = $input['lname'];
             $user->phone = $input['phone'];
-            // $user->email = $input['email'];
             $user->address = $input['address'];
-            $user->occupation = $input['occupation'];
-            $user->id_type = $input['id_type'];
-            $user->nrc_no = $input['nrc_no'];
-            $user->nrc = $input['nrc_no'];
-            $user->dob = $input['dob'];
-            $user->gender = $input['gender'];
             $user->save();
-
-            $this->isKYCComplete();
-
-
-
             return redirect()->back()->with('success', 'Profile photo updated successfully.');
         } catch (\Throwable $th) {
             return redirect()->back()->with('error', 'An error occurred while updating the profile photo. '.$th->getMessage());

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
-<!--begin::Head-->
-
+@php
+    $route = request()->route()->getName();
+@endphp
 <head>
     <base href="" />
     <title>MFS | Administration Dashboard</title>

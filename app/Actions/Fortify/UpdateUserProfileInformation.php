@@ -19,6 +19,7 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
      */
     public function update($user, array $input)
     {
+        
         Validator::make($input, [
             'fname' => ['required', 'string', 'max:255'],
             'lname' => ['required', 'string', 'max:255'],
@@ -35,16 +36,16 @@ class UpdateUserProfileInformation implements UpdatesUserProfileInformation
             // 'basic_pay' => ['required']
         ])->validateWithBag('updateProfileInformation');
 
-        
+
         if (isset($input['photo'])) {
             $user->updateProfilePhoto($input['photo']);
         }
-        
+
         if(isset($input['id_type']) && isset($input['basic_pay']) && isset($input['net_pay']) && isset($input['address']) && isset($input['phone']) && isset($input['occupation']) && isset($input['gender']) && isset($input['nrc_no']) && isset($input['dob'])){
-            
+
             $loan = Application::where('status', 0)->where('complete', 0)
                         ->where('user_id', auth()->user()->id)->first();
-                        
+
             if($loan !== null){
                 if($loan->tpin_file !== 'no file' && $loan->payslip_file !== 'no file' && $loan->nrc_file !== null){
                     $loan->complete = 1;

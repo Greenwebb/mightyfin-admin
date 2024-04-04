@@ -13,6 +13,6 @@ class DashLayout extends Component
      */
     public function render()
     {
-        return view('layouts.dashboard');
+        return view('layouts.admin');
     }
 }

@@ -1,4 +1,4 @@
-<div>
+<div class="container pt-8">
     <div class="content-body">
         <div class="container">
           <div class="row">
@@ -16,29 +16,12 @@
                     @endif
                   {{-- <img src="https://www.seekpng.com/png/detail/72-729756_how-to-add-a-new-user-to-your.png" alt="" /> --}}
                   <h4>{{ $data->fname.' '.$data->lname }}</h4>
-                  <p>
-                    Looks like you are not verified yet. Verify yourself to use the
-                    full potential of Mighty Finance Soultion.
-                  </p>
-    
-                  <ul>
-                    <li>
-                      <a href="{{ route('profile.show') }}">
-                        <span class="verified"
-                          ><i class="icofont-check-alt"></i
-                        ></span>
-                        Verify account
+
+                  <div>
+                      <a class="btn btn-primary" href="{{ route('profile.show') }}">
+                        Manage Account
                       </a>
-                    </li>
-                    {{-- <li>
-                      <a href="#">
-                        <span class="not-verified"
-                          ><i class="icofont-close-line"></i
-                        ></span>
-                        Two-factor authentication (2FA)
-                      </a>
-                    </li> --}}
-                  </ul>
+                    </div>
                 </div>
               </div>
             </div>
@@ -66,7 +49,7 @@
                 </div>
               </div>
             </div>
-    
+
             <div class="col-xxl-12">
               <div class="card">
                 <div class="card-header">
@@ -115,7 +98,7 @@
                 </div>
               </div>
             </div>
-    
+
             {{-- <div class="col-xxl-8 col-xl-6">
               <div class="card">
                 <div class="card-header">
