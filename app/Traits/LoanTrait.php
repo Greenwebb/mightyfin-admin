@@ -157,37 +157,83 @@ trait LoanTrait{
         }
     }
     public function getDueLoanRequests($type){
-        $userId = auth()->user()->id;
-        if(auth()->user()->hasRole('admin')){
-            return Application::with('loan_product')->where('complete', 1)->where('status', 1)->get();
-        }else{
-            switch ($type) {
-                case 'spooling':
-                    return Application::with('loan_product')->where('complete', 1)
-                    ->where('status', 1)->get();
-                    break;
-                case 'manual':
-                    return Application::with('loan_product')->with(['manual_approvers' => function ($query) use ($userId) {
-                        $query->where('user_id', $userId);
-                        $query->where('is_active', 1);
-                    }])->whereHas('manual_approvers', function ($query) use ($userId) {
-                        $query->where('user_id', $userId);
-                        $query->where('is_active', 1);
-                    })
-                    ->where('status', 1)
-                    ->where('complete', 1)
-                    ->get();
 
-                    break;
-                case 'auto':
-                    # code...
-                    break;
+        $currentDate = Carbon::now();
+        
+        return Application::with('loan_product', 'loan')
+            ->where('complete', 1)
+            ->where('status', 1)
+            ->where('due_date', '<', $currentDate)
+            ->get();
+        // $userId = auth()->user()->id;
+        // if(auth()->user()->hasRole('admin')){
+        //     return Application::with('loan_product')->where('complete', 1)->where('status', 1)->get();
+        // }else{
+        //     switch ($type) {
+        //         case 'spooling':
+        //             return Application::with('loan_product')->where('complete', 1)
+        //             ->where('status', 1)->get();
+        //             break;
+        //         case 'manual':
+        //             return Application::with('loan_product')->with(['manual_approvers' => function ($query) use ($userId) {
+        //                 $query->where('user_id', $userId);
+        //                 $query->where('is_active', 1);
+        //             }])->whereHas('manual_approvers', function ($query) use ($userId) {
+        //                 $query->where('user_id', $userId);
+        //                 $query->where('is_active', 1);
+        //             })
+        //             ->where('status', 1)
+        //             ->where('complete', 1)
+        //             ->get();
 
-                default:
-                    # code...
-                break;
-            }
-        }
+        //             break;
+        //         case 'auto':
+        //             # code...
+        //             break;
+
+        //         default:
+        //             # code...
+        //         break;
+        //     }
+        // }
+    }
+
+    public function getLoanArears($type){
+        return Application::with('loan_product', 'loan')
+            ->where('complete', 1)
+            ->where('status', 1)
+            ->get();
+    }
+
+    public function getNoRepaymentLoan($type){
+        return Application::with('loan_product', 'loan')
+        ->where('complete', 1)
+        ->where('status', 1)
+        ->whereDoesntHave('loan_installments') // Check if the application doesn't have any associated loans
+        ->get();
+    
+    }
+    public function getPrincipalOutstandingLoan($type){
+        return Application::with('loan_product', 'loan')
+        ->where('complete', 1)
+        ->where('status', 1)
+        ->whereDoesntHave('loan_installments') // Check if the application doesn't have any associated loans
+        ->get();
+    
+    }
+    public function getOneMonthLate($type){
+        return Application::with('loan_product', 'loan')
+        ->where('complete', 1)
+        ->where('status', 1)
+        ->whereDoesntHave('loan_installments') // Check if the application doesn't have any associated loans
+        ->get();
+    }
+    public function getThreeMonthLate($type){
+        return Application::with('loan_product', 'loan')
+        ->where('complete', 1)
+        ->where('status', 1)
+        ->whereDoesntHave('loan_installments') // Check if the application doesn't have any associated loans
+        ->get();
     }
 
     public function getLoanPackages(){

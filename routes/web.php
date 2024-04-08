@@ -46,6 +46,7 @@ use App\Http\Livewire\Dashboard\Loans\LoanViewAllView;
 use App\Http\Livewire\Dashboard\Loans\LoanTrackingView;
 use App\Http\Livewire\Dashboard\Loans\MissedRepaymentsView;
 use App\Http\Livewire\Dashboard\Loans\NewLoanView;
+use App\Http\Livewire\Dashboard\Loans\DueLoanView;
 use App\Http\Livewire\Dashboard\Loans\NoRepayments;
 use App\Http\Livewire\Dashboard\Loans\OneMonthLate;
 use App\Http\Livewire\Dashboard\Loans\PastMaturityDateView;
@@ -120,10 +121,10 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     // Administrator
     Route::get('view-all-loans', LoanViewAllView::class)->name('loans');
     Route::get('open-loans', ApprovedLoansView::class)->name('approved-loans');
-    Route::get('due-loans', ApprovedLoansView::class)->name('due-loans');
+    Route::get('due-loans', DueLoanView::class)->name('due-loans');
     Route::get('new-loan-request', NewLoanView::class)->name('new-loan');
     Route::get('client-loan-requests', LoanRequestView::class)->name('view-loan-requests');
-    Route::get('active-repayments', LoanRepaymentView::class)->name('repayments');
+    Route::get('pending-repayments', LoanRepaymentView::class)->name('repayments');
     Route::get('track-repayments/{id}', LoanTrackingView::class)->name('track-repayments');
     Route::get('closed-loans', ClosedLoanView::class)->name('closed-loans');
     Route::get('edit-loan-details/{id}', UpdateLoanView::class)->name('edit-loan');

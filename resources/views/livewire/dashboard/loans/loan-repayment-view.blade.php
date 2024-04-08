@@ -5,7 +5,7 @@
                 <div class="card">
                     <div class="card-header">
                         <h3 class="card-title align-items-start flex-column">
-                            <span class="card-label fw-bold fs-3 mb-1">Active Repayments</span>
+                            <span class="card-label fw-bold fs-3 mb-1">Pending Repayments</span>
                             <span class="text-muted mt-1 fw-semibold fs-7">Over {{$loan_requests->count()}} Missed Repayments</span>
                         </h3>
                         <div>
@@ -26,7 +26,7 @@
                                     </button>
                                     <div class="media">
                                         <div class="media-body">
-                                            <small class="mb-0">List of active loans pending to be paid back or collected.</small>
+                                            <small class="mb-0">Loans that have not received any payments since the start of the loan. You can also search for no payments made in the dates selected below.</small>
                                         </div>
                                     </div>
                                 </div>
@@ -62,16 +62,16 @@
                                 <tbody style="top:0; padding-bottom:20px">
                                     
                                     @forelse($loan_requests as $loan)
-                                        @if($loan->application->type != null)
+                                        @if($loan->type != null)
                                         <tr>
-                                            <td style="text-align:center;">#{{ $loan->application->id }}</td>
-                                            <td style="text-align:center;">{{ $loan->application->fname.' '. $loan->application->lname }}</td>
-                                            <td style="text-align:center;">{{ $loan->application->type }} Loan</td>
-                                            <td style="text-align:center;">K{{ $loan->application->amount }}</td>
-                                            <td style="text-align:center;">K{{ App\Models\Application::payback($loan->application->amount, $loan->application->repayment_plan) }}</td>
+                                            <td style="text-align:center;">#{{ $loan->id }}</td>
+                                            <td style="text-align:center;">{{ $loan->fname.' '. $loan->lname }}</td>
+                                            <td style="text-align:center;">{{ $loan->type }} Loan</td>
+                                            <td style="text-align:center;">K{{ $loan->amount }}</td>
+                                            <td style="text-align:center;">K{{ App\Models\Application::payback($loan->amount, $loan->repayment_plan) }}</td>
                                             <td style="text-align:center;">
                                                 <span class="badge badge-xl light badge-info">
-                                                    K{{ App\Models\Loans::loan_balance($loan->application->id) }} 
+                                                    K{{ App\Models\Loans::loan_balance($loan->id) }} 
                                                 </span>
                                             </td>
                                             <td>

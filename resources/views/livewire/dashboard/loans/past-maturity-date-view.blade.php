@@ -31,7 +31,7 @@
                                     </button>
                                     <div class="media">
                                         <div class="media-body">
-                                            <small class="mb-0">List of loan which have past their final due date.</small>
+                                            <small class="mb-0">Loans that are past the maturiy date and have not been fully paid.</small>
                                         </div>
                                     </div>
                                 </div>

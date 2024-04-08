@@ -131,6 +131,10 @@ class Application extends Model
         return $this->hasMany(LoanNotification::class);
     }
 
+    //New Change
+    public function loan_installments(){
+        return $this->hasMany(LoanInstallment::class, 'application_id');
+    }
     // public function approvalAction(){
     //     return $this->hasMany()
     // }

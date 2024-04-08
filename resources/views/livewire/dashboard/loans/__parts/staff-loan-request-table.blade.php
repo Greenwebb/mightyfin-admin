@@ -2,40 +2,39 @@
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <div id="kt_content_container">
             <div class="card mb-5 mb-xl-8">
-
+                
                 <div class="card-header border-0 pt-5">
                     <h3 class="card-title align-items-start flex-column">
                         <span class="card-label fw-bold fs-3 mb-1">{{ $this->title }}</span>
                         <span class="text-muted mt-1 fw-semibold fs-7">Over {{$requests->count()}} loans</span>
                     </h3>
-
                     <div class="card-toolbar">
-                        <!--begin::Filter-->
-                        <button onclick="resetBulk()" type="button" id="resetBtn" class="btn btn-sm btn-flex btn-light"
-                            data-bs-toggle="modal" data-bs-target="#kt_modal_add_payment">
-                            <i class="ki-duotone ki-plus-cross fs-3">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>
-                            </i>Reset
-                        </button>
-                        <button onclick="deleteBulk()" type="button" id="deleteBtn" class="btn mx-2 btn-sm btn-flex btn-light-danger"
-                            data-bs-toggle="modal" data-bs-target="#kt_modal_add_payment">
-                            <i class="ki-duotone ki-plus-cross fs-3">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>
-                            </i>Delete
-                        </button>
-                        <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
-                            <i class="ki-duotone ki-category fs-6">
-                                <span class="path1"></span>
-                                <span class="path2"></span>
-                                <span class="path3"></span>
-                                <span class="path4"></span>
-                            </i>
-                        </button>
-
+                        @if(request()->route()->getName() == 'view-loan-requests')
+                            <button onclick="resetBulk()" type="button" id="resetBtn" class="btn btn-sm btn-flex btn-light"
+                                data-bs-toggle="modal" data-bs-target="#kt_modal_add_payment">
+                                <i class="ki-duotone ki-plus-cross fs-3">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>Reset
+                            </button>
+                            <button onclick="deleteBulk()" type="button" id="deleteBtn" class="btn mx-2 btn-sm btn-flex btn-light-danger"
+                                data-bs-toggle="modal" data-bs-target="#kt_modal_add_payment">
+                                <i class="ki-duotone ki-plus-cross fs-3">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                </i>Delete
+                            </button>
+                            <button type="button" class="btn btn-sm btn-icon btn-color-primary btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">
+                                <i class="ki-duotone ki-category fs-6">
+                                    <span class="path1"></span>
+                                    <span class="path2"></span>
+                                    <span class="path3"></span>
+                                    <span class="path4"></span>
+                                </i>
+                            </button>
+                        @endif
                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold w-200px" data-kt-menu="true">
 
                             <div class="menu-item px-3">

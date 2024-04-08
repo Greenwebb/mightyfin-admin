@@ -293,7 +293,7 @@
                             </a>
                         </div>
                         @endcan
-
+{{-- 
                         @can('view pending repayments')
                         <div class="menu-item">
                             <a class="menu-link" href="{{ route('repayments') }}">
@@ -303,7 +303,7 @@
                                 <span class="menu-title">Pending Repayments</span>
                             </a>
                         </div>
-                        @endcan
+                        @endcan --}}
                         @can('view missed repayments')
                         <div class="menu-item">
                             <a class="menu-link" href="{{ route('missed-repayments') }}">

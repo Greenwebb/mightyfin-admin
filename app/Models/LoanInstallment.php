@@ -11,6 +11,7 @@ class LoanInstallment extends Model
 
     protected $fillable = [
         'loan_id', 
+        'application_id', 
         'next_dates', 
         'type', //manual or auto
         'paid_at', 
@@ -20,6 +21,10 @@ class LoanInstallment extends Model
 
     public function loans(){
         return $this->belongsTo(Loans::class);
+    }
+
+    public function application(){
+        return $this->belongsTo(Application::class);
     }
     public function transactions(){
         return $this->hasMany(Transaction::class);
