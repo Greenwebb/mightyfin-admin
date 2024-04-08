@@ -6,7 +6,7 @@
         </h3>
     </div>
     <div class="post d-flex flex-column-fluid" id="kt_post">
-        <form wire:submit.prevent="create_loan_product" id="kt_content_container" class="container-xxl">
+        <form wire:submit.prevent="calculateLoan" id="kt_content_container" class="container-xxl">
             <div class="card-header border-0 cursor-pointer">
                 <div class="alert alert-primary mt-2">
                     <small>
@@ -28,7 +28,7 @@
                     </div>
                 </div> 
                 
-                <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
+                <div class="card-header border-0 bg-secondary" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
                     <div class="card-title m-0">
                         <h3 class="fw-bold text-info m-0">Loan Terms:</h3>
                     </div>
@@ -138,9 +138,9 @@
                                 <div class="col-lg-8 fv-row row d-flex"> 
                                     <div class="col-lg-6">
                                         <div class="col-lg-8 input-group">
-                                            <button class="btn btn-outline-secondary" type="button" wire:click="decreaseInterestValue">-</button>
-                                            <input type="text" wire:model.lazy="loan_interest_value" class="form-control form-control-lg" placeholder="" required>
-                                            <button class="btn btn-outline-secondary" type="button" wire:click="increaseInterestValue">+</button>
+                                            <button class="btn btn-outline-secondary" type="button" wire:click="decreaseDurationValue">-</button>
+                                            <input type="text" wire:model.lazy="loan_duration_value" class="form-control form-control-lg" placeholder="" required>
+                                            <button class="btn btn-outline-secondary" type="button" wire:click="increaseDurationValue">+</button>
                                         </div>                                    
                                     </div> 
                                     <div class="col-lg-4">
@@ -172,7 +172,7 @@
                                     <div class="mt-3 align-items-start" style="display: block">
                                         <select wire:model.lazy="loan_repayment_cycle" class="form-select form-control-lg">
                                             @foreach ($repayment_cycles as $option)
-                                                <option value="{{ $option->id }}">{{ $option->name }}</option>
+                                                <option value="{{ $option->name }}">{{ $option->name }}</option>
                                             @endforeach
                                         </select>
                                     </div>
