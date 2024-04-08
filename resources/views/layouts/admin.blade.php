@@ -22,6 +22,8 @@
     <link rel="shortcut icon" href="{{ asset('public/web/images/01-ft-logo.png') }}" />
     <!--begin::Fonts(mandatory for all pages)-->
     <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+
     <!--end::Fonts-->
     <!--begin::Vendor Stylesheets(used for this page only)-->
     <link href="{{ asset('public/mfs/admin/assets/plugins/custom/fullcalendar/fullcalendar.bundle.css')}}" rel="stylesheet" type="text/css" />
@@ -3013,5 +3015,15 @@
 </body>
 <!--end::Body-->
 <script src="https://cdn.jsdelivr.net/npm/select2@4.1.0-rc.0/dist/js/select2.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+<script>
+    document.addEventListener('livewire:load', function () {
+        flatpickr("#release_date_picker", {
+            dateFormat: "Y-m-d",
+            // Other configuration options if needed
+        });
+    });
+</script>
+
 
 </html>

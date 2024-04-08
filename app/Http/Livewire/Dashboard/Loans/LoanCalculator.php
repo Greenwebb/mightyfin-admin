@@ -18,31 +18,53 @@ class LoanCalculator extends Component
 {
     use LoanTrait;
 
+    public $principal;
+    public $release_date;
+    public $loan_interest_method;
+    public $loan_interest_type;
+    public $loan_interest_value = 0;
+    public $loan_interest_period;
+    public $loan_duration_period;
+    public $minimum_num_of_repayments = 1;
+    public $loan_repayment_cycle = [];
+
     // Declare public properties for the models
     public $interest_methods;
     public $interest_types;
-    public $disbursements;
     public $repayment_cycles;
-    public $repayment_orders;
-    public $company_accounts;
-    public $service_charges;
-    public $institutions;
-    public $crb_products;
 
     public function render()
     {
         // Retrieve data from models and assign to public properties
         $this->interest_methods = InterestMethod::get();
         $this->interest_types = InterestType::get();
-        $this->disbursements = DisbursedBy::get();
         $this->repayment_cycles = RepaymentCycle::get();
-        $this->repayment_orders = RepaymentOrder::get();
-        $this->company_accounts = AccountPayment::get();
-        $this->service_charges = ServiceCharge::get();
-        $this->institutions = Institution::where('status', 1)->get();
-        $this->crb_products = CrbProduct::get();
 
         return view('livewire.dashboard.loans.loan-calculator')->layout('layouts.admin');
+    }
+        
+    // Method to increase the loan interest value
+    public function increaseInterestValue()
+    {
+        $this->loan_interest_value++;
+    }
+
+    // Method to decrease the loan interest value
+    public function decreaseInterestValue()
+    {
+        $this->loan_interest_value--;
+    }
+
+    // Method to increase the minimum number of repayments
+    public function increaseRepayments()
+    {
+        $this->minimum_num_of_repayments++;
+    }
+    
+    // Method to decrease the minimum number of repayments
+    public function decreaseRepayments()
+    {
+        $this->minimum_num_of_repayments--;
     }
 }
 
