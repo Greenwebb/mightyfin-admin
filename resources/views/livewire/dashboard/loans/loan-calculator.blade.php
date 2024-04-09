@@ -7,7 +7,6 @@
     </div>
 
     <div>
-    @if($amortization_table_flat_rate && !$firstRender)
         <div class="card mt-5">
             <div class="card-header bg-secondary">
                 <h3 class="card-title text-info">Amortization Table</h3>
@@ -43,11 +42,10 @@
                 </table>
             </div>
         </div>
-    @endif
     </div>
 
     <div class="post d-flex flex-column-fluid" id="kt_post">
-        <form wire:submit.prevent="calculateLoan" id="kt_content_container" class="container-xxl">
+        <form wire:submit.prevent="calculateLoan()" id="kt_content_container" class="container-xxl">
             <div class="card-header border-0 cursor-pointer">
                 <div class="alert alert-primary mt-2">
                     <small>
@@ -67,8 +65,8 @@
                             @endforelse
                         </select>
                     </div>
-                </div> 
-                
+                </div>
+
                 <div class="card-header border-0 bg-secondary" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
                     <div class="card-title m-0">
                         <h3 class="fw-bold text-info m-0">Loan Terms:</h3>
@@ -111,9 +109,8 @@
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Interest Method</label>
                                 <div class="col-lg-8 fv-row">
                                     <select type="text" wire:model.lazy="loan_interest_method" class="form-control form-control-lg " placeholder="Company name" value="Keenthemes">
-                                        <option value=""></option>
                                         @forelse ($interest_methods as $option)
-                                        <option value="{{ $option->id }}">{{ $option->name }}</option>
+                                        <option value="{{ $option->name }}">{{ $option->name }}</option>
                                         @empty
                                             <span>No Methods</span>
                                         @endforelse
@@ -146,10 +143,10 @@
                             </div>
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label fw-bold fs-6">Loan Interest</label>
-                                <div class="col-lg-8 fv-row row d-flex"> 
+                                <div class="col-lg-8 fv-row row d-flex">
                                     <div class="col-lg-6">
                                         <input type="text" wire:model.lazy="loan_interest_value" class="form-control form-control-lg " placeholder="%" required/>
-                                    </div> 
+                                    </div>
                                     <div class="col-lg-3">
                                         <select type="text" wire:model.lazy="loan_interest_period" class="form-select form-control form-control-lg " placeholder="Company name" value="Keenthemes">
                                             <option value="per-day">Per Day</option>
@@ -175,7 +172,7 @@
                         <div class="card-body p-9">
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label fw-bold fs-6">Loan Duration Period</label>
-                                <div class="col-lg-8 fv-row row d-flex"> 
+                                <div class="col-lg-8 fv-row row d-flex">
                                     <div class="col-lg-6">
                                         <div class="col-lg-8 input-group">
                                             <button class="btn btn-secondary" type="button" wire:click="decreaseDurationValue">
@@ -189,8 +186,8 @@
                                                 <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
                                                 </svg>
                                             </button>
-                                        </div>                                    
-                                    </div> 
+                                        </div>
+                                    </div>
                                     <div class="col-lg-4">
                                         <select type="text" wire:model.lazy="loan_duration_period" class="form-select form-control form-control-lg " placeholder="Company name" value="Keenthemes">
                                             <option value="day" selected>Days</option>
@@ -240,7 +237,7 @@
                                             <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
                                             </svg>
                                         </button>
-                                    </div>                                
+                                    </div>
                                 </div>
                             </div>
                         </div>

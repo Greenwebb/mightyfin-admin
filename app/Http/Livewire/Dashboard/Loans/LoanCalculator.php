@@ -13,6 +13,9 @@ use App\Models\AccountPayment;
 use App\Models\ServiceCharge;
 use App\Models\Institution;
 use App\Models\CrbProduct;
+use Carbon\Carbon;
+
+
 
 class LoanCalculator extends Component
 {
@@ -20,8 +23,8 @@ class LoanCalculator extends Component
 
     public $principal;
     public $release_date;
-    public $loan_interest_method;
-    public $loan_interest_type;
+    public $loan_interest_method = 'Flat Rate';
+    public $loan_interest_type = 1;
     public $loan_interest_value;
     public $loan_interest_period;
     public $loan_duration_period;
@@ -49,7 +52,7 @@ class LoanCalculator extends Component
     public function convertTime()
 {
 
-    // dd($this->loan_duration_period); 
+    // dd($this->loan_duration_period);
     switch ($this->loan_duration_period) {
         case 'day':
             switch ($this->loan_repayment_cycle) {
@@ -115,14 +118,14 @@ class LoanCalculator extends Component
                         break;
                 }
             break;
-            
+
         default:
             // Handle default case
             break;
     }
 }
 
-        
+
     // Method to increase the loan interest value
     public function increaseDurationValue()
     {
@@ -145,7 +148,7 @@ class LoanCalculator extends Component
     {
         $this->minimum_num_of_repayments++;
     }
-    
+
     // Method to decrease the minimum number of repayments
     public function decreaseRepayments()
     {
@@ -158,40 +161,44 @@ class LoanCalculator extends Component
 
 public function calculateLoan()
 {
-    switch ($this->loan_interest_method) {
-        case 'flat_rate':
-            // Perform calculation for flat rate interest
-            // You can define a separate method for this calculation
-            $this->calculateFlatRate();
-            break;
-        case 'reducing_balance_equal_installment':
-            // Perform calculation for reducing balance with equal installment interest
-            // You can define a separate method for this calculation
-            $this->calculateReducingBalanceEqualInstallment();
-            break;
-        case 'reducing_balance_equal_principal':
-            // Perform calculation for reducing balance with equal principal interest
-            // You can define a separate method for this calculation
-            $this->calculateReducingBalanceEqualPrincipal();
-            break;
-        case 'interest_only':
-            // Perform calculation for interest only interest
-            // You can define a separate method for this calculation
-            $this->calculateInterestOnly();
-            break;
-        case 'compound_interest':
-            // Perform calculation for compound interest
-            // You can define a separate method for this calculation
-            $this->calculateCompoundInterest();
-            break;
-        default:
-            // Handle other cases or show an error message
-            break;
+    try {
+        // dd($this->loan_interest_method);
+        switch ($this->loan_interest_method) {
+            case 'Flat Rate':
+                // Perform calculation for flat rate interest
+                // You can define a separate method for this calculation
+                $this->calculateFlatRate();
+                break;
+            case 'Reducing Balance - Equal Instalments':
+                // Perform calculation for reducing balance with equal installment interest
+                // You can define a separate method for this calculation
+                $this->calculateReducingBalanceEqualInstallment();
+                break;
+            case 'Reducing Balance - Equal Principal':
+                // Perform calculation for reducing balance with equal principal interest
+                // You can define a separate method for this calculation
+                $this->calculateReducingBalanceEqualPrincipal();
+                break;
+            case 'Interest Only':
+                // Perform calculation for interest only interest
+                // You can define a separate method for this calculation
+                $this->calculateInterestOnly();
+                break;
+            case 'Compound Interest':
+                // Perform calculation for compound interest
+                // You can define a separate method for this calculation
+                $this->calculateCompoundInterest();
+                break;
+            default:
+                // Handle other cases or show an error message
+                break;
+        }
+    } catch (\Throwable $th) {
+        dd($th);
     }
 }
 
 // Define separate methods for each interest calculation if needed
-
 private function calculateFlatRate()
 {
     // Convert loan duration to months if it's not already in months
@@ -222,8 +229,17 @@ private function calculateFlatRate()
     // Calculate monthly installment
     $monthly_installment = $loan_balance * $monthly_interest_rate / (1 - pow(1 + $monthly_interest_rate, -$loan_term));
 
+    // Get the release date and convert it to a Carbon instance
+    $release_date = Carbon::parse($this->release_date);
+
+    // Calculate the number of rows based on the minimum number of repayments
+    $num_rows = max(1, $this->minimum_num_of_repayments);
+
     // Loop through each period and calculate interest, principal, and remaining balance
-    for ($i = 1; $i <= $loan_term; $i++) {
+    for ($i = 1; $i <= $num_rows; $i++) {
+        // Calculate due date based on the release date
+        $due_date = $release_date->addDays(7 * $i); // Assuming weekly payments
+
         // Calculate interest for the current period
         $interest = $loan_balance * $monthly_interest_rate;
 
@@ -235,14 +251,15 @@ private function calculateFlatRate()
 
         // Add current period's data to amortization table
         $amortization_table[] = [
-            'due_date' => now()->addMonths($i)->toDateString(), // Assuming monthly payments
-            'principal_amount' => $principal,
-            'interest_amount' => $interest,
-            'fee_amount' => 0, // Assuming no fees
-            'penalty_amount' => 0, // Assuming no penalties
-            'due_amount' => $monthly_installment, // Assuming equal payments
-            'principal_balance' => $loan_balance,
-            'description' => 'Monthly Installment' // You can customize the description as needed
+            'period' => $i,
+            'due_date' => $due_date->format('d/m/Y'),
+            'principal_amount' => number_format($this->principal / $this->minimum_num_of_repayments, 2),
+            'interest_amount' => number_format($interest, 2),
+            'fee_amount' => '0',
+            'penalty_amount' => '0',
+            'due_amount' => number_format($monthly_installment, 2),
+            'principal_balance' => number_format($loan_balance, 2),
+            'description' => ($loan_balance <= 0) ? 'Maturity' : 'Repayment',
         ];
     }
 
@@ -252,6 +269,7 @@ private function calculateFlatRate()
     // Store total repayment amount in a public property
     $this->total_repayment_amount_flat_rate = $monthly_installment * $loan_term;
 }
+
 
 
 
