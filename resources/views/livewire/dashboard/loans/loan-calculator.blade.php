@@ -5,6 +5,47 @@
             <span class="card-label fw-bold fs-3 mb-1">Loan Calculator</span>
         </h3>
     </div>
+
+    <div>
+    @if($amortization_table_flat_rate && !$firstRender)
+        <div class="card mt-5">
+            <div class="card-header bg-secondary">
+                <h3 class="card-title text-info">Amortization Table</h3>
+            </div>
+            <div class="card-body">
+                <table class="table table-bordered table-hover">
+                    <thead>
+                        <tr>
+                            <th>Due Date</th>
+                            <th>Principal Amount</th>
+                            <th>Interest Amount</th>
+                            <th>Fee Amount</th>
+                            <th>Penalty Amount</th>
+                            <th>Due Amount</th>
+                            <th>Principal Balance</th>
+                            <th>Description</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach($amortization_table_flat_rate as $row)
+                            <tr>
+                                <td>{{ $row['due_date'] }}</td>
+                                <td>{{ $row['principal_amount'] }}</td>
+                                <td>{{ $row['interest_amount'] }}</td>
+                                <td>{{ $row['fee_amount'] }}</td>
+                                <td>{{ $row['penalty_amount'] }}</td>
+                                <td>{{ $row['due_amount'] }}</td>
+                                <td>{{ $row['principal_balance'] }}</td>
+                                <td>{{ $row['description'] }}</td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    @endif
+    </div>
+
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <form wire:submit.prevent="calculateLoan" id="kt_content_container" class="container-xxl">
             <div class="card-header border-0 cursor-pointer">
@@ -138,9 +179,17 @@
                                 <div class="col-lg-8 fv-row row d-flex"> 
                                     <div class="col-lg-6">
                                         <div class="col-lg-8 input-group">
-                                            <button class="btn btn-outline-secondary" type="button" wire:click="decreaseDurationValue">-</button>
+                                            <button class="btn btn-secondary" type="button" wire:click="decreaseDurationValue">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
+                                                </svg>
+                                            </button>
                                             <input type="text" wire:model.lazy="loan_duration_value" class="form-control form-control-lg" placeholder="" required>
-                                            <button class="btn btn-outline-secondary" type="button" wire:click="increaseDurationValue">+</button>
+                                            <button class="btn btn-secondary" type="button" wire:click="increaseDurationValue">
+                                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                                <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                                                </svg>
+                                            </button>
                                         </div>                                    
                                     </div> 
                                     <div class="col-lg-4">
@@ -182,9 +231,17 @@
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Minimum Number of Repayments</label>
                                 <div class="col-lg-8 fv-row">
                                     <div class="col-lg-8 input-group">
-                                        <button class="btn btn-outline-secondary" type="button" wire:click="decreaseRepayments">-</button>
+                                        <button class="btn btn-secondary" type="button" wire:click="decreaseRepayments">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-dash-lg" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M2 8a.5.5 0 0 1 .5-.5h11a.5.5 0 0 1 0 1h-11A.5.5 0 0 1 2 8"/>
+                                            </svg>
+                                        </button>
                                         <input type="text" wire:model.lazy="minimum_num_of_repayments" class="form-control form-control-lg" placeholder="1">
-                                        <button class="btn btn-outline-secondary" type="button" wire:click="increaseRepayments">+</button>
+                                        <button class="btn btn-secondary" type="button" wire:click="increaseRepayments">
+                                            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-plus-lg" viewBox="0 0 16 16">
+                                            <path fill-rule="evenodd" d="M8 2a.5.5 0 0 1 .5.5v5h5a.5.5 0 0 1 0 1h-5v5a.5.5 0 0 1-1 0v-5h-5a.5.5 0 0 1 0-1h5v-5A.5.5 0 0 1 8 2"/>
+                                            </svg>
+                                        </button>
                                     </div>                                
                                 </div>
                             </div>

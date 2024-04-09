@@ -28,6 +28,8 @@ class LoanCalculator extends Component
     public $minimum_num_of_repayments = 1;
     public $loan_duration_value = 1;
     public $loan_repayment_cycle;
+    public $amortization_table_flat_rate;
+    public $total_repayment_amount_flat_rate;
 
     // Declare public properties for the models
     public $interest_methods;
@@ -233,11 +235,14 @@ private function calculateFlatRate()
 
         // Add current period's data to amortization table
         $amortization_table[] = [
-            'period' => $i,
-            'payment' => $monthly_installment,
-            'principal' => $principal,
-            'interest' => $interest,
-            'balance' => $loan_balance,
+            'due_date' => now()->addMonths($i)->toDateString(), // Assuming monthly payments
+            'principal_amount' => $principal,
+            'interest_amount' => $interest,
+            'fee_amount' => 0, // Assuming no fees
+            'penalty_amount' => 0, // Assuming no penalties
+            'due_amount' => $monthly_installment, // Assuming equal payments
+            'principal_balance' => $loan_balance,
+            'description' => 'Monthly Installment' // You can customize the description as needed
         ];
     }
 
@@ -247,6 +252,7 @@ private function calculateFlatRate()
     // Store total repayment amount in a public property
     $this->total_repayment_amount_flat_rate = $monthly_installment * $loan_term;
 }
+
 
 
 private function calculateReducingBalanceEqualInstallment()
