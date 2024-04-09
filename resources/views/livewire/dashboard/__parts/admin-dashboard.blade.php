@@ -130,7 +130,7 @@
                                 </div>
                                 <!--end::Text-->
                             </div> --}}
-                            
+
                             <!--end::Item-->
                         </div>
                         <!--end::Body-->
@@ -145,7 +145,7 @@
                         <!--begin::Header-->
                         <div class="card-header border-0 pt-5">
                             <h3 class="card-title align-items-start flex-column">
-                                <span class="card-label fw-bold fs-3 mb-1">Latest Loan Requests</span>
+                                <span class="card-label fw-bold fs-3 mb-1">Latest 7 Loan Requests</span>
                                 <span class="text-muted mt-1 fw-semibold fs-7">More than {{ $all_loan_requests->count() }} total loan requests</span>
                             </h3>
                             <div class="card-toolbar">
@@ -185,7 +185,7 @@
                                             <!--end::Table head-->
                                             <!--begin::Table body-->
                                             <tbody>
-                                                
+
                                                 @forelse($all_loan_requests as $loan)
                                                 <tr>
                                                     <td>
@@ -232,234 +232,6 @@
                                     </div>
                                     <!--end::Table-->
                                 </div>
-                                <!--end::Tap pane-->
-                                <!--begin::Tap pane-->
-                                {{-- <div class="tab-pane fade" id="kt_table_widget_5_tab_2">
-                                    <!--begin::Table container-->
-                                    <div class="table-responsive">
-                                        <!--begin::Table-->
-                                        <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
-                                            <!--begin::Table head-->
-                                            <thead>
-                                                <tr class="border-0">
-                                                    <th class="p-0 w-50px"></th>
-                                                    <th class="p-0 min-w-150px"></th>
-                                                    <th class="p-0 min-w-140px"></th>
-                                                    <th class="p-0 min-w-110px"></th>
-                                                    <th class="p-0 min-w-50px"></th>
-                                                </tr>
-                                            </thead>
-                                            <!--end::Table head-->
-                                            <!--begin::Table body-->
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="symbol symbol-45px me-2">
-                                                            <span class="symbol-label">
-                                                                <img src="assets/media/svg/brand-logos/plurk.svg" class="h-50 align-self-center" alt="" />
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">Brad Simmons</a>
-                                                        <span class="text-muted fw-semibold d-block">Movie Creator</span>
-                                                    </td>
-                                                    <td class="text-end text-muted fw-bold">React, HTML</td>
-                                                    <td class="text-end">
-                                                        <span class="badge badge-light-success">Approved</span>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <a href="#" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
-                                                            <i class="ki-duotone ki-arrow-right fs-2">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="symbol symbol-45px me-2">
-                                                            <span class="symbol-label">
-                                                                <img src="assets/media/svg/brand-logos/telegram.svg" class="h-50 align-self-center" alt="" />
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">Popular Authors</a>
-                                                        <span class="text-muted fw-semibold d-block">Most Successful</span>
-                                                    </td>
-                                                    <td class="text-end text-muted fw-bold">Python, MySQL</td>
-                                                    <td class="text-end">
-                                                        <span class="badge badge-light-warning">In Progress</span>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <a href="#" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
-                                                            <i class="ki-duotone ki-arrow-right fs-2">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="symbol symbol-45px me-2">
-                                                            <span class="symbol-label">
-                                                                <img src="assets/media/svg/brand-logos/bebo.svg" class="h-50 align-self-center" alt="" />
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">Active Customers</a>
-                                                        <span class="text-muted fw-semibold d-block">Movie Creator</span>
-                                                    </td>
-                                                    <td class="text-end text-muted fw-bold">AngularJS, C#</td>
-                                                    <td class="text-end">
-                                                        <span class="badge badge-light-danger">Rejected</span>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <a href="#" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
-                                                            <i class="ki-duotone ki-arrow-right fs-2">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            <!--end::Table body-->
-                                        </table>
-                                    </div>
-                                    <!--end::Table-->
-                                </div> --}}
-                                <!--end::Tap pane-->
-                                <!--begin::Tap pane-->
-                                {{-- <div class="tab-pane fade" id="kt_table_widget_5_tab_3">
-                                    <!--begin::Table container-->
-                                    <div class="table-responsive">
-                                        <!--begin::Table-->
-                                        <table class="table table-row-dashed table-row-gray-200 align-middle gs-0 gy-4">
-                                            <!--begin::Table head-->
-                                            <thead>
-                                                <tr class="border-0">
-                                                    <th class="p-0 w-50px"></th>
-                                                    <th class="p-0 min-w-150px"></th>
-                                                    <th class="p-0 min-w-140px"></th>
-                                                    <th class="p-0 min-w-110px"></th>
-                                                    <th class="p-0 min-w-50px"></th>
-                                                </tr>
-                                            </thead>
-                                            <!--end::Table head-->
-                                            <!--begin::Table body-->
-                                            <tbody>
-                                                <tr>
-                                                    <td>
-                                                        <div class="symbol symbol-45px me-2">
-                                                            <span class="symbol-label">
-                                                                <img src="assets/media/svg/brand-logos/kickstarter.svg" class="h-50 align-self-center" alt="" />
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">Bestseller Theme</a>
-                                                        <span class="text-muted fw-semibold d-block">Best Customers</span>
-                                                    </td>
-                                                    <td class="text-end text-muted fw-bold">ReactJS, Ruby</td>
-                                                    <td class="text-end">
-                                                        <span class="badge badge-light-warning">In Progress</span>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <a href="#" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
-                                                            <i class="ki-duotone ki-arrow-right fs-2">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="symbol symbol-45px me-2">
-                                                            <span class="symbol-label">
-                                                                <img src="assets/media/svg/brand-logos/bebo.svg" class="h-50 align-self-center" alt="" />
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">Active Customers</a>
-                                                        <span class="text-muted fw-semibold d-block">Movie Creator</span>
-                                                    </td>
-                                                    <td class="text-end text-muted fw-bold">AngularJS, C#</td>
-                                                    <td class="text-end">
-                                                        <span class="badge badge-light-danger">Rejected</span>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <a href="#" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
-                                                            <i class="ki-duotone ki-arrow-right fs-2">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="symbol symbol-45px me-2">
-                                                            <span class="symbol-label">
-                                                                <img src="assets/media/svg/brand-logos/vimeo.svg" class="h-50 align-self-center" alt="" />
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">New Users</a>
-                                                        <span class="text-muted fw-semibold d-block">Awesome Users</span>
-                                                    </td>
-                                                    <td class="text-end text-muted fw-bold">Laravel,Metronic</td>
-                                                    <td class="text-end">
-                                                        <span class="badge badge-light-primary">Success</span>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <a href="#" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
-                                                            <i class="ki-duotone ki-arrow-right fs-2">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                                <tr>
-                                                    <td>
-                                                        <div class="symbol symbol-45px me-2">
-                                                            <span class="symbol-label">
-                                                                <img src="assets/media/svg/brand-logos/telegram.svg" class="h-50 align-self-center" alt="" />
-                                                            </span>
-                                                        </div>
-                                                    </td>
-                                                    <td>
-                                                        <a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">Popular Authors</a>
-                                                        <span class="text-muted fw-semibold d-block">Most Successful</span>
-                                                    </td>
-                                                    <td class="text-end text-muted fw-bold">Python, MySQL</td>
-                                                    <td class="text-end">
-                                                        <span class="badge badge-light-warning">In Progress</span>
-                                                    </td>
-                                                    <td class="text-end">
-                                                        <a href="#" class="btn btn-sm btn-icon btn-bg-light btn-active-color-primary">
-                                                            <i class="ki-duotone ki-arrow-right fs-2">
-                                                                <span class="path1"></span>
-                                                                <span class="path2"></span>
-                                                            </i>
-                                                        </a>
-                                                    </td>
-                                                </tr>
-                                            </tbody>
-                                            <!--end::Table body-->
-                                        </table>
-                                    </div>
-                                    <!--end::Table-->
-                                </div> --}}
-                                <!--end::Tap pane-->
                             </div>
                         </div>
                         <!--end::Body-->
@@ -467,6 +239,15 @@
                     <!--end::Tables Widget 5-->
                 </div>
                 <!--end::Col-->
+
+                <div class="w-full d-flex gap-4">
+                    <a href="{{ route('loan-calculator') }}" class="btn btn-primary text-white">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-calculator" viewBox="0 0 16 16">
+                            <path d="M12 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1zM4 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2z"/>
+                            <path d="M4 2.5a.5.5 0 0 1 .5-.5h7a.5.5 0 0 1 .5.5v2a.5.5 0 0 1-.5.5h-7a.5.5 0 0 1-.5-.5zm0 4a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm3-6a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5zm0 3a.5.5 0 0 1 .5-.5h1a.5.5 0 0 1 .5.5v4a.5.5 0 0 1-.5.5h-1a.5.5 0 0 1-.5-.5z"/>
+                        </svg>
+                    </a>
+                </div>
             </div>
             <!--end::Row-->
             <!--begin::Row-->

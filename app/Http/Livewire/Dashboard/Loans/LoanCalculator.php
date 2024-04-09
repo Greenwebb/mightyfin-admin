@@ -27,7 +27,7 @@ class LoanCalculator extends Component
     public $loan_duration_period;
     public $minimum_num_of_repayments = 1;
     public $loan_duration_value = 1;
-    public $loan_repayment_cycle;
+    public $loan_repayment_cycle = 'Daily';
     public $amortization_table_flat_rate;
     public $total_repayment_amount_flat_rate;
 

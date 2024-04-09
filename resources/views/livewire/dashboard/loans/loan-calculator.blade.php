@@ -152,10 +152,9 @@
                                     </div> 
                                     <div class="col-lg-3">
                                         <select type="text" wire:model.lazy="loan_interest_period" class="form-select form-control form-control-lg " placeholder="Company name" value="Keenthemes">
-                                            <option value=""></option>
                                             <option value="per-day">Per Day</option>
                                             <option value="per-week">Per Week</option>
-                                            <option value="per-month">Per Month</option>
+                                            <option value="per-month" selected>Per Month</option>
                                             <option value="per-year">Per Year</option>
                                             <option value="per-loan">Per Loan</option>
                                         </select>
@@ -194,8 +193,7 @@
                                     </div> 
                                     <div class="col-lg-4">
                                         <select type="text" wire:model.lazy="loan_duration_period" class="form-select form-control form-control-lg " placeholder="Company name" value="Keenthemes">
-                                            <option value=""></option>
-                                            <option value="day">Days</option>
+                                            <option value="day" selected>Days</option>
                                             <option value="week">Weeks</option>
                                             <option value="month">Month</option>
                                             <option value="year">Years</option>
