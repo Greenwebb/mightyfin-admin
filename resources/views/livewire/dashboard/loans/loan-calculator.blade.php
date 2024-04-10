@@ -16,35 +16,35 @@
                 <table class="table table-bordered table-hover">
                     <thead>
                         <tr>
+                            <th>#</th>
                             <th>Due Date</th>
-                            <th>Principal Amount</th>
-                            <th>Interest Amount</th>
-                            <th>Fee Amount</th>
-                            <th>Penalty Amount</th>
-                            <th>Due Amount</th>
+                            <th>Principal</th>
+                            <th>Interest</th>
+                            <th>Fees</th>
+                            <th>Due</th>
                             <th>Principal Balance</th>
                             <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($amortization_table_flat_rate as $row)
-                            <tr>
-                                <td>{{ $row['due_date'] }}</td>
-                                <td>{{ $row['principal_amount'] }}</td>
-                                <td>{{ $row['interest_amount'] }}</td>
-                                <td>{{ $row['fee_amount'] }}</td>
-                                <td>{{ $row['penalty_amount'] }}</td>
-                                <td>{{ $row['due_amount'] }}</td>
-                                <td>{{ $row['principal_balance'] }}</td>
-                                <td>{{ $row['description'] }}</td>
-                            </tr>
+                        @foreach($amortization_table_flat_rate['installments'] as $index => $row)
+                        <tr>
+                            <td>{{ $index + 1 }}</td>
+                            <td>{{ $row['due_date'] }}</td>
+                            <td>{{ $row['principal'] }}</td>
+                            <td>{{ $row['interest'] }}</td>
+                            <td>{{ $row['fees'] }}</td>
+                            <td>{{ $row['due'] }}</td>
+                            <td>{{ $row['principal_balance'] }}</td>
+                            <td>{{ $row['description'] }}</td>
+                        </tr>
                         @endforeach
                     </tbody>
                 </table>
             </div>
         </div>
-
         @endif
+
     </div>
 
     <div class="post d-flex flex-column-fluid" id="kt_post">

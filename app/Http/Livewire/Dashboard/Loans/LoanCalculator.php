@@ -226,38 +226,50 @@ private function calculateFlatRate()
     // Calculate monthly interest rate
     $monthly_interest_rate = $this->loan_interest_value / 100 / 12;
 
-    // Calculate monthly installment
-    $monthly_installment = $loan_balance * $monthly_interest_rate / (1 - pow(1 + $monthly_interest_rate, -$loan_term));
+    // Calculate total interest
+    $total_interest = $this->principal * ($this->loan_interest_value / 100);
+
+    // Calculate total repayment amount
+    $total_repayment_amount = $this->principal + $total_interest;
 
     // Get the release date and convert it to a Carbon instance
     $release_date = Carbon::parse($this->release_date);
 
-    // Calculate the number of rows based on the minimum number of repayments
-    $num_rows = max(1, $this->minimum_num_of_repayments);
+    // Calculate maturity date based on loan term
+    $maturity_date = $release_date->copy()->addMonths($loan_term);
+
+    // Add loan details to the amortization table
+    $amortization_table['loan_details'] = [
+        'released' => $release_date->format('d/m/Y'),
+        'maturity' => $maturity_date->format('d/m/Y'),
+        'repayment_frequency' => $this->loan_repayment_cycle,
+        'principal' => number_format($this->principal, 2),
+        'total_interest' => number_format($total_interest, 2),
+        'fees' => '0.00',
+        'due' => number_format($total_repayment_amount, 2),
+    ];
 
     // Loop through each period and calculate interest, principal, and remaining balance
-    for ($i = 1; $i <= $num_rows; $i++) {
+    for ($i = 1; $i <= $this->minimum_num_of_repayments; $i++) {
         // Calculate due date based on the release date
-        $due_date = $release_date->addDays(7 * $i); // Assuming weekly payments
+        $due_date = $release_date->copy()->addWeeks($i); // Assuming weekly payments
 
         // Calculate interest for the current period
         $interest = $loan_balance * $monthly_interest_rate;
 
         // Calculate principal for the current period
-        $principal = $monthly_installment - $interest;
+        $principal = $this->principal / $this->minimum_num_of_repayments;
 
         // Update loan balance
         $loan_balance -= $principal;
 
         // Add current period's data to amortization table
-        $amortization_table[] = [
-            'period' => $i,
+        $amortization_table['installments'][] = [
             'due_date' => $due_date->format('d/m/Y'),
-            'principal_amount' => number_format($this->principal / $this->minimum_num_of_repayments, 2),
-            'interest_amount' => number_format($interest, 2),
-            'fee_amount' => '0',
-            'penalty_amount' => '0',
-            'due_amount' => number_format($monthly_installment, 2),
+            'principal' => number_format($principal, 2),
+            'interest' => number_format($interest, 2),
+            'fees' => '0.00',
+            'due' => number_format($principal + $interest, 2),
             'principal_balance' => number_format($loan_balance, 2),
             'description' => ($loan_balance <= 0) ? 'Maturity' : 'Repayment',
         ];
@@ -267,9 +279,8 @@ private function calculateFlatRate()
     $this->amortization_table_flat_rate = $amortization_table;
 
     // Store total repayment amount in a public property
-    $this->total_repayment_amount_flat_rate = $monthly_installment * $loan_term;
+    $this->total_repayment_amount_flat_rate = number_format($total_repayment_amount, 2);
 }
-
 
 
 
