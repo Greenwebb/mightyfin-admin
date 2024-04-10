@@ -6,7 +6,8 @@
         </h3>
     </div>
 
-    <div>
+    <div class="px-8">
+        @if ($amortization_table_flat_rate)
         <div class="card mt-5">
             <div class="card-header bg-secondary">
                 <h3 class="card-title text-info">Amortization Table</h3>
@@ -42,6 +43,8 @@
                 </table>
             </div>
         </div>
+
+        @endif
     </div>
 
     <div class="post d-flex flex-column-fluid" id="kt_post">
@@ -258,4 +261,18 @@
             </div>
         </form>
     </div>
+
+    <script>
+        // Function to scroll to the top of the page
+        function scrollToTop() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // Add an event listener to the submit button
+        document.getElementById('kt_account_deactivate_account_submit').addEventListener('click', function() {
+            // Scroll to the top when the button is clicked
+            scrollToTop();
+        });
+    </script>
+
 </div>
