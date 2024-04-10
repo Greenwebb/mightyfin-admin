@@ -190,15 +190,15 @@
                                                 </svg>
                                             </button>
                                         </div>
-                                    </div>
-                                    <div class="col-lg-4">
-                                        <select type="text" wire:model.lazy="loan_duration_period" class="form-select form-control form-control-lg " placeholder="Company name" value="Keenthemes">
+                                    </div><div class="col-lg-4">
+                                        <select type="text" wire:model.lazy="loan_duration_period" wire:change="updateLoanDurationPeriod" class="form-select form-control form-control-lg" placeholder="Company name" value="Keenthemes">
                                             <option value="day" selected>Days</option>
                                             <option value="week">Weeks</option>
                                             <option value="month">Month</option>
                                             <option value="year">Years</option>
                                         </select>
                                     </div>
+
                                 </div>
                             </div>
                         </div>
@@ -217,7 +217,7 @@
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Repayment Cycle</label>
                                 <div class="col-lg-8 fv-row">
                                     <div class="mt-3 align-items-start" style="display: block">
-                                        <select wire:model.lazy="loan_repayment_cycle" class="form-select form-control-lg">
+                                        <select wire:model.lazy="loan_repayment_cycle" wire:change="updateLoanDurationPeriod" class="form-select form-control-lg">
                                             @foreach ($repayment_cycles as $option)
                                                 <option value="{{ $option->name }}">{{ $option->name }}</option>
                                             @endforeach

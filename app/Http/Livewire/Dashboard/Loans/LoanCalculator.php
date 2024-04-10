@@ -51,79 +51,123 @@ class LoanCalculator extends Component
 
     public function convertTime()
 {
-
-    // dd($this->loan_duration_period);
+    // Determine the loan duration period
     switch ($this->loan_duration_period) {
         case 'day':
+            // Handle loan duration specified in days
             switch ($this->loan_repayment_cycle) {
                 case 'Daily':
+                    // Minimum number of repayments equals the loan duration value (days)
                     $this->minimum_num_of_repayments = $this->loan_duration_value;
-                break;
-                // case 'Weekly':
-                //     $this->minimum_num_of_repayments = $this->loan_duration_value / 7;
-                //     break;
-                case 'BiWeekly':
-                    // Calculate minimum number of repayments for bi-weekly cycle
-                break;
-                case 'Monthly':
-                    // Calculate minimum number of repayments for monthly cycle
-                break;
+                    break;
+                case 'Weekly':
+                    // Convert days to weeks for weekly repayment cycle
+                    $this->minimum_num_of_repayments = $this->loan_duration_value / 7;
+                    break;
+                case 'Biweekly':
+                    // Convert days to biweeks for biweekly repayment cycle
+                    $this->minimum_num_of_repayments = $this->loan_duration_value / 14;
+                    break;
+                case 'Bimonthly':
+                    // Convert days to bimonths for bimonthly repayment cycle
+                    $this->minimum_num_of_repayments = $this->loan_duration_value / (30 * 2);
+                    break;
+                case 'Quarterly':
+                    // Convert days to quarters for quarterly repayment cycle
+                    $this->minimum_num_of_repayments = $this->loan_duration_value / (30 * 3);
+                    break;
                 default:
-                    // $this->minimum_num_of_repayments = $this->loan_duration_value;
-                break;
+                    // Handle default case
+                    break;
             }
             break;
-            case 'week':
-                switch ($this->loan_repayment_cycle) {
-                    case 'Daily':
-                        // dd($this->loan_duration_value);
-                        // Convert weekly duration to days
-                        $this->minimum_num_of_repayments = $this->loan_duration_value * 7;
+        case 'week':
+            // Handle loan duration specified in weeks
+            switch ($this->loan_repayment_cycle) {
+                case 'Daily':
+                    // Convert weeks to days for daily repayment cycle
+                    $this->minimum_num_of_repayments = $this->loan_duration_value * 7;
                     break;
-                    case 'Weekly':
-                        $this->minimum_num_of_repayments = $this->loan_duration_value;
+                case 'Weekly':
+                    // Minimum number of repayments equals the loan duration value (weeks)
+                    $this->minimum_num_of_repayments = $this->loan_duration_value;
                     break;
-                    case 'BiWeekly':
-                        // Calculate minimum number of repayments for bi-weekly cycle
+                case 'Biweekly':
+                    // Convert weeks to biweeks for biweekly repayment cycle
+                    $this->minimum_num_of_repayments = $this->loan_duration_value / 2;
                     break;
-                    case 'Monthly':
-                        // Calculate minimum number of repayments for monthly cycle
+                case 'Bimonthly':
+                    // Convert weeks to bimonths for bimonthly repayment cycle
+                    $this->minimum_num_of_repayments = $this->loan_duration_value / (4 * 2);
                     break;
-                    default:
-                        $this->minimum_num_of_repayments = $this->loan_duration_value * 7;
+                case 'Quarterly':
+                    // Convert weeks to quarters for quarterly repayment cycle
+                    $this->minimum_num_of_repayments = $this->loan_duration_value / (4 * 3);
                     break;
-                }
+                default:
+                    // Handle default case
+                    break;
+            }
             break;
-            case 'month':
-                switch ($this->loan_repayment_cycle) {
-                    case 'Daily':
-                        // Convert monthly duration to days
-                        $this->minimum_num_of_repayments = $this->loan_duration_value * 30;
-                        break;
-                    case 'Weekly':
-                        // Convert monthly duration to weeks
-                        $this->minimum_num_of_repayments = $this->loan_duration_value * 4;
-                        break;
-                    case 'BiWeekly':
-                        // Convert monthly duration to bi-weeks
-                        $this->minimum_num_of_repayments = $this->loan_duration_value * 2;
-                        break;
-                    case 'Monthly':
-                        // Minimum number of repayments is equal to the loan duration value
-                        $this->minimum_num_of_repayments = $this->loan_duration_value;
-                        break;
-                    default:
-                        // Default conversion to days
-                        $this->minimum_num_of_repayments = $this->loan_duration_value * 30;
-                        break;
-                }
+        case 'month':
+            // Handle loan duration specified in months
+            switch ($this->loan_repayment_cycle) {
+                case 'Daily':
+                    // Convert months to days for daily repayment cycle
+                    $this->minimum_num_of_repayments = $this->loan_duration_value * 30;
+                    break;
+                case 'Weekly':
+                    // Convert months to weeks for weekly repayment cycle
+                    $this->minimum_num_of_repayments = $this->loan_duration_value * 4;
+                    break;
+                case 'Biweekly':
+                    // Convert months to biweeks for biweekly repayment cycle
+                    $this->minimum_num_of_repayments = $this->loan_duration_value * 2;
+                    break;
+                case 'Monthly':
+                    // Minimum number of repayments equals the loan duration value (months)
+                    $this->minimum_num_of_repayments = $this->loan_duration_value;
+                    break;
+                default:
+                    // Default conversion to days
+                    $this->minimum_num_of_repayments = $this->loan_duration_value * 30;
+                    break;
+            }
             break;
-
+        case 'year':
+            // Handle loan duration specified in years
+            switch ($this->loan_repayment_cycle) {
+                case 'Daily':
+                    // Convert years to days for daily repayment cycle
+                    $this->minimum_num_of_repayments = $this->loan_duration_value * 365;
+                    break;
+                case 'Weekly':
+                    // Convert years to weeks for weekly repayment cycle
+                    $this->minimum_num_of_repayments = $this->loan_duration_value * 52;
+                    break;
+                case 'Biweekly':
+                    // Convert years to biweeks for biweekly repayment cycle
+                    $this->minimum_num_of_repayments = $this->loan_duration_value * 26;
+                    break;
+                case 'Bimonthly':
+                    // Convert years to bimonths for bimonthly repayment cycle
+                    $this->minimum_num_of_repayments = $this->loan_duration_value * 6;
+                    break;
+                case 'Quarterly':
+                    // Convert years to quarters for quarterly repayment cycle
+                    $this->minimum_num_of_repayments = $this->loan_duration_value * 4;
+                    break;
+                default:
+                    // Handle default case
+                    break;
+            }
+            break;
         default:
             // Handle default case
             break;
     }
 }
+
 
 
     // Method to increase the loan interest value
@@ -153,6 +197,11 @@ class LoanCalculator extends Component
     public function decreaseRepayments()
     {
         $this->minimum_num_of_repayments--;
+    }
+
+    public function updateLoanDurationPeriod()
+    {
+        $this->convertTime();
     }
 
 

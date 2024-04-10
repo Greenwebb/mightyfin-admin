@@ -21,7 +21,6 @@ class DashboardView extends Component
 
     public function render()
     {
-        $this->isKYCComplete();
         $this->my_loan = $this->getCurrentLoan();
         $this->wallet = $this->getWalletBalance(auth()->user());
         if (auth()->user()->hasRole('user')) {
@@ -29,7 +28,7 @@ class DashboardView extends Component
         } else {
             $this->all_loan_requests = Application::orWhere('status', 2)
                 ->orWhere('status', 0)
-                ->orderBy('created_at', 'desc')->take(5)->get();
+                ->orderBy('created_at', 'desc')->take(7)->get();
             return view('livewire.dashboard.dashboard-view')
                 ->layout('layouts.admin');
         }
