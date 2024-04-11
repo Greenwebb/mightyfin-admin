@@ -44,7 +44,6 @@
             </div>
         </div>
         @endif
-
     </div>
 
     <div class="post d-flex flex-column-fluid" id="kt_post">

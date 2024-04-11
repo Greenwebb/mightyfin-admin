@@ -4,8 +4,8 @@
             <div class="card">
                 <div class="card-header">
                     <h3 class="card-title align-items-start flex-column">
-                        <span class="card-label fw-bold fs-3 mb-1">Active Repayments</span>
-                        <span class="text-muted mt-1 fw-semibold fs-7">Over {{$users->count()}} Missed Repayments</span>
+                        <span class="card-label fw-bold fs-3 mb-1">Users</span>
+                        <span class="text-muted mt-1 fw-semibold fs-7">Over {{$users->count()}} Registered Users</span>
                     </h3>
                     {{-- <div>
                         @can('view all loan requests')
@@ -26,7 +26,7 @@
                         <div wire:ignore class="alert alert-info solid alert-end-icon alert-dismissible fade show">
                             <span><i class="mdi mdi-check"></i></span>
                             <button type="button" class="btn-close" data-dismiss="alert" aria-label="btn-close">
-                            </button> {{ Session::get('attention') }} 
+                            </button> {{ Session::get('attention') }}
                             {{-- @dd(session('borrower_id')) --}}
                             <a class="text-white" href="{{ route('apply-for', ['id' => session('borrower_id') ?? 0]) }}"> Continue to loan application</a>
                         </div>
@@ -41,7 +41,7 @@
                         <div wire:ignore class="alert alert-success solid alert-end-icon alert-dismissible fade show">
                             <span><i class="mdi mdi-help"></i></span>
                             <button type="button" class="btn-close" data-dismiss="alert" aria-label="btn-close">
-            
+
                             </button> {{ Session::get('deteted') }}
                         </div>
                         @endif
@@ -60,7 +60,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                
+
                                 @forelse($users as $user)
                                 <tr>
                                     <td>
@@ -94,8 +94,8 @@
                                             @if($user->email != 'info@mightyfinance.co.zm' || $user->email != 'info@mightyfinance.co.zm')
                                             <a href="#" wire:click="destory({{ $user->id }})" onclick="confirm('Are you sure you want to permanently delete this account.') || event.stopImmediatePropagation();" class="btn btn-danger shadow btn-xs sharp"><i class="fa fa-trash"></i></a>
                                             @endif
-                                        </div>												
-                                    </td>												
+                                        </div>
+                                    </td>
                                 </tr>
                                 @empty
                                 <div class="intro-y col-span-12 md:col-span-6">
@@ -135,7 +135,7 @@
                     <button type="button" class="btn-close" data-dismiss="modal">
                     </button>
                 </div>
-                
+
                 <form method="POST" action="{{ route('create-user') }}"  class="needs-validation" validate enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
@@ -154,7 +154,7 @@
                                                                 </div>
                                                                 <div class="mx-auto cursor-pointer relative mt-5">
                                                                     {{-- <button type="button" class="btn btn-square btn-primary">Add Photo</button> --}}
-                                                                    <input type="file" id="prof_image_create" name="image_path" class="w-full h-full top-0 left-0"> 
+                                                                    <input type="file" id="prof_image_create" name="image_path" class="w-full h-full top-0 left-0">
                                                                     {{-- <input type="file" name="image_path" class="w-full h-full"> --}}
                                                                 </div>
                                                                 <small>
@@ -163,7 +163,7 @@
                                                                     @endif --}}
                                                                 </small>
                                                             </div>
-                                                        </div>                                                        
+                                                        </div>
                                                     </div>
                                                     <div class="mb-3 row">
                                                         <label class="col-lg-4 col-form-label" for="validationCustom01">Firstname
@@ -344,7 +344,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger light" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>  
+                    </div>
                 </form>
             </div>
         </div>
@@ -361,7 +361,7 @@
                     <button type="button" class="btn-close" data-dismiss="modal">
                     </button>
                 </div>
-                
+
                 <form method="POST" action="{{ route('update-user') }}"  class="needs-validation" novalidate enctype="multipart/form-data">
                     @csrf
                     <div class="modal-body">
@@ -380,7 +380,7 @@
                                                                 </div>
                                                                 <div class="mx-auto cursor-pointer relative mt-5">
                                                                 <button type="button" class="btn btn-primary w-full">Add Photo</button>
-                                                                    <input type="file" id="prof_image_create" name="profile_photo_path" class="w-full h-full top-0 left-0 absolute opacity-0"> 
+                                                                    <input type="file" id="prof_image_create" name="profile_photo_path" class="w-full h-full top-0 left-0 absolute opacity-0">
                                                                     {{-- <input type="file" name="image_path" class="w-full h-full"> --}}
                                                                 </div>
                                                                 <small>
@@ -389,7 +389,7 @@
                                                                     @endif --}}
                                                                 </small>
                                                             </div>
-                                                        </div>                                                        
+                                                        </div>
                                                     </div>
                                                     <div class="mb-3 row">
                                                         <label class="col-lg-4 col-form-label" for="validationCustom01">Firstname
@@ -570,7 +570,7 @@
                     <div class="modal-footer">
                         <button type="button" class="btn btn-danger light" data-dismiss="modal">Close</button>
                         <button type="submit" class="btn btn-primary">Save changes</button>
-                    </div>  
+                    </div>
                 </form>
             </div>
         </div>
@@ -583,10 +583,10 @@
 $(document).ready(function (e) {
    $('#prof_image_create').change(function(){
         let reader = new FileReader();
-        reader.onload = (e) => { 
-            $('#preview-image-before-upload_create').attr('src', e.target.result); 
+        reader.onload = (e) => {
+            $('#preview-image-before-upload_create').attr('src', e.target.result);
         }
-        reader.readAsDataURL(this.files[0]); 
+        reader.readAsDataURL(this.files[0]);
     });
 
     // const select = document.getElementById('user_group_select');

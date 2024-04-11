@@ -170,42 +170,6 @@ class LoanCalculator extends Component
 
 
 
-    // Method to increase the loan interest value
-    public function increaseDurationValue()
-    {
-        $this->loan_duration_value++;
-        $this->increaseRepayments();
-        $this->convertTime();
-
-    }
-
-    // Method to decrease the loan interest value
-    public function decreaseDurationValue()
-    {
-        $this->loan_duration_value--;
-        $this->decreaseRepayments();
-        $this->convertTime();
-    }
-
-    // Method to increase the minimum number of repayments
-    public function increaseRepayments()
-    {
-        $this->minimum_num_of_repayments++;
-    }
-
-    // Method to decrease the minimum number of repayments
-    public function decreaseRepayments()
-    {
-        $this->minimum_num_of_repayments--;
-    }
-
-    public function updateLoanDurationPeriod()
-    {
-        $this->convertTime();
-    }
-
-
-
     // Add this method to your Livewire component
 
 public function calculateLoan()
