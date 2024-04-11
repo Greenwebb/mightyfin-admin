@@ -91,14 +91,12 @@ trait LoanTrait{
 
     public function getLoanRequests($type){
         $userId = auth()->user()->id;
-
         if(auth()->user()->hasRole('admin')){
-            // dd('here');
-            return Application::orWhere('status', 0)->orWhere('status', 2)->with('loan_product')->get();
+            return Application::orWhere('status', 0)->orWhere('status', 2)->with('loan_product')->orderByDesc('id')->get();
         }else{
             switch ($type) {
                 case 'spooling':
-                    return Application::orWhere('status', 0)->orWhere('status', 2)->with('loan_product')->get();
+                    return Application::orWhere('status', 0)->orWhere('status', 2)->with('loan_product')->orderByDesc('id')->get();
                     break;
 
                 case 'manual':
@@ -110,16 +108,17 @@ trait LoanTrait{
                         $query->where('is_active', 1);
                     })
                     ->orWhere('status', 2)->orWhere('status', 0)
+                    ->orderByDesc('id')
                     ->get();
                     break;
 
                 case 'auto':
-                    # code...
+                    // Add your code here for the 'auto' case
                     break;
 
                 default:
-                    # code...
-                break;
+                    // Add your code here for the default case
+                    break;
             }
         }
     }
@@ -159,7 +158,7 @@ trait LoanTrait{
     public function getDueLoanRequests($type){
 
         $currentDate = Carbon::now();
-        
+
         return Application::with('loan_product', 'loan')
             ->where('complete', 1)
             ->where('status', 1)
@@ -211,7 +210,7 @@ trait LoanTrait{
         ->where('status', 1)
         ->whereDoesntHave('loan_installments') // Check if the application doesn't have any associated loans
         ->get();
-    
+
     }
     public function getPrincipalOutstandingLoan($type){
         return Application::with('loan_product', 'loan')
@@ -219,7 +218,7 @@ trait LoanTrait{
         ->where('status', 1)
         ->whereDoesntHave('loan_installments') // Check if the application doesn't have any associated loans
         ->get();
-    
+
     }
     public function getOneMonthLate($type){
         return Application::with('loan_product', 'loan')
