@@ -24,7 +24,7 @@ class DashboardView extends Component
         $this->my_loan = $this->getCurrentLoan();
         $this->wallet = $this->getWalletBalance(auth()->user());
         if (auth()->user()->hasRole('user')) {
-            Auth::logout(); // Logout the user
+            // Auth::logout(); // Logout the user
         } else {
             $this->all_loan_requests = Application::orWhere('status', 2)
                 ->orWhere('status', 0)

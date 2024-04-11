@@ -94,7 +94,7 @@ trait LoanTrait{
         if(auth()->user()->hasRole('admin')){
             return Application::orWhere('status', 0)->orWhere('status', 2)->with('loan_product')->orderByDesc('id')->get();
         }else{
-            switch ($type) {
+            switch ($tPype) {
                 case 'spooling':
                     return Application::orWhere('status', 0)->orWhere('status', 2)->with('loan_product')->orderByDesc('id')->get();
                     break;
