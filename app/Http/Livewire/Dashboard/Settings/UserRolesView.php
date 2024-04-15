@@ -27,7 +27,7 @@ class UserRolesView extends Component
 
         // dd($this->permissions);
         $roles = Role::orderBy('id','DESC')->paginate(5);
-        
+
         return view('livewire.dashboard.settings.user-roles-view', [
             'roles' => $roles,
             'permissions' => $permissions
@@ -46,7 +46,7 @@ class UserRolesView extends Component
                 'guard_name' => 'web'
             ]);
             $role->syncPermissions($this->permission);
-        
+
             Session::flash('attention', "New role created successfully.");
             $this->clearFields();
             return redirect()->route('roles');
@@ -64,11 +64,10 @@ class UserRolesView extends Component
 
     public function edit(Role $role)
     {
+
         $this->name = $role->name;
         $this->role_id = $role->id;
         $this->rolePermissions = $role->permissions->pluck('name')->toArray();
-        
-        $this->show = 'true';
     }
 
     // Not in use
@@ -79,10 +78,8 @@ class UserRolesView extends Component
                 'name' => 'required',
                 'permission' => 'required|array',
             ]);
-            
+
             $role->update(['name' => $this->name]);
-            $role->syncPermissions($this->permission);
-            dd($this->permission);  
             Session::flash('attention', "Role updated successfully.");
             return redirect()->route('roles');
         } catch (\Throwable $th) {
@@ -96,7 +93,7 @@ class UserRolesView extends Component
     {
         $role->delete();
         Session::flash('attention', "Role deleted successfully.");
-        
+
         return redirect()->route('roles');
     }
 
@@ -120,10 +117,10 @@ class UserRolesView extends Component
     }
 
     public function clearFields(){
-        $this->user_roles = []; 
-        $this->permissions = []; 
+        $this->user_roles = [];
+        // $this->permissions = [];
         $this->name = '';
-        $this->role = ''; 
+        $this->role = '';
         $this->rolePermissions = [];
     }
 }
