@@ -13,7 +13,6 @@ use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Collection;
 
 trait UserTrait{
-
     public function registerUser($input){
         $password = 'mighty4you';
 

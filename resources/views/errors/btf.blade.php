@@ -4,7 +4,7 @@
 <html lang="en" class="h-100">
 
 <head>
-     	
+
     <meta charset="utf-8">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -13,11 +13,11 @@
 	<meta property="og:description" content="Salreo : Crypto Trading UI Admin  Bootstrap 5 Template" >
 	<meta property="og:image" content="social-image.png" >
 	<meta name="format-detection" content="telephone=no">
-	
+
 	<!-- PAGE TITLE HERE -->
-	<title>Mighty Finance - Dashboard</title>
+	<title>Mighty Finance - Oh Oh</title>
 	<!-- FAVICONS ICON -->
-	
+
 
     <link href="{{ asset('public/vendor/wow-master/css/libs/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('public/vendor/bootstrap-select/dist/css/bootstrap-select.min.css') }}" rel="stylesheet">
@@ -35,7 +35,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Icons" rel="stylesheet">
 
     <link rel="stylesheet" href="{{ asset('public/mfs/css/style.css')}}" />
-  
+
 </head>
 
 <body class="vh-100">
@@ -44,10 +44,10 @@
             <div class="row justify-content-center h-100 align-items-center">
                 <div class="col-md-7">
                     <div class="form-input-content text-center error-page">
-                        <h1 style="color: #792db8" class="error-text fw-bold"> 
+                        <h1 style="color: #792db8" class="error-text fw-bold">
                             @yield('code')
                         </h1>
-                        <h4><i class="fa fa-exclamation-triangle text-warning"></i> 
+                        <h4><i class="fa fa-exclamation-triangle text-warning"></i>
                             @yield('message')
                         </h4>
                         <p>@yield('submessage')</p>

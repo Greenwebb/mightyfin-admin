@@ -35,10 +35,10 @@ class EmployeesView extends Component
         $this->user_role = Role::pluck('name')->toArray();
         $this->permissions = Permission::get();
         $roles = Role::orderBy('id','desc')->paginate(5);
-        
-       
+
+
         $users = User::orderBy('id','desc')->get();
-        
+
         // For Staff only
         return view('livewire.dashboard.employees.employees-view', [
             'users' => $users,
@@ -61,7 +61,7 @@ class EmployeesView extends Component
     }
 
     public function destory($id){
-        $user = User::find($id); 
+        $user = User::find($id);
         if ($user) {
             try {
                 $user->delete();

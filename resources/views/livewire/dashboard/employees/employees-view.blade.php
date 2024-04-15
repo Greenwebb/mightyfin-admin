@@ -7,6 +7,10 @@
             <div class="card">
                 <!--begin::Card header-->
                 <div class="card-header border-0 pt-6">
+                    <h3 class="card-title align-items-start flex-column">
+                        <span class="card-label fw-bold fs-3 mb-1">Employees</span>
+                        {{-- <span class="text-muted mt-1 fw-semibold fs-7">Over {{$users->count()}} Employees</span> --}}
+                    </h3>
                     <!--begin::Card title-->
                     <div class="card-title">
                         <!--begin::Search-->
@@ -81,7 +85,7 @@
                         </thead>
                         <tbody class="fw-semibold text-gray-600">
                             @forelse($users as $user)
-                                @if(!$user->hasRole('user'))
+                                @if( !$user->hasRole('user')  && $user->id !== 1)
                                     <tr>
                                         <td>
                                             <div class="form-check form-check-sm form-check-custom form-check-solid">
@@ -296,7 +300,7 @@
                                         <!--begin::Input group-->
                                         <div class="row g-9 mb-7">
                                             <!--begin::Label-->
-                                            
+
                                             <div class="col-md-6 fv-row">
                                                 <label class="fs-6 fw-semibold mb-2">
                                                     <span class="required">Gender</span>
@@ -314,7 +318,7 @@
                                                     <option value="">Select a gender...</option>
                                                     <option value="Male">Male</option>
                                                     <option value="Female">Female</option>
-                                                    
+
                                                 </select>
                                             </div>
                                             <div class="col-md-6 fv-row">
@@ -514,10 +518,10 @@
     $(document).ready(function (e) {
         $('#prof_image_create').change(function(){
             let reader = new FileReader();
-            reader.onload = (e) => { 
-                $('#preview-image-before-upload_create').attr('src', e.target.result); 
+            reader.onload = (e) => {
+                $('#preview-image-before-upload_create').attr('src', e.target.result);
             }
-            reader.readAsDataURL(this.files[0]); 
+            reader.readAsDataURL(this.files[0]);
         });
     });
 
@@ -533,8 +537,8 @@
             const imgData = canvas.toDataURL('image/png');
             // Add the image data URL to the PDF document
             doc.addImage(
-                imgData, 
-                'PNG', 
+                imgData,
+                'PNG',
                 2, // x-coordinate
                 2, // y-coordinate
             );

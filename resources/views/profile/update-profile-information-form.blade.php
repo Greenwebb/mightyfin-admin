@@ -23,7 +23,7 @@
                             </div>
                         </div>
                     </div>
-                    <button class="btn btn-xs" style="background-color:blueviolet" id="openModalBtn">Change Profile Picture</button>
+                    <button class="btn btn-xs text-white" style="background-color:blueviolet" id="openModalBtn">Change Profile Picture</button>
                 </div>
             </div>
         </div>
@@ -89,8 +89,7 @@
                         </div>
 
                         <div class="col-12">
-                            <button type="submit" style="background-color: blueviolet" class="btn btn-xs"
-                            >
+                            <button type="submit" style="background-color: blueviolet" class="btn btn-xs text-white">
                             Save Changes
                             </button>
                         </div>
@@ -99,7 +98,6 @@
             </div>
         </div>
     </div>
-
     {{-- <x-slot name="actions">
         <x-jet-action-message class="mr-3" on="saved">
             {{ __('Updating...') }}
