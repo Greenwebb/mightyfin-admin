@@ -28,7 +28,7 @@
                     <span class="path3"></span>
                     <span class="path4"></span>
                 </i>
-                <div class="text-white fw-bold fs-2 mb-2 mt-5">K {{ App\Models\Application::totalAmountPending() }}</div>
+                <div class="text-white fw-bold fs-2 mb-2 mt-5">K {{ $all_loan_requests->sum('amount') }}</div>
                 <div class="fw-semibold text-white">PENDING BORROWED AMOUNT</div>
             </div>
             <!--end::Body-->
