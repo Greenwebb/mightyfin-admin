@@ -33,7 +33,7 @@ class LoanCalculator extends Component
     public $loan_repayment_cycle = 'Daily';
     public $amortization_table_flat_rate;
     public $total_repayment_amount_flat_rate;
-
+    public $loan_product_id;
     // Declare public properties for the models
     public $interest_methods;
     public $interest_types;
@@ -45,12 +45,15 @@ class LoanCalculator extends Component
         $this->interest_methods = InterestMethod::get();
         $this->interest_types = InterestType::get();
         $this->repayment_cycles = RepaymentCycle::get();
-
         return view('livewire.dashboard.loans.loan-calculator')->layout('layouts.admin');
     }
 
-    public function convertTime()
-{
+    public function prefillLoanProductValues(){
+        $data = $this->get_loan_product($this->loan_product_id);
+        $this->loan_interest_value = $data->def_loan_interest ?? 0;
+    }
+
+    public function convertTime(){
     // Determine the loan duration period
     switch ($this->loan_duration_period) {
         case 'day':

@@ -59,7 +59,7 @@
                 <div class="row mb-6 px-10 py-6">
                     <label class="col-lg-4 col-form-label required fw-bold fs-6">Loan Product</label>
                     <div class="col-lg-8 fv-row">
-                        <select type="text" name="loan_product_id" class="form-control form-control-lg " placeholder="E.g Business Loan" required>
+                        <select type="text" wire:model.lazy="loan_product_id" class="form-control form-control-lg"  wire:change="prefillLoanProductValues"  placeholder="E.g Business Loan" required>
                             <option value="">-- select --</option>
                             @forelse ($this->get_all_loan_products() as $lp)
                             <option {{ $loan->loan_product_id == $lp->id ? 'selected':'' }} value="{{ $lp->id }}">{{ $lp->name }}</option>

@@ -15,7 +15,6 @@ use Maatwebsite\Excel\Facades\Excel;
 
 class GuarantorsView extends Component
 {
-    use AuthorizesRequests;
     public $user_role, $permissions, $assigned_role;
     public $createModal = true;
     public $editModal = false;
@@ -25,18 +24,17 @@ class GuarantorsView extends Component
 
     public function render()
     {
-        $this->authorize('view loan relatives');
+        // $this->authorize('view loan relatives');
         $this->user_role = Role::pluck('name')->toArray();
         $this->permissions = Permission::get();
         $roles = Role::orderBy('id','DESC')->paginate(5);
-        // $users = User::latest()->paginate(7);
 
         $guarantors = Application::where('status', 1)->where('complete', 1)->get();
         return view('livewire.dashboard.loans.guarantors-view',[
             'guarantors' => $guarantors,
             'roles' => $roles
-        ])->layout('layouts.dashboard');
-    }    
+        ])->layout('layouts.admin');
+    }
     public function exportGuarantors(){
         return Excel::download(new GuarantorExport, 'Guarantors.xlsx');
     }
