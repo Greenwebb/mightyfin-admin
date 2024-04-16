@@ -460,7 +460,7 @@
                                             <div class="row col-6">
                                                 @if ($loan->user->uploads->where('name', 'nrc_file')->isNotEmpty())
                                                     <div class="col-6">
-                                                        <a href="{{ 'https://app.mightyfinance.co.zm/'.Storage::url($loan->user->uploads->where('name', 'nrc_file')->first()->path) }}"  class="open-modal" data-toggle="modal" data-target="#fileModal" data-file-url="{{ 'public/'.Storage::url($loan->user->uploads[0]->path) }}">
+                                                        <a href="{{ 'https://app.mightyfinance.co.zm/public/'.Storage::url($loan->user->uploads->where('name', 'nrc_file')->first()->path) }}"  class="open-modal" data-toggle="modal" data-target="#fileModal" data-file-url="{{ 'public/'.Storage::url($loan->user->uploads[0]->path) }}">
                                                             <img width="90" src="{{ asset('public/mfs/admin/assets/media/svg/files/pdf.svg') }}">
                                                         </a>
                                                         <p class="file-list">NRC uploaded on
@@ -473,7 +473,7 @@
                                                 @endif
                                                 @if ($loan->user->uploads->where('name', 'tpin_file')->isNotEmpty())
                                                     <div class="col-6">
-                                                        <a href="{{ 'https://app.mightyfinance.co.zm/'.Storage::url($loan->user->uploads->where('name', 'tpin_file')->first()->path) }}"  class="open-modal" data-toggle="modal" data-target="#fileModal" data-file-url="{{ 'public/'.Storage::url($loan->user->uploads[0]->path) }}">
+                                                        <a href="{{ 'https://app.mightyfinance.co.zm/public/'.Storage::url($loan->user->uploads->where('name', 'tpin_file')->first()->path) }}"  class="open-modal" data-toggle="modal" data-target="#fileModal" data-file-url="{{ 'public/'.Storage::url($loan->user->uploads[0]->path) }}">
                                                             <img width="90" src="{{ asset('public/mfs/admin/assets/media/svg/files/pdf.svg') }}">
                                                         </a>
                                                         <p class="file-list">Tpin uploaded on
@@ -488,7 +488,7 @@
                                             <div class="row col-6">
                                                 @if ($loan->user->uploads->where('name', 'preapproval')->isNotEmpty())
                                                     <div class="col-6">
-                                                        <a href="{{ 'https://app.mightyfinance.co.zm/'.Storage::url($loan->user->uploads->where('name', 'preapproval')->first()->path) }}"  class="open-modal" data-toggle="modal" data-target="#fileModal" data-file-url="{{ 'public/'.Storage::url($loan->user->uploads[0]->path) }}">
+                                                        <a href="{{ 'https://app.mightyfinance.co.zm/public/'.Storage::url($loan->user->uploads->where('name', 'preapproval')->first()->path) }}"  class="open-modal" data-toggle="modal" data-target="#fileModal" data-file-url="{{ 'public/'.Storage::url($loan->user->uploads[0]->path) }}">
                                                             <img width="90" src="{{ asset('public/mfs/admin/assets/media/svg/files/pdf.svg') }}">
                                                         </a>
                                                         <p class="file-list">Preapproval uploaded on
@@ -500,7 +500,7 @@
                                                 @endif
                                                 @if ($loan->user->uploads->where('name', 'letterofintro')->isNotEmpty())
                                                     <div class="col-6">
-                                                        <a href="{{ 'https://app.mightyfinance.co.zm/'.Storage::url($loan->user->uploads->where('name', 'letterofintro')->first()->path) }}"  class="open-modal" data-toggle="modal" data-target="#fileModal" data-file-url="{{ 'public/'.Storage::url($loan->user->uploads[0]->path) }}">
+                                                        <a href="{{ 'https://app.mightyfinance.co.zm/public/'.Storage::url($loan->user->uploads->where('name', 'letterofintro')->first()->path) }}"  class="open-modal" data-toggle="modal" data-target="#fileModal" data-file-url="{{ 'public/'.Storage::url($loan->user->uploads[0]->path) }}">
                                                             <img width="90" src="{{ asset('public/mfs/admin/assets/media/svg/files/pdf.svg') }}">
                                                         </a>
                                                         <p class="file-list">Letter of Introduction uploaded on
@@ -514,7 +514,7 @@
                                             <div class="row col-12">
                                                 @if ($loan->user->uploads->where('name', 'bankstatement')->isNotEmpty())
                                                     <div class="col-3">
-                                                        <a href="{{ 'https://app.mightyfinance.co.zm/'.Storage::url($loan->user->uploads->where('name', 'bankstatement')->first()->path) }}"  class="open-modal" data-toggle="modal" data-target="#fileModal" data-file-url="{{ 'public/'.Storage::url($loan->user->uploads[0]->path) }}">
+                                                        <a href="{{ 'https://app.mightyfinance.co.zm/public/'.Storage::url($loan->user->uploads->where('name', 'bankstatement')->first()->path) }}"  class="open-modal" data-toggle="modal" data-target="#fileModal" data-file-url="{{ 'public/'.Storage::url($loan->user->uploads[0]->path) }}">
                                                             <img width="90" src="{{ asset('public/mfs/admin/assets/media/svg/files/pdf.svg') }}">
                                                         </a>
                                                         <p class="file-list">Bank Statement uploaded on
@@ -527,7 +527,7 @@
                                                 @endif
                                                 @if ($loan->user->uploads->where('name', 'payslip_file')->isNotEmpty())
                                                     <div class="col-3">
-                                                        <a href="{{ 'https://app.mightyfinance.co.zm/'.Storage::url($loan->user->uploads->where('name', 'payslip_file')->first()->path) }}"  class="open-modal" data-toggle="modal" data-target="#fileModal" data-file-url="{{ 'public/'.Storage::url($loan->user->uploads[0]->path) }}">
+                                                        <a href="{{ 'https://app.mightyfinance.co.zm/public/'.Storage::url($loan->user->uploads->where('name', 'payslip_file')->first()->path) }}"  class="open-modal" data-toggle="modal" data-target="#fileModal" data-file-url="{{ 'public/'.Storage::url($loan->user->uploads[0]->path) }}">
                                                             <img width="90" src="{{ asset('public/mfs/admin/assets/media/svg/files/pdf.svg') }}">
                                                         </a>
                                                         <p class="file-list">Payslip uploaded on {{
@@ -538,7 +538,7 @@
                                                 @endif
                                                 @if ($loan->user->uploads->where('name', 'passport')->isNotEmpty())
                                                     <div class="col-3">
-                                                        <a href="{{ 'https://app.mightyfinance.co.zm/'.Storage::url($loan->user->uploads->where('name', 'passport')->first()->path) }}"  class="open-modal" data-toggle="modal" data-target="#fileModal" data-file-url="{{ 'public/'.Storage::url($loan->user->uploads[0]->path) }}">
+                                                        <a href="{{ 'https://app.mightyfinance.co.zm/public/'.Storage::url($loan->user->uploads->where('name', 'passport')->first()->path) }}"  class="open-modal" data-toggle="modal" data-target="#fileModal" data-file-url="{{ 'public/'.Storage::url($loan->user->uploads[0]->path) }}">
                                                             <img width="90" src="{{ asset('public/mfs/admin/assets/media/svg/files/pdf.svg') }}">
                                                         </a>
                                                         <p class="file-list">Passport Size photo uploaded on
