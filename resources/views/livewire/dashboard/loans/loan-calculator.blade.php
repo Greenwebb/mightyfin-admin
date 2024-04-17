@@ -7,7 +7,7 @@
     </div>
 
     <div class="px-8">
-        @if ($amortization_table_flat_rate)
+        @if ($amortization_table)
         <div class="card mt-5">
             <div class="card-header bg-secondary">
                 <h3 class="card-title text-info">Amortization Table</h3>
@@ -18,22 +18,24 @@
                         <tr>
                             <th>#</th>
                             <th>Due Date</th>
-                            <th>Principal</th>
-                            <th>Interest</th>
-                            <th>Fees</th>
-                            <th>Due</th>
+                            <th>Principal Amount</th>
+                            <th>Interest Amount</th>
+                            <th>Fee Amount</th>
+                            <th>Penalty Amount</th>
+                            <th>Due Amount</th>
                             <th>Principal Balance</th>
                             <th>Description</th>
                         </tr>
                     </thead>
                     <tbody>
-                        @foreach($amortization_table_flat_rate['installments'] as $index => $row)
+                        @foreach($amortization_table['installments'] as $index => $row)
                         <tr>
                             <td>{{ $index + 1 }}</td>
                             <td>{{ $row['due_date'] }}</td>
                             <td>{{ $row['principal'] }}</td>
                             <td>{{ $row['interest'] }}</td>
                             <td>{{ $row['fees'] }}</td>
+                            <td>{{ isset($row['penalty']) ? $row['penalty'] : '0.00' }}</td>
                             <td>{{ $row['due'] }}</td>
                             <td>{{ $row['principal_balance'] }}</td>
                             <td>{{ $row['description'] }}</td>
@@ -45,6 +47,7 @@
         </div>
         @endif
     </div>
+
 
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <form wire:submit.prevent="calculateLoan()" id="kt_content_container" class="container-xxl">
