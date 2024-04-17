@@ -11,6 +11,7 @@ class LoanProduct extends Model
 
     protected $fillable = [
         'name',
+        'loan_type',
         'description',
         'icon',
         'icon_alt',
