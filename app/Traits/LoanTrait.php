@@ -12,6 +12,7 @@ use App\Models\LoanPackage;
 use App\Models\LoanProduct;
 use App\Models\Loans;
 use App\Models\LoanStatus;
+use App\Models\LoanType;
 use App\Models\User;
 use App\Notifications\LoanRequestNotification;
 use Carbon\Carbon;
@@ -25,9 +26,14 @@ trait LoanTrait{
     use EmailTrait;
     public $application;
 
+
+    public function get_all_loan_types(){
+        return LoanType::with('loan_child_type.loan_products')->get();
+    }
+
     public function get_all_loan_products(){
         return LoanProduct::with([
-            // 'disbursed_by.disbursed_by',
+            'disbursed_by.disbursed_by',
             'interest_methods.interest_method',
             'interest_types.interest_type',
             // 'loan_accounts.account_payment',

@@ -12,6 +12,8 @@ class LoanProduct extends Model
     protected $fillable = [
         'name',
         'loan_type',
+        'loan_child_type_id',
+        'is_digitize',
         'description',
         'icon',
         'icon_alt',
@@ -76,6 +78,9 @@ class LoanProduct extends Model
     }
     public function loan_crb(){
         return $this->hasMany(LoanCrbProduct::class);
+    }
+    public function loan_child_type(){
+        return $this->belongsTo(LoanChildType::class);
     }
 
 }
