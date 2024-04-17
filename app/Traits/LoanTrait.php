@@ -27,9 +27,14 @@ trait LoanTrait{
 
     public function get_all_loan_products(){
         return LoanProduct::with([
-            'disbursed_by.disbursed_by',
+            // 'disbursed_by.disbursed_by',
             'interest_methods.interest_method',
             'interest_types.interest_type',
+            // 'loan_accounts.account_payment',
+            // 'loan_status.status',
+            // 'loan_decimal_places',
+            'service_fees.service_charge',
+            'loan_institutes.institutions'
             ])->get();
     }
 

@@ -255,100 +255,87 @@ public function calculateLoan()
 
 private function calculateFlatRate()
 {
-
     try {
-            // Convert loan duration to months if it's not already in months
-    switch ($this->loan_duration_period) {
-        case 'day':
-            $loan_term = $this->loan_duration_value / 30; // Assuming 30 days per month
-            break;
-        case 'week':
-            $loan_term = $this->loan_duration_value * 4; // Assuming 4 weeks per month
-            break;
-        case 'year':
-            $loan_term = $this->loan_duration_value * 12; // 12 months in a year
-            break;
-        default:
-            $loan_term = $this->loan_duration_value;
-            break;
-    }
+        // Convert loan duration to months if it's not already in months
+        switch ($this->loan_duration_period) {
+            case 'day':
+                $loan_term = $this->loan_duration_value / 30; // Assuming 30 days per month
+                break;
+            case 'week':
+                $loan_term = $this->loan_duration_value * 4; // Assuming 4 weeks per month
+                break;
+            case 'year':
+                $loan_term = $this->loan_duration_value * 12; // 12 months in a year
+                break;
+            default:
+                $loan_term = $this->loan_duration_value;
+                break;
+        }
 
-    // Initialize amortization table
-    $amortization_table = [];
+        // Initialize amortization table
+        $amortization_table = [];
 
-    // Initialize loan balance
-    $loan_balance = $this->principal;
+        // Initialize loan balance
+        $loan_balance = $this->principal;
 
-    // Calculate monthly interest rate
-    $monthly_interest_rate = $this->loan_interest_value / 100;
+        // Calculate total interest
+        $total_interest = $this->principal * ($this->loan_interest_value / 100 * $loan_term);
 
-    // Calculate total interest
-    $total_interest = $loan_balance * $monthly_interest_rate * $loan_term;
+        // Calculate total repayment amount
+        $total_repayment_amount = $this->principal + $total_interest;
 
-    // Calculate total repayment amount
-    $total_repayment_amount = $this->principal + $total_interest;
+        // Get the release date and convert it to a Carbon instance
+        $release_date = Carbon::parse($this->release_date);
 
-    // Get the release date and convert it to a Carbon instance
-    $release_date = Carbon::parse($this->release_date);
-
-    // Add loan details to the amortization table
-    $amortization_table['loan_details'] = [
-        'loan_product' => $this->lp->name,
-        'loan_terms' => 'Principal: $' . number_format($this->principal, 2),
-        'loan_release_date' => $release_date->format('d/m/Y'),
-        'interest' => 'Flat Rate',
-        'loan_interest' => $this->loan_interest_value . '% per month',
-        'duration' => $this->loan_duration_value . ' months',
-        'repayment_cycle' => $this->loan_repayment_cycle,
-        'num_of_repayments' => $this->minimum_num_of_repayments,
-    ];
-
-    // Loop through each period and calculate interest, principal, and remaining balance
-    for ($i = 1; $i <= $this->minimum_num_of_repayments; $i++) {
-        // Calculate due date based on the release date
-        $due_date = $release_date->copy()->addMonths($i);
-
-        // Calculate interest for the current period
-        $interest = $loan_balance * $monthly_interest_rate;
-
-        // Calculate principal for the current period
-        $principal = $this->principal / $this->minimum_num_of_repayments;
-
-        // Update loan balance
-        $loan_balance -= $principal;
-
-        // Add current period's data to amortization table
-        $amortization_table['installments'][] = [
-            'due_date' => $due_date->format('d/m/Y'),
-            'principal_amount' => '$' . number_format($principal, 2),
-            'interest_amount' => '$' . number_format($interest, 2),
-            'fee_amount' => '$0',
-            'penalty_amount' => '$0',
-            'due_amount' => '$' . number_format($principal + $interest, 2),
-            'principal_balance' => '$' . number_format($loan_balance, 2),
-            'description' => ($loan_balance <= 0) ? 'Maturity' : 'Repayment',
+        // Add loan details to the amortization table
+        $amortization_table['loan_details'] = [
+            'loan_product' => $this->lp->name,
+            'loan_terms' => 'Principal: $' . number_format($this->principal, 2),
+            'loan_release_date' => $release_date->format('d/m/Y'),
+            'interest' => 'Flat Rate',
+            'loan_interest' => $this->loan_interest_value . '% per month',
+            'duration' => $this->loan_duration_value . ' months',
+            'repayment_cycle' => $this->loan_repayment_cycle,
+            'num_of_repayments' => $this->minimum_num_of_repayments,
         ];
-    }
 
-    // Add totals to the amortization table
-    $amortization_table['totals'] = [
-        'principal' => '$' . number_format($this->principal, 2),
-        'total_interest' => '$' . number_format($total_interest, 2),
-        'total_fees' => '$0',
-        'total_penalty' => '$0',
-        'total_due_amount' => '$' . number_format($total_repayment_amount, 2),
-    ];
+        // Loop through each period and calculate interest, principal, and remaining balance
+        for ($i = 1; $i <= $this->minimum_num_of_repayments; $i++) {
+            // Calculate due date based on the release date
+            $due_date = $release_date->copy()->addMonths($i);
 
-    // Store amortization table in a public property for wire model bindings
-    $this->amortization_table = $amortization_table;
+            // Calculate interest for the current period
+            $interest = $this->principal * ($this->loan_interest_value / 100);
 
-    // Store total repayment amount in a public property
-    $this->total_repayment_amount = number_format($total_repayment_amount, 2);
+            // Calculate principal for the current period
+            $principal = $this->principal / $this->minimum_num_of_repayments;
+
+            // Update loan balance
+            $loan_balance -= $principal;
+
+            // Add current period's data to amortization table
+            $amortization_table['installments'][] = [
+                'due_date' => $due_date->format('d/m/Y'),
+                'principal_amount' => '$' . number_format($principal, 2),
+                'interest_amount' => '$' . number_format($interest, 2),
+                'fee_amount' => '$0',
+                'penalty_amount' => '$0',
+                'due_amount' => '$' . number_format($principal + $interest, 2),
+                'principal_balance' => '$' . number_format($loan_balance, 2),
+                'description' => ($loan_balance <= 0) ? 'Maturity' : 'Repayment',
+            ];
+        }
+
+        // Store amortization table in a public property for wire model bindings
+        $this->amortization_table = $amortization_table;
+
+        // Store total repayment amount in a public property
+        $this->total_repayment_amount = number_format($total_repayment_amount, 2);
     } catch (\Throwable $th) {
         dd($th);
     }
-
 }
+
 
 
 
