@@ -290,7 +290,7 @@ private function calculateFlatRate()
         // Add loan details to the amortization table
         $amortization_table['loan_details'] = [
             'loan_product' => $this->lp->name,
-            'loan_terms' => 'Principal: $' . number_format($this->principal, 2),
+            'loan_terms' => 'Principal: K' . number_format($this->principal, 2),
             'loan_release_date' => $release_date->format('d/m/Y'),
             'interest' => 'Flat Rate',
             'loan_interest' => $this->loan_interest_value . '% per month',
@@ -298,6 +298,10 @@ private function calculateFlatRate()
             'repayment_cycle' => $this->loan_repayment_cycle,
             'num_of_repayments' => $this->minimum_num_of_repayments,
         ];
+
+        // Initialize totals
+        $total_principal = 0;
+        $total_interest_amount = 0;
 
         // Loop through each period and calculate interest, principal, and remaining balance
         for ($i = 1; $i <= $this->minimum_num_of_repayments; $i++) {
@@ -309,6 +313,10 @@ private function calculateFlatRate()
 
             // Calculate principal for the current period
             $principal = $this->principal / $this->minimum_num_of_repayments;
+
+            // Update totals
+            $total_principal += $principal;
+            $total_interest_amount += $interest;
 
             // Update loan balance
             $loan_balance -= $principal;
@@ -326,6 +334,18 @@ private function calculateFlatRate()
             ];
         }
 
+        // Add totals row
+        $amortization_table['installments'][] = [
+            'due_date' => 'Total',
+            'principal' => 'K' . number_format($total_principal, 2),
+            'interest' => 'K' . number_format($total_interest_amount, 2),
+            'fee_amount' => 'K0',
+            'penalty' => 'K0',
+            'due' => 'K' . number_format($total_principal + $total_interest_amount, 2),
+            'principal_balance' => '', // leave blank for totals row
+            'description' => '', // leave blank for totals row
+        ];
+
         // Store amortization table in a public property for wire model bindings
         $this->amortization_table = $amortization_table;
 
@@ -335,6 +355,7 @@ private function calculateFlatRate()
         dd($th);
     }
 }
+
 
 
 
