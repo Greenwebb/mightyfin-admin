@@ -19,10 +19,9 @@ In loanDisk
 
 
 
-use same livewire-property/valriables in calculateReducingBalanceEqualInstallment to calculateInterestOnly
+use same livewire-property/valriables in calculateFlatRate to calculateInterestOnly
 
-
-private function calculateReducingBalanceEqualInstallment()
+private function calculateInterestOnly()
 {
     try {
         // Initialize amortization table
@@ -37,55 +36,47 @@ private function calculateReducingBalanceEqualInstallment()
         $monthly_interest_rate = $this->loan_interest_value / 100;
 
         // Calculate total number of installments
-        $total_installments = $this->loan_duration_value;
-
-        // Calculate monthly installment using reducing balance method
-        $monthly_installment = ($this->principal * $monthly_interest_rate) / (1 - pow(1 + $monthly_interest_rate, -$total_installments));
-
-        // Initialize loan balance
-        $loan_balance = $this->principal;
+        $total_installments = $this->minimum_num_of_repayments;
 
         // Initialize total amounts
-        $total_principal = 0;
         $total_interest = 0;
         $total_due = 0;
 
-        // Loop through each installment and calculate details
-        for ($i = 1; $i <= $total_installments; $i++) {
-            // Calculate due date based on the release date
-            $due_date = $release_date->copy()->addMonths($i);
+// Loop through each installment and calculate details
+for ($i = 1; $i <= $total_installments; $i++) {
+    // Calculate due date based on the release date
+    $due_date = $release_date->copy()->addMonths($i);
 
-            // Calculate interest for the current installment
-            $interest = $loan_balance * $monthly_interest_rate;
+    // Calculate interest for the current installment
+    $interest = $this->principal * $monthly_interest_rate;
 
-            // Calculate principal for the current installment
-            $principal = $monthly_installment - $interest;
+    // Set principal balance to 0 for the last installment
+    $principal_balance = ($i === $total_installments) ? 0 : $this->principal;
 
-            // Update loan balance
-            $loan_balance -= $principal;
+    // Add principal balance to the due amount for the last installment
+    $due_amount = ($i === $total_installments) ? $interest + $principal_balance : $interest;
 
-            // Update total amounts
-            $total_principal += $principal;
-            $total_interest += $interest;
-            $total_due += $monthly_installment;
+    // Update total amounts
+    $total_interest += $interest;
+    $total_due += $due_amount;
 
-            // Add current installment's data to amortization table
-            $amortization_table['installments'][] = [
-                'due_date' => $due_date->format('d/m/Y'),
-                'principal' => 'K' . number_format($principal, 2),
-                'interest' => 'K' . number_format($interest, 2),
-                'fee_amount' => '0', // Assuming no fees
-                'penalty' => '0', // Assuming no penalties
-                'due' => 'K' . number_format($monthly_installment, 2),
-                'principal_balance' => 'K' . number_format($loan_balance, 2),
-                'description' => ($loan_balance <= 0) ? 'Maturity' : 'Repayment',
-            ];
-        }
+    // Add current installment's data to amortization table
+    $amortization_table['installments'][] = [
+        'due_date' => $due_date->format('d/m/Y'),
+        'principal' => '0.00', // Principal is zero for interest-only loans
+        'interest' => 'K' . number_format($interest, 2),
+        'fee_amount' => '0', // Assuming no fees
+        'penalty' => '0', // Assuming no penalties
+        'due' => 'K' .  number_format($due_amount, 2), // Include principal balance in due amount for the last installment
+        'principal_balance' => 'K' . number_format($principal_balance, 2), // Principal balance remains the same
+        'description' => 'Repayment',
+    ];
+}
 
         // Add total row
         $amortization_table['installments'][] = [
             'due_date' => 'Total',
-            'principal' => 'K' . number_format($total_principal, 2),
+            'principal' => '0.00',
             'interest' => 'K' . number_format($total_interest, 2),
             'fee_amount' => '0',
             'penalty' => '0',
@@ -105,21 +96,24 @@ private function calculateReducingBalanceEqualInstallment()
 }
 
 
+Results for the calculateReducingBalanceEqualPrincipal should be:
+Loan Calculator
+
 Released	Maturity	Repayment	Principal	Interest	Fees (Non Deduct)	Due
-10/04/2024	10/08/2024	Monthly	5,000.00	60.00	0	5,060.00
+10/04/2024	10/08/2024	Monthly	5,000.00	45.00	0	5,045.00
 You can edit the below fields. The amounts will automatically update below.
 #	DueDate	Principal Amount		Interest Amount		Fee Amount		Penalty Amount		Due Amount	Principal Balance	Description
 1
 10/05/2024
 0
 +
-15.00
+11.25
 Set Default	+
 0
 Set Default	+
 0
 Set Default	=
-15.00
+11.25
 5000
 Repayment
 Set Default
@@ -127,51 +121,51 @@ Set Default
 10/06/2024
 0
 +
-15.00
+11.25
 +
 0
 +
 0
 =
-15.00
+11.25
 5000
 Repayment
 3
 10/07/2024
 0
 +
-15.00
+11.25
 +
 0
 +
 0
 =
-15.00
+11.25
 5000
 Repayment
 4
 10/08/2024
 5000.00
 +
-15.00
+11.25
 +
 0
 +
 0
 =
-5015.00
+5011.25
 0
 Maturity
 Total
 5000
 +
-60
+45
 +
 0
 +
 0
 =
-5060
+5045
 You can use this page to calculate the loan value in case of customer inquiries. To add a loan into the system, visit Loans(left menu) → Add Loan.
 
 Loan Product
@@ -197,7 +191,7 @@ Per Month
 Duration:
 
 Loan Duration
-4
+3
 
 Months
 Repayments:

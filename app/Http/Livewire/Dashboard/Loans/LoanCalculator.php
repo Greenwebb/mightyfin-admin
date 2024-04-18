@@ -371,7 +371,7 @@ private function calculateReducingBalanceEqualInstallment()
         $monthly_interest_rate = $this->loan_interest_value / 100;
 
         // Calculate total number of installments
-        $total_installments = $this->loan_duration_value;
+        $total_installments = $this->minimum_num_of_repayments;
 
         // Calculate monthly installment using reducing balance method
         $monthly_installment = ($this->principal * $monthly_interest_rate) / (1 - pow(1 + $monthly_interest_rate, -$total_installments));
@@ -454,7 +454,7 @@ private function calculateReducingBalanceEqualPrincipal()
         $monthly_interest_rate = $this->loan_interest_value / 100;
 
         // Calculate total number of installments
-        $total_installments = $this->loan_duration_value;
+        $total_installments = $this->minimum_num_of_repayments;
 
         // Initialize loan balance
         $loan_balance = $this->principal;
@@ -518,89 +518,80 @@ private function calculateReducingBalanceEqualPrincipal()
     }
 }
 
-
-
-
 private function calculateInterestOnly()
 {
-    // Convert loan duration to months if it's not already in months
-    switch ($this->loan_duration_period) {
-        case 'day':
-            $loan_term = $this->loan_duration_value / 30; // Assuming 30 days per month
-            break;
-        case 'week':
-            $loan_term = $this->loan_duration_value * 4; // Assuming 4 weeks per month
-            break;
-        case 'year':
-            $loan_term = $this->loan_duration_value * 12; // 12 months in a year
-            break;
-        default:
-            $loan_term = $this->loan_duration_value;
-            break;
-    }
-
-    // Initialize amortization table
-    $amortization_table = [];
-
-    // Calculate monthly interest rate
-    $monthly_interest_rate = $this->loan_interest_value / 100 / 12;
-
-    // Initialize total interest
-    $total_interest = 0;
-
-    // Get the release date and convert it to a Carbon instance
-    $release_date = Carbon::parse($this->release_date);
-
-    // Calculate maturity date based on loan term
-    $maturity_date = $release_date->copy()->addMonths($loan_term);
-
-    // Add loan details to the amortization table
-    $amortization_table['loan_details'] = [
-        'released' => $release_date->format('d/m/Y'),
-        'maturity' => $maturity_date->format('d/m/Y'),
-        'repayment_frequency' => $this->loan_repayment_cycle,
-        'principal' => number_format($this->principal, 2),
-        'total_interest' => '0.00', // Will be calculated later
-        'fees' => '0.00',
-        'due' => '0.00', // Will be calculated later
-    ];
-
-    // Loop through each period and calculate interest
-    for ($i = 1; $i <= $loan_term; $i++) {
-        // Calculate due date based on the release date
-        $due_date = $release_date->copy()->addMonths($i);
-
-        // Calculate interest for the current period
-        $interest = $this->principal * $monthly_interest_rate;
-
-        // Update total interest
-        $total_interest += $interest;
-
-        // Add current period's data to amortization table
-        $amortization_table['installments'][] = [
-            'due_date' => $due_date->format('d/m/Y'),
-            'principal' => '0.00',
-            'interest' => number_format($interest, 2),
-            'fees' => '0.00',
-            'due' => number_format($interest, 2),
-            'principal_balance' => number_format($this->principal, 2),
-            'description' => 'Interest Only',
-            'penalty' => '0.00' // Add penalty field with default value
+    try {
+        // Initialize amortization table
+        $amortization_table = [
+            'installments' => [],
         ];
+
+        // Get the release date and convert it to a Carbon instance
+        $release_date = Carbon::parse($this->release_date);
+
+        // Calculate monthly interest rate
+        $monthly_interest_rate = $this->loan_interest_value / 100;
+
+        // Calculate total number of installments
+        $total_installments = $this->minimum_num_of_repayments;
+
+        // Initialize total amounts
+        $total_interest = 0;
+        $total_due = 0;
+
+        // Loop through each installment and calculate details
+        for ($i = 1; $i <= $total_installments; $i++) {
+            // Calculate due date based on the release date
+            $due_date = $release_date->copy()->addMonths($i);
+
+            // Calculate interest for the current installment
+            $interest = $this->principal * $monthly_interest_rate;
+
+            // Set principal balance to 0 for all installments except the last one
+            $principal_balance = ($i === $total_installments) ? $this->principal + $interest : 0.00;
+
+            // Add principal balance to the due amount for the last installment
+            $due_amount = $interest + $principal_balance;
+
+            // Update total amounts
+            $total_interest += $interest;
+            $total_due += $due_amount;
+
+            // Add current installment's data to amortization table
+            $amortization_table['installments'][] = [
+                'due_date' => $due_date->format('d/m/Y'),
+                'principal' => '0.00', // Principal is zero for interest-only loans
+                'interest' => 'K' . number_format($interest, 2),
+                'fee_amount' => '0', // Assuming no fees
+                'penalty' => '0', // Assuming no penalties
+                'due' => 'K' .  number_format($due_amount, 2), // Include principal balance in due amount for the last installment
+                'principal_balance' => 'K' . number_format($principal_balance, 2), // Principal balance remains the same
+                'description' => ($i === $total_installments) ? 'Maturity' : 'Repayment',
+            ];
+        }
+
+        // Add total row
+        $amortization_table['installments'][] = [
+            'due_date' => 'Total',
+            'principal' => '0.00',
+            'interest' => 'K' . number_format($total_interest, 2),
+            'fee_amount' => '0',
+            'penalty' => '0',
+            'due' => 'K' . number_format($total_due, 2),
+            'principal_balance' => '', // Leave blank for totals row
+            'description' => '', // Leave blank for totals row
+        ];
+
+        // Store amortization table in a public property for Livewire model bindings
+        $this->amortization_table = $amortization_table;
+
+        // Calculate total repayment amount
+        $this->total_repayment_amount = number_format($total_due, 2);
+    } catch (\Throwable $th) {
+        dd($th);
     }
-
-    // Update total interest in the amortization table
-    $amortization_table['loan_details']['total_interest'] = number_format($total_interest, 2);
-
-    // Update total repayment amount in the amortization table (equals total interest for interest-only loans)
-    $amortization_table['loan_details']['due'] = number_format($total_interest, 2);
-
-    // Store amortization table in a public property for wire model bindings
-    $this->amortization_table = $amortization_table;
-
-    // Store total repayment amount in a public property
-    $this->total_repayment_amount = number_format($total_interest, 2);
 }
+
 
 
 private function calculateCompoundInterest()
