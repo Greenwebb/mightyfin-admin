@@ -316,12 +316,12 @@ private function calculateFlatRate()
             // Add current period's data to amortization table
             $amortization_table['installments'][] = [
                 'due_date' => $due_date->format('d/m/Y'),
-                'principal_amount' => '$' . number_format($principal, 2),
-                'interest_amount' => '$' . number_format($interest, 2),
-                'fee_amount' => '$0',
-                'penalty_amount' => '$0',
-                'due_amount' => '$' . number_format($principal + $interest, 2),
-                'principal_balance' => '$' . number_format($loan_balance, 2),
+                'principal' => 'K' . number_format($principal, 2),
+                'interest' => 'K' . number_format($interest, 2),
+                'fee_amount' => 'K0',
+                'penalty' => 'K0',
+                'due' => 'K' . number_format($principal + $interest, 2),
+                'principal_balance' => 'K' . number_format($loan_balance, 2),
                 'description' => ($loan_balance <= 0) ? 'Maturity' : 'Repayment',
             ];
         }
@@ -335,7 +335,6 @@ private function calculateFlatRate()
         dd($th);
     }
 }
-
 
 
 
