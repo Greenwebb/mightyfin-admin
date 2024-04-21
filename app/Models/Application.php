@@ -22,6 +22,7 @@ class Application extends Model
         'amount',
         'interest',
         'payback_amount',
+        'old_amount',
 
         'glname',
         'gfname',

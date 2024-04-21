@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\LoanCalculator;
 use App\Http\Controllers\Api\LoanNotificationController;
 use App\Http\Controllers\Api\LoanRequestController;
 use App\Http\Controllers\Api\SettingController;
@@ -49,6 +50,8 @@ Route::get('get-loan-interest-amount/{duration}/{principal}', [LoanRequestContro
 Route::get('get-loan-monthly-installment-amount/{duration}/{principal}', [LoanRequestController::class, 'loanMonthlyInstallments']);
 Route::get('get-total-payback-amount/{duration}/{principal}', [LoanRequestController::class, 'totalCollectable']);
 
+// Amoritization table
+Route::post('/calculate-reducing-balance', [LoanCalculator::class, 'calculateReducingBalanceEqualInstallment']);
 
 Route::get('/get-loan-products', [SettingController::class, '__get_loan_products']);
 Route::get('/get-loan-product-details/{loan_id}', [SettingController::class, '__get_loan_details']);

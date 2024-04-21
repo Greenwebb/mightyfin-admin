@@ -27,7 +27,8 @@ class LoanDetailView extends Component
     public $loan_stage, $denied_status, $picked_status, $current, $principal_amt, $code, $crb, $crb_results;
     public $amortizationSchedule,$amo_principal, $amo_duration;
     public $debt_ratio, $gross_pay, $net_pay, $result_amount;
-    public $crb_selected_products, $loan_notifications;
+    public $crb_selected_products, $loan_notifications, $plp_rule, $plp;
+    public $lp, $loan_interest_value, $principal, $amortization_table;
 
     public function mount($id){
         $this->loan_id = $id;
@@ -37,18 +38,53 @@ class LoanDetailView extends Component
     {
         try {
             $this->authorize('processes loans');
-            $this->loan = $this->get_loan_details($this->loan_id);
-            $this->loan_notifications = $this->loan_notifications($this->loan->id);
-            $this->loan_product = $this->get_loan_product($this->loan->loan_product_id);
-            $this->crb_selected_products = $this->loan_product->loan_crb;
-            $this->loan_stage = $this->get_loan_current_stage($this->loan->loan_product_id);
-            $this->denied_status = Status::where('stage', 'denied')->orderBy('id')->get();
-            $this->current = ApplicationStage::where('application_id', $this->loan->id)->first();
+            $this->dataSets();
+            $this->prefillLoanProductValues();
+            $this->getAmoritizationTable();
             $this->change_status();
             return view('livewire.dashboard.loans.loan-detail-view')
             ->layout('layouts.admin');
         } catch (\Throwable $th) {
 
+        }
+    }
+
+    public function dataSets(){
+        $this->loan = $this->get_loan_details($this->loan_id);
+        $this->loan_notifications = $this->loan_notifications($this->loan->id);
+        $this->loan_product = $this->get_loan_product($this->loan->loan_product_id);
+        $this->crb_selected_products = $this->loan_product->loan_crb;
+        $this->loan_stage = $this->get_loan_current_stage($this->loan->loan_product_id);
+        $this->denied_status = Status::where('stage', 'denied')->orderBy('id')->get();
+        $this->current = ApplicationStage::where('application_id', $this->loan->id)->first();
+        $this->plp_rule = false;
+    }
+
+    public function prefillLoanProductValues(){
+        try {
+            $this->lp = $this->get_loan_product($this->loan->loan_product_id);
+            $this->loan_interest_value =$this->lp->def_loan_interest / 100;
+            $this->principal = $this->loan->amount;
+        } catch (\Throwable $th) {
+            dd($th);
+        }
+    }
+
+    public function getAmoritizationTable(){
+        try {
+            $data = [
+                'loan_duration_period' =>'month',
+                'loan_duration_value' => $this->loan->repayment_plan,
+                'principal' => $this->principal,
+                'loan_interest_value' => $this->loan_interest_value,
+                'num_of_repayments' => $this->loan->repayment_plan,
+                'release_date' => '04-10-2024',
+            ];
+            $this->amortization_table = $this->calculateEqualInstallment($data);
+
+            // dd($this->amortization_table['amortization_table']['installments']);
+        } catch (\Throwable $th) {
+            dd($th);
         }
     }
 
@@ -69,8 +105,18 @@ class LoanDetailView extends Component
         ];
     }
 
-    public function checkRisk(){
-        $this->result_amount =  $this->net_pay - ($this->gross_pay * $this->debt_ratio);
+    public function checkRisk(){}
+
+    public function acceptSuggestionBtn(){
+        dd($this->plp);
+        try {
+            $switch = $this->loan;
+            $switch->old_amount = $switch->amount;
+            $switch->amount = $this->plp;
+            $switch->save();
+        } catch (\Throwable $th) {
+            dd($th);
+        }
     }
 
     public function calculateAmoritization(){
@@ -105,6 +151,7 @@ class LoanDetailView extends Component
         session()->flash('success', 'Loan successfully set under review!');
         sleep(3);
     }
+
     public function rollbackLoan(){
         try {
             switch (strtolower($this->current->status)) {
@@ -224,10 +271,10 @@ class LoanDetailView extends Component
         $this->upvote($x->id);
         $currentDate = Carbon::now();
         $futureDate = $currentDate->addMonths((int)$x->repayment_plan);
-        $x->status = 1; 
-        $x->due_date = $futureDate; 
+        $x->status = 1;
+        $x->due_date = $futureDate;
         $x->save();
-        
+
         if($x->email != null){
             $mail = [
                 'user_id' => $x->user_id,

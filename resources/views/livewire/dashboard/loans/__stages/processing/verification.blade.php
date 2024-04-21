@@ -307,13 +307,14 @@
 
                                                 <div class="w-full">
                                                     <span class="text-primary" style="color:blueviolet"><b>Possible Loan Principal (PLP)</b></span>
-                                                    <input type="text" disabled class="form-control" placeholder="{{$result_amount}}" id="result_amount">
+                                                    <input type="text" disabled class="form-control" wire:model='plp' id="result_amount">
                                                 </div>
                                             </div>
                                             <button id="calculateRisk" class="btn btn-sm btn-primary">Check</button>
                                         </div>
                                     </div>
-                                    <div class="container mt-4">
+
+                                    <div id="plp_rule" class="container mt-4">
                                         <div class="alert alert-danger">
                                             <div class="d-flex">
                                                 <span class="col-1">
@@ -336,7 +337,7 @@
                                                         Notify {{ $loan->user->fname .' '.$loan->user->lname }} about this
                                                     </button>
                                                 @endif
-                                                <button id="acceptSuggestionBtn" class="btn btn-primary btn-xs">Accept Suggestion</button>
+                                                <button wire:click="acceptSuggestionBtn" class="btn btn-primary btn-xs">Accept Suggestion</button>
                                             </div>
                                         </div>
                                     </div>
@@ -346,11 +347,7 @@
                         </div>
 
                         <!--begin:::Tab pane-->
-                        <div class="tab-pane fade" id="kt_customer_view_overview_loan_details"
-                            role="tabpanel">
-                            <!--begin::Card-->
-
-                            <!--end::Card-->
+                        <div class="tab-pane fade" id="kt_customer_view_overview_loan_details" role="tabpanel">
                             <!--begin::Card-->
                             <div class="row g-5 g-xl-12">
                                 <div class="col-xl-12">
@@ -581,6 +578,7 @@
     <!--end::Post-->
 
     <script>
+        document.getElementById('plp_rule').style.display = 'none';
         document.getElementById('calculateRisk').addEventListener('click', function() {
             var debtRatio = parseFloat(document.getElementById('debt_ratio').value);
             var grossPay = parseFloat(document.getElementById('gross_pay').value);
@@ -592,6 +590,13 @@
 
             // Format the result with "K" prefix
             var formattedResult =  "K " + resultAmount.toFixed(2);
+
+            // Show plp rule
+            if (resultAmount.toFixed(2) < @json($loan->amount)) {
+                document.getElementById('plp_rule').style.display = 'block';
+            } else {
+                document.getElementById('plp_rule').style.display = 'none';
+            }
 
             // Update the result field
             document.getElementById('result_amount').value = formattedResult;

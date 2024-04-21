@@ -198,8 +198,8 @@
                                         <div id="kt_customer_view_payment_method_1"
                                             class="collapse show fs-6 ps-10"
                                             data-bs-parent="#kt_customer_view_payment_method">
-                                            <div class="d-flex flex-wrap gap-2 py-5">
-                                                <div class="w-full">
+                                            <div class="">
+                                                {{-- <div class="w-full">
                                                     <p>Principal</p>
                                                     <input type="number" class="form-control" wire:model.defer="amo_principal" placeholder="{{$amo_principal}}" id="amo">
                                                 </div>
@@ -221,29 +221,41 @@
                                                     <div class="spinner-border text-primary" role="status">
                                                         <span class="visually-hidden">Loading...</span>
                                                     </div>
+                                                </div> --}}
+
+                                                <div class="px-0">
+                                                    @if ($amortization_table)
+                                                            <table class="table table-bordered table-hover">
+                                                                <thead>
+                                                                    <tr>
+                                                                        <th>#</th>
+                                                                        <th>Due Date</th>
+                                                                        <th>Principal Amount</th>
+                                                                        <th>Interest Amount</th>
+                                                                        {{-- <th>Penalty Amount</th> --}}
+                                                                        <th>Due Amount</th>
+                                                                        <th>Principal Balance</th>
+                                                                        <th>Description</th>
+                                                                    </tr>
+                                                                </thead>
+                                                                <tbody>
+                                                                    @foreach($amortization_table['amortization_table']['installments'] as $index => $row)
+                                                                    <tr>
+                                                                        <td>{{ $index + 1 }}</td>
+                                                                        <td>{{ $row['due_date'] }}</td>
+                                                                        <td>{{ $row['principal'] }}</td>
+                                                                        <td>{{ $row['interest'] }}</td>
+                                                                        {{-- <td>{{ $row['fee_amount'] }}</td> --}}
+                                                                        {{-- <td>{{ isset($row['penalty']) ? $row['penalty'] : '0.00' }}</td> --}}
+                                                                        <td>{{ $row['due'] }}</td>
+                                                                        <td>{{ $row['principal_balance'] }}</td>
+                                                                        <td>{{ $row['description'] }}</td>
+                                                                    </tr>
+                                                                    @endforeach
+                                                                </tbody>
+                                                            </table>
+                                                    @endif
                                                 </div>
-                                                <table wire:loading.remove class="table">
-                                                    <thead>
-                                                        <tr>
-                                                            <th>Month</th>
-                                                            <th>Payment</th>
-                                                            <th>Interest</th>
-                                                            <th>Principal</th>
-                                                            <th>Balance</th>
-                                                        </tr>
-                                                    </thead>
-                                                    <tbody>
-                                                        @foreach ($amortizationSchedule as $payment)
-                                                        <tr>
-                                                            <td>{{ $payment['month'] }}</td>
-                                                            <td>{{ number_format($payment['payment'], 2) }}</td>
-                                                            <td>{{ number_format($payment['interest'], 2) }}</td>
-                                                            <td>{{ number_format($payment['principal'], 2) }}</td>
-                                                            <td>{{ number_format($payment['balance'], 2) }}</td>
-                                                        </tr>
-                                                        @endforeach
-                                                    </tbody>
-                                                </table>
 
                                             </div>
                                         </div>
