@@ -12,15 +12,16 @@ class UserUpdateView extends Component
 {
     use AuthorizesRequests;
     public $user;
-    public $user_role, $roles, $permissions;
+    public $user_role, $roles, $permissions, $current_role_name;
     public function mount($id)
     {
         $this->user_role = Role::pluck('name')->toArray();
         $this->permissions = Permission::get();
         $this->roles = Role::all();
         $this->user = User::find($id);
-
+        $this->current_role_name = $this->user->roles->first()->name ?? null;
     }
+
     public function render()
     {
         $this->authorize('view system settings');

@@ -9,8 +9,9 @@
         <div class="aside-user d-flex align-items-sm-center justify-content-center py-5">
             <!--begin::Symbol-->
             <div class="symbol symbol-50px">
+
                 @if (auth()->user()->profile_photo_path)
-                    @if ($route == 'profile.show' || $route == 'loan-details' || $route == 'detailed' || $route == 'loan-statement')
+                    @if ($route == 'edit-user' || $route == 'profile.show' || $route == 'loan-details' || $route == 'detailed' || $route == 'loan-statement')
                     <img src="{{ '../public/'.Storage::url(auth()->user()->profile_photo_path) }}" alt=""/>
                     @else
                     <img src="{{ 'public/'.Storage::url(auth()->user()->profile_photo_path) }}" alt=""/>

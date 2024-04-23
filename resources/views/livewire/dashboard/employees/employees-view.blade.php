@@ -122,6 +122,9 @@
                                                 <div class="menu-item px-3">
                                                     <a href="{{ route('client-account', ['key'=>$user->id]) }}" class="menu-link px-3">View</a>
                                                 </div>
+                                                <div class="menu-item px-3">
+                                                    <a href="{{ route('edit-user', ['id'=>$user->id]) }}" class="menu-link px-3">Edit</a>
+                                                </div>
                                                 <!--end::Menu item-->
                                                 <!--begin::Menu item-->
                                                 <div class="menu-item px-3">

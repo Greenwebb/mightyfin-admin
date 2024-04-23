@@ -7,14 +7,14 @@
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="card-body">
-                                
+
                                 <div class="form-validation">
                                         <div class="row">
-                                            
+
                                             <div class="col-xl-6 col-xxl-6 col-lg-6">
                                                 <div class="mb-2">
                                                     <div class="col-6">
-                                                        
+
                                                         <div class="border-2 border-dashed shadow-xs border-slate-200/60 dark:border-darkmode-400 rounded-md p-0">
                                                             <div class="h-20 relative image-fit cursor-pointer zoom-in mx-auto">
                                                                 <img class="col-12" alt="" id="preview-image-before-upload_create" src="{{ 'public/'.Storage::url($user->profile_photo_path) }}">
@@ -22,7 +22,7 @@
                                                             </div>
                                                             <div class="mx-auto cursor-pointer relative mt-5">
                                                                 {{-- <button type="button" class="btn btn-square btn-primary">Add Photo</button> --}}
-                                                                <input type="file" id="prof_image_create" name="image_path" class="w-full h-full top-0 left-0"> 
+                                                                <input type="file" id="prof_image_create" name="image_path" class="w-full h-full top-0 left-0">
                                                                 {{-- <input type="file" name="image_path" class="w-full h-full"> --}}
                                                             </div>
                                                             <small>
@@ -31,10 +31,10 @@
                                                                 @endif --}}
                                                             </small>
                                                         </div>
-                                                    </div>                                                        
+                                                    </div>
                                                 </div>
                                                 <div class="mb-3 row">
-                                                    <label class="col-lg-4 col-form-label" for="validationCustom01">Firstname 
+                                                    <label class="col-lg-4 col-form-label" for="validationCustom01">Firstname
                                                         <span class="text-danger">*</span>
                                                     </label>
                                                     <div class="col-lg-6">
@@ -140,25 +140,25 @@
                                                         </div>
                                                     </div>
                                                 </div>
-
                                                 <div class="mb-3 row">
                                                     <label class="col-lg-4 col-form-label" for="validationCustom05">User Role
                                                         <span class="text-danger">*</span>
                                                     </label>
                                                     <div class="col-lg-6">
                                                         <select name="assigned_role" class="default-select wide form-control" id="validationCustom05">
-                                                            <option  data-display="Select">Please select</option>
+                                                            <option data-display="Select">Please select</option>
                                                             @foreach($roles as $role)
-                                                            <option value="{{ $role->id }}">{{ $role->name }}</option>
+                                                                <option value="{{ $role->id }}" {{ $current_role_name == $role->name ? 'selected' : '' }}>{{ ucwords($role->name) }}</option>
                                                             @endforeach
                                                         </select>
                                                         <div class="invalid-feedback">
                                                             Please select a one.
                                                         </div>
                                                     </div>
-                                                </div>                                                
+
+                                                </div>
                                                 <input type="hidden" value="{{$user->id}}" name="user_edit_id" class="default-select wide form-control" placeholder="Borrower" id="validationCustom05">
-                                                 
+
                                                 <div class="mb-3 row">
                                                     <label class="col-lg-4 col-form-label" for="validationCustom04">Address<span
                                                             class="text-danger">*</span>
@@ -181,7 +181,7 @@
                 </div>
                 <div class="modal-footer">
                     <button type="submit" class="btn btn-primary">Save changes</button>
-                </div>  
+                </div>
             </form>
         </div>
     </div>
