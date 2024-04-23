@@ -54,7 +54,7 @@ trait CalculatorTrait{
     public function calculateEqualInstallment(array $data){
 
         // API endpoint URL
-        $api_url = 'http://localhost/mighty/admin/api/calculate-reducing-balance';
+        $api_url = 'https://admin.mightyfinance.co.zm/api/calculate-reducing-balance';
 
         // Sample request data
         $request_data = [
@@ -92,7 +92,7 @@ trait CalculatorTrait{
             // Decode the response JSON
             $response_data = json_decode($response, true);
 
-            dd($response_data);
+            // dd($response_data);
             // Print response
             return $response_data;
         }
