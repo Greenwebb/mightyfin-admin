@@ -112,6 +112,8 @@ trait CRBTrait{
             curl_close($ch);
             // Process $response as needed (e.g., parse XML, handle SOAP response)
             return $response;
+
+            dd($response);
         } catch (\Throwable $th) {
             dd('Hello Greenwebbtech Fix this error: '.$th);
         }
