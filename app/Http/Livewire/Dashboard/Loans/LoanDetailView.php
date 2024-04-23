@@ -73,16 +73,17 @@ class LoanDetailView extends Component
     public function getAmoritizationTable(){
         try {
             $data = [
-                'loan_duration_period' =>'month',
+                'loan_duration_period' => 'month',
                 'loan_duration_value' => $this->loan->repayment_plan,
                 'principal' => $this->principal,
                 'loan_interest_value' => $this->loan_interest_value,
                 'num_of_repayments' => $this->loan->repayment_plan,
-                'release_date' => '04-10-2024',
+                'release_date' => Carbon::now()->format('d-m-Y'),  // Formatting date as Day-Month-Year
             ];
+            dd($data);
             $this->amortization_table = $this->calculateEqualInstallment($data);
 
-            dd($this->amortization_table);
+            // dd($this->amortization_table);
         } catch (\Throwable $th) {
             dd($th);
         }
