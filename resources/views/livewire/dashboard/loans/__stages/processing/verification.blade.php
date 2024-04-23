@@ -208,7 +208,7 @@
                                                     class="form-control form-control-lg form-control-solid"
                                                     placeholder="" required>
 
-                                                <option value="s">Sample</option>
+                                                {{-- <option value="s">Sample</option> --}}
                                                 @forelse ($crb_selected_products as $item)
                                                 <option value="{{ $item->crb_product->name }}">{{ $item->crb_product->name }}</option>
                                                 @empty
