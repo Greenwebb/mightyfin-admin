@@ -82,7 +82,7 @@ class LoanDetailView extends Component
             ];
             $this->amortization_table = $this->calculateEqualInstallment($data);
 
-            // dd($this->amortization_table['amortization_table']['installments']);
+            dd($this->amortization_table);
         } catch (\Throwable $th) {
             dd($th);
         }
