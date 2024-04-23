@@ -197,7 +197,7 @@
                                                     </td>
                                                     <td>
                                                         <a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">
-                                                            {{ $loan->fname.' '.$loan->lname }}
+                                                            {{ $loan->user->fname.' '.$loan->user->lname }}
                                                         </a>
                                                         <span class="text-muted fw-semibold d-block">
                                                             <a href="tel:{{ $loan->user->phone }}">{{ $loan->user->phone }}</a> <br> {{ $loan->email }} </span>
