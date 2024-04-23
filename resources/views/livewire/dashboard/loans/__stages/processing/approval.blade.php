@@ -199,19 +199,29 @@
                                             class="collapse show fs-6 ps-10"
                                             data-bs-parent="#kt_customer_view_payment_method">
                                             <div class="w-full">
-                                                <div>
-                                                    <div class="w-1/4">
+                                                <div style="display: grid; grid-template-columns: repeat(3, 1fr);">
+                                                    <div>
                                                         <p>Principal</p>
-                                                        <input type="number" class="form-control" wire:model.defer="amo_principal" placeholder="{{$amo_principal}}" id="amo">
+                                                        <input type="number" class="form-control" wire:model.defer="amo_principal" placeholder="{{$loan->amount}}" id="amo_principal">
                                                     </div>
-                                                    <div class="w-1/4">
+                                                    <div>
                                                         <p>Duration (Months)</p>
-                                                        <input type="number" class="form-control" wire:model.defer="amo_duration" placeholder="{{$amo_duration}}" id="amo">
+                                                        <input type="number" class="form-control" wire:model.defer="amo_duration" placeholder="{{$loan->repayment_plan}}" id="amo_duration">
                                                     </div>
-                                                    <div class="w-1/4">
-                                                        <p>Interest Rate</p>
-                                                        <input type="number" class="form-control" wire:model.defer="amo_duration" placeholder="{{$amo_duration}}" id="amo">
+                                                    <div>
+                                                        <p>Interest Rate (%)</p>
+                                                        <input type="number" class="form-control" wire:model.defer="amo_interest" placeholder="{{$lp->def_loan_interest}}" id="amo_interest">
                                                     </div>
+                                                </div>
+                                                <div>
+                                                    <p>Interest Method</p>
+                                                    <select type="text" wire:model.lazy="loan_interest_method" class="form-control form-control-lg " placeholder="Company name" value="Keenthemes">
+                                                        @forelse ($interest_methods as $option)
+                                                        <option value="{{ $option->name }}">{{ $option->name }}</option>
+                                                        @empty
+                                                            <span>No Methods</span>
+                                                        @endforelse
+                                                    </select>
                                                 </div>
                                                 <hr>
                                                 <!-- Preloader icon to display while the action is processing -->

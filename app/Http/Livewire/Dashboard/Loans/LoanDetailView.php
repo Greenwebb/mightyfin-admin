@@ -4,6 +4,7 @@ namespace App\Http\Livewire\Dashboard\Loans;
 
 use App\Models\Application;
 use App\Models\ApplicationStage;
+use App\Models\InterestMethod;
 use App\Models\LoanManualApprover;
 use App\Models\LoanStatus;
 use App\Models\Status;
@@ -29,6 +30,7 @@ class LoanDetailView extends Component
     public $debt_ratio, $gross_pay, $net_pay, $result_amount;
     public $crb_selected_products, $loan_notifications, $plp_rule, $plp;
     public $lp, $loan_interest_value, $principal, $amortization_table;
+    public $loan_interest_method, $interest_methods;
 
     public function mount($id){
         $this->loan_id = $id;
@@ -57,6 +59,7 @@ class LoanDetailView extends Component
         $this->loan_stage = $this->get_loan_current_stage($this->loan->loan_product_id);
         $this->denied_status = Status::where('stage', 'denied')->orderBy('id')->get();
         $this->current = ApplicationStage::where('application_id', $this->loan->id)->first();
+        $this->interest_methods = InterestMethod::get();
         $this->plp_rule = false;
     }
 
