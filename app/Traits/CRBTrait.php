@@ -25,7 +25,7 @@ trait CRBTrait{
             $xmlPayload = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.zm.crbws.transunion.ke.co/">
                     <soapenv:Header/>
                     <soapenv:Body>
-                        <ws:getProduct104>
+                        <ws:getProduct'.$code.'>
                             <!--Optional:-->
                             <!--Optional:-->
                             <username>Ws_Mighty</username>
@@ -76,7 +76,7 @@ trait CRBTrait{
                             <physicalCountry>?</physicalCountry>
                             <reportSector>1</reportSector>
                             <reportReason>3</reportReason>
-                        </ws:getProduct104>
+                        </ws:getProduct'.$code.'>
                     </soapenv:Body>
                 </soapenv:Envelope>';
             // dd($xmlPayload);

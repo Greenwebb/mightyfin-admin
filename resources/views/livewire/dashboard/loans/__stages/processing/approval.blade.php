@@ -198,30 +198,28 @@
                                         <div id="kt_customer_view_payment_method_1"
                                             class="collapse show fs-6 ps-10"
                                             data-bs-parent="#kt_customer_view_payment_method">
-                                            <div class="">
-                                                {{-- <div class="w-full">
-                                                    <p>Principal</p>
-                                                    <input type="number" class="form-control" wire:model.defer="amo_principal" placeholder="{{$amo_principal}}" id="amo">
-                                                </div>
-                                                <div class="w-full">
-                                                    <p>Duration (Months)</p>
-                                                    <input type="number" class="form-control" wire:model.defer="amo_duration" placeholder="{{$amo_duration}}" id="amo">
-                                                </div>
+                                            <div class="w-full">
                                                 <div>
-                                                    <!-- Show loading spinner while the action is processing -->
-                                                    <button class="btn btn-primary" wire:click="calculateAmoritization()" wire:loading.attr="disabled">
-                                                        <span wire:loading.remove>Submit</span>
-                                                        <span wire:loading>Loading...</span>
-                                                    </button>
+                                                    <div class="w-1/4">
+                                                        <p>Principal</p>
+                                                        <input type="number" class="form-control" wire:model.defer="amo_principal" placeholder="{{$amo_principal}}" id="amo">
+                                                    </div>
+                                                    <div class="w-1/4">
+                                                        <p>Duration (Months)</p>
+                                                        <input type="number" class="form-control" wire:model.defer="amo_duration" placeholder="{{$amo_duration}}" id="amo">
+                                                    </div>
+                                                    <div class="w-1/4">
+                                                        <p>Interest Rate</p>
+                                                        <input type="number" class="form-control" wire:model.defer="amo_duration" placeholder="{{$amo_duration}}" id="amo">
+                                                    </div>
                                                 </div>
-                                                <br>
                                                 <hr>
                                                 <!-- Preloader icon to display while the action is processing -->
                                                 <div wire:loading wire:target="calculateAmoritization()">
                                                     <div class="spinner-border text-primary" role="status">
                                                         <span class="visually-hidden">Loading...</span>
                                                     </div>
-                                                </div> --}}
+                                                </div>
 
                                                 <div class="px-0">
                                                     @if ($amortization_table)
