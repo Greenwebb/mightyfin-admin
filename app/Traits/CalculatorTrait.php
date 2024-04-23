@@ -52,7 +52,7 @@ trait CalculatorTrait{
 
 
     public function calculateEqualInstallment(array $data){
-        
+
         // API endpoint URL
         $api_url = 'http://localhost/mighty/admin/api/calculate-reducing-balance';
 
@@ -66,7 +66,6 @@ trait CalculatorTrait{
             'release_date' => $data['release_date'],
         ];
 
-        dd($request_data);
         // dd($request_data);
         // Initialize curl
         $curl = curl_init();
@@ -93,6 +92,7 @@ trait CalculatorTrait{
             // Decode the response JSON
             $response_data = json_decode($response, true);
 
+            dd($response_data);
             // Print response
             return $response_data;
         }
