@@ -292,12 +292,12 @@
                                             <div class="d-flex gap-10 flex-wrap py-5">
                                                 <div class="w-full">
                                                     <span class="font-bold"><b>Debt Ratio (%)</b></span>
-                                                    <input type="number" value="40" class="form-control" id="debt_ratio">
+                                                    <input type="number" disabled value="40" class="form-control" id="debt_ratio">
                                                 </div>
 
                                                 <div class="w-full">
-                                                    <span class="font-bold"><b>Gross Pay</b></span>
-                                                    <input type="number" class="form-control" id="gross_pay">
+                                                    <span class="font-bold"><b>Basic Pay</b></span>
+                                                    <input type="number" class="form-control" id="basic_pay">
                                                 </div>
 
                                                 <div class="w-full">
@@ -581,12 +581,12 @@
         document.getElementById('plp_rule').style.display = 'none';
         document.getElementById('calculateRisk').addEventListener('click', function() {
             var debtRatio = parseFloat(document.getElementById('debt_ratio').value);
-            var grossPay = parseFloat(document.getElementById('gross_pay').value);
+            var basicPay = parseFloat(document.getElementById('basic_pay').value);
             var netPay = parseFloat(document.getElementById('net_pay').value);
 
             // Perform the calculation
             var debtR = debtRatio / 100;
-            var resultAmount = netPay - (grossPay * debtR);
+            var resultAmount = netPay - (basicPay * debtR);
 
             // Format the result with "K" prefix
             var formattedResult =  "K " + resultAmount.toFixed(2);
