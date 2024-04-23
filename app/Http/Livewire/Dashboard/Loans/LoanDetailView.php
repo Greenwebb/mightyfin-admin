@@ -80,7 +80,7 @@ class LoanDetailView extends Component
                 'num_of_repayments' => $this->loan->repayment_plan,
                 'release_date' => Carbon::now()->format('d-m-Y'),  // Formatting date as Day-Month-Year
             ];
-            dd($data);
+            // dd($data);
             $this->amortization_table = $this->calculateEqualInstallment($data);
 
             // dd($this->amortization_table);
