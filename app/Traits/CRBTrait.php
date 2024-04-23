@@ -111,7 +111,7 @@ trait CRBTrait{
 
             curl_close($ch);
             // Process $response as needed (e.g., parse XML, handle SOAP response)
-            return $response;
+            // return $response;
 
             dd($response);
         } catch (\Throwable $th) {
