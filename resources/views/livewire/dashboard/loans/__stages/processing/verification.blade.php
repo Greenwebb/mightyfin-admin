@@ -1,4 +1,4 @@
-<div  class="content d-flex flex-column flex-column-fluid" id="kt_content">
+<div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <!--begin::Post-->
     <div class="post d-flex flex-column-fluid" id="kt_post">
         <!--begin::Container-->
@@ -74,7 +74,9 @@
                                         <div
                                             class="col-lg-4 border border-gray-300 border-dashed rounded py-3 px-3 mx-4 m-3">
                                             <div class="fs-4 fw-bold text-gray-700">
-                                                <span class="w-50px">K {{ App\Models\Application::monthly_installment($loan->amount, $loan->repayment_plan) }}</span>
+
+                                                <span class="w-50px">K {{ $amortization_table['amortization_table']['installments'][0]['due'] }}</span>
+                                                {{-- <span class="w-50px">K {{ App\Models\Application::monthly_installment($loan->amount, $loan->repayment_plan) }}</span> --}}
                                                 <i class="ki-duotone ki-usd fs-3 text-danger">
                                                     <span class="path1"></span>
                                                     <span class="path2"></span>
@@ -306,7 +308,7 @@
                                                 </div>
 
                                                 <div class="w-full">
-                                                    <span class="text-primary" style="color:blueviolet"><b>Possible Loan Principal (PLP)</b></span>
+                                                    <span class="text-primary" style="color:blueviolet"><b>Possible Monthly Calculation (PMC)</b></span>
                                                     <input type="text" disabled class="form-control" wire:model='plp' id="result_amount">
                                                 </div>
                                             </div>
@@ -323,8 +325,8 @@
                                                     </svg>
                                                 </span>
                                                 <p class="col-10">
-                                                    Principal amount is more than the PLP, you might need to increase the number of months for
-                                                    the loan and also reduce the principal amount being requested.
+                                                    Principal Monthly Calculation is more than the Monthly Installment, you might need to increase the number of months for
+                                                    the loan or reduce the principal amount being requested.
                                                 </p>
                                             </div>
                                             <div class="justify-content-between d-flex">
@@ -576,7 +578,6 @@
         <!--end::Container-->
     </div>
     <!--end::Post-->
-
     <script>
         document.getElementById('plp_rule').style.display = 'none';
         document.getElementById('calculateRisk').addEventListener('click', function() {
@@ -591,8 +592,11 @@
             // Format the result with "K" prefix
             var formattedResult =  "K " + resultAmount.toFixed(2);
 
+            // Convert the due amount from JSON, removing commas and converting to float
+            var dueAmount = parseFloat(@json($amortization_table['amortization_table']['installments'][0]['due']).replace(/,/g, ''));
+
             // Show plp rule
-            if (resultAmount.toFixed(2) < @json($loan->amount)) {
+            if (resultAmount.toFixed(2) < dueAmount) {
                 document.getElementById('plp_rule').style.display = 'block';
             } else {
                 document.getElementById('plp_rule').style.display = 'none';
@@ -602,6 +606,7 @@
             document.getElementById('result_amount').value = formattedResult;
         });
     </script>
+
     <script>
         $(document).ready(function() {
             $('#notifyUserBtn').click(function() {

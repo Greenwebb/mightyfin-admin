@@ -199,7 +199,7 @@
                                             class="collapse show fs-6 ps-10"
                                             data-bs-parent="#kt_customer_view_payment_method">
                                             <div class="w-full">
-                                                <div style="display: grid; grid-template-columns: repeat(3, 1fr);">
+                                                {{-- <div style="display: grid; grid-template-columns: repeat(3, 1fr);">
                                                     <div>
                                                         <p>Principal</p>
                                                         <input type="number" class="form-control" wire:model.defer="amo_principal" placeholder="{{$loan->amount}}" id="amo_principal">
@@ -222,7 +222,7 @@
                                                             <span>No Methods</span>
                                                         @endforelse
                                                     </select>
-                                                </div>
+                                                </div> --}}
                                                 <hr>
                                                 <!-- Preloader icon to display while the action is processing -->
                                                 <div wire:loading wire:target="calculateAmoritization()">
