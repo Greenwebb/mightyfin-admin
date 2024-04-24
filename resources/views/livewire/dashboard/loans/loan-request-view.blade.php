@@ -4,99 +4,72 @@
             <br>
             <div class="col-12">
                 @if(!empty($loan_requests->toArray()))
-                <div class="">
+                    <div class="">
+                        @role('user')
+                        <div style="background-color:#792db8;@role('user') @else margin-top:2%; padding:2%; @endrole " class="card-header">
 
-                    @role('user')
-                    <div style="background-color:#792db8;@role('user') @else margin-top:2%; padding:2%; @endrole " class="card-header">
+                            <h4 class="card-title" style=" color:#f0f0f0">
+                                <svg version="1.1" id="Uploaded to svgrepo.com" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="35" height="35" viewBox="0 0 32 32" xml:space="preserve" fill="#af83c3" stroke="#af83c3" stroke-width="0.48">
 
-                        <h4 class="card-title" style=" color:#f0f0f0">
-                            <svg version="1.1" id="Uploaded to svgrepo.com" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="35" height="35" viewBox="0 0 32 32" xml:space="preserve" fill="#af83c3" stroke="#af83c3" stroke-width="0.48">
+                                    <g id="SVGRepo_bgCarrier" stroke-width="0"/>
 
-                                <g id="SVGRepo_bgCarrier" stroke-width="0"/>
+                                    <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
 
-                                <g id="SVGRepo_tracerCarrier" stroke-linecap="round" stroke-linejoin="round"/>
+                                    <g id="SVGRepo_iconCarrier"> <style type="text/css"> .feather_een{fill:#ffffff;} </style> <path class="feather_een" d="M3,11c0-0.552,0.448-1,1-1s1,0.448,1,1c0,0.552-0.448,1-1,1S3,11.552,3,11z M4,22c0.552,0,1-0.448,1-1 c0-0.552-0.448-1-1-1s-1,0.448-1,1C3,21.552,3.448,22,4,22z M28,10c-0.552,0-1,0.448-1,1c0,0.552,0.448,1,1,1s1-0.448,1-1 C29,10.448,28.552,10,28,10z M21,16c0,3.314-1.686,6-5,6s-5-2.686-5-6s1.686-6,5-6S21,12.686,21,16z M20,16c0-2.417-1.051-5-4-5 s-4,2.583-4,5c0,2.417,1.051,5,4,5S20,18.417,20,16z M28,20c-0.552,0-1,0.448-1,1c0,0.552,0.448,1,1,1s1-0.448,1-1 C29,20.448,28.552,20,28,20z M31,12.28V22c0,1.105-0.895,2-2,2h-9.686l-6.849,6.849c-0.391,0.391-0.902,0.586-1.414,0.586 s-1.024-0.195-1.414-0.586l-6.873-6.873c-0.923-0.11-1.647-0.844-1.742-1.771C0.432,21.481,0.425,20.451,1,19.72V10 c0-1.105,0.895-2,2-2h9.686l6.849-6.849c0.391-0.391,0.902-0.586,1.414-0.586s1.024,0.195,1.414,0.586l6.873,6.873 c0.923,0.11,1.647,0.843,1.742,1.771C31.568,10.519,31.575,11.549,31,12.28z M14.101,8h13.698l-6.142-6.142 c-0.189-0.189-0.44-0.293-0.707-0.293s-0.518,0.104-0.707,0.293L14.101,8z M17.899,24H4.201l6.142,6.142 c0.189,0.189,0.44,0.293,0.707,0.293c0.267,0,0.518-0.104,0.707-0.293L17.899,24z M30,10c0-0.551-0.449-1-1-1H3 c-0.551,0-1,0.449-1,1v12c0,0.551,0.449,1,1,1h26c0.551,0,1-0.449,1-1V10z"/> </g>
 
-                                <g id="SVGRepo_iconCarrier"> <style type="text/css"> .feather_een{fill:#ffffff;} </style> <path class="feather_een" d="M3,11c0-0.552,0.448-1,1-1s1,0.448,1,1c0,0.552-0.448,1-1,1S3,11.552,3,11z M4,22c0.552,0,1-0.448,1-1 c0-0.552-0.448-1-1-1s-1,0.448-1,1C3,21.552,3.448,22,4,22z M28,10c-0.552,0-1,0.448-1,1c0,0.552,0.448,1,1,1s1-0.448,1-1 C29,10.448,28.552,10,28,10z M21,16c0,3.314-1.686,6-5,6s-5-2.686-5-6s1.686-6,5-6S21,12.686,21,16z M20,16c0-2.417-1.051-5-4-5 s-4,2.583-4,5c0,2.417,1.051,5,4,5S20,18.417,20,16z M28,20c-0.552,0-1,0.448-1,1c0,0.552,0.448,1,1,1s1-0.448,1-1 C29,20.448,28.552,20,28,20z M31,12.28V22c0,1.105-0.895,2-2,2h-9.686l-6.849,6.849c-0.391,0.391-0.902,0.586-1.414,0.586 s-1.024-0.195-1.414-0.586l-6.873-6.873c-0.923-0.11-1.647-0.844-1.742-1.771C0.432,21.481,0.425,20.451,1,19.72V10 c0-1.105,0.895-2,2-2h9.686l6.849-6.849c0.391-0.391,0.902-0.586,1.414-0.586s1.024,0.195,1.414,0.586l6.873,6.873 c0.923,0.11,1.647,0.843,1.742,1.771C31.568,10.519,31.575,11.549,31,12.28z M14.101,8h13.698l-6.142-6.142 c-0.189-0.189-0.44-0.293-0.707-0.293s-0.518,0.104-0.707,0.293L14.101,8z M17.899,24H4.201l6.142,6.142 c0.189,0.189,0.44,0.293,0.707,0.293c0.267,0,0.518-0.104,0.707-0.293L17.899,24z M30,10c0-0.551-0.449-1-1-1H3 c-0.551,0-1,0.449-1,1v12c0,0.551,0.449,1,1,1h26c0.551,0,1-0.449,1-1V10z"/> </g>
-
-                                </svg>
-                            View All Loans
-                        </h4>
-
-                        <!-- <div>
-                            <button title="Export to Excel" wire:click="exportLoans()" class="btn btn-square btn-success">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-spreadsheet" viewBox="0 0 16 16">
-                                    <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2V9H3V2a1 1 0 0 1 1-1h5.5v2zM3 12v-2h2v2H3zm0 1h2v2H4a1 1 0 0 1-1-1v-1zm3 2v-2h3v2H6zm4 0v-2h3v1a1 1 0 0 1-1 1h-2zm3-3h-3v-2h3v2zm-7 0v-2h3v2H6z"/>
-                                </svg>
-                            </button>
-                            <button onclick="printLoansTable()" title="Export all to PDF" class="btn btn-square btn-warning">
-                                <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-filetype-pdf" viewBox="0 0 16 16">
-                                    <path fill-rule="evenodd" d="M14 4.5V14a2 2 0 0 1-2 2h-1v-1h1a1 1 0 0 0 1-1V4.5h-2A1.5 1.5 0 0 1 9.5 3V1H4a1 1 0 0 0-1 1v9H2V2a2 2 0 0 1 2-2h5.5L14 4.5ZM1.6 11.85H0v3.999h.791v-1.342h.803c.287 0 .531-.057.732-.173.203-.117.358-.275.463-.474a1.42 1.42 0 0 0 .161-.677c0-.25-.053-.476-.158-.677a1.176 1.176 0 0 0-.46-.477c-.2-.12-.443-.179-.732-.179Zm.545 1.333a.795.795 0 0 1-.085.38.574.574 0 0 1-.238.241.794.794 0 0 1-.375.082H.788V12.48h.66c.218 0 .389.06.512.181.123.122.185.296.185.522Zm1.217-1.333v3.999h1.46c.401 0 .734-.08.998-.237a1.45 1.45 0 0 0 .595-.689c.13-.3.196-.662.196-1.084 0-.42-.065-.778-.196-1.075a1.426 1.426 0 0 0-.589-.68c-.264-.156-.599-.234-1.005-.234H3.362Zm.791.645h.563c.248 0 .45.05.609.152a.89.89 0 0 1 .354.454c.079.201.118.452.118.753a2.3 2.3 0 0 1-.068.592 1.14 1.14 0 0 1-.196.422.8.8 0 0 1-.334.252 1.298 1.298 0 0 1-.483.082h-.563v-2.707Zm3.743 1.763v1.591h-.79V11.85h2.548v.653H7.896v1.117h1.606v.638H7.896Z"/>
-                                </svg>
-                            </button>
-                            @hasanyrole('admin')
-                            <a target="_blank" href="{{ route('proxy-loan-create')}}" class="btn btn-square btn-primary">
-                                <span class="mx-2">Create New Loan</span>
-                                <span>
-                                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-box-arrow-up-right" viewBox="0 0 16 16">
-                                        <path fill-rule="evenodd" d="M8.636 3.5a.5.5 0 0 0-.5-.5H1.5A1.5 1.5 0 0 0 0 4.5v10A1.5 1.5 0 0 0 1.5 16h10a1.5 1.5 0 0 0 1.5-1.5V7.864a.5.5 0 0 0-1 0V14.5a.5.5 0 0 1-.5.5h-10a.5.5 0 0 1-.5-.5v-10a.5.5 0 0 1 .5-.5h6.636a.5.5 0 0 0 .5-.5z"/>
-                                        <path fill-rule="evenodd" d="M16 .5a.5.5 0 0 0-.5-.5h-5a.5.5 0 0 0 0 1h3.793L6.146 9.146a.5.5 0 1 0 .708.708L15 1.707V5.5a.5.5 0 0 0 1 0v-5z"/>
                                     </svg>
-                                </span>
-                            </a>
-                            @endhasanyrole
-                        </div> -->
-                    </div>
-                    @endrole
-
-                    <div class="card-body pb-0" style="padding-bottom: 30%">
-                        @if (Session::has('attention'))
-                        <div wire:ignore.self class="intro-x alert alert-secondary w-1/2 alert-dismissible justify-center show flex items-center mb-2" role="alert">
-                            <i data-lucide="alert-octagon" class="w-6 h-6 mr-2"></i>
-                            {{ Session::get('attention') }}
-                            <button type="button" class="btn-close" data-tw-dismiss="alert" aria-label="Close">
-                                <i data-lucide="x" class="w-4 h-4"></i>
-                            </button>
+                                View All Loans
+                            </h4>
                         </div>
-                        @elseif (Session::has('error_msg'))
-                        <div wire:ignore.self class="intro-x alert alert-danger w-1/2 alert-dismissible justify-center show flex items-center mb-2" role="alert">
-                            <i data-lucide="alert-octagon" class="w-6 h-6 mr-2"></i>
-                            {{ Session::get('error_msg') }}
-                            <button type="button" class="btn-close" data-tw-dismiss="alert" aria-label="Close">
-                                <i data-lucide="x" class="w-4 h-4"></i>
-                            </button>
-                        </div>
-                        @endif
-                        <div wire:ignore.self class="table-responsive patient">
-                            
-                            @include('livewire.dashboard.__parts.dash-alerts')
-                            
-                            <div id="loans_table_print_view">
-                                @if($view === 'list')
-                                @role('user')
-                                    @include('livewire.dashboard.loans.__parts.list-loan-request')
-                                @else
-                                    @include('livewire.dashboard.loans.__parts.staff-loan-request-table')
-                                @endrole
-                                @endif
-                                @if($view === 'table')
-                                    @include('livewire.dashboard.loans.__parts.default-loan-request-table')
-                                @endif
-
-                                @if($view === 'grid')
-                                    @include('livewire.dashboard.loans.__parts.grid-loan-requests')
-                                @endif
-
-                                @if($view === 'assesment')
-                                    @include('livewire.dashboard.loans.__parts.assesment-loan-request-table')
-                                @endif
+                        @endrole
+                        <div class="card-body pb-0" style="padding-bottom: 30%">
+                            @if (Session::has('attention'))
+                            <div wire:ignore.self class="intro-x alert alert-secondary w-1/2 alert-dismissible justify-center show flex items-center mb-2" role="alert">
+                                <i data-lucide="alert-octagon" class="w-6 h-6 mr-2"></i>
+                                {{ Session::get('attention') }}
+                                <button type="button" class="btn-close" data-tw-dismiss="alert" aria-label="Close">
+                                    <i data-lucide="x" class="w-4 h-4"></i>
+                                </button>
                             </div>
-                            <div class="flex items-center justify-center text-xs my-4 mx-4">
-                                {{-- {{ $requests->links() }} --}}
+                            @elseif (Session::has('error_msg'))
+                            <div wire:ignore.self class="intro-x alert alert-danger w-1/2 alert-dismissible justify-center show flex items-center mb-2" role="alert">
+                                <i data-lucide="alert-octagon" class="w-6 h-6 mr-2"></i>
+                                {{ Session::get('error_msg') }}
+                                <button type="button" class="btn-close" data-tw-dismiss="alert" aria-label="Close">
+                                    <i data-lucide="x" class="w-4 h-4"></i>
+                                </button>
+                            </div>
+                            @endif
+                            <div wire:ignore.self class="table-responsive patient">
+
+                                @include('livewire.dashboard.__parts.dash-alerts')
+
+                                <div id="loans_table_print_view">
+                                    @if($view === 'list')
+                                    @role('user')
+                                        @include('livewire.dashboard.loans.__parts.list-loan-request')
+                                    @else
+                                        @include('livewire.dashboard.loans.__parts.staff-loan-request-table')
+                                    @endrole
+                                    @endif
+                                    @if($view === 'table')
+                                        @include('livewire.dashboard.loans.__parts.default-loan-request-table')
+                                    @endif
+
+                                    @if($view === 'grid')
+                                        @include('livewire.dashboard.loans.__parts.grid-loan-requests')
+                                    @endif
+
+                                    @if($view === 'assesment')
+                                        @include('livewire.dashboard.loans.__parts.assesment-loan-request-table')
+                                    @endif
+                                </div>
+                                <div class="flex items-center justify-center text-xs my-4 mx-4">
+                                    {{-- {{ $requests->links() }} --}}
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-
                 @else
                     {{-- Illustrate No Loan --}}
                     <div class="container m-12 d-flex justify-content-center align-items-center">
