@@ -1,157 +1,142 @@
-<!DOCTYPE HTML>
-<html lang="en" xmlns="http://www.w3.org/1999/xhtml" xmlns:o="urn:schemas-microsoft-com:office:office">
+<!DOCTYPE html>
+<!--
+Author: Keenthemes
+Product Name: Metronic
+Product Version: 8.2.0
+Purchase: https://1.envato.market/EA4JP
+Website: http://www.keenthemes.com
+Contact: support@keenthemes.com
+Follow: www.twitter.com/keenthemes
+Dribbble: www.dribbble.com/keenthemes
+Like: www.facebook.com/keenthemes
+License: For each use you must have a valid license purchased only from above link in order to legally use the theme for your project.
+-->
+<html lang="en">
+	<!--begin::Head-->
+	<head><base href="../../"/>
+		<title>MightyFin</title>
+		<meta charset="utf-8" />
+		<meta name="description" content="The most advanced Bootstrap 5 Admin Theme with 40 unique prebuilt layouts on Themeforest trusted by 100,000 beginners and professionals. Multi-demo, Dark Mode, RTL support and complete React, Angular, Vue, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel versions. Grab your copy now and get life-time updates for free." />
+		<meta name="keywords" content="metronic, bootstrap, bootstrap 5, angular, VueJs, React, Asp.Net Core, Rails, Spring, Blazor, Django, Express.js, Node.js, Flask, Symfony & Laravel starter kits, admin themes, web design, figma, web development, free templates, free admin themes, bootstrap theme, bootstrap template, bootstrap dashboard, bootstrap dak mode, bootstrap button, bootstrap datepicker, bootstrap timepicker, fullcalendar, datatables, flaticon" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta property="og:locale" content="en_US" />
+		<meta property="og:type" content="article" />
+		<meta property="og:title" content="Metronic - Bootstrap Admin Template, HTML, VueJS, React, Angular. Laravel, Asp.Net Core, Ruby on Rails, Spring Boot, Blazor, Django, Express.js, Node.js, Flask Admin Dashboard Theme & Template" />
+		<meta property="og:url" content="https://keenthemes.com/metronic" />
+		<meta property="og:site_name" content="Keenthemes | Metronic" />
+		<link rel="canonical" href="https://preview.keenthemes.com/metronic8" />
+		<link rel="shortcut icon" href="https://admin.mightyfinance.co.zm/public/mfs/admin/assets/media/logos/favicon.ico" />
+		<!--begin::Fonts(mandatory for all pages)-->
+		<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Inter:300,400,500,600,700" />
+		<!--end::Fonts-->
+		<!--begin::Global Stylesheets Bundle(mandatory for all pages)-->
+		<link href="https://admin.mightyfinance.co.zm/public/mfs/admin/assets/plugins/global/plugins.bundle.css" rel="stylesheet" type="text/css" />
+		<link href="https://admin.mightyfinance.co.zm/public/mfs/admin/assets/css/style.bundle.css" rel="stylesheet" type="text/css" />
+		<!--end::Global Stylesheets Bundle-->
+		<script>// Frame-busting to prevent site from being loaded within a frame without permission (click-jacking) if (window.top != window.self) { window.top.location.replace(window.self.location.href); }</script>
+	</head>
+	<!--end::Head-->
+	<!--begin::Body-->
+	<body id="kt_body" class="auth-bg">
+		<!--begin::Theme mode setup on page load-->
+		<script>var defaultThemeMode = "light"; var themeMode; if ( document.documentElement ) { if ( document.documentElement.hasAttribute("data-bs-theme-mode")) { themeMode = document.documentElement.getAttribute("data-bs-theme-mode"); } else { if ( localStorage.getItem("data-bs-theme") !== null ) { themeMode = localStorage.getItem("data-bs-theme"); } else { themeMode = defaultThemeMode; } } if (themeMode === "system") { themeMode = window.matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light"; } document.documentElement.setAttribute("data-bs-theme", themeMode); }</script>
+		<!--end::Theme mode setup on page load-->
+		<!--begin::Main-->
+		<!--begin::Root-->
+		<div class="d-flex flex-column flex-root">
+			<!--begin::Wrapper-->
+			<div class="d-flex flex-column flex-column-fluid">
+				<!--begin::Header-->
+				<!--end::Header-->
+				<!--begin::Body-->
+				<div class="scroll-y flex-column-fluid px-10 py-10" data-kt-scroll="true" data-kt-scroll-activate="true" data-kt-scroll-height="auto" data-kt-scroll-dependencies="#kt_app_header_nav" data-kt-scroll-offset="5px" data-kt-scroll-save-state="true" style="background-color:#D5D9E2; --kt-scrollbar-color: #d9d0cc; --kt-scrollbar-hover-color: #d9d0cc">
+					<!--begin::Email template-->
+					<style>html,body { padding:0; margin:0; font-family: montserrat, sans-serif, "sans-serif"; } a:hover { color: #009ef7; }</style>
+					<div id="#kt_app_body_content" style="background-color:#D5D9E2; font-family:Arial,Helvetica,sans-serif; line-height: 1.5; min-height: 100%; font-weight: normal; font-size: 15px; color: #2F3044; margin:0; padding:0; width:100%;">
+						<div style="background-color:#ffffff; padding: 45px 0 34px 0; border-radius: 24px; margin:40px auto; max-width: 600px;">
+							<table align="center" border="0" cellpadding="0" cellspacing="0" width="100%" height="auto" style="border-collapse:collapse">
+								<tbody>
+									<tr>
+										<td align="center" valign="center" style="text-align:center; padding-bottom: 10px">
+											<!--begin:Email content-->
+											<div style="text-align:center; margin:0 15px 34px 15px">
+												<!--begin:Logo-->
+												<div style="margin-bottom: 10px">
+													<a href="https://admin.mightyfinance.co.zm" rel="noopener" target="_blank">
+														<img alt="Logo" src="https://admin.mightyfinance.co.zm/public/mfs/images/j.png" style="height: 55px" />
+													</a>
+												</div>
+												<!--end:Logo-->
+												<!--begin:Media-->
+												<div style="margin-bottom: 15px">
+													<img alt="Logo" src="https://admin.mightyfinance.co.zm/public/mfs/admin/assets/media/email/icon-positive-vote-1.svg" />
+												</div>
+												<!--end:Media-->
+                                                <div style="font-size: 14px; font-weight: 500; margin-bottom: 27px; font-family: Arial, Helvetica, sans-serif;">
+                                                    <p style="margin-bottom: 9px; color: #181C32; font-size: 22px; font-weight: 700;">
+                                                        Hey {{ $data['name'] }}, Your account is ready!
+                                                    </p>
+                                                    <p style="margin-bottom: 2px; color: #7E8299;">
+                                                        {{ $data['message'] }}
+                                                    </p>
+                                                </div>
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="x-apple-disable-message-reformatting">
-  <meta name="format-detection" content="date=no">
-  <meta name="format-detection" content="telephone=no">
-  <style type="text/CSS"></style>
-  <style @import url('https://dopplerhealth.com/fonts/BasierCircle/basiercircle-regular-webfont.woff2');></style>
-  <title></title>
-  <style>
-       table,
-    td,
-    div,
-    h1,
-    p {
-      font-family: 'Basier Circle', 'montserrat', 'Helvetica', 'Arial', sans-serif;
-    }
+												<!--end:Text-->
+												<!--begin:Action-->
+												<a href="https://admin.mightyfinance.co.zm/dashboard" target="_blank" style="background-color:#582e6b; border-radius:6px;display:inline-block; padding:11px 19px; color: #FFFFFF; font-size: 14px; font-weight:500;">Goto Dashboard</a>
+												<!--begin:Action-->
+											</div>
+											<!--end:Email content-->
+										</td>
+									</tr>
 
-    @media screen and (max-width: 530px) {
-      .unsub {
-        display: block;
-        padding: 8px;
-        margin-top: 14px;
-        border-radius: 6px;
-        background-color: #ffffff;
-        text-decoration: none !important;
-        font-weight: bold;
-      }
-
-      .button {
-        min-height: 42px;
-        line-height: 42px;
-      }
-
-      .col-lge {
-        max-width: 100% !important;
-      }
-    }
-
-    @media screen and (min-width: 531px) {
-      .col-sml {
-        max-width: 27% !important;
-      }
-
-      .col-lge {
-        max-width: 73% !important;
-      }
-    }
-
-  a {
-    text-decoration: none;
-  }
-  
-  .-btn {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 216px;
-    height: 56px;
-    text-align: center;
-    border-radius: 12px;
-  }
-  
-  .-btn:hover {
-    opacity: .8;
-  }
-  
-  .-bg {
-    background: #ffee00;
-  }
-  
-  .-txt {
-    color: #fff;
-  }
-  
-  .-xs {
-    font-size: 12px;
-  }
-  </style>
-</head>
-
-<body style="margin:0;padding:0;word-spacing:normal;background-color:#ffffff;">
-  <div role="article" aria-roledescription="email" lang="en" style="text-size-adjust:100%;-webkit-text-size-adjust:100%;-ms-text-size-adjust:100%;background-color:#FDF8F4;">
-    <table role="presentation" style="width:100%;border:none;border-spacing:0;">
-      <tr>
-        <td align="center" style="padding:0;">
-          <!--[if mso]>
-          <table role="presentation" align="center" style="width:600px;">
-          <tr>
-          <td>
-          <![endif]-->
-          <table role="presentation" style="width:94%;max-width:600px;border:none;border-spacing:0;text-align:left;font-family:'Basier Circle', 'montserrat', 'Helvetica', 'Arial', sans-serif;font-size:1em;line-height:1.37em;color:#384049;">
-            <!--  Logo headder -->
-            <tr>
-              <td style="padding:30px 20px 20px 20px;text-align:center;font-size:1.5em;font-weight:bold; background: #ffffff;">
-                <a href="https://mightyfinance.co.zm" style=" text-decoration:none;">
-                  Might Finance Solution
-                  <!-- <img style="width:120px; height:90px" alt="Mighty Finance Solutions" src="https://mightyfinance.co.zm/web/images/01-ft-logo.png'"> -->
-                </a>
-              </td>
-            </tr>
-            <!--  Intro Section -->
-            <tr>
-              <td style="padding:30px;background-color:#ffffff;">
-                <h1 style="margin-top:0;margin-bottom:1.38em;font-size:1.953em;line-height:1.3;font-weight:bold;letter-spacing:-0.02em;">
-                   {{  $data['subject']  }}
-                </h1>
-                <p style="margin:0;">Hello, {{ $data['name'] }}</p>
-                <p style="text-align: left;">
-                    {{  $data['message']  }}
-                </p>
-                <a target="_blank" href="https://mightyfinance.co.zm/login" style="padding: 12px;text-align:center;font-size: 0.75em;background-color:#500d6c;color:#384049;color:white;border: 1em solid #fff;" >Sign In</a>
-                <br>
-                <p>Best Regards</p>
-              </td>
-            </tr>
-            <tr>
-              <td style="padding:30px;text-align:center;font-size: 0.75em;background-color:#500d6c;color:#384049;color:white;border: 1em solid #fff;">
-                <p style="margin:0 0 0.75em 0;line-height: 0;">
-                  <!--      LinkedIn logo            -->
-                  <a href="{{App\Models\ContactSetting::linkedin()}}" style="display:inline-block;text-decoration:none;margin: 0 5px;">
-                    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB2aWV3Qm94PSIyLjUgMi44NzMgMjAgMjAiIHdpZHRoPSIyMHB4IiBoZWlnaHQ9IjIwcHgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CiAgPGRlZnM+CiAgICA8Y2xpcFBhdGggaWQ9ImNsaXAwIj4KICAgICAgPHJlY3Qgd2lkdGg9IjIwIiBoZWlnaHQ9IjIwIiBmaWxsPSJ3aGl0ZSIgdHJhbnNmb3JtPSJ0cmFuc2xhdGUoMi41IDIuODcyNTYpIi8+CiAgICA8L2NsaXBQYXRoPgogIDwvZGVmcz4KICA8ZyBjbGlwLXBhdGg9InVybCgjY2xpcDApIj4KICAgIDxwYXRoIGQ9Ik0yMS42MjUgMi44NzI1NkgzLjM3NUMyLjg3NSAyLjg3MjU2IDIuNSAzLjI0NzU2IDIuNSAzLjc0NzU2VjIyLjEyMjZDMi41IDIyLjQ5NzYgMi44NzUgMjIuODcyNiAzLjM3NSAyMi44NzI2SDIxLjc1QzIyLjI1IDIyLjg3MjYgMjIuNjI1IDIyLjQ5NzYgMjIuNjI1IDIxLjk5NzZWMy43NDc1NkMyMi41IDMuMjQ3NTYgMjIuMTI1IDIuODcyNTYgMjEuNjI1IDIuODcyNTZaTTguMzc1IDE5Ljg3MjZINS41VjEwLjM3MjZIOC41VjE5Ljg3MjZIOC4zNzVaTTcgOS4xMjI1NkM2IDkuMTIyNTYgNS4yNSA4LjI0NzU2IDUuMjUgNy4zNzI1NkM1LjI1IDYuMzcyNTYgNiA1LjYyMjU2IDcgNS42MjI1NkM4IDUuNjIyNTYgOC43NSA2LjM3MjU2IDguNzUgNy4zNzI1NkM4LjYyNSA4LjI0NzU2IDcuODc1IDkuMTIyNTYgNyA5LjEyMjU2Wk0xOS41IDE5Ljg3MjZIMTYuNVYxNS4yNDc2QzE2LjUgMTQuMTIyNiAxNi41IDEyLjc0NzYgMTUgMTIuNzQ3NkMxMy41IDEyLjc0NzYgMTMuMjUgMTMuOTk3NiAxMy4yNSAxNS4yNDc2VjE5Ljk5NzZIMTAuMjVWMTAuMzcyNkgxMy4xMjVWMTEuNjIyNkMxMy41IDEwLjg3MjYgMTQuNSAxMC4xMjI2IDE1Ljg3NSAxMC4xMjI2QzE4Ljg3NSAxMC4xMjI2IDE5LjM3NSAxMi4xMjI2IDE5LjM3NSAxNC42MjI2VjE5Ljg3MjZIMTkuNVoiIHN0eWxlPSJmaWxsOiByZ2IoMTc3LCAxODgsIDIwMSk7Ii8+CiAgPC9nPgo8L3N2Zz4=" width="30px" height="30px">
-                  </a>
-                  <!--      Facebook logo            -->
-                  <a href="{{App\Models\ContactSetting::fb()}}" style="display:inline-block;text-decoration:none;margin: 0 5px;">
-                    <img src="data:image/svg+xml;base64,PD94bWwgdmVyc2lvbj0iMS4wIiBlbmNvZGluZz0idXRmLTgiPz4KPHN2ZyB2aWV3Qm94PSIzNzIuMjUyIC0yNzkuNTEzIDE5NC4yIDE5MyIgd2lkdGg9IjE5NC4yIiBoZWlnaHQ9IjE5MyIgeG1sbnM9Imh0dHA6Ly93d3cudzMub3JnLzIwMDAvc3ZnIj4KICA8cGF0aCBkPSJNMTA2MC44LDEwMC44YzAtNTMuNi00My41LTk3LjEtOTcuMS05Ny4xcy05Ny4xLDQzLjUtOTcuMSw5Ny4xYzAsNDguNSwzNS41LDg4LjcsODIsOTUuOXYtNjcuOWgtMjQuOHYtMjhoMjQuOFY3OS40IGMwLTI0LjMsMTQuNC0zNy44LDM2LjYtMzcuOGMxMC42LDAsMjEuNiwyLDIxLjYsMnYyMy43aC0xMi4yYy0xMi4xLDAtMTUuOSw3LjYtMTUuOSwxNS4ydjE4LjJoMjdsLTQuMywyOGgtMjIuN3Y2Ny45IEMxMDI1LjMsMTg5LjUsMTA2MC44LDE0OS4zLDEwNjAuOCwxMDAuOHoiIHN0eWxlPSJmaWxsOiByZ2IoMTc3LCAxODgsIDIwMSk7IiB0cmFuc2Zvcm09Im1hdHJpeCgxLCAwLCAwLCAxLCAtNDk0LjM0NzcxNywgLTI4My4yMTMyNTcpIi8+Cjwvc3ZnPg==" width="30px" height="30px">
-                  </a>
-                  <!--     Instagram logo               -->
-                  <a href="{{App\Models\ContactSetting::instagram()}}" style="display:inline-block;text-decoration:none;margin: 0 5px;">
-                    <svg viewBox="-448.436 -467.48 999.99 999.997" width="30px" height="30px" alt="i">
-                      <path d="M -155.515 -463.983 C -208.715 -461.473 -245.045 -452.983 -276.805 -440.503 C -309.675 -427.693 -337.535 -410.503 -365.255 -382.683 C -392.975 -354.863 -410.045 -326.983 -422.765 -294.063 C -435.075 -262.233 -443.415 -225.873 -445.765 -172.643 C -448.115 -119.413 -448.635 -102.303 -448.375 33.477 C -448.115 169.257 -447.515 186.277 -444.935 239.617 C -442.395 292.807 -433.935 329.127 -421.455 360.897 C -408.625 393.767 -391.455 421.617 -363.625 449.347 C -335.795 477.077 -307.935 494.107 -274.935 506.847 C -243.135 519.137 -206.765 527.517 -153.545 529.847 C -100.325 532.177 -83.195 532.717 52.545 532.457 C 188.285 532.197 205.375 531.597 258.705 529.067 C 312.035 526.537 348.165 518.017 379.945 505.597 C 412.815 492.737 440.685 475.597 468.395 447.757 C 496.105 419.917 513.165 392.017 525.875 359.077 C 538.195 327.277 546.565 290.907 548.875 237.727 C 551.205 184.357 551.755 167.317 551.495 31.557 C 551.235 -104.203 550.625 -121.223 548.095 -174.543 C 545.565 -227.863 537.095 -264.073 524.625 -295.863 C 511.775 -328.733 494.625 -356.563 466.805 -384.313 C 438.985 -412.063 411.065 -429.113 378.135 -441.793 C 346.315 -454.103 309.965 -462.493 256.745 -464.793 C 203.525 -467.093 186.395 -467.683 50.605 -467.423 C -85.185 -467.163 -102.185 -466.583 -155.515 -463.983 M -149.675 439.897 C -198.425 437.777 -224.895 429.677 -242.535 422.897 C -265.895 413.897 -282.535 403.017 -300.115 385.607 C -317.695 368.197 -328.495 351.497 -337.615 328.187 C -344.465 310.547 -352.715 284.107 -354.995 235.357 C -357.475 182.667 -357.995 166.847 -358.285 33.357 C -358.575 -100.133 -358.065 -115.933 -355.755 -168.643 C -353.675 -217.353 -345.525 -243.853 -338.755 -261.483 C -329.755 -284.873 -318.915 -301.483 -301.465 -319.053 C -284.015 -336.623 -267.365 -347.443 -244.035 -356.563 C -226.415 -363.443 -199.975 -371.623 -151.245 -373.943 C -98.515 -376.443 -82.715 -376.943 50.755 -377.233 C 184.225 -377.523 200.065 -377.023 252.815 -374.703 C 301.525 -372.583 328.035 -364.513 345.645 -357.703 C 369.015 -348.703 385.645 -337.893 403.215 -320.413 C 420.785 -302.933 431.615 -286.343 440.735 -262.963 C 447.625 -245.393 455.805 -218.963 458.105 -170.203 C 460.615 -117.473 461.185 -101.663 461.425 31.797 C 461.665 165.257 461.195 181.107 458.885 233.797 C 456.755 282.547 448.675 309.027 441.885 326.687 C 432.885 350.037 422.035 366.687 404.575 384.247 C 387.115 401.807 370.485 412.627 347.145 421.747 C 329.545 428.617 303.075 436.817 254.385 439.137 C 201.655 441.617 185.855 442.137 52.335 442.427 C -81.185 442.717 -96.935 442.177 -149.665 439.897 M 257.935 -234.713 C 258.012 -188.525 308.06 -159.741 348.021 -182.901 C 387.983 -206.062 387.886 -263.797 347.848 -286.824 C 338.712 -292.079 328.353 -294.834 317.815 -294.813 C 284.685 -294.747 257.879 -267.842 257.935 -234.713 M -205.165 33.017 C -204.885 174.817 -89.725 289.507 52.045 289.237 C 193.815 288.967 308.585 173.817 308.315 32.017 C 308.045 -109.783 192.855 -224.503 51.065 -224.223 C -90.725 -223.943 -205.435 -108.763 -205.165 33.017 M -115.105 32.837 C -115.359 -95.465 23.374 -175.929 134.614 -111.997 C 245.854 -48.066 246.171 112.312 135.185 176.683 C 109.877 191.361 81.151 199.119 51.895 199.177 C -40.159 199.371 -114.934 124.891 -115.105 32.837" style="fill: rgb(177, 188, 201);"></path>
-                    </svg>
-                  </a>
-                </p>
-                <p style="margin:0;font-size:.75rem;line-height:1.5em;text-align: center;">
-                  {{App\Models\ContactSetting::name()}}, {{App\Models\ContactSetting::address()}}, {{App\Models\ContactSetting::place()}}.
-                  <br>
-                  <a class="unsub" href="https://mightyfinance.co.zm" style="color:#bcc9d8;text-decoration:underline;">Unsubscribe</a>
-                </p>
-              </td>
-            </tr>
-          </table>
-          <!--[if mso]>
-          </td>
-          </tr>
-          </table>
-          <![endif]-->
-        </td>
-      </tr>
-    </table>
-  </div>
-</body>
-
+									<tr>
+										<td align="center" valign="center" style="font-size: 13px; text-align:center; padding: 0 10px 10px 10px; font-weight: 500; color: #A1A5B7; font-family:Arial,Helvetica,sans-serif">
+											<p style="color:#181C32; font-size: 16px; font-weight: 600; margin-bottom:9px">It’s all about customers!</p>
+											<p style="margin-bottom:2px">Call our customer care number: +31 6 3344 55 56</p>
+											<p style="margin-bottom:4px">You may reach us at
+											<a href="https://devs.keenthemes.com" rel="noopener" target="_blank" style="font-weight: 600">admin@mightyfinance.co.zm</a>.</p>
+											<p>We serve Mon-Fri, 9AM-18AM</p>
+										</td>
+									</tr>
+									<tr>
+										<td align="center" valign="center" style="text-align:center; padding-bottom: 20px;">
+											<a href="#" style="margin-right:10px">
+												<img alt="Logo" src="https://admin.mightyfinance.co.zm/public/mfs/admin/assets/media/email/icon-linkedin.svg" />
+											</a>
+											<a href="#" style="margin-right:10px">
+												<img alt="Logo" src="https://admin.mightyfinance.co.zm/public/mfs/admin/assets/media/email/icon-facebook.svg" />
+											</a>
+											<a href="#">
+												<img alt="Logo" src="https://admin.mightyfinance.co.zm/public/mfs/admin/assets/media/email/icon-twitter.svg" />
+											</a>
+										</td>
+									</tr>
+									<tr>
+										<td align="center" valign="center" style="font-size: 13px; padding:0 15px; text-align:center; font-weight: 500; color: #A1A5B7;font-family:Arial,Helvetica,sans-serif">
+											<p>&copy; Copyright MightyFin.
+											<a href="https://admin.mightyfinance.co.zm" rel="noopener" target="_blank" style="font-weight: 600;font-family:Arial,Helvetica,sans-serif">Unsubscribe</a>&nbsp; from newsletter.</p>
+										</td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<!--end::Email template-->
+				</div>
+				<!--end::Body-->
+			</div>
+			<!--end::Wrapper-->
+		</div>
+		<!--end::Root-->
+		<!--end::Main-->
+		<!--begin::Javascript-->
+		<script>var hostUrl = "https://admin.mightyfinance.co.zm/public/mfs/admin/assets/";</script>
+		<!--begin::Global Javascript Bundle(mandatory for all pages)-->
+		<script src="https://admin.mightyfinance.co.zm/public/mfs/admin/assets/plugins/global/plugins.bundle.js"></script>
+		<script src="https://admin.mightyfinance.co.zm/public/mfs/admin/assets/js/scripts.bundle.js"></script>
+		<!--end::Global Javascript Bundle-->
+		<!--end::Javascript-->
+	</body>
+	<!--end::Body-->
 </html>

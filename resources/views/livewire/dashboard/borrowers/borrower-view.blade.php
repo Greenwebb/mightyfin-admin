@@ -153,7 +153,7 @@
                             </tr>
                         </thead>
                         <tbody class="fw-semibold text-gray-600">
-                            
+
                             @forelse($users as $user)
                             <tr>
                                 <td>
@@ -162,7 +162,7 @@
                                     </div>
                                 </td>
                                 <td>
-                                    
+
                                     {{-- @if($user->profile_photo_path == null)
                                         @if($user->fname != null && $user->lname != null)
                                             <span>{{ $user->fname[0].' '.$user->lname[0] }}</span>
@@ -172,10 +172,10 @@
                                     @else
                                         <img class="rounded-circle" width="35" src="{{ 'public/'.Storage::url($user->profile_photo_path) }}" />
                                     @endif --}}
-                                    <a href="" class="text-gray-800 text-hover-primary mb-1">{{ $user->fname.' '.$user->lname }}</a>
+                                    <a href="{{ route('client-account', ['key'=>$user->id]) }}" class="text-gray-800 text-hover-primary mb-1">{{ $user->fname.' '.$user->lname }}</a>
                                 </td>
                                 <td>
-                                    <a href="#" class="text-gray-600 text-hover-primary mb-1">{{ $user->email }}</a>
+                                    <a href="mailto:{{ $user->email }}" class="text-gray-600 text-hover-primary mb-1">{{ $user->email }}</a>
                                 </td>
                                 <td>{{ $user->jobTitle ?? 'No Data' }}</td>
                                 <td data-filter="visa">
@@ -211,7 +211,7 @@
                                     <p>No User Found</p>
                                 </div>
                             </div>
-                            @endforelse 
+                            @endforelse
                         </tbody>
                     </table>
                     <!--end::Table-->
