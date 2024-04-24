@@ -52,7 +52,7 @@ class LoanRequestView extends Component
             ])->layout('layouts.admin');
 
         } catch (\Throwable $th) {
-            dd($th);
+            dd($th->getMessage());
             // If an exception occurs, set $loan_requests to an empty array
             $this->loan_requests = [];
             $requests = [];
