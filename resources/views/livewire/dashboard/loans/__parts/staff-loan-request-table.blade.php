@@ -6,7 +6,7 @@
                 <div class="card-header border-0 pt-5">
                     <h3 class="card-title align-items-start flex-column">
                         <span class="card-label fw-bold fs-3 mb-1">{{ $this->title }}</span>
-                        <span class="text-muted mt-1 fw-semibold fs-7">Over {{$requests->count()}} loans</span>
+                        <span class="text-muted mt-1 fw-semibold fs-7">Over {{ $requests !== null ? $requests->count() : 0}} loans</span>
                     </h3>
                     <div class="card-toolbar">
                         @if(request()->route()->getName() == 'view-loan-requests')
