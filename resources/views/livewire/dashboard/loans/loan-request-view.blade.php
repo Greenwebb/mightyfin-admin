@@ -3,7 +3,7 @@
         <div class="row">
             <br>
             <div class="col-12">
-                @if(true)
+                @if($loan_requests)
                     <div class="">
                         @role('user')
                         <div style="background-color:#792db8;@role('user') @else margin-top:2%; padding:2%; @endrole " class="card-header">
@@ -159,7 +159,7 @@
                                         <label class="text-label form-label">Borrower*</label>
                                         <select type="text" name="borrower_id" class="form-control">
                                             @forelse ($users as $user)
-                                                @if(true)
+                                                @if(empty($user->loans->toArray()))
                                                     <option wire:model="new_loan_user" value="{{ $user->id }}">{{ $user->fname.' '.$user->lname}}</option>
                                                 @endif
                                             @empty
