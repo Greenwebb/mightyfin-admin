@@ -194,7 +194,6 @@
 
                 @can('view clientele')
                 <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-
                     <span class="menu-link">
                         <span class="menu-icon">
                             <i class="ki-duotone ki-address-book fs-2">
@@ -241,7 +240,7 @@
                     </span>
 
                     <div class="menu-sub menu-sub-accordion">
-                        @can('view pending')
+                        @can('view loans')
                         <div class="menu-item">
                             <a class="menu-link" href="{{ route('view-loan-requests') }}">
                                 <span class="menu-bullet">
@@ -273,7 +272,7 @@
                             </a>
                         </div>
                         @endcan
-                        {{-- @can('create loan') --}}
+                        @can('create loans')
                         <div class="menu-item">
                             <a class="menu-link" href="{{ route('proxy-loan-create') }}">
                                 <span class="menu-bullet">
@@ -283,7 +282,7 @@
                                 <span class="menu-title">Add Loan</span>
                             </a>
                         </div>
-                        {{-- @endcan --}}
+                        @endcan
                         @can('view pending')
                         <div class="menu-item">
                             <a class="menu-link" href="{{ route('due-loans') }}">
@@ -375,7 +374,7 @@
                             </a>
                         </div>
                         @endcan
-                        @can('view pending')
+                        @can('view calculator')
                         <div class="menu-item">
                             <a class="menu-link" href="{{ route('loan-calculator') }}">
                                 <span class="menu-bullet">
@@ -395,6 +394,8 @@
                             </a>
                         </div>
                         @endcan
+
+                        @can('view loans')
                         <div class="menu-item">
                             <a class="menu-link" href="{{ route('loans') }}">
                                 <span class="menu-bullet">
@@ -403,6 +404,7 @@
                                 <span class="menu-title">View all Loans</span>
                             </a>
                         </div>
+                        @endcan
                     </div>
                 </div>
                 @endcan

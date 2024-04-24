@@ -10,7 +10,7 @@ use Spatie\Permission\Models\Permission;
 
 class RoleSeeder extends Seeder
 {
-    
+
     /**
      * Run the database seeds.
      *
@@ -30,17 +30,17 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'edit clientele','group'=>'customer','permission'=>'Edit', 'description' => 'Edit a customer'])->syncRoles([$role1, $role4]);
         Permission::create(['name' => 'delete clientele','group'=>'customer','permission'=>'Delete', 'description' => 'Delete a customer'])->syncRoles([$role1, $role4]);
         Permission::create(['name' => 'create clientele','group'=>'customer','permission'=>'Create', 'description' => 'Create a customer'])->syncRoles([$role1, $role4]);
-        Permission::create(['name' => 'send payment remainders to customers','group'=>'customer','permission'=>'disburse funds', 'description' => 'Send payment remainders to customers'])->syncRoles([$role1, $role4, $role3]);
+        Permission::create(['name' => 'send payment remainders to customers','group'=>'customer','permission'=>'send payment remainders to customers', 'description' => 'Send payment remainders to customers'])->syncRoles([$role1, $role4, $role3]);
 
         // Operation Module
-        Permission::create(['name' => 'view operations','group'=>'operations','permission'=>'View All', 'description' => 'View Employees'])->syncRoles([$role1, $role4]);
+        Permission::create(['name' => 'view operations', 'group' => 'operations', 'permission'=>'View All', 'description' => 'View Employees'])->syncRoles([$role1, $role4]);
 
         // Employees
         Permission::create(['name' => 'view employees','group'=>'employee','permission'=>'View All', 'description' => 'View Employees'])->syncRoles([$role1, $role4]);
         Permission::create(['name' => 'edit employee','group'=>'employee','permission'=>'Edit', 'description' => 'Update Employees'])->syncRoles([$role1, $role4]);
         Permission::create(['name' => 'delete employee','group'=>'employee','permission'=>'Delete', 'description' => 'Delete Employees'])->syncRoles([$role1, $role4]);
         Permission::create(['name' => 'create employee','group'=>'employee','permission'=>'Create', 'description' => 'Add/create Employees'])->syncRoles([$role1, $role4]);
-        
+
         // Reports
         Permission::create(['name' => 'view reports','group'=>'reports','permission'=>'View All', 'description' => 'View Reports Module'])->syncRoles([$role1, $role4]);
         Permission::create(['name' => 'view loan reports','group'=>'reports','permission'=>'Loan Reports ', 'description' => 'View Loan Reports'])->syncRoles([$role1, $role4]);
@@ -70,7 +70,7 @@ class RoleSeeder extends Seeder
         Permission::create(['name' => 'see the list of users','group'=>'user','permission'=>'View All', 'description'=> 'Sees all the list of users registered in the system'])->syncRoles([$role1]);
         Permission::create(['name' => 'create a user','group'=>'user','permission'=>'Create', 'description'=> 'Creates a new user'])->syncRoles([$role1]);
         Permission::create(['name' => 'edit a user','group'=>'user','permission'=>'Edit', 'description'=> 'Updates a user'])->syncRoles([$role1]);
-        
+
         // Roles Page
         Permission::create(['name' => 'view user roles','group'=>'roles','permission'=>'View All', 'description' => 'View user roles'])->syncRoles([$role1]);
         Permission::create(['name' => 'add user roles','group'=>'roles','permission'=>'Create', 'description' => 'Add new roles'])->syncRoles([$role1]);
@@ -109,16 +109,16 @@ class RoleSeeder extends Seeder
 
         // Loan Rates
         Permission::create(['name' => 'view loan rates','group'=>'loan rates','permission'=>'View Rates', 'description' => 'View loan rates management'])->syncRoles([$role1, $role4, $role3]);
-        
+
         // Calculator
         Permission::create(['name' => 'view loan calculator','group'=>'calculator','permission'=>'View Calculator', 'description' => 'View loan management'])->syncRoles([$role1,$role2, $role4, $role3]);
 
-        
+
         // Payments & Transactions
         Permission::create(['name' => 'disburse funds','group'=>'transaction','permission'=>'disburse funds', 'description' => 'Transfer funds to customers'])->syncRoles([$role1, $role4]);
         Permission::create(['name' => 'make payments','group'=>'transaction','permission'=>'make payments', 'description' => 'Make payments to repay loans'])->syncRoles([$role2, $role4]);
         Permission::create(['name' => 'withdraw funds','group'=>'transaction','permission'=>'withdraw funds', 'description' => 'Withdraw loan funds'])->syncRoles([$role2, $role4]);
-        
+
         // System Settings
         Permission::create(['name' => 'system settings','group'=>'system settings','permission'=>'system settings', 'description' => 'View loan management'])->syncRoles([$role1,$role2, $role4, $role3]);
 

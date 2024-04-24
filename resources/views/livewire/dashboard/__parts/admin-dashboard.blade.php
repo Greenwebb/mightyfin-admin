@@ -4,7 +4,9 @@
         <!--begin::Container-->
         <div id="kt_content_container" class="container-xxl">
             <!--begin::Row-->
+            @can('company financial stats')
             @include('livewire.dashboard.__parts.current-admin-stats')
+            @endcan
             <!--end::Row-->
             <!--begin::Row-->
             <div class="row g-5 g-xl-8">
@@ -239,7 +241,7 @@
                     <!--end::Tables Widget 5-->
                 </div>
                 <!--end::Col-->
-
+                @can('view calculator')
                 <div class="w-full d-flex gap-4">
                     <a href="{{ route('loan-calculator') }}" class="btn btn-primary text-white">
                         <svg xmlns="http://www.w3.org/2000/svg" width="25" height="25" fill="currentColor" class="bi bi-calculator" viewBox="0 0 16 16">
@@ -248,6 +250,7 @@
                         </svg>
                     </a>
                 </div>
+                @endcan
             </div>
             <!--end::Row-->
             <!--begin::Row-->

@@ -114,7 +114,7 @@
                             <!--end::Export-->
                             <!--begin::Add customer-->
                             @can('create clientele')
-                            <a href="{{ route('new-borrower') }}" class="btn btn-primary">Add Customer</a>
+                            <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer" class="btn btn-primary">Add Customer</a>
                             @endcan
                             {{-- data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer" --}}
                             <!--end::Add customer-->
@@ -162,7 +162,6 @@
                                     </div>
                                 </td>
                                 <td>
-
                                     {{-- @if($user->profile_photo_path == null)
                                         @if($user->fname != null && $user->lname != null)
                                             <span>{{ $user->fname[0].' '.$user->lname[0] }}</span>
@@ -179,30 +178,25 @@
                                 </td>
                                 <td>{{ $user->jobTitle ?? 'No Data' }}</td>
                                 <td data-filter="visa">
-                                    {{-- <img src="{{ asset('public/mfs/admin/assets/media/svg/card-logos/visa.svg')}}" class="w-35px me-3" alt="" />
-                                    **** 6561 --}}
                                     {{ $user->nrc_no ?? $user->nrc ?? 'No Data' }}
                                 </td>
                                 <td>{{ $user->created_at->diffForHumans() }}</td>
                                 <td class="text-end">
                                     <a href="#" class="btn btn-sm btn-light btn-flex btn-center btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
                                     <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                    <!--begin::Menu-->
                                     <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                        <!--begin::Menu item-->
+                                        @can('view clientele')
                                         <div class="menu-item px-3">
                                             <a href="{{ route('client-account', ['key'=>$user->id]) }}" class="menu-link px-3">View</a>
                                         </div>
-                                        <!--end::Menu item-->
-                                        <!--begin::Menu item-->
+                                        @endcan
+
                                         @can('delete clientele')
                                         <div class="menu-item px-3">
                                             <a wire:click="destroy({{ $user->id }})" onclick="confirm('Are you sure you want to permanently delete this account.') || event.stopImmediatePropagation();" title="Delete Account" href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
                                         </div>
                                         @endcan
-                                        <!--end::Menu item-->
                                     </div>
-                                    <!--end::Menu-->
                                 </td>
                             </tr>
                             @empty

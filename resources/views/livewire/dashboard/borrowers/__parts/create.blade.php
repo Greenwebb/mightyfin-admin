@@ -32,7 +32,7 @@
                             <label class="required fs-6 fw-semibold mb-2">Firstname</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="fname"  />
+                            <input type="text" class="form-control form-control-sm" placeholder="" name="fname"  />
                             <!--end::Input-->
                         </div>
                         <div class="fv-row mb-7">
@@ -40,7 +40,7 @@
                             <label class="required fs-6 fw-semibold mb-2">Lastname</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="lname"  />
+                            <input type="text" class="form-control form-control-sm" placeholder="" name="lname"  />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
@@ -59,7 +59,7 @@
                             </label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="email" class="form-control form-control-solid" placeholder="" name="email" />
+                            <input type="email" class="form-control form-control-sm" placeholder="" name="email" />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
@@ -69,9 +69,9 @@
                             <label class="fs-6 fw-semibold mb-2">Gender</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            {{-- <input type="text" class="form-control form-control-solid" placeholder="" name="description" /> --}}
-                            
-                            <select name="gender" class="form-control form-control-solid" id="validationCustom05">
+                            {{-- <input type="text" class="form-control form-control-sm" placeholder="" name="description" /> --}}
+
+                            <select name="gender" class="form-control form-control-sm" id="validationCustom05">
                                 <option value="">--choose--</option>
                                 <option value="Male">Male</option>
                                 <option value="Female">Female</option>
@@ -83,9 +83,9 @@
                             <label class="fs-6 fw-semibold mb-2">National ID Type</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            {{-- <input type="text" class="form-control form-control-solid" placeholder="" name="description" /> --}}
-                            
-                            <select name="id_type" class="form-control form-control-solid" id="validationCustom05">
+                            {{-- <input type="text" class="form-control form-control-sm" placeholder="" name="description" /> --}}
+
+                            <select name="id_type" class="form-control form-control-sm" id="validationCustom05">
                                 <option value="">--choose--</option>
                                 <option value="NRC">NRC</option>
                                 <option value="Passport">Passport</option>
@@ -98,7 +98,7 @@
                             <label class="fs-6 fw-semibold mb-2">ID Number</label>
                             <!--end::Label-->
                             <!--begin::Input-->
-                            <input type="text" class="form-control form-control-solid" placeholder="" name="nrc_no" />
+                            <input type="text" class="form-control form-control-sm" placeholder="" name="nrc_no" />
                             <!--end::Input-->
                         </div>
                         <!--end::Input group-->
@@ -118,7 +118,7 @@
                                 <label class="required fs-6 fw-semibold mb-2">Address Line</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
-                                <input class="form-control form-control-solid" placeholder="" name="occupation" />
+                                <input class="form-control form-control-sm" placeholder="" name="occupation" />
                                 <!--end::Input-->
                             </div>
                             <!--end::Input group-->
@@ -128,7 +128,7 @@
                                 <label class="fs-6 fw-semibold mb-2">Job Title</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
-                                <input class="form-control form-control-solid" placeholder="" name="address2" />
+                                <input class="form-control form-control-sm" placeholder="" name="address2" />
                                 <!--end::Input-->
                             </div>
                             <!--end::Input group-->
@@ -138,7 +138,7 @@
                                 <label class="required fs-6 fw-semibold mb-2">Phone</label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
-                                <input class="form-control form-control-solid" placeholder="" name="phone" />
+                                <input class="form-control form-control-sm" placeholder="" name="phone" />
                                 <!--end::Input-->
                             </div>
                             <!--end::Input group-->
@@ -150,7 +150,7 @@
                                     <label class="required fs-6 fw-semibold mb-2">State / Province</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-solid" placeholder="" name="state" value="Victoria" />
+                                    <input class="form-control form-control-sm" placeholder="" name="state" value="Victoria" />
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Col-->
@@ -160,7 +160,7 @@
                                     <label class="required fs-6 fw-semibold mb-2">Post Code</label>
                                     <!--end::Label-->
                                     <!--begin::Input-->
-                                    <input class="form-control form-control-solid" placeholder="" name="postcode" value="3000" />
+                                    <input class="form-control form-control-sm" placeholder="" name="postcode" value="3000" />
                                     <!--end::Input-->
                                 </div>
                                 <!--end::Col-->
@@ -181,7 +181,7 @@
                                 </label>
                                 <!--end::Label-->
                                 <!--begin::Input-->
-                                
+
                                 <!--end::Input-->
                             </div> --}}
                             <!--end::Input group-->
@@ -200,7 +200,7 @@
                                     </div>
                                     <!--end::Label-->
                                     <!--begin::Switch-->
-                                    <label class="form-check form-switch form-check-custom form-check-solid">
+                                    <label class="form-check form-switch form-check-custom form-check-sm">
                                         <!--begin::Input-->
                                         <input class="form-check-input" name="billing" type="checkbox" value="1" id="kt_modal_add_customer_billing" checked="checked" />
                                         <!--end::Input-->

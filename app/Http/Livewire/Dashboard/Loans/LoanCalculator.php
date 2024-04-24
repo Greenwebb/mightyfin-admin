@@ -14,12 +14,11 @@ use App\Models\ServiceCharge;
 use App\Models\Institution;
 use App\Models\CrbProduct;
 use Carbon\Carbon;
-
-
+use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 
 class LoanCalculator extends Component
 {
-    use LoanTrait;
+    use LoanTrait, AuthorizesRequests;
 
     public $principal;
     public $release_date;
@@ -42,7 +41,7 @@ class LoanCalculator extends Component
 
     public function render()
     {
-        // Retrieve data from models and assign to public properties
+        $this->authorize('view calculator');
         $this->interest_methods = InterestMethod::get();
         $this->interest_types = InterestType::get();
         $this->repayment_cycles = RepaymentCycle::get();
