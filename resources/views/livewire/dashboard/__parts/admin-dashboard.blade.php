@@ -210,12 +210,14 @@
                                                         {{-- <span class="badge badge-light-success">Approved</span> --}}
                                                     </td>
                                                     <td class="text-end">
+                                                        @can('processes loans')
                                                         <a href="{{ route('loan-details',['id' => $loan->id]) }}" class="btn btn-sm btn-icon btn-bg-primary btn-active-color-primary">
                                                             <i class="ki-duotone ki-arrow-right fs-2">
                                                                 <span class="path1"></span>
                                                                 <span class="path2"></span>
                                                             </i>
                                                         </a>
+                                                        @endcan
                                                     </td>
                                                 </tr>
                                                 @empty
