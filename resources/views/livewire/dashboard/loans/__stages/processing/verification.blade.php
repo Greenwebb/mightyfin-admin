@@ -129,17 +129,21 @@
                     <div class="float-end">
 
                         @if ($this->my_review_status($loan->id) == 1)
-                            @can('verify loan')
+
+                            @can('approve loan')
                                 <a href="#" class="btn btn-primary ps-7" data-kt-menu-trigger="click"
                                     data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">Action
                                     <i class="ki-duotone ki-down fs-2 me-0"></i>
                                 </a>
                             @endcan
+
                         @elseif (auth()->user()->hasRole('admin'))
                             <a href="#" class="btn btn-primary ps-7" data-kt-menu-trigger="click"
                                 data-kt-menu-attach="parent" data-kt-menu-placement="bottom-end">Action
                                 <i class="ki-duotone ki-down fs-2 me-0"></i>
                             </a>
+                        @else
+                        <p>This loan application was not assigned to you.</p>
                         @endif
 
                         <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-800 menu-state-bg-light-primary fw-semibold py-4 w-250px fs-6" data-kt-menu="true">
