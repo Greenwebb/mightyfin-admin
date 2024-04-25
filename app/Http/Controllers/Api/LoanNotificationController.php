@@ -5,29 +5,46 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\LoanNotification;
 use App\Models\Application;
+use App\Models\User;
+use App\Traits\SMSTrait;
 use Illuminate\Http\Request;
 
 class LoanNotificationController extends Controller
 {
-    public function plpNotification(Request $request){
+    use SMSTrait;public function plpNotification(Request $request) {
         try {
+            $applicationId = $request->input('application_id');
+            $userId = $request->input('user_id');
+
+            // Create Loan Notification
             LoanNotification::create([
-                'application_id' => $request->input('application_id'),
-                'user_id' => $request->input('user_id'), //Borrower
-                'notification_type' => 'PLP',
-                'message' => 'Your request loan amount is more than the PLP, you might need to increase the number of months for
-                the loan and also reduce the request loan amount being requested.',
+                'application_id' => $applicationId,
+                'user_id' => $userId,
+                'notification_type' => 'PMC',
+                'message' => 'Your requested loan amount exceeds the Monthly Installment limits. Please consider increasing the loan duration or reducing the loan amount.',
                 'is_accepted' => 0,
-                'status' => 1 //sent
+                'status' => 1 // Sent
             ]);
-            Application::where('id', $request->input('application_id'))->update([
+
+            // Update application status
+            Application::where('id', $applicationId)->update([
                 'plp_sent' => 1
             ]);
 
-            //Send SMS
+            // Send SMS
+            $userPhone = User::find($userId)?->phone;
+            if (!$userPhone) {
+                return response()->json(['resp' => false, 'message' => 'User phone number not found.']);
+            }
+
+            $smsMessage = "Your loan request exceeds your pre-approved limit. Please consider extending the loan term or reducing the principal amount. Log into your dashboard to adjust your loan terms.";
+            $this->send_sms(['phone' => '26'.$userPhone, 'message' => $smsMessage]);
+
             return response()->json(['resp' => true]);
         } catch (\Throwable $th) {
-            return response()->json(['resp' => false]);
+            dd($th); // Ensure the exception is logged
+            return response()->json(['resp' => false, 'message' => 'An error occurred while processing your request.']);
         }
     }
+
 }
