@@ -166,7 +166,9 @@ Route::middleware(['auth:sanctum', config('jetstream.auth_session'), 'verified']
     // Data Import & Export
 
     Route::post('export-loans', [ExportController::class, 'export_loans'])->name('export-loans');
+    Route::post('export-users', [ExportController::class, 'export_users'])->name('export-users');
     Route::post('import-loans', [ImportController::class, 'import_loans'])->name('import-loans');
+    Route::post('import-users', [ImportController::class, 'import_users'])->name('import-users');
 
     // ---- Payments
     Route::get('make-payments', PaymentPage::class)->name('payments');

@@ -116,8 +116,16 @@
                             @can('create clientele')
                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer" class="btn btn-primary">Add Customer</a>
                             @endcan
-                            {{-- data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer" --}}
-                            <!--end::Add customer-->
+
+
+
+                            <div class="menu-item px-3">
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#export_borrowers_panel" class="btn btn-success px-3">Export</a>
+                            </div>
+
+                            <div class="menu-item px-3">
+                                <a href="#" data-bs-toggle="modal" data-bs-target="#import_customers_panel" class="btn btn-warning px-3">Import</a>
+                            </div>
                         </div>
                         <!--end::Toolbar-->
                         <!--begin::Group actions-->
@@ -327,4 +335,6 @@
         <!--end::Container-->
     </div>
     <!--end::Post-->
+    @include('livewire.dashboard.loans.__modals.export-borrowers')
+    @include('livewire.dashboard.loans.__modals.import-borrowers')
 </div>
