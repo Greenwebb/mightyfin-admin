@@ -117,8 +117,6 @@
                             <a href="#" data-bs-toggle="modal" data-bs-target="#kt_modal_add_customer" class="btn btn-primary">Add Customer</a>
                             @endcan
 
-
-
                             <div class="menu-item px-3">
                                 <a href="#" data-bs-toggle="modal" data-bs-target="#export_borrowers_panel" class="btn btn-success px-3">Export</a>
                             </div>

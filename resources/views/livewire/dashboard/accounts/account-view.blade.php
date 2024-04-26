@@ -365,7 +365,7 @@
                                 <!--end::Menu item-->
                                 <!--begin::Menu item-->
                                 <div class="menu-item px-5">
-                                    <a href="#" class="menu-link px-5">Reports</a>
+                                    <a href="{{ route('transcript', ['key' => $data->id]) }}" class="menu-link px-5">Transcript</a>
                                 </div>
                                 <!--end::Menu item-->
                                 <!--begin::Menu item-->
@@ -456,7 +456,7 @@
                                                 </td>
                                             </tr>
                                             @empty
-                                                
+
                                             @endforelse
                                         </tbody>
                                         <!--end::Table body-->
@@ -1491,9 +1491,9 @@
                                                     {{-- <td class="pe-0 text-end min-w-200px">{{ }}</td> --}}
                                                 </tr>
                                                 @empty
-                                                    
+
                                                 @endforelse
-                                                
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -1526,9 +1526,9 @@
                                                     {{-- <td class="pe-0 text-end min-w-200px">{{ }}</td> --}}
                                                 </tr>
                                                 @empty
-                                                    
+
                                                 @endforelse
-                                                
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -1563,9 +1563,9 @@
                                                     {{-- <td class="pe-0 text-end min-w-200px">{{ }}</td> --}}
                                                 </tr>
                                                 @empty
-                                                    
+
                                                 @endforelse
-                                                
+
                                             </tbody>
                                         </table>
                                     </div>
@@ -1684,7 +1684,7 @@
                                                     </tr>
                                                 </thead>
                                                 <tbody>
-                                                    
+
                                                     @forelse($data->loans as $loan)
                                                     <tr>
                                                         <td>{{ $loan->created_at->toFormattedDateString() }}</td>
@@ -1693,7 +1693,7 @@
                                                         </td>
                                                         <td> <b>{{ $loan->amount }}</b> </td>
                                                         <td class="text-danger text-xs">
-                                                            {{ 
+                                                            {{
                                                                 number_format(App\Models\Application::payback($loan->amount, $loan->repayment_plan), 2, '.', ',')
                                                             }}
                                                         </td>
