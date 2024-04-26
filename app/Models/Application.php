@@ -76,7 +76,8 @@ class Application extends Model
         'nationality',
         'continue',
         'is_assigned',
-        'plp_sent'
+        'plp_sent',
+        'closed'
     ];
     protected $appends = [
         'done_by',
@@ -160,6 +161,15 @@ class Application extends Model
     public static function my_number_of_loans($id){
         return Application::where('user_id', $id)->where('status', 1)->count();
     }
+
+    public static function my_number_of_pending_repayments($id){
+        return Application::where('user_id', $id)->where('status', 1)->where('closed', 0)->count();
+    }
+
+    public static function my_pending_repayment_amount($id){
+        return Application::where('user_id', $id)->where('status', 1)->where('closed', 0)->sum('amount');
+    }
+
     public static function my_number_of_pending_loans($id){
         return Application::where('user_id', $id)->whereNot('status', 3)
         ->whereNot('status', 1)->count();

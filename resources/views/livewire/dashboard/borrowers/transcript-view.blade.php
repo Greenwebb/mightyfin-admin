@@ -36,7 +36,7 @@
 
             <div class="card mb-5 mb-xl-8 container-xxl">
 
-                <div class="card-body pt-15 mx-12">
+                <div class="card-body pt-15">
 
                     <div class="d-flex flex-center flex-column mb-5">
                         <div class="flex flex-center flex-column">
@@ -66,32 +66,9 @@
                                 @endforeach
                             </div> --}}
                         </div>
-                        <div class="d-flex flex-wrap flex-center">
-                            <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
-                                <div class="fs-4 fw-bold text-gray-700">
-                                    <span class="w-50px">{{ App\Models\Application::my_number_of_loans($data->id) }}</span>
-                                </div>
-                                <div class="fw-semibold text-muted">Number of Borrowed Loans</div>
-                            </div>
-                            <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
-                                <div class="fs-4 fw-bold text-gray-700">
-                                    <span class="w-50px">{{ App\Models\Application::my_number_of_pending_loans($data->id) }}</span>
-                                </div>
-                                <div class="fw-semibold text-muted">Number of Pending Loans</div>
-                            </div>
-                            <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
-                                <div class="fs-4 fw-bold text-gray-700">
-                                    <span class="w-75px">K {{ App\Models\Loans::customer_total_borrowed($data->id) }}</span>
-                                </div>
-                                <div class="fw-semibold text-muted">Total Amount Borrowed</div>
-                            </div>
-                            <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
-                                <div class="fs-4 fw-bold text-gray-700">
-                                    <span class="w-50px">K {{ App\Models\Loans::customer_total_pending_borrowed($data->id) }}</span>
-                                </div>
-                                <div class="fw-semibold text-muted">Pending Amount Borrowed</div>
-                            </div>
-                            <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
+                        <div class="d-flex flex-wrap gap">
+                            @include('livewire.dashboard.borrowers.__parts.stats')
+                            {{-- <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
                                 <div class="fs-4 fw-bold text-gray-700">
                                     <span class="w-50px">K {{ App\Models\Loans::loan_balance($data->loans->first()->id) }}</span>
                                 </div>
@@ -102,7 +79,7 @@
                                     <span class="w-50px">K {{ App\Models\Loans::customer_total_paid($data->id) }}</span>
                                 </div>
                                 <div class="fw-semibold text-muted">Settled Repayment Amount</div>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
 
@@ -231,7 +208,7 @@
                                 </tr>
                             </thead>
                             <tbody class="fs-6 fw-semibold text-gray-600">
-                                @forelse (App\Models\Transaction::hasTransaction($data->id) as $item)
+                                @forelse (App\Models\Transaction::customer_transactions($data->id) as $item)
                                 <tr>
                                     <td>{{ $item->created_at->toFormattedDateString() }}</td>
                                     <td>

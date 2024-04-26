@@ -39,21 +39,19 @@ class Loans extends Model
 
     }
 
-    
+
     // Completed kyc and final submission form and given funds
     public static function customer_total_borrowed($user_id){
-        $loans = Application::with('loan')
+        return Application::with('loan')
         ->where('status', 1)
-        ->where('complete', 1)
-        ->where('continue', 0)
-        ->where('user_id', $user_id)->get();
+        ->where('user_id', $user_id)->sum('amount');
 
-        $total = 0;
-        foreach ($loans as $key => $loan) {
-            $total += Loans::where('application_id', $loan->id)->first()->principal;
-        }
-        
-        return $total;
+        // $total = 0;
+        // foreach ($loans as $key => $loan) {
+        //     $total += Loans::where('application_id', $loan->id)->first()->principal;
+        // }
+
+        // return $total;
     }
 
     // Completed kyc and final submission form
@@ -74,13 +72,22 @@ class Loans extends Model
         foreach ($loans as $key => $loan) {
             $amount_paid += Transaction::where('application_id', $loan->id)->first()->amount_settled;
         }
-        
+
         return $amount_paid;
     }
 
+    public static function customer_total_settled_amount($user_id){
+        return Transaction::with('application')
+            ->whereHas('application', function ($query) use ($user_id) {
+                $query->where('user_id', '=', $user_id);
+            })
+            ->count(); // Counts the number of transactions
+    }
+
+
     // customer repayment balance
     public static function customer_balance($user_id){
-        
+
         $loans = Application::with('loan')
             ->where('status', 1)
             ->where('complete', 1)
@@ -93,7 +100,7 @@ class Loans extends Model
             $payback += Application::payback($loan->amount, $loan->repayment_plan);
             $amount_paid += Transaction::where('application_id', $loan->id)->first()->amount_settled;
         }
-        
+
         return $payback - $amount_paid;
     }
 
@@ -106,7 +113,6 @@ class Loans extends Model
         }else{
             return Application::payback($loan->amount, $loan->repayment_plan);
         }
-
     }
 
     public static function hasLoan($user_id){
