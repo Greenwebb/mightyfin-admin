@@ -11,8 +11,7 @@ class TranscriptView extends Component
 // On our platform, our we able to download the information on historical data on our customers showing
 // (i)	when each customer signed up; and
 // (ii)	their loan activity since then (amount borrowed, date borrowed, repayments and any repeat borrowing owing to a server migration this weekend.
-// Is there a scren shot i can have of this information.
-// Baobab are requesting for it ASAP...
+
 
     public $data, $key;
 

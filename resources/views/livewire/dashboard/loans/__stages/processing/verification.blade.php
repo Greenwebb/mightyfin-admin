@@ -179,13 +179,15 @@
                         <li class="nav-item">
                             <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
                                 href="#kt_customer_view_overview_loan_details">
-                                <small>Loan Info</small></a>
+                                <small>Loan Info</small>
+                            </a>
                         </li>
 
                         <li class="nav-item">
                             <a class="nav-link text-active-primary pb-4" data-kt-countup-tabs="true"
                                 data-bs-toggle="tab" href="#kt_customer_view_documents">
-                                <small>Uploads</small></a>
+                                <small>Uploads</small>
+                            </a>
                         </li>
 
                         {{-- <li class="nav-item">
@@ -471,7 +473,6 @@
                                 </div> --}}
 
                                 <div class="card-body py-0">
-
                                     <div class="row g-6 g-xl-9 mb-6 mb-xl-9">
                                         <div class="row">
                                             <div class="row col-6">

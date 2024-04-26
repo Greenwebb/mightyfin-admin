@@ -51,11 +51,11 @@
                                     <img class="rounded-circle bg-primary" src="{{ 'public/'.Storage::url($data->profile_photo_path) }}" />
                                 @endif
                             </div>
-    
+
                             <a href="#" class="fs-3 text-gray-800 text-hover-primary fw-bold mb-1">
                                 {{ $data->fname.' '.$data->lname }}
                             </a>
-    
+
                             {{-- <div class="fs-5 fw-semibold text-muted mb-6">
                                 @foreach ($data->roles as $role)
                                     @if($role->name == 'user')
@@ -262,10 +262,43 @@
                         </table>
 
                     </div>
+                    <br>
+                    {{-- Loan History --}}
+                    <div class="d-flex flex-stack fs-4 py-3">
+                        <div class="fw-bold rotate collapsible" data-bs-toggle="collapse" href="#kt_customer_view_details" role="button" aria-expanded="false" aria-controls="kt_customer_view_details">
+                            Next of Kin
+                            <span class="ms-2 rotate-180">
+                                <i class="ki-duotone ki-down fs-3"></i>
+                            </span>
+                        </div>
+                    </div>
+                    <div class="separator separator-dashed my-3"></div>
+                    <div id="kt_customer_view_details" class="collapse show">
+                        <table class="table align-middle table-row-dashed fw-semibold text-gray-600 fs-6 gy-5" id="kt_table_customers_logs">
+                            <tbody>
+                                @forelse (App\Models\NextOfKing::customer_nok($data->id) as $refs)
+                                <tr>
+                                    <td class="min-w-70px">
+                                        {{ $refs->fname.' '.$refs->lname }}
+                                    </td>
+                                    <td>{{ '+'.$refs->phone }} </td>
+                                    <td>{{ $refs->email }} </td>
+                                    <td>{{ $refs->relation }} </td>
+                                    {{-- <td class="pe-0 text-end min-w-200px">{{ }}</td> --}}
+                                </tr>
+                                @empty
+                                <tr class="text-muted">
+                                    Not Set
+                                </tr>
+                                @endforelse
+
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 
         </div>
     </div>
 </div>
-  
+
