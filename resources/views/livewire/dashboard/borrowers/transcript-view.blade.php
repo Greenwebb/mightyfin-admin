@@ -32,89 +32,78 @@
 </style>
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <div class="post d-flex flex-column-fluid" id="kt_post">
-        <div id="kt_content_container" class="container-xxl">
+        <div id="kt_content_container" class="container-xxl ">
 
-            <div class="card mb-5 mb-xl-8">
+            <div class="card mb-5 mb-xl-8 container-xxl">
 
-                <div class="card-body pt-15">
+                <div class="card-body pt-15 mx-12">
 
                     <div class="d-flex flex-center flex-column mb-5">
-
-                        <div class="symbol symbol-100px symbol-circle mb-7">
-                            @if($data->profile_photo_path == null)
-                                @if($data->fname != null && $data->lname != null)
-                                    <span class="text-white">{{ $data->fname[0].' '.$data->lname[0] }}</span>
+                        <div class="flex flex-center flex-column">
+                            <div class="symbol symbol-100px symbol-circle mb-7 bg-primary p-4">
+                                @if($data->profile_photo_path == null)
+                                    @if($data->fname != null && $data->lname != null)
+                                        <span class="text-white">{{ $data->fname[0].' '.$data->lname[0] }}</span>
+                                    @else
+                                        <span>{{ $data->name[0] }}</span>
+                                    @endif
                                 @else
-                                    <span>{{ $data->name[0] }}</span>
+                                    <img class="rounded-circle bg-primary" src="{{ 'public/'.Storage::url($data->profile_photo_path) }}" />
                                 @endif
-                            @else
-                                <img class="rounded-circle bg-primary" src="{{ 'public/'.Storage::url($data->profile_photo_path) }}" />
-                            @endif
+                            </div>
+    
+                            <a href="#" class="fs-3 text-gray-800 text-hover-primary fw-bold mb-1">
+                                {{ $data->fname.' '.$data->lname }}
+                            </a>
+    
+                            {{-- <div class="fs-5 fw-semibold text-muted mb-6">
+                                @foreach ($data->roles as $role)
+                                    @if($role->name == 'user')
+                                    <span>Borrower</span>
+                                    @else
+                                    <p>{{ ucwords($role->name) }}</p>
+                                    @endif
+                                @endforeach
+                            </div> --}}
                         </div>
-
-                        <a href="#" class="fs-3 text-gray-800 text-hover-primary fw-bold mb-1">
-                            {{ $data->fname.' '.$data->lname }}
-                        </a>
-
-                        <div class="fs-5 fw-semibold text-muted mb-6">
-                            @foreach ($data->roles as $role)
-                                @if($role->name == 'user')
-                                <p>Borrower</p>
-                                @else
-                                <p>{{ ucwords($role->name) }}</p>
-                                @endif
-                            @endforeach
-                        </div>
-
                         <div class="d-flex flex-wrap flex-center">
-                            <!--begin::Stats-->
+                            <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
+                                <div class="fs-4 fw-bold text-gray-700">
+                                    <span class="w-50px">{{ App\Models\Application::my_number_of_loans($data->id) }}</span>
+                                </div>
+                                <div class="fw-semibold text-muted">Number of Borrowed Loans</div>
+                            </div>
+                            <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
+                                <div class="fs-4 fw-bold text-gray-700">
+                                    <span class="w-50px">{{ App\Models\Application::my_number_of_pending_loans($data->id) }}</span>
+                                </div>
+                                <div class="fw-semibold text-muted">Number of Pending Loans</div>
+                            </div>
                             <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
                                 <div class="fs-4 fw-bold text-gray-700">
                                     <span class="w-75px">K {{ App\Models\Loans::customer_total_borrowed($data->id) }}</span>
-                                    <i class="ki-duotone ki-arrow-up fs-3 text-success">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                    </i>
                                 </div>
-                                <div class="fw-semibold text-muted">Total Borrowed</div>
+                                <div class="fw-semibold text-muted">Total Amount Borrowed</div>
                             </div>
-                            <!--end::Stats-->
-                            <!--begin::Stats-->
-                            <div class="border border-gray-300 border-dashed rounded py-3 px-3 mx-4 mb-3">
+                            <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
                                 <div class="fs-4 fw-bold text-gray-700">
                                     <span class="w-50px">K {{ App\Models\Loans::customer_total_pending_borrowed($data->id) }}</span>
-                                    <i class="ki-duotone ki-arrow-down fs-3 text-danger">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                    </i>
                                 </div>
-                                <div class="fw-semibold text-muted">Pending Borrowed</div>
+                                <div class="fw-semibold text-muted">Pending Amount Borrowed</div>
                             </div>
-                            <!--end::Stats-->
-                            <!--begin::Stats-->
                             <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
                                 <div class="fs-4 fw-bold text-gray-700">
                                     <span class="w-50px">K {{ App\Models\Loans::loan_balance($data->loans->first()->id) }}</span>
-                                    <i class="ki-duotone ki-arrow-up fs-3 text-success">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                    </i>
                                 </div>
                                 <small class="fw-semibold text-xs text-muted">Pending Repayment</small>
                             </div>
                             <div class="border border-gray-300 border-dashed rounded py-3 px-3 mb-3">
                                 <div class="fs-4 fw-bold text-gray-700">
                                     <span class="w-50px">K {{ App\Models\Loans::customer_total_paid($data->id) }}</span>
-                                    <i class="ki-duotone ki-arrow-up fs-3 text-success">
-                                        <span class="path1"></span>
-                                        <span class="path2"></span>
-                                    </i>
                                 </div>
-                                <div class="fw-semibold text-muted">Settled Repayment</div>
+                                <div class="fw-semibold text-muted">Settled Repayment Amount</div>
                             </div>
-                            <!--end::Stats-->
                         </div>
-                        <!--end::Info-->
                     </div>
 
 
@@ -124,6 +113,12 @@
                                 <div class="details-item">
                                     <div class="fw-bold">Account ID</div>
                                     <div class="text-gray-600">ID-{{ $data->id }}</div>
+                                </div>
+                                <div class="details-item">
+                                    <div class="fw-bold">Phone Number</div>
+                                    <div class="text-gray-600">
+                                        <a href="#" class="text-gray-600 text-hover-primary">{{ $data->phone ?? $data->phone2 }}</a>
+                                    </div>
                                 </div>
                                 <div class="details-item">
                                     <div class="fw-bold">Email</div>
@@ -140,6 +135,10 @@
                             </div>
                             <div class="details-column">
                                 <div class="details-item">
+                                    <div class="fw-bold">Date of Birth</div>
+                                    <div class="text-gray-600">{{ $data->dob ?? 'Not Set' }}</div>
+                                </div>
+                                <div class="details-item">
                                     <div class="fw-bold">ID Type</div>
                                     <div class="text-gray-600">{{ $data->id_type ?? 'Not Set' }}</div>
                                 </div>
@@ -148,8 +147,8 @@
                                     <div class="text-gray-600">{{ $data->nrc_no ?? $data->nrc ?? 'Not Set' }}</div>
                                 </div>
                                 <div class="details-item">
-                                    <div class="fw-bold">Registered On</div>
-                                    <div class="text-gray-600">{{ $data->created_at->diffForHumans() ?? 'Not Set' }}</div>
+                                    <div class="fw-bold">Signed Up</div>
+                                    <div class="text-gray-600">{{ $data->created_at->toFormattedDateString() }} </div>
                                 </div>
                             </div>
                         </div>
@@ -182,7 +181,7 @@
                                 <tr>
                                     <td>{{ $loan->created_at->toFormattedDateString() }}</td>
                                     <td>
-                                        <a href="#" class="text-gray-600 text-hover-primary">{{ $loan->type }}</a>
+                                        <a href="#" class="text-gray-600 text-hover-primary">{{ $loan->loan_product->name }}</a>
                                     </td>
                                     <td> <b>{{ $loan->amount }}</b> </td>
                                     <td class="text-danger text-xs">
@@ -269,3 +268,4 @@
         </div>
     </div>
 </div>
+  

@@ -58,9 +58,8 @@ class Loans extends Model
 
     // Completed kyc and final submission form
     public static function customer_total_pending_borrowed($user_id){
-        $total = Application::where('status', 0)
-        ->where('complete', 1)
-        ->where('continue', 0)
+        $total = Application::orWhere('status', 2)
+        ->orWhere('status', 3)
         ->where('user_id', $user_id)->sum('amount');
         return $total;
     }

@@ -157,6 +157,14 @@ class Application extends Model
     //     // }
     // }
 
+    public static function my_number_of_loans($id){
+        return Application::where('user_id', $id)->where('status', 1)->count();
+    }
+    public static function my_number_of_pending_loans($id){
+        return Application::where('user_id', $id)->whereNot('status', 3)
+        ->whereNot('status', 1)->count();
+    }
+
     public static function loanProduct($id){
         return LoanProduct::where('id', $id)->first();
     }
@@ -164,7 +172,6 @@ class Application extends Model
     public static function currentApplication(){
         return Application::where('user_id', auth()->user()->id)
         ->orderBy('created_at', 'desc')->first();
-        // ->where('status', 0)->where('complete', 0)->first();
     }
 
     // Pending for payback
