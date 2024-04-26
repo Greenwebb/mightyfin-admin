@@ -105,7 +105,6 @@ class Loans extends Model
     }
 
     public static function loan_balance($application_id){
-        dd($application_id);
         $loan = Application::where('id', $application_id)->first();
         if($loan->status == 1){
             $paid = Transaction::where('application_id', $application_id)->sum('amount_settled');
