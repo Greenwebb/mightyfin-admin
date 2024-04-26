@@ -97,7 +97,7 @@ class Loans extends Model
         $amount_paid = 0;
         foreach ($loans as $key => $loan) {
             // dd($loan);
-            $payback += Application::payback($loan->amount, $loan->repayment_plan);
+            $payback += Application::payback($loan->amount, $loan->repayment_plan, $loan->loan_product_id);
             $amount_paid += Transaction::where('application_id', $loan->id)->first()->amount_settled;
         }
 
@@ -105,13 +105,15 @@ class Loans extends Model
     }
 
     public static function loan_balance($application_id){
+        dd($application_id);
         $loan = Application::where('id', $application_id)->first();
         if($loan->status == 1){
             $paid = Transaction::where('application_id', $application_id)->sum('amount_settled');
-            $payback = Application::payback($loan->amount, $loan->repayment_plan);
+            $payback = Application::payback($loan->amount, $loan->repayment_plan, $loan->loan_product_id);
+
             return (float)$payback - (float)$paid;
         }else{
-            return Application::payback($loan->amount, $loan->repayment_plan);
+            return Application::payback($loan->amount, $loan->repayment_plan, $loan->loan_product_id);
         }
     }
 

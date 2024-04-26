@@ -184,9 +184,10 @@
                     <br>
                     <p class="fs-5 fw-bold">Loan Application</p>
                     <div class="form-group">
-                        <select wire:model.defer="loan_id" class="form-select uppercase form-control wide mb-3" id="exampleInputEmail7" placeholder="Find Customer" data-live-search="true">
+                        <select wire:model.lazy="loan_id" class="form-select uppercase form-control wide mb-3" id="exampleInputEmail7" placeholder="Find Customer" data-live-search="true">
+                            <option value="">--select--</option>
                             @forelse ($loans as $item)
-                            <option value="{{ $item->id }}">{{ $item->application->fname.' '.$item->application->lname.' | K'.App\Models\Loans::loan_balance($item->application->id).' - '.$item->application->type.' Loan'.' | Duration '.$item->application->repayment_plan}}</option>
+                            <option value="{{ $item->id }}">{{ $item->user->fname.' '.$item->user->lname.' | K'.App\Models\Loans::loan_balance($item->id).' - '.$item->product->name.' Loan'.' | Duration '.$item->repayment_plan}}</option>
                             @empty
                             <option>No Active Loans Found</option>
                             @endforelse
@@ -195,7 +196,7 @@
                     <br>
                     <p class="fs-5 fw-bold">Amount</p>
                     <div class="form-group">
-                        <input wire:model.defer="amount" type="text" class="form-control" required>
+                        <input wire:model.lazy="amount" type="text" class="form-control" required>
                     </div>
                 </div>
                 <div class="modal-footer">
