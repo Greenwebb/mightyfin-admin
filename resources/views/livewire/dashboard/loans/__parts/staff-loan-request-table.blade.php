@@ -80,8 +80,9 @@
                                     <th class="min-w-100px">Loan Type</th>
                                     <th class="min-w-140px">Principal</th>
                                     <th class="w-120px">Date</th>
-                                    <th class="w-100px">Borrower</th>
+                                    <th class="min-w-120px">Borrower</th>
                                     <th class="min-w-120px">Payback</th>
+                                    <th class="min-w-70px">Repayment Balance</th>
                                     <th class="min-w-90">Status</th>
 
                                     @if($this->current_configs('loan-approval')->value == 'spooling')
@@ -109,7 +110,7 @@
                                         </td>
                                         <td>
                                             <a href="#" class="text-dark fw-bold text-hover-primary d-block mb-1 fs-6">
-                                                {{ number_format($loan->amount, 2, '.', ',') }}
+                                              K  {{ number_format($loan->amount, 2, '.', ',') }}
                                             </a>
                                             <span class="text-muted fw-semibold text-muted d-block fs-7">
                                                 Upto {{ $loan->repayment_plan }} Months
@@ -126,9 +127,12 @@
                                             <span class="text-muted fw-semibold text-muted d-block fs-7">{{ $loan->phone??' '. $loan->user->phone.', '.$loan->user->gender }}</span>
                                         </td>
                                         <td class="text-dark fw-bold text-hover-primary fs-6">
-                                            {{
-                                                number_format(App\Models\Application::payback($loan->amount, $loan->repayment_plan), 2, '.', ',')
+                                            K {{
+                                                number_format(App\Models\Application::payback($loan->amount, $loan->repayment_plan, $loan->loan_product_id), 2, '.', ',')
                                             }}
+                                        </td>
+                                        <td class="text-danger fw-bold text-hover-primary fs-6">
+                                            K {{  number_format(App\Models\Loans::loan_balance( $loan->id)) }}
                                         </td>
                                         <td>
                                             @if($loan->status == 0)
