@@ -39,4 +39,6 @@ class Transaction extends Model
     public static function total_collected(){
         return Transaction::whereNotNull('application_id')->sum('amount_settled');
     }
+
+
 }

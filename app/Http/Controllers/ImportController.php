@@ -16,20 +16,20 @@ class ImportController extends Controller
     public function import_loans(Request $request){
         if ($request->isMethod('post')) {
             $file = $request->file('file');
-    
+
             if ($file->isValid() && $file->getClientOriginalExtension() == 'xlsx') {
                 $uploadedFilePath = 'uploads/' . $file->getClientOriginalName();
-    
+
                 if ($file->move('uploads', $uploadedFilePath)) {
                     try {
                         $spreadsheet = IOFactory::load($uploadedFilePath);
                         $worksheet = $spreadsheet->getActiveSheet();
-    
+
                         $data = $worksheet->toArray(null, true, true, true);
-    
+
                         // Remove the header row
                         array_shift($data);
-                        
+
                         try {
                             foreach ($data as $row) {
                                 if ($row['A'] !== null || $row['E'] !== null || $row['J'] !== null) {
@@ -67,7 +67,7 @@ class ImportController extends Controller
                         } catch (\Throwable $th) {
                             dd($th);
                         }
-    
+
                         // Add a success flash message
                         return redirect()->back()->with('success', 'Upload successful!');
                     } catch (\Exception $e) {
@@ -90,20 +90,20 @@ class ImportController extends Controller
     public function import_users(Request $request){
         if ($request->isMethod('post')) {
             $file = $request->file('file');
-    
+
             if ($file->isValid() && $file->getClientOriginalExtension() == 'xlsx') {
                 $uploadedFilePath = 'uploads/' . $file->getClientOriginalName();
-    
+
                 if ($file->move('uploads', $uploadedFilePath)) {
                     try {
                         $spreadsheet = IOFactory::load($uploadedFilePath);
                         $worksheet = $spreadsheet->getActiveSheet();
-    
+
                         $data = $worksheet->toArray(null, true, true, true);
-    
+
                         // Remove the header row
                         array_shift($data);
-                        
+
                         try {
                             foreach ($data as $row) {
                                 if ($row['A'] !== null || $row['E'] !== null || $row['J'] !== null) {
@@ -120,13 +120,14 @@ class ImportController extends Controller
                                         'address' => $row['I'],
                                         'gender' =>  $row['J'],
                                         'employeeNo' => $row['K'],
+                                        'password' => 'mighty4you'
                                     ]);
                                 }
                             }
                         } catch (\Throwable $th) {
                             dd($th);
                         }
-    
+
                         // Add a success flash message
                         return redirect()->back()->with('success', 'Upload successful!');
                     } catch (\Exception $e) {

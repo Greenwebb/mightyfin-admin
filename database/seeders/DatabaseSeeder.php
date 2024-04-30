@@ -36,5 +36,6 @@ class DatabaseSeeder extends Seeder
         $this->call(LoanProductSeeder::class);
         $this->call(CRBProducts::class);
         $this->call(LoanCrbProductSeeder::class);
+        $this->call(WalletSeeder::class);
     }
 }

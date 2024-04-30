@@ -149,6 +149,7 @@
                                     <th class="w-100px">Loan</th>
                                     <th class="w-300px">Principal(K)</th>
                                     <th class="w-100px">Payback(K)</th>
+                                    <th class="w-100px">Balance(K)</th>
                                     <th class="w-100px text-end pe-7">Status</th>
                                 </tr>
                             </thead>
@@ -166,7 +167,10 @@
                                             number_format(App\Models\Application::payback($loan->amount, $loan->repayment_plan, $loan->loan_product_id), 2, '.', ',')
                                         }}
                                     </td>
-                                    <td class="text-end">
+                                    <td>
+                                        {{ App\Models\Loans::loan_balance( $loan->id) }}
+                                    </td>
+                                    <td class="">
                                         @if($loan->status == 0)
                                             <span class="badge badge-light-warning">Pending</span>
                                         @elseif($loan->status == 1)
@@ -204,7 +208,8 @@
                                     <th class="w-100px">Loan</th>
                                     <th class="w-300px">Principal(K)</th>
                                     <th class="w-100px">Payback(K)</th>
-                                    <th class="w-100px text-end pe-7">Status</th>
+                                    <th class="w-100px">Amount Settled(K)</th>
+                                    <th class="w-100px">Status</th>
                                 </tr>
                             </thead>
                             <tbody class="fs-6 fw-semibold text-gray-600">
@@ -212,23 +217,25 @@
                                 <tr>
                                     <td>{{ $item->created_at->toFormattedDateString() }}</td>
                                     <td>
-                                        <a href="#" class="text-gray-600 text-hover-primary mb-1">9673-1893</a>
+                                        <a href="#" class="text-gray-600 text-hover-primary mb-1">{{ $item->application->loan_product->name }}</a>
                                     </td>
-                                    <td>$1,200.00</td>
-                                    <td class="pe-0 text-end">
-                                        <a href="#" class="btn btn-sm btn-light image.png btn-active-light-primary" data-kt-menu-trigger="click" data-kt-menu-placement="bottom-end">Actions
-                                        <i class="ki-duotone ki-down fs-5 ms-1"></i></a>
-                                        <div class="menu menu-sub menu-sub-dropdown menu-column menu-rounded menu-gray-600 menu-state-bg-light-primary fw-semibold fs-7 w-125px py-4" data-kt-menu="true">
-                                            <div class="menu-item px-3">
-                                                <a href="../apps/customers/view.html" class="menu-link px-3">View</a>
-                                            </div>
-                                            <div class="menu-item px-3">
-                                                <a href="#" class="menu-link px-3" data-kt-customer-table-filter="delete_row">Delete</a>
-                                            </div>
-                                        </div>
+                                    <td><b>K {{ $item->application->amount }}</b></td>
+                                    <td >
+                                        <a href="#" class="bg-active-light-primary">
+                                        K {{
+                                            number_format(App\Models\Application::payback($item->application->amount, $item->application->repayment_plan, $item->application->loan_product_id), 2, '.', ',')
+                                        }}
+                                        </a>
                                     </td>
                                     <td>
-                                        <span class="badge badge-light-success">Successful</span>
+                                        <span class="bg-light-success">
+                                            K {{  $item->amount_settled  }}
+                                        </span>
+                                    </td>
+                                    <td>
+                                        <span class="badge badge-light">
+                                            Repayment
+                                        </span>
                                     </td>
                                 </tr>
                                 @empty

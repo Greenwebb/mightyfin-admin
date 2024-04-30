@@ -21,7 +21,7 @@ class LoanWalletView extends Component
         $this->current_funds = $this->getCompanyWallet();
         $this->gross_funds = LoanWallet::first()->deposit ?? 0;
         return view('livewire.dashboard.settings.loan-wallet-view')
-        ->layout('layouts.dashboard');
+        ->layout('layouts.admin');
     }
 
     public function store(){
@@ -37,7 +37,7 @@ class LoanWalletView extends Component
                     'user_id' => auth()->user()->id,
                     'loan_wallet_id' => $this->account->id
                     ]);
-                    
+
                     session()->flash('success', 'Successfully updated K'.$this->amount.' into the Account Funds');
                 $this->render();
             }else{
@@ -51,7 +51,7 @@ class LoanWalletView extends Component
                     'user_id' => auth()->user()->id,
                     'loan_wallet_id' => $this->account->id
                 ]);
-                
+
                 session()->flash('success', 'Successfully deposited K'.$this->amount.' into the Account Funds');
                 $this->render();
             }
@@ -68,5 +68,5 @@ class LoanWalletView extends Component
     public function resetWallet(){
         $this->resetWalletFunds();
     }
-    
+
 }

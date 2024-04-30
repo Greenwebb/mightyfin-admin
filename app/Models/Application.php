@@ -167,7 +167,20 @@ class Application extends Model
     }
 
     public static function my_pending_repayment_amount($id){
-        return Application::where('user_id', $id)->where('status', 1)->where('closed', 0)->sum('amount');
+        $loans = Application::with('loan')
+            ->where('status', 1)
+            ->where('complete', 1)
+            ->where('user_id', $id)->get();
+
+        $payback = 0;
+        $amount_paid = 0;
+        foreach ($loans as $key => $loan) {
+            $payback += Application::payback($loan->amount, $loan->repayment_plan, $loan->loan_product_id);
+            $amount_paid += Transaction::where('application_id', $loan->id)->first()->amount_settled;
+        }
+
+        return $payback - $amount_paid;
+        // return Application::where('user_id', $id)->where('status', 1)->where('closed', 0)->sum('amount');
     }
 
     public static function my_number_of_pending_loans($id){

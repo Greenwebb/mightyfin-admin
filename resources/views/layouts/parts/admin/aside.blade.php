@@ -528,14 +528,14 @@
                             @endcan
 
                             @can('manage funds')
-                            {{-- <div data-kt-menu-trigger="click" class="menu-item menu-accordion">
-                                <span class="menu-link">
+                            <div class="menu-item menu-accordion">
+                                <a href="{{ route('loan-wallet') }}" class="menu-link">
                                     <span class="menu-bullet">
                                         <span class="bullet bullet-dot"></span>
                                     </span>
                                     <span class="menu-title">Manage Funds</span>
-                                </span>
-                            </div> --}}
+                                </a>
+                            </div>
                             @endcan
                         </div>
                     </div>

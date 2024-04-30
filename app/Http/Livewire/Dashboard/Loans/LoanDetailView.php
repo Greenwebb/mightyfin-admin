@@ -295,7 +295,7 @@ class LoanDetailView extends Component
             ];
             $this->send_loan_accepted_notification($mail);
         }
-        // $this->deposit($x->amount, $x);
+        $this->deposit($x->amount, $x);
         DB::commit();
         session()->flash('success', 'Successfully transfered '.$x->amount.' to '.$x->fname.' '.$x->lname);
     }

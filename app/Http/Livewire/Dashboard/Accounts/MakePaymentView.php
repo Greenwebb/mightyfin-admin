@@ -47,13 +47,14 @@ class MakePaymentView extends Component
                     'transaction_fee' => 0,
                     'profit_margin' => 0,
                     'proccess_by' => auth()->user()->fname.' '.auth()->user()->lname,
-                    'charge_amount' => 0
+                    'charge_amount' => 0,
+                    'user_id' => $borrower_loan->user_id,
                 ]);
 
                 // Update Installment
-                $installment = LoanInstallment::where('loan_id', $borrower_loan->id)->whereNull('paid_at')->first();
-                $installment->paid_at = Carbon::now();
-                $installment->save();
+                // $installment = LoanInstallment::where('loan_id', $borrower_loan->id)->whereNull('paid_at')->first();
+                // $installment->paid_at = Carbon::now();
+                // $installment->save();
 
                 // Close loan if the balance is 0
                 if($borrower_loan->payback < 1){

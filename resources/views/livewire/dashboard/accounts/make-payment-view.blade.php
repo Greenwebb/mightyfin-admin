@@ -118,8 +118,7 @@
                                     <th>Amount Paid</th>
                                     <th>Balance</th>
                                     <th>Processed By</th>
-                                    <th>Created On</th>
-                                    <th> </th>
+                                    <th>Done On</th>
                                 </tr>
                             </thead>
                             <tbody style="top:0; padding-bottom:20px">
@@ -127,16 +126,16 @@
                                 @forelse($transactions as $data)
                                 <tr>
                                     {{-- <td style="">{{ $data->id }}</td> --}}
-                                    <td style="text-align:center;">{{ $data->ref_no ?? $data->application_id }}</td>
-                                    <td style="text-align:center;">{{ $data->application->type }} Loan</td>
-                                    <td style="text-align:center;">{{ $data->application->fname.' '.$data->application->lname }}</td>
+                                    <td >{{ $data->ref_no ?? $data->application_id }}</td>
+                                    <td >{{ $data->application->loan_product->name }} Loan</td>
+                                    <td >{{ $data->application->fname.' '.$data->application->lname }}</td>
 
-                                    <td style="text-align:center;">K{{ App\Models\Application::payback($data->application->amount, $data->application->repayment_plan) }}</td>
-                                    <td style="text-align:center;">K{{ $data->amount_settled }}</td>
-                                    <td style="text-align:center;">K{{ App\Models\Loans::loan_balance( $data->application->id) }}</td>
-                                    <td style="text-align:center;">{{ $data->proccess_by ?? '' }}</td>
-                                    <td style="text-align:center;">{{ $data->created_at->toFormattedDateString() }}</td>
-                                    <td class="d-flex">
+                                    <td >K{{ App\Models\Application::payback($data->application->amount, $data->application->repayment_plan) }}</td>
+                                    <td style="color:green;font-weight:bold">K{{ $data->amount_settled }}</td>
+                                    <td >K {{ App\Models\Loans::loan_balance( $data->application->id) }}</td>
+                                    <td >{{ $data->proccess_by ?? '' }}</td>
+                                    <td >{{ $data->created_at->toFormattedDateString() }}</td>
+                                    {{-- <td class="d-flex">
                                         <div class="btn sharp tp-btn ms-auto" title="View More Details">
                                             <a target="_blank" href="{{ route('loan-details',['id' => $data->application_id]) }}">
                                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-eye" viewBox="0 0 16 16">
@@ -145,7 +144,7 @@
                                                 </svg>
                                             </a>
                                         </div>
-                                    </td>
+                                    </td> --}}
                                 </tr>
                                 @empty
                                 <div class="intro-y col-span-12 md:col-span-6">
