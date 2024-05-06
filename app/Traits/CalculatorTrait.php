@@ -8,6 +8,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\File;
 trait CalculatorTrait{
 
+    use LoanTrait;
     public function calculateAmortizationSchedule($loanAmount, $loanTermYears, $loanProductId) {
 
         try {
@@ -55,13 +56,15 @@ trait CalculatorTrait{
 
         // API endpoint URL
         $api_url = 'https://admin.mightyfinance.co.zm/api/calculate-reducing-balance';
-
+        $lp = $this->get_loan_product($data['loan_product_id']);
+        $loan_interest_value = $this->lp->def_loan_interest / 100;
+        $principal = $lp->def_loan_amount ?? 0;
         // Sample request data
         $request_data = [
             'loan_duration_period' => $data['loan_duration_period'],
             'loan_duration_value' => $data['loan_duration_value'],
             'principal' => $data['principal'],
-            'loan_interest_value' => $data['loan_interest_value'],
+            'loan_interest_value' => $loan_interest_value,
             'minimum_num_of_repayments' => $data['num_of_repayments'],
             'release_date' => $data['release_date'],
         ];
@@ -118,3 +121,5 @@ trait CalculatorTrait{
         ])->first();
     }
 }
+
+
