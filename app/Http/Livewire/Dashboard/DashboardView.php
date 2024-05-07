@@ -22,26 +22,16 @@ class DashboardView extends Component
 
     public function render()
     {
-        $user = auth()->user(); // Fetch the user once to avoid multiple auth() calls
-        $this->my_loan = $this->getCurrentLoan();
+        $user = auth()->user();
         $this->wallet = $this->getWalletBalance($user);
-
-        // Check if the user has the role 'user' and logout
         if ($user->hasRole('user')) {
-            // Http::asForm()->post(route('logout'));
-            // Redirect to login or another appropriate page
             return view('livewire.dashboard.not-admin-view')->layout('layouts.bouncer');
         }else{
-            // For users with roles other than 'user', load specific data
             $this->all_loan_requests = Application::where(function ($query) {
                 $query->where('status', 2)->orWhere('status', 0);
             })->orderBy('created_at', 'desc')->take(7)->get();
-
-            // Always return the same view layout after handling the conditions
             return view('livewire.dashboard.dashboard-view')->layout('layouts.admin');
         }
-
-
     }
 
     public function submitWithdrawRequest(){

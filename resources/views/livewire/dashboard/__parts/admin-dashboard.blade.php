@@ -4,9 +4,9 @@
         <!--begin::Container-->
         <div id="kt_content_container" class="container-xxl">
             <!--begin::Row-->
-            @can('company financial stats')
+            {{-- @can('company financial stats') --}}
             @include('livewire.dashboard.__parts.current-admin-stats')
-            @endcan
+            {{-- @endcan --}}
             <!--end::Row-->
             <!--begin::Row-->
             <div class="row g-5 g-xl-8">
