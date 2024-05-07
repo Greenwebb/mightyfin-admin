@@ -13,6 +13,8 @@ class LoanType extends Model
         'name',
         'type_name',
         'description',
+        'icon',
+        'alt_icon',
     ];
 
     public function loan_child_type(){
