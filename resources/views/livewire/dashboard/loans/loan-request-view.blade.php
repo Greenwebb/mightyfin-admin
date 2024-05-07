@@ -3,7 +3,7 @@
         <div class="row">
             <br>
             <div class="col-12">
-                @if($loan_requests)
+                @if($requests)
                     <div class="">
                         @role('user')
                         <div style="background-color:#792db8;@role('user') @else margin-top:2%; padding:2%; @endrole " class="card-header">

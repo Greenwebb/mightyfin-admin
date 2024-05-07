@@ -100,39 +100,58 @@ trait LoanTrait{
         }
     }
 
-    public function getLoanRequests($type){
+    public function getLoanRequests($type, $perPage = 10)
+    {
         $userId = auth()->user()->id;
+
         if(auth()->user()->hasRole('admin')){
-            return Application::orWhere('status', 0)->orWhere('status', 2)->with('loan_product')->orderByDesc('id')->get();
-        }else{
+            // Admins get paginated results
+            return Application::orWhere('status', 0)
+                              ->orWhere('status', 2)
+                              ->with('loan_product')
+                              ->orderByDesc('id')
+                              ->paginate($perPage);
+        } else {
             switch ($type) {
                 case 'spooling':
-                    return Application::orWhere('status', 0)->orWhere('status', 2)->with('loan_product')->orderByDesc('id')->get();
-                    break;
+                    // Paginated results for spooling
+                    return Application::orWhere('status', 0)
+                                      ->orWhere('status', 2)
+                                      ->with('loan_product')
+                                      ->orderByDesc('id')
+                                      ->paginate($perPage);
 
                 case 'manual':
-                    return Application::with('loan_product')->with(['manual_approvers' => function ($query) use ($userId) {
-                        $query->where('user_id', $userId);
-                        $query->where('is_active', 1);
-                    }])->whereHas('manual_approvers', function ($query) use ($userId) {
-                        $query->where('user_id', $userId);
-                        $query->where('is_active', 1);
-                    })
-                    ->orWhere('status', 2)->orWhere('status', 0)
-                    ->orderByDesc('id')
-                    ->get();
-                    break;
+                    // Paginated results for manual approvals
+                    return Application::with('loan_product')
+                                      ->with(['manual_approvers' => function ($query) use ($userId) {
+                                          $query->where('user_id', $userId)
+                                                ->where('is_active', 1);
+                                      }])
+                                      ->whereHas('manual_approvers', function ($query) use ($userId) {
+                                          $query->where('user_id', $userId)
+                                                ->where('is_active', 1);
+                                      })
+                                      ->orWhere('status', 2)
+                                      ->orWhere('status', 0)
+                                      ->orderByDesc('id')
+                                      ->paginate($perPage);
 
                 case 'auto':
-                    // Add your code here for the 'auto' case
-                    break;
+                    // Example pagination for 'auto' case (You'll need to define the actual conditions)
+                    return Application::where('some_auto_condition', true)
+                                      ->with('loan_product')
+                                      ->orderByDesc('id')
+                                      ->paginate($perPage);
 
                 default:
-                    // Add your code here for the default case
-                    break;
+                    // Handle default case if needed or return empty paginated result
+                    return Application::where('id', null) // No results by default
+                                      ->paginate($perPage);
             }
         }
     }
+
     public function getOpenLoanRequests($type){
         $userId = auth()->user()->id;
         if(auth()->user()->hasRole('admin')){

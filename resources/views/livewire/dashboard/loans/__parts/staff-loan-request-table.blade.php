@@ -233,6 +233,10 @@
                                 @endforelse
                             </tbody>
                         </table>
+
+                        <div>
+                            {{-- {{ $requests->links() }} --}}
+                        </div>
                     </div>
                 </div>
             </div>
