@@ -105,7 +105,7 @@
                                         </td>
                                         <td>
                                             <a href="#" class="text-dark fw-bold text-hover-primary ">
-                                                {{ $loan->loan_product->name }}
+                                                {{ $loan->loan_product->name }} Loan
                                             </a>
                                         </td>
                                         <td>
@@ -235,8 +235,15 @@
                         </table>
 
                         <div>
-                            {{-- {{ $requests->links() }} --}}
+                            {{-- Check if $requests is set and is an instance of a paginator --}}
+                            @if($requests instanceof \Illuminate\Pagination\LengthAwarePaginator && $requests->count() > 0)
+                                <div>
+                                    {{-- Display pagination links --}}
+                                    {{ $requests->links() }}
+                                </div>
+                            @endif
                         </div>
+
                     </div>
                 </div>
             </div>
