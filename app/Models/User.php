@@ -178,7 +178,12 @@ class User extends Authenticatable
     {
         return $this->hasMany(BankDetails::class)->orderBy('created_at', 'desc');
     }
-    
+
+    public function nrc_photos()
+    {
+        return $this->hasMany(NRCPhoto::class)->orderBy('created_at', 'desc');
+    }
+
     public function uploads(){
         return $this->hasMany(UserFile::class);
     }
