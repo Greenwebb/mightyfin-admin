@@ -111,9 +111,9 @@ trait CRBTrait{
 
             curl_close($ch);
             // Process $response as needed (e.g., parse XML, handle SOAP response)
-            // return $response;
+            return $response;
 
-            dd($response);
+            // dd($response);
         } catch (\Throwable $th) {
             dd('Hello Greenwebbtech Fix this error: '.$th);
         }
@@ -139,7 +139,7 @@ trait CRBTrait{
                             <!--Optional:-->
                             <infinityCode>zm123456789</infinityCode>
                             <!--Optional:-->
-                            <name1>'.$user->fname.'</name1>
+                            <name1>Elizabeth</name1>
                             <!--Optional:-->
                             <name2>'.$user->lname.'</name2>
                             <!--Optional:-->

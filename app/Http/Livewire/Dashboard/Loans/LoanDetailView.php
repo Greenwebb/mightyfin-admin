@@ -112,7 +112,6 @@ class LoanDetailView extends Component
     public function checkRisk(){}
 
     public function acceptSuggestionBtn(){
-        dd($this->plp);
         try {
             $switch = $this->loan;
             $switch->old_amount = $switch->amount;
