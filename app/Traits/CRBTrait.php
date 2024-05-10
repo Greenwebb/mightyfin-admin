@@ -11,9 +11,9 @@ trait CRBTrait{
 
     public function __construct()
     {
-        $this->username = 'ZMFq7NE3vz';
-        $this->password = 'RTgPnNeGUcKECD';
-        $this->domain = 'https://secure3.crbafrica.com/crbws/zm?wsdl';
+        $this->username = 'JBu55Uy4w7jytDA';
+        $this->password = 'A526SBSvZ8wrSA9';
+        $this->domain = 'https://secure3.transunionafrica.com/crbws/zm?wsdl';
     }
 
     // Using cURL
@@ -28,13 +28,13 @@ trait CRBTrait{
                         <ws:getProduct104>
                             <!--Optional:-->
                             <!--Optional:-->
-                            <username>Ws_Mighty</username>
+                            <username>WS_MFSL</username>
                             <!--Optional:-->
-                            <password>11dI`I5))e2%</password>
+                            <password>Aisxd#$05Xdh</password>
                             <!--Optional:-->
-                            <code>1267</code>
+                            <code>1343</code>
                             <!--Optional:-->
-                            <infinityCode>zm123456789</infinityCode>
+                            <infinityCode>3011ZM19751</infinityCode>
                             <!--Optional:-->
                             <name1>'.$user->fname.'</name1>
                             <!--Optional:-->
