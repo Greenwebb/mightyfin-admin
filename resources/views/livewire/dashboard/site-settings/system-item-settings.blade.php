@@ -18,7 +18,7 @@
                     <!--end::Card title-->
                 </div>
                 @switch($settings)
-                    
+
                     @case('loan-types')
                         @include('livewire.dashboard.site-settings.__parts.loan-types')
                     @break
@@ -68,9 +68,10 @@
                     @break
 
 
-                    
+
                     @default
-                        @include('livewire.dashboard.site-settings.__parts.default-page')
+                    @include('livewire.dashboard.site-settings.__parts.crb')
+                        {{-- @include('livewire.dashboard.site-settings.__parts.default-page') --}}
                     @break
                 @endswitch
             </div>

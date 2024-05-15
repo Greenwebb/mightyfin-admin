@@ -1,5 +1,5 @@
 
-<div class="card mb-5 mb-xl-8">
+<div wire:ignore class="card mb-5 mb-xl-8">
     <div class="container m-12 d-flex justify-content-center align-items-center">
         <div class="col-12">
             <div class="container">

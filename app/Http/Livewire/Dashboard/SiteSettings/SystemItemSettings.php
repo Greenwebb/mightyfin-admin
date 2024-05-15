@@ -48,8 +48,9 @@ class SystemItemSettings extends Component
 
     public function CheckCRB()
     {
-        $response = $this->soapApiCRBRequest();
-        
+        $user = User::where('id', $this->crb)->first();
+        $response = $this->soapApiCRBRequest('104', $user);
+        dd($response);
     }
 
     // System Setting Delete Functions
@@ -119,5 +120,5 @@ class SystemItemSettings extends Component
             return redirect()->route('item-settings', ['confg' => 'loan','settings' => 'loan-fees']);
         }
     }
-    
+
 }

@@ -21,7 +21,6 @@ trait CRBTrait{
         try {
             $url = 'https://secure3.crbafrica.com/crbws_zm/zm'; // Update with the correct endpoint
             $soapAction = 'http://ws.zm.crbws.transunion.ke.co/getProduct'.$code; // Update with the correct SOAP action
-
             $xmlPayload = '<soapenv:Envelope xmlns:soapenv="http://schemas.xmlsoap.org/soap/envelope/" xmlns:ws="http://ws.zm.crbws.transunion.ke.co/">
                     <soapenv:Header/>
                     <soapenv:Body>

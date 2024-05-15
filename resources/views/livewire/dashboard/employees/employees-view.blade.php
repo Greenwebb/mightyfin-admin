@@ -284,7 +284,12 @@
                                                 <label class="required fs-6 fw-semibold mb-2">National ID Type</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input class="form-control form-control-solid" placeholder="" name="id_type" />
+                                                <select class="form-control form-control" placeholder="" name="id_type" >
+                                                    <option value="">--choose--</option>
+                                                    <option value="NRC">NRC</option>
+                                                    <option value="Passport">Passport</option>
+                                                    <option value="Driver Liecense">Driver Liecense</option>
+                                                </select>
                                                 <!--end::Input-->
                                             </div>
                                             <!--end::Col-->
@@ -294,7 +299,7 @@
                                                 <label class="required fs-6 fw-semibold mb-2">National ID</label>
                                                 <!--end::Label-->
                                                 <!--begin::Input-->
-                                                <input class="form-control form-control-solid" placeholder="" name="nrc_no" />
+                                                <input class="form-control form-control" placeholder="" name="nrc_no" />
                                                 <!--end::Input-->
                                             </div>
                                             <!--end::Col-->
