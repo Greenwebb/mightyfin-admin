@@ -13,14 +13,14 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('loan_types', function (Blueprint $table) {
-            $table->text('alt_icon')->nullable();
-            $table->string('card_bg')->nullable();
-        });
-        Schema::table('loan_products', function (Blueprint $table) {
-            $table->text('alt_icon')->nullable();
-            $table->string('card_bg')->nullable();
-        });
+        // Schema::table('loan_types', function (Blueprint $table) {
+        //     $table->text('alt_icon')->nullable();
+        //     $table->string('card_bg')->nullable();
+        // });
+        // Schema::table('loan_products', function (Blueprint $table) {
+        //     $table->text('alt_icon')->nullable();
+        //     $table->string('card_bg')->nullable();
+        // });
     }
 
     /**
