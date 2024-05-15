@@ -124,6 +124,10 @@ class Application extends Model
     {
         return $this->hasMany(LoanScore::class);
     }
+    public function loan_expenses()
+    {
+        return $this->hasMany(LoanExpense::class);
+    }
 
     public function approvedLoans(){
         return $this->hasOne(Loans::class);

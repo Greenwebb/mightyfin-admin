@@ -232,37 +232,37 @@
                                                 </div>
 
                                                 <div class="px-0">
-                                                    @if ($amortization_table)
-                                                            <table class="table table-bordered table-hover">
-                                                                <thead>
-                                                                    <tr>
-                                                                        <th>#</th>
-                                                                        <th>Due Date</th>
-                                                                        <th>Principal Amount</th>
-                                                                        <th>Interest Amount</th>
-                                                                        {{-- <th>Penalty Amount</th> --}}
-                                                                        <th>Due Amount</th>
-                                                                        <th>Principal Balance</th>
-                                                                        <th>Description</th>
-                                                                    </tr>
-                                                                </thead>
-                                                                <tbody>
-                                                                    @foreach($amortization_table['amortization_table']['installments'] as $index => $row)
-                                                                    <tr>
-                                                                        <td>{{ $index + 1 }}</td>
-                                                                        <td>{{ $row['due_date'] }}</td>
-                                                                        <td>{{ $row['principal'] }}</td>
-                                                                        <td>{{ $row['interest'] }}</td>
-                                                                        {{-- <td>{{ $row['fee_amount'] }}</td> --}}
-                                                                        {{-- <td>{{ isset($row['penalty']) ? $row['penalty'] : '0.00' }}</td> --}}
-                                                                        <td>{{ $row['due'] }}</td>
-                                                                        <td>{{ $row['principal_balance'] }}</td>
-                                                                        <td>{{ $row['description'] }}</td>
-                                                                    </tr>
-                                                                    @endforeach
-                                                                </tbody>
-                                                            </table>
-                                                    @endif
+                                                        @if ($amortization_table)
+                                                                <table class="table table-bordered table-hover">
+                                                                    <thead>
+                                                                        <tr>
+                                                                            <th>#</th>
+                                                                            <th>Due Date</th>
+                                                                            <th>Principal Amount</th>
+                                                                            <th>Interest Amount</th>
+                                                                            {{-- <th>Penalty Amount</th> --}}
+                                                                            <th>Due Amount</th>
+                                                                            <th>Principal Balance</th>
+                                                                            <th>Description</th>
+                                                                        </tr>
+                                                                    </thead>
+                                                                    <tbody>
+                                                                        @foreach($amortization_table['amortization_table']['installments'] as $index => $row)
+                                                                        <tr>
+                                                                            <td>{{ $index + 1 }}</td>
+                                                                            <td>{{ $row['due_date'] }}</td>
+                                                                            <td>{{ $row['principal'] }}</td>
+                                                                            <td>{{ $row['interest'] }}</td>
+                                                                            {{-- <td>{{ $row['fee_amount'] }}</td> --}}
+                                                                            {{-- <td>{{ isset($row['penalty']) ? $row['penalty'] : '0.00' }}</td> --}}
+                                                                            <td>{{ $row['due'] }}</td>
+                                                                            <td>{{ $row['principal_balance'] }}</td>
+                                                                            <td>{{ $row['description'] }}</td>
+                                                                        </tr>
+                                                                        @endforeach
+                                                                    </tbody>
+                                                                </table>
+                                                        @endif
                                                 </div>
 
                                             </div>

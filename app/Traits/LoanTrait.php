@@ -5,6 +5,7 @@ namespace App\Traits;
 use App\Mail\LoanApplication;
 use App\Models\Application;
 use App\Models\ApplicationStage;
+use App\Models\LoanExpense;
 use App\Models\LoanInstallment;
 use App\Models\LoanManualApprover;
 use App\Models\LoanNotification;
@@ -64,6 +65,10 @@ trait LoanTrait{
     public function get_loan_current_stage($id){
         return LoanStatus::with('status')->where('loan_product_id', $id)
                         ->first();
+    }
+
+    public function get_loan_expenses($id){
+        return LoanExpense::where('application_id', $id)->get();
     }
 
     public function getAllLoanRequests($type){
