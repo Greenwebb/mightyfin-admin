@@ -38,6 +38,7 @@ trait EmailTrait{
             Notification::send($admin, new BTFLoanRequest($data));
             return true;
         } catch (\Throwable $th) {
+            dd($th);
             return false;
         }
 
@@ -63,9 +64,9 @@ trait EmailTrait{
         } catch (\Throwable $th) {
             return $th;
         }
-    } 
+    }
 
-    
+
     // This email send a contact message from contact us page /////////////
     public function send_loan_remainder($data, $user){
         try {
@@ -75,7 +76,7 @@ trait EmailTrait{
             return $th;
         }
     }
-    
+
     // This email send a attachement of Preaproval Forms /////////////
     public function send_pre_approval_forms($email){
         try {
@@ -112,7 +113,7 @@ trait EmailTrait{
         }
 
     }
-    
+
     public function send_loan_declined_notification($data){
         $borrower = User::where('id', $data['user_id'])->first();
         $me = auth()->user();

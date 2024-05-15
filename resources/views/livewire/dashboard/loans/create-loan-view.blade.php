@@ -23,20 +23,21 @@
                 </div>
             </div>
 
+            @include('livewire.dashboard.__parts.dash-alerts')
             <div class="card mb-5 mb-xl-10">
                 <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
                     <div class="card-title m-0">
                         <h3 class="fw-bold text-info m-0">New Loan Information:</h3>
                     </div>
                 </div>
-                
+
                 <div id="kt_account_settings_profile_details" class="collapse show">
                     <div id="kt_account_profile_details_form" class="form">
                         <div class="card-body border-top p-9">
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Loan Product</label>
                                 <div class="col-lg-8 fv-row">
-                                    <select type="text" name="loan_product_id" class="form-control form-control-lg form-control-solid" placeholder="E.g Business Loan" required>
+                                    <select type="text" name="loan_product_id" class="form-control form-control-lg form-control" placeholder="E.g Business Loan" required>
                                         <option value="">-- select --</option>
                                         @forelse ($loan_products as $lp)
                                         <option value="{{ $lp->id }}">{{ $lp->name }}</option>
@@ -44,11 +45,11 @@
                                         @endforelse
                                     </select>
                                 </div>
-                            </div> 
+                            </div>
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Borrower</label>
                                 <div class="col-lg-8 fv-row">
-                                    <select type="text" name="borrower_id" class="form-control form-control-lg form-control-solid" placeholder="E.g Civil Servant Loan" required>
+                                    <select type="text" name="borrower_id" class="form-control form-control-lg form-control" placeholder="E.g Civil Servant Loan" required>
                                         <option value="name">-- select --</option>
                                         @forelse ($borrowers as $b)
                                         <option value="{{ $b->id }}">{{ $b->fname.' '.$b->lname.' | '.$b->phone }}</option>
@@ -60,19 +61,19 @@
                             {{-- <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Loan #</label>
                                 <div class="col-lg-8 fv-row">
-                                    <textarea type="text" name="new_loan_icon" class="form-control form-control-lg form-control-solid" placeholder="SVG code" required></textarea>
+                                    <textarea type="text" name="new_loan_icon" class="form-control form-control-lg form-control" placeholder="SVG code" required></textarea>
                                 </div>
                             </div> --}}
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Principal Amount</label>
                                 <div class="col-lg-8 fv-row">
-                                    <input type="text" name="amount" class="form-control form-control-lg form-control-solid" placeholder="10 000" required/>
+                                    <input type="text" name="amount" class="form-control form-control-lg form-control" placeholder="10 000" required/>
                                 </div>
                             </div>
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Duration</label>
                                 <div class="col-lg-8 fv-row">
-                                    <select type="text" name="replayment_plan" class="form-control form-control-lg form-control-solid" placeholder="" required>
+                                    <select type="text" name="replayment_plan" class="form-control form-control-lg form-control" placeholder="" required>
                                         <option value="">--select--</option>
                                         <option value="1">1 Month</option>
                                         <option value="2">2 Months</option>
@@ -100,45 +101,45 @@
                         <h3 class="fw-bold text-info m-0">Next of Kin:</h3>
                     </div>
                 </div>
-                
+
                 <div id="kt_account_settings_profile_details" class="collapse show">
                     <div id="kt_account_profile_details_form" class="form">
                         <div class="card-body border-top p-9">
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">First Name</label>
                                 <div class="col-lg-8 fv-row">
-                                    <input type="text" name="nok_fname" class="form-control form-control-lg form-control-solid" placeholder="" ></input>
+                                    <input type="text" name="nok_fname" class="form-control form-control-lg form-control" placeholder="" ></input>
                                 </div>
                             </div>
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Last Name</label>
                                 <div class="col-lg-8 fv-row">
-                                    <input type="text" name="nok_lname" class="form-control form-control-lg form-control-solid" placeholder="" ></input>
+                                    <input type="text" name="nok_lname" class="form-control form-control-lg form-control" placeholder="" ></input>
                                 </div>
                             </div>
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Phone Number</label>
                                 <div class="col-lg-8 fv-row">
-                                    <input type="text" name="nok_phone" class="form-control form-control-lg form-control-solid" placeholder="" ></input>
+                                    <input type="text" name="nok_phone" class="form-control form-control-lg form-control" placeholder="" ></input>
                                 </div>
                             </div>
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Email Address</label>
                                 <div class="col-lg-8 fv-row">
-                                    <input type="text" name="nok_email" class="form-control form-control-lg form-control-solid" placeholder="" ></input>
+                                    <input type="text" name="nok_email" class="form-control form-control-lg form-control" placeholder="" ></input>
                                 </div>
                             </div>
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Relation</label>
                                 <div class="col-lg-8 fv-row">
-                                    <input type="text" name="nok_relation" class="form-control form-control-lg form-control-solid" placeholder="" ></input>
+                                    <input type="text" name="nok_relation" class="form-control form-control-lg form-control" placeholder="" ></input>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
 
             <div class="card mb-5 mb-xl-10">
                 <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
@@ -146,64 +147,64 @@
                         <h3 class="fw-bold text-info m-0">References Information:</h3>
                     </div>
                 </div>
-                
+
                 <div id="kt_account_settings_profile_details" class="collapse show">
                     <div id="kt_account_profile_details_form" class="form">
                         <div class="card-body border-top p-9">
-                            
+
                         <h4 class="text-gray py-3" style="color: darkgray">Human Resources</h4>
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">First Name</label>
                                 <div class="col-lg-8 fv-row">
-                                    <input type="text" name="sup_fname" class="form-control form-control-lg form-control-solid" placeholder=""></input>
+                                    <input type="text" name="sup_fname" class="form-control form-control-lg form-control" placeholder=""></input>
                                 </div>
                             </div>
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Last Name</label>
                                 <div class="col-lg-8 fv-row">
-                                    <input type="text" name="sup_lname" class="form-control form-control-lg form-control-solid" placeholder=""></input>
+                                    <input type="text" name="sup_lname" class="form-control form-control-lg form-control" placeholder=""></input>
                                 </div>
                             </div>
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Phone Number</label>
                                 <div class="col-lg-8 fv-row">
-                                    <input type="text" name="sup_phone" class="form-control form-control-lg form-control-solid" placeholder=""></input>
+                                    <input type="text" name="sup_phone" class="form-control form-control-lg form-control" placeholder=""></input>
                                 </div>
                             </div>
                         </div>
                         <div class="card-body border-top p-9">
-                            
+
                         <h4 class="text-gray py-3" style="color: darkgray">Supervisor </h4>
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">First Name</label>
                                 <div class="col-lg-8 fv-row">
-                                    <input type="text" name="sup_fname" class="form-control form-control-lg form-control-solid" placeholder="" ></input>
+                                    <input type="text" name="sup_fname" class="form-control form-control-lg form-control" placeholder="" ></input>
                                 </div>
                             </div>
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Last Name</label>
                                 <div class="col-lg-8 fv-row">
-                                    <input type="text" name="sup_lname" class="form-control form-control-lg form-control-solid" placeholder="" ></input>
+                                    <input type="text" name="sup_lname" class="form-control form-control-lg form-control" placeholder="" ></input>
                                 </div>
                             </div>
                             <div class="row mb-6">
                                 <label class="col-lg-4 col-form-label required fw-bold fs-6">Phone Number</label>
                                 <div class="col-lg-8 fv-row">
-                                    <input type="text" name="sup_phone" class="form-control form-control-lg form-control-solid" placeholder="" ></input>
+                                    <input type="text" name="sup_phone" class="form-control form-control-lg form-control" placeholder="" ></input>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
-            
+
             <div class="card mb-5 mb-xl-10">
                 <div class="card-header border-0 cursor-pointer" role="button" data-bs-toggle="collapse" data-bs-target="#kt_account_profile_details" aria-expanded="true" aria-controls="kt_account_profile_details">
                     <div class="card-title m-0">
                         <h3 class="fw-bold text-info m-0">Documents Upload:</h3>
                     </div>
                 </div>
-                
+
                 <div id="kt_account_settings_profile_details" class="collapse show">
                     <div id="kt_account_profile_details_form" class="form">
                         <div class="card-body border-top p-9">
@@ -237,12 +238,12 @@
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-floppy2" viewBox="0 0 16 16">
                                 <path d="M1.5 0h11.586a1.5 1.5 0 0 1 1.06.44l1.415 1.414A1.5 1.5 0 0 1 16 2.914V14.5a1.5 1.5 0 0 1-1.5 1.5h-13A1.5 1.5 0 0 1 0 14.5v-13A1.5 1.5 0 0 1 1.5 0M1 1.5v13a.5.5 0 0 0 .5.5H2v-4.5A1.5 1.5 0 0 1 3.5 9h9a1.5 1.5 0 0 1 1.5 1.5V15h.5a.5.5 0 0 0 .5-.5V2.914a.5.5 0 0 0-.146-.353l-1.415-1.415A.5.5 0 0 0 13.086 1H13v3.5A1.5 1.5 0 0 1 11.5 6h-7A1.5 1.5 0 0 1 3 4.5V1H1.5a.5.5 0 0 0-.5.5m9.5-.5a.5.5 0 0 0-.5.5v3a.5.5 0 0 0 .5.5h1a.5.5 0 0 0 .5-.5v-3a.5.5 0 0 0-.5-.5z"/>
                             </svg>
-                        </span>    
+                        </span>
                         Save
                     </button>
                 </div>
             </div>
-            
+
         </form>
     </div>
 </div>

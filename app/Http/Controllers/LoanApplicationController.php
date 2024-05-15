@@ -354,29 +354,20 @@ class LoanApplicationController extends Controller
             ];
 
             // Email going to the Administrator
-            $process = $this->send_loan_email($mail);
-
-            if($request->wantsJson()){
-                return response()->json([
-                    "status" => 200,
-                    "success" => true,
-                    "message" => "Your loan has been sent.",
-                    "data" => $application
-                ]);
-            }else{
-                if($process){
-                    DB::commit();
-                    return redirect()->route('view-loan-requests');
-                }else{
-                    DB::commit();
-                    return redirect()->back();
-                }
-            }
-            // DB::commit();
+            // $process = $this->send_loan_email($mail);
+            // if($process){
+                DB::commit();
+                Session::flash('success', "Loan created successfully");
+                return redirect()->route('view-loan-requests');
+            // }else{
+            //     DB::commit();
+            //     Session::flash('error', "Loan could not be created, something failed. ");
+            //     return redirect()->back();
+            // }
         } catch (\Throwable $th) {
-            dd($th);
-            // DB::rollback();
-            // return redirect()->back();
+            DB::rollback();
+            Session::flash('error', "Something failed. ".$th->getMessage());
+            return redirect()->back();
         }
     }
 
