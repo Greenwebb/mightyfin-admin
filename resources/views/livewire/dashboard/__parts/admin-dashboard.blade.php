@@ -191,15 +191,15 @@
                                                 @forelse($all_loan_requests as $loan)
                                                 <tr>
                                                     <td>
-                                                        <div class="symbol symbol-45px me-2">
-                                                            <span class="symbol-label">
-                                                                <img src="assets/media/svg/brand-logos/plurk.svg" class="h-50 align-self-center" alt="" />
-                                                            </span>
+                                                        <div class="symbol symbol-45px me-2" style="box-shadow: rgba(0, 0, 0, 0.1) -4px 9px 25px -6px;">
+                                                            {{-- <span class="symbol-label"> --}}
+                                                                <img src="{{ asset('/public/icons/mfs/loan.png') }}" class="h-50 align-self-center" alt="" />
+                                                            {{-- </span> --}}
                                                         </div>
                                                     </td>
                                                     <td>
                                                         <a href="#" class="text-dark fw-bold text-hover-primary mb-1 fs-6">
-                                                            {{ $loan->user->fname.' '.$loan->user->lname }}
+                                                            {{ ucwords($loan->user->fname).' '.ucwords($loan->user->lname) }}
                                                         </a>
                                                         <span class="text-muted fw-semibold d-block">
                                                             <a href="tel:{{ $loan->user->phone }}">{{ $loan->user->phone }}</a> <br> {{ $loan->email }} </span>
@@ -207,7 +207,15 @@
                                                     <td class="text-end text-muted fw-bold"><small>Requested on</small><br>{{ $loan->created_at->toFormattedDateString() }}</td>
                                                     <td class="text-end">
                                                         <span class="badge badge-light-primary">K {{ $loan->amount }}</span>
-                                                        {{-- <span class="badge badge-light-success">Approved</span> --}}
+                                                        @if($loan->status == 0)
+                                                            <span class="badge badge-light-warning">Pending</span>
+                                                        @elseif($loan->status == 1)
+                                                            <span class="badge badge-light-success">Open</span>
+                                                        @elseif($loan->status == 2)
+                                                            <span class="badge badge-light-primary">Processing</span>
+                                                        @else
+                                                            <span class="badge badge-light-danger">Denied</span>
+                                                        @endif
                                                     </td>
                                                     <td class="text-end">
                                                         @can('processes loans')

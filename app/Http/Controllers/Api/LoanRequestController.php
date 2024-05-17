@@ -17,15 +17,20 @@ class LoanRequestController extends Controller
 {
     use EmailTrait, WalletTrait, LoanTrait;
 
-    public function getMyLoans($id){
+    public function getLoan($id){
+        $data = $this->get_loan_details($id);
+        return response()->json(['data' => $data]);
+    }
+
+    public function getMyLoans($user_id){
         $data = Application::with('loan')
-        ->where('user_id', $id)
+        ->where('user_id', $user_id)
         ->orderBy('created_at', 'desc')
         ->get();
 
         return response()->json(['data' => $data]);
     }
-    
+
     public function makeWithdrawalRequest(Request $request){
         try {
             $uuid = Str::orderedUuid();
@@ -41,18 +46,18 @@ class LoanRequestController extends Controller
                 'card_number' => $request['card_number'],
                 'user_id' =>  $request['user_id']
             ]);
-    
+
             return response()->json(['message' => 'Your withdraw request has been sent']);
-        } catch (\Throwable $th) {    
+        } catch (\Throwable $th) {
             return response()->json(['message' => 'Failed']);
         }
     }
-    
+
     public function getWithdrawalRequests($id){
         $requests = $this->getWithdrawRequests();
         return response()->json(['data' => $requests]);
     }
-    
+
     public function getWallets($id){
         $wallet = $this->getUserWallet($id);
         return response()->json(['amount' => $wallet]);

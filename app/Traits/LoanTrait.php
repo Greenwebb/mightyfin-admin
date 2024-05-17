@@ -27,7 +27,6 @@ trait LoanTrait{
     use EmailTrait;
     public $application;
 
-
     public function get_all_loan_types(){
         return LoanType::with('loan_child_type.loan_products')->get();
     }
@@ -291,11 +290,50 @@ trait LoanTrait{
         ->orderBy('created_at', 'desc') // Add this line to order by 'created_at' column in descending order
         ->first();
     }
+
     public function get_loan_details($id){
-        $data = Application::with('user.nextkin')
-        ->with('user.uploads')->where('id', $id)->first();
-        return $data;
+        return Application::with('user.nextkin')
+        ->with('user.uploads')
+        ->where('id', $id)->first();
     }
+
+    public function get_loan_qualification_ai($id){
+        $data = Application::with('user.nextkin')
+            ->with('user.uploads')
+            ->where('id', $id)->first();
+
+        // Convert the data to JSON
+        $jsonData = json_encode($data);
+        
+        // URL of the Python endpoint
+        $pythonEndpoint = 'http://your-python-endpoint-url';
+
+        // Initialize cURL session
+        $ch = curl_init($pythonEndpoint);
+
+        // Set the POST request options
+        curl_setopt($ch, CURLOPT_POST, 1);
+        curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+
+        // Execute the request
+        $response = curl_exec($ch);
+
+        // Check for errors
+        if(curl_errno($ch)){
+            $error_message = curl_error($ch);
+            // Handle error
+        }
+
+        // Close cURL session
+        curl_close($ch);
+
+        // Process the response from the Python endpoint
+        // ...
+
+        // Return the result or do further processing
+    }
+
 
     public function apply_loan($data){
             try {

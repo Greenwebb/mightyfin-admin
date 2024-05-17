@@ -30,7 +30,7 @@ class LoanDetailView extends Component
     public $debt_ratio, $gross_pay, $net_pay, $result_amount;
     public $crb_selected_products, $loan_notifications, $plp_rule, $plp;
     public $lp, $loan_interest_value, $principal, $amortization_table;
-    public $loan_interest_method, $interest_methods;
+    public $loan_interest_method, $interest_methods, $loan_ai;
 
     public function mount($id){
         $this->loan_id = $id;
@@ -53,6 +53,7 @@ class LoanDetailView extends Component
 
     public function dataSets(){
         $this->loan = $this->get_loan_details($this->loan_id);
+        $this->loan_ai = $this->get_loan_qualification_ai($this->loan_id);
         $this->loan_notifications = $this->loan_notifications($this->loan->id);
         $this->loan_product = $this->get_loan_product($this->loan->loan_product_id);
         $this->crb_selected_products = $this->loan_product->loan_crb;

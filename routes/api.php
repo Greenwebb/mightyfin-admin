@@ -36,6 +36,8 @@ Route::post('update-profile', [UserController::class, 'updateProfile']);
 Route::post('change-password', [UserController::class, 'updatePassword']);
 Route::post('upload-files', [UserController::class, 'uploadFiles']);
 
+// Python
+Route::get('/get-application/{id}',[LoanRequestController::class, 'getLoan']);
 
 // Functions
 Route::post('request-for-loan', [LoanApplicationController::class, 'store']);
@@ -75,4 +77,5 @@ Route::post('make-withdrawal-request', [LoanRequestController::class, 'makeWithd
 // Admin Settings
 Route::get('/get-approvers-users', [SettingController::class, '__get_approvers']);
 Route::post('/set-auto-approvers', [SettingController::class, '__set_approvers']);
+
 

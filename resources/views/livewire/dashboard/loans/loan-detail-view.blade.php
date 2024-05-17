@@ -104,9 +104,9 @@
                                 @break
                                 @case('open')
                                     <div class="mx-6">
-                                        <div class="px-9 py-6 mt-2">
+                                        <div class="px-9 py-6 mt-8">
                                             <h1 class="text-info fw-bold font-bold">Open Loan</h1>
-                                            <p>Note: This loan is current active and is pending for repayment collection.</p>
+                                            <p>Note: This loan is currently active and is pending for repayment collection.</p>
                                         </div>
                                     </div>
                                 @break

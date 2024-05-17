@@ -1,11 +1,12 @@
 <div class="content d-flex flex-column flex-column-fluid" id="kt_content">
     <div class="post d-flex flex-column-fluid" id="kt_post">
-        
+
         <div id="kt_content_container" class="container-xxl">
             <div class="container">
-                <h1>Loan has been opened successfully</h1>
+                <h1>Loan opened successfully</h1>
+                <img width="100" src="{{ asset('public/mfs/gif/discount-bag.gif') }}" alt="">
                 <div style="width: 22%">
-                    <a href="{{ route('detailed', $loan->id ) }}" class="btn btn-secondary gap-2 d-flex space-x-1">
+                    <a style="box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;" href="{{ route('detailed', $loan->id ) }}" class="btn btn-primary gap-2 d-flex space-x-1">
                         More Details
                         <span>
                             <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chevron-compact-right" viewBox="0 0 16 16">
@@ -16,6 +17,6 @@
                 </div>
             </div>
         </div>
-        
+
     </div>
 </div>

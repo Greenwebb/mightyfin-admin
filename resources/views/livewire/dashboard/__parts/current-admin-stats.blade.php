@@ -1,5 +1,5 @@
 <div class="row g-5 g-xl-8">
-    <div class="col-xl-4">
+    <div class="col-xl-4" >
         <!--begin::Statistics Widget 5-->
         <a href="{{ route('borrowers') }}" class="card bg-body-white hoverable card-xl-stretch mb-xl-8">
             <!--begin::Body-->
