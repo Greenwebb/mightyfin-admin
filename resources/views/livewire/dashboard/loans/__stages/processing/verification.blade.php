@@ -242,9 +242,9 @@
                                                 <h6 class="text-muted">Result Information</h6>
                                                 <hr>
                                                 
-                                                <div>
+                                                {{-- <div>
                                                     {!! $crb_results['html'] !!}
-                                                </div>
+                                                </div> --}}
                                                 <h6>
                                                     @switch($crb_results['values'][5]['value'])
                                                         @case(200)
@@ -630,6 +630,7 @@
         document.getElementById('no_plp').style.display = 'none';
         document.getElementById('plp_rule').style.display = 'none';
         document.getElementById('plp_success').style.display = 'none';
+
         window.onload = function() {
             var debtRatio = 40;
             var basicPay = @json($basic_pay);
