@@ -243,7 +243,7 @@
                                                 <hr>
                                                 
                                                 <div>
-                                                    {{ $crb_results['html'] }}
+                                                    {!! $crb_results['html'] !!}
                                                 </div>
                                                 <h6>
                                                     @switch($crb_results['values'][5]['value'])
