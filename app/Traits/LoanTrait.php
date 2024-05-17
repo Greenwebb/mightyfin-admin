@@ -297,16 +297,18 @@ trait LoanTrait{
         ->where('id', $id)->first();
     }
 
-    public function get_loan_qualification_ai($id){
+    public function get_loan_qualification_ai($id) {
+        // Fetch data with related user information
         $data = Application::with('user.nextkin')
             ->with('user.uploads')
-            ->where('id', $id)->first();
+            ->where('id', $id)
+            ->first();
 
         // Convert the data to JSON
         $jsonData = json_encode($data);
-        
+
         // URL of the Python endpoint
-        $pythonEndpoint = 'http://your-python-endpoint-url';
+        $pythonEndpoint = 'https://001b-45-215-255-149.ngrok-free.app/process-pdf';
 
         // Initialize cURL session
         $ch = curl_init($pythonEndpoint);
@@ -315,24 +317,41 @@ trait LoanTrait{
         curl_setopt($ch, CURLOPT_POST, 1);
         curl_setopt($ch, CURLOPT_POSTFIELDS, $jsonData);
         curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_HTTPHEADER, array('Content-Type:application/json'));
 
         // Execute the request
         $response = curl_exec($ch);
 
         // Check for errors
-        if(curl_errno($ch)){
+        if (curl_errno($ch)) {
             $error_message = curl_error($ch);
-            // Handle error
+            // Handle error (log it, return an error response, etc.)
+            curl_close($ch);
+            return response()->json(['error' => 'Failed to communicate with the AI service: ' . $error_message], 500);
         }
 
         // Close cURL session
         curl_close($ch);
 
-        // Process the response from the Python endpoint
-        // ...
+        // Decode the JSON response
+        $response_data = json_decode($response, true);
 
-        // Return the result or do further processing
+        // Check if the response is valid and contains the expected data
+        if (isset($response_data['result'])) {
+            // Return the result or process it further
+            return [
+                'message' => 'Documents have been successfully submitted and verified for assessment',
+                'result' => $response_data['result']
+            ];
+        } else {
+            // Handle unexpected response format
+            return [
+                'message' => 'Documents have not been completely submitted or assessed for verification.',
+                'result' => []
+            ];
+        }
     }
+
 
 
     public function apply_loan($data){

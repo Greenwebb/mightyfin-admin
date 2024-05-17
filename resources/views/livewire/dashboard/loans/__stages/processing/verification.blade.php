@@ -213,15 +213,14 @@
                                             <label class="col-lg-4 col-form-label required fw-bold fs-6">CRB Product</label>
 
                                             <select type="text" wire:model.lazy="code"
-                                                    class="form-control form-control-lg form-control-solid"
-                                                    placeholder="" required>
-
-                                                {{-- <option value="s">Sample</option> --}}
-                                                @forelse ($crb_selected_products as $item)
-                                                <option value="{{ $item->crb_product->name }}">{{ $item->crb_product->name }}</option>
-                                                @empty
-                                                <option value="">None</option>
-                                                @endforelse
+                                                class="form-control form-control-lg form-control-solid"
+                                                placeholder="" required>
+                                                    <option value="">--select-</option>
+                                                    @forelse ($crb_selected_products as $item)
+                                                    <option value="{{ $item->crb_product->name }}">{{ $item->crb_product->name }}</option>
+                                                    @empty
+                                                    <option value="">None</option>
+                                                    @endforelse
                                             </select>
                                             <br>
                                             <!-- Show loading spinner while the action is processing -->
@@ -238,10 +237,14 @@
                                         </div>
                                     </div>
                                     <div class="px-10 mt-10">
-                                        @if(isset($crb_results['values']) && count($crb_results['values']) > 0)
+                                        {{-- @if(isset($crb_results['values']) && count($crb_results['values']) > 0) --}}
                                             <div>
                                                 <h6 class="text-muted">Result Information</h6>
                                                 <hr>
+                                                
+                                                <div>
+                                                    {{ $crb_results['html'] }}
+                                                </div>
                                                 <h6>
                                                     @switch($crb_results['values'][5]['value'])
                                                         @case(200)
@@ -283,9 +286,9 @@
                                                 @endforeach
                                                 </tbody>
                                             </table>
-                                        @else
+                                        {{-- @else
                                             <p>No CRB results available.</p>
-                                        @endif
+                                        @endif --}}
                                     </div>
                                 </div>
                             </div>
@@ -295,7 +298,7 @@
                             role="tabpanel">
                             <div class="card pt-4 mb-6 mb-xl-9">
                                 <div id="kt_customer_view_payment_method" class="card-body pt-0">
-                                    <div class="py-0" data-kt-customer-payment-method="row">
+                                    {{-- <div class="py-0" data-kt-customer-payment-method="row">
                                         <div id="kt_customer_view_payment_method_1" class="collapse show fs-6 ps-10" data-bs-parent="#kt_customer_view_payment_method">
                                             <div class="d-flex gap-10 flex-wrap py-5">
                                                 <div class="w-full">
@@ -320,7 +323,7 @@
                                             </div>
                                             <button id="calculateRisk" class="btn btn-sm btn-primary">Check</button>
                                         </div>
-                                    </div>
+                                    </div> --}}
 
                                     <div id="plp_rule" class="container mt-4">
                                         <div class="alert alert-danger">
@@ -348,6 +351,46 @@
                                                 <button wire:click="acceptSuggestionBtn" class="btn btn-primary btn-xs">Accept Suggestion</button>
                                             </div>
                                         </div>
+                                    </div>
+
+                                    {{-- Plp success --}}
+                                    <div id="plp_success" class="container mt-4">
+                                        <div class="alert alert-success">
+                                            <div class="d-flex">
+                                                <span class="col-1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
+                                                        <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6m3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5"/>
+                                                    </svg>
+                                                </span>
+                                                <p class="col-10">
+                                                    Eligible Loan Application
+                                                    <br/>
+                                                    {{ $loan_ai['message'] }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    {{-- No Plp --}}
+                                    <div id="no_plp" class="container mt-4">
+                                        <div class="alert alert-danger">
+                                            <div class="d-flex">
+                                                <span class="col-1">
+                                                    <svg xmlns="http://www.w3.org/2000/svg" width="21" height="21" fill="currentColor" class="bi bi-lightbulb-fill" viewBox="0 0 16 16">
+                                                        <path d="M2 6a6 6 0 1 1 10.174 4.31c-.203.196-.359.4-.453.619l-.762 1.769A.5.5 0 0 1 10.5 13h-5a.5.5 0 0 1-.46-.302l-.761-1.77a1.964 1.964 0 0 0-.453-.618A5.984 5.984 0 0 1 2 6m3 8.5a.5.5 0 0 1 .5-.5h5a.5.5 0 0 1 0 1l-.224.447a1 1 0 0 1-.894.553H6.618a1 1 0 0 1-.894-.553L5.5 15a.5.5 0 0 1-.5-.5"/>
+                                                    </svg>
+                                                </span>
+                                                <p class="col-10">
+                                                    AI Feed
+                                                    <br/>
+                                                    {{ $loan_ai['message'] }}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                    <div id="shimmer_loader" class="w-full">
+                                        <img src="{{ asset('public/mfs/gif/shimmer.gif') }}" alt="">
                                     </div>
                                 </div>
 
@@ -584,32 +627,38 @@
     </div>
     <!--end::Post-->
     <script>
+        document.getElementById('no_plp').style.display = 'none';
         document.getElementById('plp_rule').style.display = 'none';
-        document.getElementById('calculateRisk').addEventListener('click', function() {
-            var debtRatio = parseFloat(document.getElementById('debt_ratio').value);
-            var basicPay = parseFloat(document.getElementById('basic_pay').value);
-            var netPay = parseFloat(document.getElementById('net_pay').value);
+        document.getElementById('plp_success').style.display = 'none';
+        window.onload = function() {
+            var debtRatio = 40;
+            var basicPay = @json($basic_pay);
+            var netPay = @json($net_pay);
 
             // Perform the calculation
             var debtR = debtRatio / 100;
             var resultAmount = netPay - (basicPay * debtR);
 
             // Format the result with "K" prefix
-            var formattedResult =  "K " + resultAmount.toFixed(2);
+            var formattedResult = "K " + resultAmount.toFixed(2);
 
             // Convert the due amount from JSON, removing commas and converting to float
             var dueAmount = parseFloat(@json($amortization_table['amortization_table']['installments'][0]['due']).replace(/,/g, ''));
 
             // Show plp rule
             if (resultAmount.toFixed(2) < dueAmount) {
-                document.getElementById('plp_rule').style.display = 'block';
+                if (resultAmount === 0) {
+                    document.getElementById('no_plp').style.display = 'block';
+                }else{
+                    // document.getElementById('plp_rule').style.display = 'block';
+                }
             } else {
                 document.getElementById('plp_rule').style.display = 'none';
+                document.getElementById('plp_success').style.display = 'block';
             }
+            document.getElementById('shimmer_loader').style.display = 'none';
+        };
 
-            // Update the result field
-            document.getElementById('result_amount').value = formattedResult;
-        });
     </script>
 
     <script>

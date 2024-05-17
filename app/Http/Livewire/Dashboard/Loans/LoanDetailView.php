@@ -27,7 +27,9 @@ class LoanDetailView extends Component
     public $loan, $user, $loan_id, $msg, $due_date, $reason, $loan_product;
     public $loan_stage, $denied_status, $picked_status, $current, $principal_amt, $code, $crb, $crb_results;
     public $amortizationSchedule,$amo_principal, $amo_duration;
-    public $debt_ratio, $gross_pay, $net_pay, $result_amount;
+    public $employee_name, $employee_number;
+    public $deductions = [];
+    public $debt_ratio, $gross_pay, $basic_pay, $net_pay, $result_amount;
     public $crb_selected_products, $loan_notifications, $plp_rule, $plp;
     public $lp, $loan_interest_value, $principal, $amortization_table;
     public $loan_interest_method, $interest_methods, $loan_ai;
@@ -52,6 +54,8 @@ class LoanDetailView extends Component
     }
 
     public function dataSets(){
+
+        //Data fetch
         $this->loan = $this->get_loan_details($this->loan_id);
         $this->loan_ai = $this->get_loan_qualification_ai($this->loan_id);
         $this->loan_notifications = $this->loan_notifications($this->loan->id);
@@ -61,7 +65,26 @@ class LoanDetailView extends Component
         $this->denied_status = Status::where('stage', 'denied')->orderBy('id')->get();
         $this->current = ApplicationStage::where('application_id', $this->loan->id)->first();
         $this->interest_methods = InterestMethod::get();
+
+        //State controll
         $this->plp_rule = false;
+
+        //Processing
+        if ($this->loan_ai['result']) {
+            $this->basic_pay = $this->loan_ai['result']['gross_pay'];
+            $this->gross_pay = $this->loan_ai['result']['gross_pay'];
+            $this->net_pay = $this->loan_ai['result']['net_pay'];
+            $this->employee_name = $this->loan_ai['result']['employee_name'];
+            $this->employee_number = $this->loan_ai['result']['employee_number'];
+            $this->deductions = $this->loan_ai['result']['deductions'];
+        }else{
+            $this->basic_pay = 0;
+            $this->gross_pay = 0;
+            $this->net_pay = 0;
+            $this->employee_name = 0;
+            $this->employee_number = 0;
+            $this->deductions = 0;
+        }
     }
 
     public function prefillLoanProductValues(){
@@ -95,19 +118,23 @@ class LoanDetailView extends Component
 
     public function CheckCRB()
     {
-        if($this->code === 's'){
-            $response = $this->soapApiCRBDemoRequest($this->code, $this->loan->user);
-        }else{
-            $response = $this->soapApiCRBRequest($this->code, $this->loan->user);
+        if($this->code){
+            if($this->code === 's'){
+                // $response = $this->soapApiCRBDemoRequest($this->code, $this->loan->user);
+                // $response = $this->soapApiCRBDemoRequest($this->code, $this->loan->user);
+            }else{
+                $response = $this->soapApiCRBRequest($this->code, $this->loan->user);
+            }
+            $parser = xml_parser_create();
+            xml_parse_into_struct($parser, $response, $values, $index);
+            xml_parser_free($parser);
+    
+            $this->crb_results = [
+                'values' => $values,
+                'index' => $index,
+                'html' => $response
+            ];    
         }
-        $parser = xml_parser_create();
-        xml_parse_into_struct($parser, $response, $values, $index);
-        xml_parser_free($parser);
-
-        $this->crb_results = [
-            'values' => $values,
-            'index' => $index
-        ];
     }
 
     public function checkRisk(){}

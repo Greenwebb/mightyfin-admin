@@ -109,6 +109,7 @@ trait CRBTrait{
             }
 
             curl_close($ch);
+            // dd($response);
             // Process $response as needed (e.g., parse XML, handle SOAP response)
             return $response;
 
