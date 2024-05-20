@@ -28,5 +28,5 @@ class References extends Model
     public static function customer_supervisors($user_id){
         return References::where('user_id', $user_id)->distinct('supervisorContactNumber')->get(['supervisorLastName','supervisorLastName','supervisorContactNumber']);
     }
-     
+
 }

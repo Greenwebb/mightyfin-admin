@@ -5,6 +5,8 @@ namespace App\Http\Livewire\Dashboard\Loans;
 use Illuminate\Foundation\Auth\Access\AuthorizesRequests;
 use App\Classes\Exports\GuarantorExport;
 use App\Models\Application;
+use App\Models\NextOfKing;
+use App\Models\References;
 use Livewire\Component;
 use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Session;
@@ -29,10 +31,12 @@ class GuarantorsView extends Component
         $this->permissions = Permission::get();
         $roles = Role::orderBy('id','DESC')->paginate(5);
 
-        $guarantors = Application::where('status', 1)->where('complete', 1)->get();
+        $noks = NextOfKing::get();
+        $refs = References::get();
+
         return view('livewire.dashboard.loans.guarantors-view',[
-            'guarantors' => $guarantors,
-            'roles' => $roles
+            'noks' => $noks,
+            'refs' => $refs
         ])->layout('layouts.admin');
     }
     public function exportGuarantors(){
