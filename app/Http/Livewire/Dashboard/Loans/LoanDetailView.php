@@ -53,6 +53,25 @@ class LoanDetailView extends Component
         }
     }
 
+    public function ai_score(){
+        $this->loan_ai = $this->get_loan_qualification_ai($this->loan_id);
+        if ($this->loan_ai['result']) {
+            $this->basic_pay = $this->loan_ai['result']['gross_pay'];
+            $this->gross_pay = $this->loan_ai['result']['gross_pay'];
+            $this->net_pay = $this->loan_ai['result']['net_pay'];
+            $this->employee_name = $this->loan_ai['result']['employee_name'];
+            $this->employee_number = $this->loan_ai['result']['employee_number'];
+            $this->deductions = $this->loan_ai['result']['deductions'];
+        }else{
+            $this->basic_pay = 0;
+            $this->gross_pay = 0;
+            $this->net_pay = 0;
+            $this->employee_name = 0;
+            $this->employee_number = 0;
+            $this->deductions = 0;
+        }
+    }
+
     public function dataSets(){
 
         //Data fetch
@@ -66,7 +85,7 @@ class LoanDetailView extends Component
         $this->current = ApplicationStage::where('application_id', $this->loan->id)->first();
         $this->interest_methods = InterestMethod::get();
 
-        //State controll
+        //State control
         $this->plp_rule = false;
 
         //Processing
@@ -128,12 +147,12 @@ class LoanDetailView extends Component
             $parser = xml_parser_create();
             xml_parse_into_struct($parser, $response, $values, $index);
             xml_parser_free($parser);
-    
+
             $this->crb_results = [
                 'values' => $values,
                 'index' => $index,
                 'html' => $response
-            ];    
+            ];
         }
     }
 

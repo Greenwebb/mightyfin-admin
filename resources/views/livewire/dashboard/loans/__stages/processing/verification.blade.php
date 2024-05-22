@@ -170,7 +170,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
+                            <a wire:click="ai_score()" class="nav-link text-active-primary pb-4" data-bs-toggle="tab"
                                 href="#kt_credit_assement_tab">
                                 <small>Risk Assement</small>
                             </a>
@@ -207,12 +207,12 @@
 
                                 <div id="kt_customer_view_payment_method" class="card-body pt-0">
                                     <div class="py-0" data-kt-customer-payment-method="row">
-                                        <div id="kt_customer_view_payment_method_1"
+                                        <form id="kt_customer_view_payment_method_1"
                                              class="collapse show fs-6 ps-10"
                                              data-bs-parent="#kt_customer_view_payment_method">
                                             <label class="col-lg-4 col-form-label required fw-bold fs-6">CRB Product</label>
-
-                                            <select type="text" wire:model.lazy="code"
+                                            <input type="hidden" name="user_id" value="{{ $loan->user->id }}">
+                                            <select type="text" name="code"
                                                 class="form-control form-control-lg form-control-solid"
                                                 placeholder="" required>
                                                     <option value="">--select-</option>
@@ -224,27 +224,21 @@
                                             </select>
                                             <br>
                                             <!-- Show loading spinner while the action is processing -->
-                                            <button class="btn btn-primary" wire:click="CheckCRB()" wire:loading.attr="disabled">
-                                                <span wire:loading.remove>Submit</span>
-                                                <span wire:loading>Loading...</span>
+                                            <button type="submit" class="btn btn-primary">
+                                                <span>Submit</span>
+                                                <span>Loading...</span>
                                             </button>
-                                            <!-- Preloader icon to display while the action is processing -->
-                                            <div wire:loading wire:target="CheckCRB()">
-                                                <div class="spinner-border text-primary" role="status">
-                                                    <span class="visually-hidden">Loading...</span>
-                                                </div>
-                                            </div>
-                                        </div>
+                                        </form>
                                     </div>
                                     <div class="px-10 mt-10">
                                         {{-- @if(isset($crb_results['values']) && count($crb_results['values']) > 0) --}}
                                             <div>
                                                 <h6 class="text-muted">Result Information</h6>
                                                 <hr>
-                                                
-                                                {{-- <div>
+
+                                                <div>
                                                     {!! $crb_results['html'] !!}
-                                                </div> --}}
+                                                </div>
                                                 <h6>
                                                     @switch($crb_results['values'][5]['value'])
                                                         @case(200)

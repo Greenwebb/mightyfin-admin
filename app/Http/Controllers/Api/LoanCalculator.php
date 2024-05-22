@@ -11,25 +11,26 @@ class LoanCalculator extends Controller
 {
     public function calculateReducingBalanceEqualInstallment(Request $request)
     {
+        // dd($request);
         try {
             // Convert loan duration to months if it's not already in months
             switch ($request->loan_duration_period) {
                 case 'day':
-                    $loan_term = $request->loan_duration_value / 30; // Assuming 30 days per month
+                    $loan_term = (int)$request->loan_duration_value / 30; // Assuming 30 days per month
                     break;
                 case 'week':
-                    $loan_term = $request->loan_duration_value * 4; // Assuming 4 weeks per month
+                    $loan_term = (int)$request->loan_duration_value * 4; // Assuming 4 weeks per month
                     break;
                 case 'year':
-                    $loan_term = $request->loan_duration_value * 12; // 12 months in a year
+                    $loan_term = (int)$request->loan_duration_value * 12; // 12 months in a year
                     break;
                 default:
-                    $loan_term = $request->loan_duration_value;
+                    $loan_term = (int)$request->loan_duration_value;
                     break;
             }
 
             $release_date = Carbon::parse($request->release_date);
-            $monthly_interest_rate = $request->loan_interest_value / 100;
+            $monthly_interest_rate = (float)$request->loan_interest_value / 100;
             $monthly_installment = ($request->principal * $monthly_interest_rate) / (1 - pow(1 + $monthly_interest_rate, -$loan_term));
             $loan_balance = $request->principal;
 
@@ -39,7 +40,7 @@ class LoanCalculator extends Controller
 
             $amortization_table = ['installments' => []];
 
-            for ($i = 1; $i <= $request->minimum_num_of_repayments; $i++) {
+            for ($i = 1; $i <= (int)$request->minimum_num_of_repayments; $i++) {
                 $due_date = $release_date->copy()->addMonths($i);
                 $interest = $loan_balance * $monthly_interest_rate;
                 $principal = $monthly_installment - $interest;
