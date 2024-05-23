@@ -374,7 +374,7 @@
                             </a>
                         </div>
                         @endcan
-                        @can('view calculator')
+                        {{-- @can('view calculator') --}}
                         <div class="menu-item">
                             <a class="menu-link" href="{{ route('loan-calculator') }}">
                                 <span class="menu-bullet">
@@ -383,7 +383,7 @@
                                 <span class="menu-title">Loan Calculator</span>
                             </a>
                         </div>
-                        @endcan
+                        {{-- @endcan --}}
                         @can('view pending')
                         <div class="menu-item">
                             <a class="menu-link" href="{{ route('guarantors') }}">

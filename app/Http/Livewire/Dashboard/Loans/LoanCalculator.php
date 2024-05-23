@@ -41,7 +41,7 @@ class LoanCalculator extends Component
 
     public function render()
     {
-        $this->authorize('view calculator');
+        // $this->authorize('view calculator');
         $this->interest_methods = InterestMethod::get();
         $this->interest_types = InterestType::get();
         $this->repayment_cycles = RepaymentCycle::get();

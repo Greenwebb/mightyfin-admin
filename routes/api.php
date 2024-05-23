@@ -53,7 +53,7 @@ Route::get('get-loan-monthly-installment-amount/{duration}/{principal}', [LoanRe
 Route::get('get-total-payback-amount/{duration}/{principal}', [LoanRequestController::class, 'totalCollectable']);
 
 // Amoritization table
-Route::post('/calculate-reducing-balance', [LoanCalculator::class, 'calculateReducingBalanceEqualInstallment']);
+Route::post('/amoritization-schedule', [LoanCalculator::class, 'calculateLoan']);
 
 Route::get('/get-loan-products', [SettingController::class, '__get_loan_products']);
 Route::get('/get-loan-product-details/{loan_id}', [SettingController::class, '__get_loan_details']);
