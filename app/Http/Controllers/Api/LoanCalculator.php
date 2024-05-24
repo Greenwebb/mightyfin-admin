@@ -25,16 +25,16 @@ class LoanCalculator extends Controller
                 case 'Flat Rate':
                     // Perform calculation for flat rate interest
                     // You can define a separate method for this calculation
-                    $this->calculateFlatRate($request);
+                    return $this->calculateFlatRate($request);
                     break;
                 case 'Reducing Balance - Equal Installments':
                     // Perform calculation for reducing balance with equal installment interest
                     // You can define a separate method for this calculation
-                    $this->calculateReducingBalanceEqualInstallment($request);
+                    return $this->calculateReducingBalanceEqualInstallment($request);
                     break;
                 default:
                     // Handle other cases or show an error message
-                    $this->calculateFlatRate($request);
+                    return $this->calculateFlatRate($request);
                     break;
             }
         } catch (\Throwable $th) {
