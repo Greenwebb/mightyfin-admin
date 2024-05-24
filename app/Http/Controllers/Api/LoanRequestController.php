@@ -5,8 +5,10 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Models\Application;
 use App\Models\Loans;
+use App\Models\User;
 use App\Models\Wallet;
 use App\Models\WithdrawRequest;
+use App\Traits\CRBTrait;
 use App\Traits\EmailTrait;
 use App\Traits\LoanTrait;
 use App\Traits\WalletTrait;
@@ -15,7 +17,7 @@ use Illuminate\Support\Str;
 
 class LoanRequestController extends Controller
 {
-    use EmailTrait, WalletTrait, LoanTrait;
+    use CRBTrait, EmailTrait, WalletTrait, LoanTrait;
 
     public function getLoan($id){
         $data = $this->get_loan_details($id);
@@ -90,5 +92,12 @@ class LoanRequestController extends Controller
     public function createLoan(Request $request){
         $data = $request->all();
         return $this->apply_loan($data);
+    }
+
+    public function checkCRB($user_id){
+        $code = '104';
+        $user = User::where('id', $user_id)->first();
+        $requests = $this->soapApiCRBRequest($code, $user);
+        return response()->json(['data' => $requests]);
     }
 }
