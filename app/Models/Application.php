@@ -89,7 +89,7 @@ class Application extends Model
         parent::boot();
 
         static::addGlobalScope('withUser', function ($builder) {
-            $builder->with('user');
+            $builder->with('user')->whereNotNull('user_id');
         });
     }
 
