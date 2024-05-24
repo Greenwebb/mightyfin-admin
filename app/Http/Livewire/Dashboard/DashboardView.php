@@ -28,7 +28,7 @@ class DashboardView extends Component
             return view('livewire.dashboard.not-admin-view')->layout('layouts.bouncer');
         }else{
             $this->all_loan_requests = Application::where(function ($query) {
-                $query->where('status', 2)->orWhere('status', 0);
+                $query->where('status', 2)->whereNotNull('user_id')->orWhere('status', 0);
             })->orderBy('created_at', 'desc')->take(7)->get();
             return view('livewire.dashboard.dashboard-view')->layout('layouts.admin');
         }

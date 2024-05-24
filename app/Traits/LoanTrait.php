@@ -75,15 +75,15 @@ trait LoanTrait{
 
         if(auth()->user()->hasRole('admin')){
             // dd('here');
-            return Application::with('loan_product')->get();
+            return Application::with('loan_product')->whereNotNull('user_id')->get();
         }else{
             switch ($type) {
                 case 'spooling':
-                    return Application::with('loan_product')->get();
+                    return Application::with('loan_product')->whereNotNull('user_id')->get();
                     break;
 
                 case 'manual':
-                    return Application::with('loan_product')->with(['manual_approvers' => function ($query) use ($userId) {
+                    return Application::with('loan_product')->whereNotNull('user_id')->with(['manual_approvers' => function ($query) use ($userId) {
                         $query->where('user_id', $userId);
                         $query->where('is_active', 1);
                     }])->whereHas('manual_approvers', function ($query) use ($userId) {
@@ -113,6 +113,7 @@ trait LoanTrait{
             return Application::orWhere('status', 0)
                               ->orWhere('status', 2)
                               ->with('loan_product')
+                              ->whereNotNull('user_id')
                               ->orderByDesc('id')
                               ->paginate($perPage);
         } else {
@@ -122,6 +123,7 @@ trait LoanTrait{
                     return Application::orWhere('status', 0)
                                       ->orWhere('status', 2)
                                       ->with('loan_product')
+                                      ->whereNotNull('user_id')
                                       ->orderByDesc('id')
                                       ->paginate($perPage);
 
@@ -138,6 +140,7 @@ trait LoanTrait{
                                       })
                                       ->orWhere('status', 2)
                                       ->orWhere('status', 0)
+                                      ->whereNotNull('user_id')
                                       ->orderByDesc('id')
                                       ->paginate($perPage);
 
@@ -145,6 +148,7 @@ trait LoanTrait{
                     // Example pagination for 'auto' case (You'll need to define the actual conditions)
                     return Application::where('some_auto_condition', true)
                                       ->with('loan_product')
+                                      ->whereNotNull('user_id')
                                       ->orderByDesc('id')
                                       ->paginate($perPage);
 
@@ -159,15 +163,15 @@ trait LoanTrait{
     public function getOpenLoanRequests($type){
         $userId = auth()->user()->id;
         if(auth()->user()->hasRole('admin')){
-            return Application::with('loan_product')->where('complete', 1)->where('status', 1)->get();
+            return Application::with('loan_product')->whereNotNull('user_id')->where('complete', 1)->where('status', 1)->get();
         }else{
             switch ($type) {
                 case 'spooling':
-                    return Application::with('loan_product')->where('complete', 1)
+                    return Application::with('loan_product')->whereNotNull('user_id')->where('complete', 1)
                     ->where('status', 1)->get();
                     break;
                 case 'manual':
-                    return Application::with('loan_product')->with(['manual_approvers' => function ($query) use ($userId) {
+                    return Application::with('loan_product')->whereNotNull('user_id')->with(['manual_approvers' => function ($query) use ($userId) {
                         $query->where('user_id', $userId);
                         $query->where('is_active', 1);
                     }])->whereHas('manual_approvers', function ($query) use ($userId) {
