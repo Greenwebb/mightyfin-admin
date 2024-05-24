@@ -6,16 +6,21 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use Carbon\Carbon;
 use App\Models\LoanProduct;
+use App\Traits\CalculatorTrait;
+use App\Traits\CRBTrait;
 use Illuminate\Http\JsonResponse;
 
 class LoanCalculator extends Controller
 {
+    use CRBTrait, CalculatorTrait;
+
     public function calculateLoan(Request $request){
         try {
 
             $lp = $this->get_loan_product($request->loan_product_id);
+
             $loan_interest_method = $lp->loan_interest_method;
-            
+            // dd($loan_interest_method);
             switch ($loan_interest_method) {
                 case 'Flat Rate':
                     // Perform calculation for flat rate interest
@@ -29,6 +34,7 @@ class LoanCalculator extends Controller
                     break;
                 default:
                     // Handle other cases or show an error message
+                    $this->calculateFlatRate($request);
                     break;
             }
         } catch (\Throwable $th) {
@@ -36,9 +42,9 @@ class LoanCalculator extends Controller
         }
     }
 
-    public function calculateReducingBalanceEqualInstallment($request)
+    public function calculateReducingBalanceEqualInstallment($request):JsonResponse
     {
-
+        // dd($request->loan_duration_period);
         $lp = $this->get_loan_product($request->loan_product_id);
         $loan_interest_value = $lp->def_loan_interest / 100;
         try {
@@ -99,8 +105,10 @@ class LoanCalculator extends Controller
             ];
 
             return response()->json([
-                'amortization_table' => $amortization_table,
-                'totals' => $totals
+                'data' => [
+                    'amortization_table' => $amortization_table,
+                    'totals' => $totals
+                ]
             ]);
 
         } catch (\Throwable $th) {
@@ -211,8 +219,8 @@ class LoanCalculator extends Controller
                 'total_repayment_amount' => number_format($total_repayment_amount, 2),
             ];
 
-            return response()->json($response_data);
-
+            // dd($response_data);
+            return response()->json(['data' => $response_data]);
         } catch (\Throwable $th) {
             // Return error response
             return response()->json([
