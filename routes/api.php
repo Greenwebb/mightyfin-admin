@@ -29,6 +29,7 @@ Route::apiResource('apply-loan', LoanRequestController::class);
 Route::post('register', [UserAuthenticationController::class, 'register']);
 Route::post('login', [UserAuthenticationController::class, 'login']);
 Route::post('verify-otp', [OTPController::class, 'verifyOTP']);
+Route::get('users', [UserAuthenticationController::class, 'user_info']);
 
 
 

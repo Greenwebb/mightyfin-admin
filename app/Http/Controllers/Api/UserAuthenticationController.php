@@ -59,15 +59,15 @@ class UserAuthenticationController extends Controller
                 'email' => 'required|email',
                 'password' => 'required'
             ]);
-    
+
             $remember = true;
             if (Auth::attempt($credentials, $remember)) {
                 // $request->session()->regenerate();
                 $user = Auth::user();
                 $rememberToken = $remember ? $user->getRememberToken() : null;
                 return response()->json([
-                    'message' => 'Successful.', 
-                    'user' => $user, 
+                    'message' => 'Successful.',
+                    'user' => $user,
                     'remember_me_token' => $rememberToken
                 ]);
             }else{
@@ -75,6 +75,17 @@ class UserAuthenticationController extends Controller
             }
         } catch (\Throwable $th) {
             dd($th);
+        }
+    }
+
+    public function user_info(){
+        try {
+            return response()->json([User::role('user')->with([
+                'uploads','loans', 'next_of_king', 'refs',
+                'wallet','bank'
+                ])->get()]);
+        } catch (\Throwable $th) {
+            return response()->json(['error' => $th->getMessage()], 500);
         }
     }
 }
